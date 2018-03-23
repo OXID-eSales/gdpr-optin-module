@@ -39,10 +39,10 @@ class oeGdprOptinContactTest extends OxidTestCase
      */
     public function dataProviderOptInValidationRequired()
     {
-        return array(
-            'formMethod-deletion' => array('deletion', false),
-            'formMethod-statistical' => array('statistical', true),
-        );
+        return [
+            'formMethod-deletion' => ['deletion', false],
+            'formMethod-statistical' => ['statistical', true],
+        ];
     }
 
     /**

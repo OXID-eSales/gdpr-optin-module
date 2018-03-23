@@ -58,10 +58,10 @@ class oeGdprOptinReviewTest extends OxidTestCase
      */
     public function dataProviderReviewOptInValidationRequired()
     {
-        return array(
-            'required' => array(true, true),
-            'not-required' => array(false, false),
-        );
+        return [
+            'required' => [true, true],
+            'not-required' => [false, false]
+        ];
     }
 
     /**
@@ -73,7 +73,7 @@ class oeGdprOptinReviewTest extends OxidTestCase
     {
         $controller = oxNew(\OxidEsales\Eshop\Application\Controller\ReviewController::class);
         \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam($controller::REVIEW_OPTIN_PARAM, $configValue);
-        $this->getConfig()->setRequestParameter('rvw_oegdproptin', $checkboxStatus);
+        $this->setRequestParameter('rvw_oegdproptin', $checkboxStatus);
 
         $this->assertSame($expectedValue, $controller->validateOptIn());
     }
@@ -83,14 +83,14 @@ class oeGdprOptinReviewTest extends OxidTestCase
      */
     public function dataProviderValidateOptIn()
     {
-        return array(
-            'required-checked' => array(true, 1, true),
-            'required-not-checked' => array(true, 0, false),
-            'required-not-exist' => array(true, null, false),
-            'not-required-checked' => array(false, 1, true),
-            'not-required-not-checked' => array(false, 0, true),
-            'not-required-not-exits' => array(false, null, true)
-        );
+        return [
+            'required-checked' => [true, 1, true],
+            'required-not-checked' => [true, 0, false],
+            'required-not-exist' => [true, null, false],
+            'not-required-checked' => [false, 1, true],
+            'not-required-not-checked' => [false, 0, true],
+            'not-required-not-exits' => [false, null, true]
+        ];
     }
 
     /**
@@ -102,7 +102,7 @@ class oeGdprOptinReviewTest extends OxidTestCase
     {
         $controller = oxNew(\OxidEsales\Eshop\Application\Controller\ReviewController::class);
         \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam($controller::REVIEW_OPTIN_PARAM, $configValue);
-        $this->getConfig()->setRequestParameter('rvw_oegdproptin', $checkboxStatus);
+        $this->setRequestParameter('rvw_oegdproptin', $checkboxStatus);
 
         $this->assertSame($expectedValue, $controller->isReviewOptInError());
     }
@@ -112,13 +112,13 @@ class oeGdprOptinReviewTest extends OxidTestCase
      */
     public function dataProviderReviewOptInError()
     {
-        return array(
-            'required-checked' => array(true, 1, false),
-            'required-not-checked' => array(true, 0, true),
-            'required-not-exist' => array(true, null, false),
-            'not-required-checked' => array(false, 1, false),
-            'not-required-not-checked' => array(false, 0, false),
-            'not-required-not-exits' => array(false, null, false)
-        );
+        return [
+            'required-checked' => [true, 1, false],
+            'required-not-checked' => [true, 0, true],
+            'required-not-exist' => [true, null, false],
+            'not-required-checked' => [false, 1, false],
+            'not-required-not-checked' => [false, 0, false],
+            'not-required-not-exits' => [false, null, false]
+        ];
     }
 }

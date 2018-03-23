@@ -69,10 +69,10 @@ class oeGdprOptinFrontendTest extends OxidTestCase
      */
     public function providerDeliveryAddressOptin()
     {
-        return array(
-            'enable_optin_true_flow' => array(true, 'assertContains', 'flow'),
-            'enable_optin_false_flow' => array(false, 'assertNotContains', 'flow')
-        );
+        return [
+            'enable_optin_true_flow' => [true, 'assertContains', 'flow'],
+            'enable_optin_false_flow' => [false, 'assertNotContains', 'flow']
+        ];
     }
 
     /**
@@ -120,10 +120,10 @@ class oeGdprOptinFrontendTest extends OxidTestCase
      */
     public function providerUserRegistrationOptin()
     {
-        return array(
-            'enable_optin_true_flow' => array(true, 'assertContains', 'flow'),
-            'enable_optin_false_flow' => array(false, 'assertNotContains', 'flow')
-        );
+        return [
+            'enable_optin_true_flow' => [true, 'assertContains', 'flow'],
+            'enable_optin_false_flow' => [false, 'assertNotContains', 'flow']
+        ];
     }
 
     /**
@@ -142,7 +142,7 @@ class oeGdprOptinFrontendTest extends OxidTestCase
         \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('sTheme', $theme);
         \OxidEsales\Eshop\Core\Registry::getSession()->setUser(null);
 
-        $addViewData = array();
+        $addViewData = [];
         $addViewData['oxcmp_basket'] = oxNew(\OxidEsales\Eshop\Application\Model\Basket::class);
         $addViewData['oConfig'] = \OxidEsales\Eshop\Core\Registry::getConfig();
         $addViewData['sidebar'] = '';
@@ -156,12 +156,12 @@ class oeGdprOptinFrontendTest extends OxidTestCase
      */
     public function providerUserCheckoutRegistrationOptin()
     {
-        return array(
-            'enable_optin_true_flow_noreg' => array(true, 'assertNotContains', 'flow', 1),
-            'enable_optin_false_flow_noreg' => array(false, 'assertNotContains', 'flow', 1),
-            'enable_optin_true_flow_reg' => array(true, 'assertContains', 'flow', 3),
-            'enable_optin_false_flow_reg' => array(false, 'assertNotContains', 'flow', 3)
-        );
+        return [
+            'enable_optin_true_flow_noreg' => [true, 'assertNotContains', 'flow', 1],
+            'enable_optin_false_flow_noreg' => [false, 'assertNotContains', 'flow', 1],
+            'enable_optin_true_flow_reg' => [true, 'assertContains', 'flow', 3],
+            'enable_optin_false_flow_reg' => [false, 'assertNotContains', 'flow', 3]
+        ];
     }
 
     /**
@@ -177,12 +177,12 @@ class oeGdprOptinFrontendTest extends OxidTestCase
      */
     public function testUserRegistrationOptinDuringCheckout($blOeGdprOptinUserRegistration, $assertMethod, $theme, $option)
     {
-        $this->getConfig()->setRequestParameter('option', $option);
+        $this->setRequestParameter('option', $option);
         \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('blOeGdprOptinUserRegistration', $blOeGdprOptinUserRegistration);
         \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('sTheme', $theme);
         \OxidEsales\Eshop\Core\Registry::getSession()->setUser(null);
 
-        $addViewData = array();
+        $addViewData = [];
         $addViewData['oxcmp_basket'] = oxNew(\OxidEsales\Eshop\Application\Model\Basket::class);
         $addViewData['oConfig'] = \OxidEsales\Eshop\Core\Registry::getConfig();
         $addViewData['sidebar'] = '';
@@ -261,7 +261,7 @@ class oeGdprOptinFrontendTest extends OxidTestCase
         $user = oxNew(\OxidEsales\Eshop\Application\Model\User::class);
         $user->setId(self::TEST_USER_ID);
         $user->assign(
-            array(
+            [
                 'oxfname'     => 'Max',
                 'oxlname'     => 'Mustermann',
                 'oxusername'  => 'gdpruser@oxid.de',
@@ -274,7 +274,7 @@ class oeGdprOptinFrontendTest extends OxidTestCase
                 'oxstreetnr'  => '101',
                 'oxcity'      => 'Hamburg',
                 'oxzip'       => '22769'
-            )
+            ]
         );
         $user->save();
 
@@ -318,9 +318,9 @@ class oeGdprOptinFrontendTest extends OxidTestCase
      */
     public function providerContactForm()
     {
-        return array(
-            'flow' => array('flow')
-        );
+        return [
+            'flow' => ['flow']
+        ];
     }
 
     /**
@@ -328,10 +328,10 @@ class oeGdprOptinFrontendTest extends OxidTestCase
      */
     public function providerDetailsReviewOptin()
     {
-        return array(
-            'enable_optin_true_flow_art'   => array(true, 'assertContains', 'flow', 'oxwArticleDetails'),
-            'enable_optin_false_flow_art'  => array(false, 'assertNotContains', 'flow', 'oxwArticleDetails')
-        );
+        return [
+            'enable_optin_true_flow_art'   => [true, 'assertContains', 'flow', 'oxwArticleDetails'],
+            'enable_optin_false_flow_art'  => [false, 'assertNotContains', 'flow', 'oxwArticleDetails']
+        ];
     }
 
     /**
@@ -363,10 +363,10 @@ class oeGdprOptinFrontendTest extends OxidTestCase
      */
     public function providerOxwArticleDetailsReviewOptinError()
     {
-        return array(
-            'enable_optin_true_flow_art'   => array(true, 'assertContains', 'flow', 1),
-            'enable_optin_false_flow_art'  => array(false, 'assertNotContains', 'flow', 0)
-        );
+        return [
+            'enable_optin_true_flow_art'   => [true, 'assertContains', 'flow', 1],
+            'enable_optin_false_flow_art'  => [false, 'assertNotContains', 'flow', 0]
+        ];
     }
 
     /**
@@ -384,7 +384,7 @@ class oeGdprOptinFrontendTest extends OxidTestCase
         \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('blOeGdprOptinProductReviews', $blOeGdprOptinProductReviews);
         \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('sTheme', $theme);
 
-        $controller = $this->getMock('oegdproptinoxwarticledetails', array('isReviewOptInError'));
+        $controller = $this->getMock('oegdproptinoxwarticledetails', ['isReviewOptInError']);
         $controller->expects($this->exactly($count))->method('isReviewOptInError')->will($this->returnValue(true));
         $controller->init();
         $controller->setViewProduct($this->product);
