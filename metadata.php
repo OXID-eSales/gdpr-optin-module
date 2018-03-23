@@ -37,7 +37,7 @@ $aModule = array(
         'de' => 'Das Modul stellt Opt-in-Funktionalit&auml;t f&uuml;r die Datenschutz-Grundverordnung (DSVGO) bereit',
         'en' => 'This module provides the opt-in functionality for the European General Data Protection Regulation (GDPR)',
     ),
-    'thumbnail'   => 'out/pictures/logo.png',
+    'thumbnail'   => 'logo.png',
     'version'     => '1.0.0',
     'author'      => 'OXID eSales AG',
     'url'         => 'https://www.oxid-esales.com/',
