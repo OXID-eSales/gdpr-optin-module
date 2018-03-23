@@ -25,7 +25,7 @@
  *
  * @codeCoverageIgnore
  */
-class oeGdprOptinModule extends oxModule
+class oeGdprOptinModule extends \OxidEsales\Eshop\Core\Module\Module
 {
 
     /**
@@ -46,7 +46,7 @@ class oeGdprOptinModule extends oxModule
 
         $this->load($sModuleId);
 
-        oxRegistry::set('oeGdprOptinModule', $this);
+        \OxidEsales\Eshop\Core\Registry::set('oeGdprOptinModule', $this);
     }
 
 
@@ -104,7 +104,7 @@ class oeGdprOptinModule extends oxModule
             $sCode = 'OE_GDPROPTIN_' . $sCode;
         }
 
-        return oxRegistry::getLang()->translateString($sCode, oxRegistry::getLang()->getBaseLanguage(), false);
+        return \OxidEsales\Eshop\Core\Registry::getLang()->translateString($sCode, \OxidEsales\Eshop\Core\Registry::getLang()->getBaseLanguage(), false);
     }
 
     /**
@@ -121,7 +121,7 @@ class oeGdprOptinModule extends oxModule
             $sModuleSettingName = 'oeGdprOptin' . (string) $sModuleSettingName;
         }
 
-        return oxRegistry::getConfig()->getConfigParam((string) $sModuleSettingName);
+        return \OxidEsales\Eshop\Core\Registry::getConfig()->getConfigParam((string) $sModuleSettingName);
     }
 
     /**
@@ -133,7 +133,7 @@ class oeGdprOptinModule extends oxModule
      */
     protected static function _getFolderToClear($sClearFolderPath = '')
     {
-        $sTempFolderPath = (string) oxRegistry::getConfig()->getConfigParam('sCompileDir');
+        $sTempFolderPath = (string) \OxidEsales\Eshop\Core\Registry::getConfig()->getConfigParam('sCompileDir');
 
         if (!empty($sClearFolderPath) and (strpos($sClearFolderPath, $sTempFolderPath) !== false)) {
             $sFolderPath = $sClearFolderPath;

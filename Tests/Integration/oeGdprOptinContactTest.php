@@ -28,9 +28,9 @@ class oeGdprOptinContactTest extends OxidTestCase
      */
     public function testOptInValidationRequired($configValue, $expected)
     {
-        oxRegistry::getConfig()->setConfigParam('OeGdprOptinContactFormMethod', $configValue);
+        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('OeGdprOptinContactFormMethod', $configValue);
 
-        $controller = oxNew("Contact");
+        $controller = oxNew(\OxidEsales\Eshop\Application\Controller\ContactController::class);
         $this->assertSame($expected, $controller->isOptInValidationRequired());
     }
 
@@ -50,9 +50,9 @@ class oeGdprOptinContactTest extends OxidTestCase
      */
     public function testSendError()
     {
-        oxRegistry::getConfig()->setConfigParam('OeGdprOptinContactFormMethod', "statistical");
+        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('OeGdprOptinContactFormMethod', "statistical");
 
-        $controller = oxNew("Contact");
+        $controller = oxNew(\OxidEsales\Eshop\Application\Controller\ContactController::class);
         $this->assertFalse($controller->isOptInError());
         $this->assertFalse($controller->send());
         $this->assertTrue($controller->isOptInError());

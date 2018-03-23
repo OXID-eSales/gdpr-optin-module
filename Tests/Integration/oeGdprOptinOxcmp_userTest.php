@@ -85,16 +85,16 @@ class oeGdprOptinOxcmp_userTest extends OxidTestCase
      */
     public function testDeliveryAddressOptinValidationCheckoutUser($blOeGdprOptinDeliveryAddress, $checkboxChecked, $sAssertDisplayExc, $showShip, $parameters)
     {
-        oxRegistry::getConfig()->setConfigParam('blOeGdprOptinDeliveryAddress', $blOeGdprOptinDeliveryAddress);
+        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('blOeGdprOptinDeliveryAddress', $blOeGdprOptinDeliveryAddress);
 
         $parameters['oegdproptin_deliveryaddress'] = (int) $checkboxChecked;
         $parameters['blshowshipaddress'] = (int) $showShip;
         $this->addRequestParameters($parameters);
 
-        $oCmpUser = oxNew('oxcmp_user');
+        $oCmpUser = oxNew(\OxidEsales\Eshop\Application\Component\UserComponent::class);
         $oCmpUser->changeuser();
 
-        $aDisplayErrors = oxRegistry::getSession()->getVariable('Errors');
+        $aDisplayErrors = \OxidEsales\Eshop\Core\Registry::getSession()->getVariable('Errors');
         $this->$sAssertDisplayExc(array_key_exists('oegdproptin_deliveryaddress', $aDisplayErrors));
     }
 
@@ -111,16 +111,16 @@ class oeGdprOptinOxcmp_userTest extends OxidTestCase
      */
     public function testDeliveryAddressOptinValidationAccountUser($blOeGdprOptinDeliveryAddress, $checkboxChecked, $sAssertDisplayExc, $showShip, $parameters)
     {
-        oxRegistry::getConfig()->setConfigParam('blOeGdprOptinDeliveryAddress', $blOeGdprOptinDeliveryAddress);
+        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('blOeGdprOptinDeliveryAddress', $blOeGdprOptinDeliveryAddress);
 
         $parameters['oegdproptin_deliveryaddress'] = (int) $checkboxChecked;
         $parameters['blshowshipaddress'] = (int) $showShip;
         $this->addRequestParameters($parameters);
 
-        $oCmpUser = oxNew('oxcmp_user');
+        $oCmpUser = oxNew(\OxidEsales\Eshop\Application\Component\UserComponent::class);
         $oCmpUser->changeuser_testvalues();
 
-        $aDisplayErrors = oxRegistry::getSession()->getVariable('Errors');
+        $aDisplayErrors = \OxidEsales\Eshop\Core\Registry::getSession()->getVariable('Errors');
         $this->$sAssertDisplayExc(array_key_exists('oegdproptin_deliveryaddress', $aDisplayErrors));
     }
 
@@ -149,19 +149,19 @@ class oeGdprOptinOxcmp_userTest extends OxidTestCase
      */
     public function testUserRegistrationOptinValidation($oeGdprUserRegistrationAddress, $checkboxChecked, $assertDisplayExc)
     {
-        oxRegistry::getSession()->setUser(null);
-        oxRegistry::getConfig()->setConfigParam('blOeGdprOptinUserRegistration', $oeGdprUserRegistrationAddress);
+        \OxidEsales\Eshop\Core\Registry::getSession()->setUser(null);
+        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('blOeGdprOptinUserRegistration', $oeGdprUserRegistrationAddress);
 
         $parameters = array('oegdproptin_userregistration' => (int) $checkboxChecked,
                             'option' => 3);
         $this->addRequestParameters($parameters);
 
-        $cmpUser = oxNew('oxcmp_user');
-        $parentView = oxNew('register');
+        $cmpUser = oxNew(\OxidEsales\Eshop\Application\Component\UserComponent::class);
+        $parentView = oxNew(\OxidEsales\Eshop\Application\Controller\RegisterController::class);
         $cmpUser->setParent($parentView);
         $cmpUser->createUser();
 
-        $displayErrors = oxRegistry::getSession()->getVariable('Errors');
+        $displayErrors = \OxidEsales\Eshop\Core\Registry::getSession()->getVariable('Errors');
         $this->$assertDisplayExc(array_key_exists('oegdproptin_userregistration', $displayErrors));
     }
 
@@ -193,19 +193,19 @@ class oeGdprOptinOxcmp_userTest extends OxidTestCase
      */
     public function testUserRegistrationOptinValidationCheckoutUser($oeGdprUserRegistrationAddress, $checkboxChecked, $assertDisplayExc, $option)
     {
-        oxRegistry::getSession()->setUser(null);
-        oxRegistry::getConfig()->setConfigParam('blOeGdprOptinUserRegistration', $oeGdprUserRegistrationAddress);
+        \OxidEsales\Eshop\Core\Registry::getSession()->setUser(null);
+        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('blOeGdprOptinUserRegistration', $oeGdprUserRegistrationAddress);
 
         $parameters = array('oegdproptin_userregistration' => (int) $checkboxChecked,
                             'option' => $option);
         $this->addRequestParameters($parameters);
 
-        $cmpUser = oxNew('oxcmp_user');
-        $parentView = oxNew('user');
+        $cmpUser = oxNew(\OxidEsales\Eshop\Application\Component\UserComponent::class);
+        $parentView = oxNew(\OxidEsales\Eshop\Application\Controller\UserController::class);
         $cmpUser->setParent($parentView);
         $cmpUser->createUser();
 
-        $displayErrors = oxRegistry::getSession()->getVariable('Errors');
+        $displayErrors = \OxidEsales\Eshop\Core\Registry::getSession()->getVariable('Errors');
         $this->$assertDisplayExc(array_key_exists('oegdproptin_userregistration', $displayErrors));
     }
 
@@ -214,7 +214,7 @@ class oeGdprOptinOxcmp_userTest extends OxidTestCase
      */
     private function createTestUser()
     {
-        $user = oxNew('oxUser');
+        $user = oxNew(\OxidEsales\Eshop\Application\Model\User::class);
         $user->setId(self::TEST_USER_ID);
         $user->assign(
             array(
@@ -246,9 +246,9 @@ class oeGdprOptinOxcmp_userTest extends OxidTestCase
         $this->setSessionParam('usr', self::TEST_USER_ID);
         $this->setSessionParam('auth', self::TEST_USER_ID);
 
-        $user = oxNew('oxUser');
+        $user = oxNew(\OxidEsales\Eshop\Application\Model\User::class);
         $user->load(self::TEST_USER_ID);
-        oxRegistry::getSession()->setUser($user);
+        \OxidEsales\Eshop\Core\Registry::getSession()->setUser($user);
         $user->setUser($user);
         $this->assertTrue($user->loadActiveUser());
     }
@@ -270,7 +270,7 @@ class oeGdprOptinOxcmp_userTest extends OxidTestCase
 
         $deliveryAddress = unserialize($address);
         $parameters = array('deladr' => $deliveryAddress,
-                            'stoken' => oxRegistry::getSession()->getSessionChallengeToken());
+                            'stoken' => \OxidEsales\Eshop\Core\Registry::getSession()->getSessionChallengeToken());
 
         $parameters = array_merge($parameters, $additionalParameters);
 

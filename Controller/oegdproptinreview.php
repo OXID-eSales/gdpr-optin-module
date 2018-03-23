@@ -23,7 +23,7 @@
  * Class oeGdprOptinReview.
  * Extends details.
  *
- * @see details
+ * @see \OxidEsales\Eshop\Application\Controller\ArticleDetailsController
  */
 class oeGdprOptinReview extends oeGdprOptinReview_parent
 {
@@ -37,7 +37,7 @@ class oeGdprOptinReview extends oeGdprOptinReview_parent
     public function saveReview()
     {
         if (!$this->validateOptIn()) {
-            oxRegistry::get("oxUtilsView")->addErrorToDisplay('OEGDPROPTIN_REVIEW_FORM_ERROR_MESSAGE');
+            \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\UtilsView::class)->addErrorToDisplay('OEGDPROPTIN_REVIEW_FORM_ERROR_MESSAGE');
             return false;
         }
 
@@ -51,7 +51,7 @@ class oeGdprOptinReview extends oeGdprOptinReview_parent
      */
     public function isReviewOptInValidationRequired()
     {
-        return (bool)oxRegistry::getConfig()->getConfigParam(self::REVIEW_OPTIN_PARAM);
+        return (bool)\OxidEsales\Eshop\Core\Registry::getConfig()->getConfigParam(self::REVIEW_OPTIN_PARAM);
     }
 
     /**
@@ -61,7 +61,7 @@ class oeGdprOptinReview extends oeGdprOptinReview_parent
      */
     public function validateOptIn()
     {
-        $optInValue = oxRegistry::getConfig()->getRequestParameter('rvw_oegdproptin');
+        $optInValue = \OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter('rvw_oegdproptin');
         if ($this->isReviewOptInValidationRequired() && !$optInValue) {
             return false;
         }
@@ -76,8 +76,8 @@ class oeGdprOptinReview extends oeGdprOptinReview_parent
      */
     public function isReviewOptInError()
     {
-        $formSent = oxRegistry::getConfig()->getRequestParameter('rvw_oegdproptin') !== null;
-        $review = oxNew('Review');
+        $formSent = \OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter('rvw_oegdproptin') !== null;
+        $review = oxNew(\OxidEsales\Eshop\Application\Controller\ReviewController::class);
         $result = false;
 
         if ($formSent && !$review->validateOptIn())

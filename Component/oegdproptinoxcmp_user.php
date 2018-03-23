@@ -23,7 +23,7 @@
  * Class oeGdprOptinOxcmp_user.
  * Extends oxcmp_user.
  *
- * @see oxcmp_user
+ * @see \OxidEsales\Eshop\Application\Component\UserComponent
  */
 class oeGdprOptinOxcmp_user extends oeGdprOptinOxcmp_user_parent
 {
@@ -36,9 +36,9 @@ class oeGdprOptinOxcmp_user extends oeGdprOptinOxcmp_user_parent
     {
         if (false == $this->validateRegistrationOptin()) {
             //show error message on submit but not on page reload.
-            if(oxRegistry::getConfig()->getRequestParameter('stoken')) {
-                oxRegistry::get("oxUtilsView")->addErrorToDisplay('OEGDPROPTIN_CONFIRM_USER_REGISTRATION_OPTIN', false, true);
-                oxRegistry::get('oxUtilsView')->addErrorToDisplay('OEGDPROPTIN_CONFIRM_USER_REGISTRATION_OPTIN', false, true, 'oegdproptin_userregistration');
+            if(\OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter('stoken')) {
+                \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\UtilsView::class)->addErrorToDisplay('OEGDPROPTIN_CONFIRM_USER_REGISTRATION_OPTIN', false, true);
+                \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\UtilsView::class)->addErrorToDisplay('OEGDPROPTIN_CONFIRM_USER_REGISTRATION_OPTIN', false, true, 'oegdproptin_userregistration');
             }
         } else {
             return parent::createUser();
@@ -47,8 +47,8 @@ class oeGdprOptinOxcmp_user extends oeGdprOptinOxcmp_user_parent
 
     /**
      * Mostly used for customer profile editing screen (OXID eShop ->
-     * MY ACCOUNT). Checks if oUser is set (oxcmp_user::oUser) - if
-     * not - executes oxcmp_user::_loadSessionUser(). If user unchecked newsletter
+     * MY ACCOUNT). Checks if oUser is set (\OxidEsales\Eshop\Application\Component\UserComponent::oUser) - if
+     * not - executes \OxidEsales\Eshop\Application\Component\UserComponent::_loadSessionUser(). If user unchecked newsletter
      * subscription option - removes him from this group. There is an
      * additional MUST FILL fields checking. Function returns true or false
      * according to user data submission status.
@@ -74,8 +74,8 @@ class oeGdprOptinOxcmp_user extends oeGdprOptinOxcmp_user_parent
         if (true == $this->validateDeliveryAddressOptIn()) {
             $return = parent::_changeUser_noRedirect();
         } else {
-            oxRegistry::get("oxUtilsView")->addErrorToDisplay('OEGDPROPTIN_CONFIRM_STORE_DELIVERY_ADDRESS', false, true);
-            oxRegistry::get('oxUtilsView')->addErrorToDisplay('OEGDPROPTIN_CONFIRM_STORE_DELIVERY_ADDRESS', false, true, 'oegdproptin_deliveryaddress');
+            \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\UtilsView::class)->addErrorToDisplay('OEGDPROPTIN_CONFIRM_STORE_DELIVERY_ADDRESS', false, true);
+            \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\UtilsView::class)->addErrorToDisplay('OEGDPROPTIN_CONFIRM_STORE_DELIVERY_ADDRESS', false, true, 'oegdproptin_deliveryaddress');
         }
 
         return $return;
@@ -90,12 +90,12 @@ class oeGdprOptinOxcmp_user extends oeGdprOptinOxcmp_user_parent
     protected function validateDeliveryAddressOptIn()
     {
         $return = true;
-        $optin = (int) oxRegistry::getConfig()->getRequestParameter('oegdproptin_deliveryaddress');
-        $changeExistigAddress = (int) oxRegistry::getConfig()->getRequestParameter('oegdproptin_changeDelAddress');
-        $addressId = oxRegistry::getConfig()->getRequestParameter('oxaddressid');
+        $optin = (int) \OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter('oegdproptin_deliveryaddress');
+        $changeExistigAddress = (int) \OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter('oegdproptin_changeDelAddress');
+        $addressId = \OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter('oxaddressid');
         $deliveryAddressData = $this->_getDelAddressData();
 
-        if (oxRegistry::getConfig()->getConfigParam('blOeGdprOptinDeliveryAddress')
+        if (\OxidEsales\Eshop\Core\Registry::getConfig()->getConfigParam('blOeGdprOptinDeliveryAddress')
             && ((null == $addressId) || ('-1' == $addressId) || (1 == $changeExistigAddress))
             && !empty($deliveryAddressData)
             && (1 !== $optin)
@@ -113,10 +113,10 @@ class oeGdprOptinOxcmp_user extends oeGdprOptinOxcmp_user_parent
     protected function validateRegistrationOptin()
     {
         $return = true;
-        $optin = (int) oxRegistry::getConfig()->getRequestParameter('oegdproptin_userregistration');
+        $optin = (int) \OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter('oegdproptin_userregistration');
         //1 is for guest buy, 3 for account creation
-        $registrationOption = (int) oxRegistry::getConfig()->getRequestParameter('option');
-        if (oxRegistry::getConfig()->getConfigParam('blOeGdprOptinUserRegistration') && (3 == $registrationOption) && (1 !== $optin)) {
+        $registrationOption = (int) \OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter('option');
+        if (\OxidEsales\Eshop\Core\Registry::getConfig()->getConfigParam('blOeGdprOptinUserRegistration') && (3 == $registrationOption) && (1 !== $optin)) {
             $return = false;
         }
         return $return;

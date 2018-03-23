@@ -31,7 +31,7 @@ class oeGdprOptinFrontendTest extends OxidTestCase
     /**
      * Test product.
      *
-     * @var oxArticle
+     * @var \OxidEsales\Eshop\Application\Model\Article
      */
     private $product =null;
 
@@ -47,7 +47,7 @@ class oeGdprOptinFrontendTest extends OxidTestCase
         $this->createTestUser();
         $this->createTestProduct();
         $this->createBasket();
-        oxRegistry::get('oxUtilsView')->getSmarty(true);
+        \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\UtilsView::class)->getSmarty(true);
     }
 
     /**
@@ -88,9 +88,9 @@ class oeGdprOptinFrontendTest extends OxidTestCase
      */
     public function testDeliveryAddressOptinForCheckout($blOeGdprOptinDeliveryAddress, $assertMethod, $theme)
     {
-        oxRegistry::getSession()->setVariable('blshowshipaddress', true);
-        oxRegistry::getConfig()->setConfigParam('blOeGdprOptinDeliveryAddress', $blOeGdprOptinDeliveryAddress);
-        oxRegistry::getConfig()->setConfigParam('sTheme', $theme);
+        \OxidEsales\Eshop\Core\Registry::getSession()->setVariable('blshowshipaddress', true);
+        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('blOeGdprOptinDeliveryAddress', $blOeGdprOptinDeliveryAddress);
+        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('sTheme', $theme);
 
         $content = $this->getTemplateOutput('user', 'form/user_checkout_change.tpl');
 
@@ -108,9 +108,9 @@ class oeGdprOptinFrontendTest extends OxidTestCase
      */
     public function testDeliveryAddressOptinForUserAccount($blOeGdprOptinDeliveryAddress, $assertMethod, $theme)
     {
-        oxRegistry::getSession()->setVariable('blshowshipaddress', true);
-        oxRegistry::getConfig()->setConfigParam('blOeGdprOptinDeliveryAddress', $blOeGdprOptinDeliveryAddress);
-        oxRegistry::getConfig()->setConfigParam('sTheme', $theme);
+        \OxidEsales\Eshop\Core\Registry::getSession()->setVariable('blshowshipaddress', true);
+        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('blOeGdprOptinDeliveryAddress', $blOeGdprOptinDeliveryAddress);
+        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('sTheme', $theme);
 
         $content = $this->getTemplateOutput('account_user', 'form/user.tpl');
 
@@ -142,13 +142,13 @@ class oeGdprOptinFrontendTest extends OxidTestCase
      */
     public function testUserRegistrationOptin($blOeGdprOptinUserRegistration, $assertMethod, $theme)
     {
-        oxRegistry::getConfig()->setConfigParam('blOeGdprOptinUserRegistration', $blOeGdprOptinUserRegistration);
-        oxRegistry::getConfig()->setConfigParam('sTheme', $theme);
-        oxRegistry::getSession()->setUser(null);
+        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('blOeGdprOptinUserRegistration', $blOeGdprOptinUserRegistration);
+        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('sTheme', $theme);
+        \OxidEsales\Eshop\Core\Registry::getSession()->setUser(null);
 
         $addViewData = array();
-        $addViewData['oxcmp_basket'] = oxNew('oxbasket');
-        $addViewData['oConfig'] = oxRegistry::getConfig();
+        $addViewData['oxcmp_basket'] = oxNew(\OxidEsales\Eshop\Application\Model\Basket::class);
+        $addViewData['oConfig'] = \OxidEsales\Eshop\Core\Registry::getConfig();
         $addViewData['sidebar'] = '';
 
         $content = $this->getTemplateOutput('register', 'page/account/register.tpl', $addViewData);
@@ -186,13 +186,13 @@ class oeGdprOptinFrontendTest extends OxidTestCase
     public function testUserRegistrationOptinDuringCheckout($blOeGdprOptinUserRegistration, $assertMethod, $theme, $option)
     {
         $this->getConfig()->setRequestParameter('option', $option);
-        oxRegistry::getConfig()->setConfigParam('blOeGdprOptinUserRegistration', $blOeGdprOptinUserRegistration);
-        oxRegistry::getConfig()->setConfigParam('sTheme', $theme);
-        oxRegistry::getSession()->setUser(null);
+        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('blOeGdprOptinUserRegistration', $blOeGdprOptinUserRegistration);
+        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('sTheme', $theme);
+        \OxidEsales\Eshop\Core\Registry::getSession()->setUser(null);
 
         $addViewData = array();
-        $addViewData['oxcmp_basket'] = oxNew('oxbasket');
-        $addViewData['oConfig'] = oxRegistry::getConfig();
+        $addViewData['oxcmp_basket'] = oxNew(\OxidEsales\Eshop\Application\Model\Basket::class);
+        $addViewData['oConfig'] = \OxidEsales\Eshop\Core\Registry::getConfig();
         $addViewData['sidebar'] = '';
 
         $content = $this->getTemplateOutput('user', 'page/checkout/user.tpl', $addViewData);
@@ -205,9 +205,9 @@ class oeGdprOptinFrontendTest extends OxidTestCase
      */
     public function testContactFormDeletionOptIn()
     {
-        oxRegistry::getConfig()->setConfigParam('OeGdprOptinContactFormMethod', 'deletion');
-        oxRegistry::getConfig()->setConfigParam('sTheme', 'flow');
-        $expected = oxRegistry::getLang()->translateString("OEGDPROPTIN_CONTACT_FORM_MESSAGE_DELETION");
+        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('OeGdprOptinContactFormMethod', 'deletion');
+        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('sTheme', 'flow');
+        $expected = \OxidEsales\Eshop\Core\Registry::getLang()->translateString("OEGDPROPTIN_CONTACT_FORM_MESSAGE_DELETION");
 
         $content = $this->getTemplateOutput('Contact', 'oegdproptin_contact_form.tpl');
 
@@ -220,9 +220,9 @@ class oeGdprOptinFrontendTest extends OxidTestCase
      */
     public function testContactFormStatisticalOptIn()
     {
-        oxRegistry::getConfig()->setConfigParam('OeGdprOptinContactFormMethod', 'statistical');
-        oxRegistry::getConfig()->setConfigParam('sTheme', 'flow');
-        $expected = oxRegistry::getLang()->translateString("OEGDPROPTIN_CONTACT_FORM_MESSAGE_STATISTICAL");
+        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('OeGdprOptinContactFormMethod', 'statistical');
+        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('sTheme', 'flow');
+        $expected = \OxidEsales\Eshop\Core\Registry::getLang()->translateString("OEGDPROPTIN_CONTACT_FORM_MESSAGE_STATISTICAL");
 
         $content = $this->getTemplateOutput('Contact', 'oegdproptin_contact_form.tpl');
 
@@ -235,15 +235,15 @@ class oeGdprOptinFrontendTest extends OxidTestCase
      */
     private function createBasket()
     {
-        oxRegistry::getSession()->getBasket();
-        $this->assertNull(oxRegistry::getSession()->getVariable('_newitem'));
+        \OxidEsales\Eshop\Core\Registry::getSession()->getBasket();
+        $this->assertNull(\OxidEsales\Eshop\Core\Registry::getSession()->getVariable('_newitem'));
 
-        $basketComponent = oxNew('oxcmp_basket');
+        $basketComponent = oxNew(\OxidEsales\Eshop\Application\Component\BasketComponent::class);
         $basketComponent->toBasket(self::TEST_ARTICLE_OXID, 1);
         $basket = $basketComponent->render();
         $this->assertEquals(1, $basket->getProductsCount());
 
-        oxRegistry::getSession()->setBasket($basket);
+        \OxidEsales\Eshop\Core\Registry::getSession()->setBasket($basket);
     }
 
     /**
@@ -251,11 +251,11 @@ class oeGdprOptinFrontendTest extends OxidTestCase
      */
     private function createTestProduct()
     {
-        $product = oxNew('oxArticle');
+        $product = oxNew(\OxidEsales\Eshop\Application\Model\Article::class);
         $product->setId(self::TEST_ARTICLE_OXID);
-        $product->oxarticles__oxshopid = new oxField(1);
-        $product->oxarticles__oxtitle = new oxField(self::TEST_ARTICLE_OXID);
-        $product->oxarticles__oxprice = new oxField(6.66);
+        $product->oxarticles__oxshopid = new \OxidEsales\Eshop\Core\Field(1);
+        $product->oxarticles__oxtitle = new \OxidEsales\Eshop\Core\Field(self::TEST_ARTICLE_OXID);
+        $product->oxarticles__oxprice = new \OxidEsales\Eshop\Core\Field(6.66);
         $product->save();
 
         $this->product = $product;
@@ -266,7 +266,7 @@ class oeGdprOptinFrontendTest extends OxidTestCase
      */
     private function createTestUser()
     {
-        $user = oxNew('oxUser');
+        $user = oxNew(\OxidEsales\Eshop\Application\Model\User::class);
         $user->setId(self::TEST_USER_ID);
         $user->assign(
             array(
@@ -298,9 +298,9 @@ class oeGdprOptinFrontendTest extends OxidTestCase
         $this->setSessionParam('usr', self::TEST_USER_ID);
         $this->setSessionParam('auth', self::TEST_USER_ID);
 
-        $user = oxNew('oxUser');
+        $user = oxNew(\OxidEsales\Eshop\Application\Model\User::class);
         $user->load(self::TEST_USER_ID);
-        oxRegistry::getSession()->setUser($user);
+        \OxidEsales\Eshop\Core\Registry::getSession()->setUser($user);
         $user->setUser($user);
         $this->assertTrue($user->loadActiveUser());
     }
@@ -310,7 +310,7 @@ class oeGdprOptinFrontendTest extends OxidTestCase
      */
     private function replaceBlocks()
     {
-        $shopId = oxRegistry::getConfig()->getShopId();
+        $shopId = \OxidEsales\Eshop\Core\Registry::getConfig()->getShopId();
         $query = "INSERT INTO oxtplblocks (OXID, OXACTIVE, OXSHOPID, OXTEMPLATE, OXBLOCKNAME, OXPOS, OXFILE, OXMODULE) VALUES " .
                  "('_test_header', 1, '{$shopId}', 'layout/page.tpl', 'layout_header', 1, 'tests/integration/views/blocks/empty.tpl', 'oegdproptin'), " .
                  "('_test_footer', 1, '{$shopId}', 'layout/footer.tpl', 'footer_main', 1, 'tests/integration/views/blocks/empty.tpl', 'oegdproptin'), " .
@@ -359,15 +359,15 @@ class oeGdprOptinFrontendTest extends OxidTestCase
      */
     public function testDetailsReviewFormOptIn($blOeGdprOptinProductReviews, $assertMethod, $theme, $class)
     {
-        oxRegistry::getConfig()->setConfigParam('blOeGdprOptinProductReviews', $blOeGdprOptinProductReviews);
-        oxRegistry::getConfig()->setConfigParam('sTheme', $theme);
+        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('blOeGdprOptinProductReviews', $blOeGdprOptinProductReviews);
+        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('sTheme', $theme);
 
         $content = $this->getTemplateOutput($class, 'widget/reviews/reviews.tpl', null, true);
 
         $this->$assertMethod('id="rvw_oegdproptin"', $content);
 
         //Error message always present in DOM, if checkbox present, but is hidden by default
-        $message = oxRegistry::getLang()->translateString("OEGDPROPTIN_REVIEW_FORM_ERROR_MESSAGE");
+        $message = \OxidEsales\Eshop\Core\Registry::getLang()->translateString("OEGDPROPTIN_REVIEW_FORM_ERROR_MESSAGE");
         $this->$assertMethod($message, $content);
     }
 
@@ -396,8 +396,8 @@ class oeGdprOptinFrontendTest extends OxidTestCase
      */
     public function testOxwArticleDetailsReviewFormOptInError($blOeGdprOptinProductReviews, $assertMethod, $theme, $count)
     {
-        oxRegistry::getConfig()->setConfigParam('blOeGdprOptinProductReviews', $blOeGdprOptinProductReviews);
-        oxRegistry::getConfig()->setConfigParam('sTheme', $theme);
+        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('blOeGdprOptinProductReviews', $blOeGdprOptinProductReviews);
+        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('sTheme', $theme);
 
         $controller = $this->getMock('oegdproptinoxwarticledetails', array('isReviewOptInError'));
         $controller->expects($this->exactly($count))->method('isReviewOptInError')->will($this->returnValue(true));
@@ -406,7 +406,7 @@ class oeGdprOptinFrontendTest extends OxidTestCase
 
         $content = $this->doRender($controller, 'widget/reviews/reviews.tpl');
 
-        $expected = oxRegistry::getLang()->translateString("OEGDPROPTIN_REVIEW_FORM_ERROR_MESSAGE");
+        $expected = \OxidEsales\Eshop\Core\Registry::getLang()->translateString("OEGDPROPTIN_REVIEW_FORM_ERROR_MESSAGE");
         $this->$assertMethod($expected, $content);
     }
 
@@ -433,8 +433,8 @@ class oeGdprOptinFrontendTest extends OxidTestCase
      */
     public function testOxwReviewFormOptInError($blOeGdprOptinProductReviews, $assertMethod, $theme, $count)
     {
-        oxRegistry::getConfig()->setConfigParam('blOeGdprOptinProductReviews', $blOeGdprOptinProductReviews);
-        oxRegistry::getConfig()->setConfigParam('sTheme', $theme);
+        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('blOeGdprOptinProductReviews', $blOeGdprOptinProductReviews);
+        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('sTheme', $theme);
         $this->getConfig()->setRequestParameter('rvw_oegdproptin', 'something');
 
         $controller = $this->getMock('oegdproptinreview', array('isReviewOptInError'));
@@ -444,7 +444,7 @@ class oeGdprOptinFrontendTest extends OxidTestCase
 
         $content = $this->doRender($controller, 'page/review/review.tpl');
 
-        $expected = oxRegistry::getLang()->translateString("OEGDPROPTIN_REVIEW_FORM_ERROR_MESSAGE");
+        $expected = \OxidEsales\Eshop\Core\Registry::getLang()->translateString("OEGDPROPTIN_REVIEW_FORM_ERROR_MESSAGE");
         $this->$assertMethod($expected, $content);
     }
 
@@ -479,17 +479,17 @@ class oeGdprOptinFrontendTest extends OxidTestCase
     protected function doRender($controller, $template, $addViewData = null)
     {
         //prepare output
-        $output = oxNew('oxOutput');
+        $output = oxNew(\OxidEsales\Eshop\Core\Output::class);
         $viewData = $output->processViewArray($controller->getViewData(), $controller->getClassName());
         if (is_array($addViewData)) {
             $viewData = array_merge($viewData, $addViewData);
         } else {
-            $viewData['oxcmp_user'] = oxRegistry::getSession()->getUser();
-            $viewData['oxcmp_basket'] = oxRegistry::getSession()->getBasket();
-            $viewData['oConfig'] = oxRegistry::getConfig();
+            $viewData['oxcmp_user'] = \OxidEsales\Eshop\Core\Registry::getSession()->getUser();
+            $viewData['oxcmp_basket'] = \OxidEsales\Eshop\Core\Registry::getSession()->getBasket();
+            $viewData['oConfig'] = \OxidEsales\Eshop\Core\Registry::getConfig();
         }
 
         $controller->setViewData($viewData);
-        return oxRegistry::get("oxUtilsView")->getTemplateOutput($template, $controller);
+        return \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\UtilsView::class)->getTemplateOutput($template, $controller);
     }
 }

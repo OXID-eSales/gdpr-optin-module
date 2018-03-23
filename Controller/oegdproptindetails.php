@@ -23,7 +23,7 @@
  * Class oeGdprOptinDetails.
  * Extends details.
  *
- * @see details
+ * @see \OxidEsales\Eshop\Application\Controller\ArticleDetailsController
  */
 class oeGdprOptinDetails extends oeGdprOptinDetails_parent
 {
@@ -34,9 +34,9 @@ class oeGdprOptinDetails extends oeGdprOptinDetails_parent
      */
     public function saveReview()
     {
-        $reviewController = oxNew('Review');
+        $reviewController = oxNew(\OxidEsales\Eshop\Application\Controller\ReviewController::class);
         if (!$reviewController->validateOptIn()) {
-            oxRegistry::get("oxUtilsView")->addErrorToDisplay('OEGDPROPTIN_REVIEW_FORM_ERROR_MESSAGE');
+            \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\UtilsView::class)->addErrorToDisplay('OEGDPROPTIN_REVIEW_FORM_ERROR_MESSAGE');
             return false;
         }
 

@@ -42,9 +42,9 @@ class oeGdprOptinContact extends oeGdprOptinContact_parent
      */
     public function send()
     {
-        $optInValue = oxRegistry::getConfig()->getRequestParameter('c_oegdproptin');
+        $optInValue = \OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter('c_oegdproptin');
         if ($this->isOptInValidationRequired() && !$optInValue) {
-            oxRegistry::get("oxUtilsView")->addErrorToDisplay('OEGDPROPTIN_CONTACT_FORM_ERROR_MESSAGE');
+            \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\UtilsView::class)->addErrorToDisplay('OEGDPROPTIN_CONTACT_FORM_ERROR_MESSAGE');
             $this->optInError = true;
             return false;
         }
@@ -79,7 +79,7 @@ class oeGdprOptinContact extends oeGdprOptinContact_parent
     {
         $method = self::CONTACT_FORM_METHOD_DEFAULT;
 
-        if ($configMethod = oxRegistry::getConfig()->getConfigParam('OeGdprOptinContactFormMethod')) {
+        if ($configMethod = \OxidEsales\Eshop\Core\Registry::getConfig()->getConfigParam('OeGdprOptinContactFormMethod')) {
             $method = $configMethod;
         }
 

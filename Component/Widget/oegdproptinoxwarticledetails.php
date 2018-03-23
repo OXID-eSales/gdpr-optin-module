@@ -23,19 +23,29 @@
  * Class oeGdprOptinOxwarticledetails.
  * Extends oxwArticleDetails.
  *
- * @see oxwArticleDetails
+ * @see \OxidEsales\Eshop\Application\Component\Widget\ArticleDetails
  */
 class oeGdprOptinOxwarticledetails extends oeGdprOptinOxwarticledetails_parent
 {
+    /**
+     * Is optin for product review required.
+     *
+     * @return bool
+     */
     public function isReviewOptInValidationRequired()
     {
-        $review = oxNew('Review');
+        $review = oxNew(\OxidEsales\Eshop\Application\Controller\ReviewController::class);
         return $review->isReviewOptInValidationRequired();
     }
 
+    /**
+     * Was there an error for shop side review optin validation?
+     *
+     * @return bool
+     */
     public function isReviewOptInError()
     {
-        $review = oxNew('Review');
+        $review = oxNew(\OxidEsales\Eshop\Application\Controller\ReviewController::class);
         return $review->isReviewOptInError();
     }
 }
