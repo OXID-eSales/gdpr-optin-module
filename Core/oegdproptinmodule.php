@@ -32,16 +32,16 @@ class oeGdprOptinModule extends \OxidEsales\Eshop\Core\Module\Module
      * Class constructor.
      * Sets current module main data and loads the rest module info.
      */
-    function __construct()
+    public function __construct()
     {
         $sModuleId = 'oegdproptin';
 
         $this->setModuleData(
-            array(
+            [
                 'id'          => $sModuleId,
                 'title'       => 'oegdproptin',
                 'description' => 'OE GDPR opt-in Module',
-            )
+            ]
         );
 
         $this->load($sModuleId);
@@ -153,7 +153,7 @@ class oeGdprOptinModule extends \OxidEsales\Eshop\Core\Module\Module
      */
     protected static function _clear($sFileName, $sFilePath)
     {
-        if (!in_array($sFileName, array('.', '..', '.gitkeep', '.htaccess'))) {
+        if (!in_array($sFileName, ['.', '..', '.gitkeep', '.htaccess'])) {
             if (is_file($sFilePath)) {
                 @unlink($sFilePath);
             } else {

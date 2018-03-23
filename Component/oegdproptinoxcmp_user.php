@@ -36,7 +36,7 @@ class oeGdprOptinOxcmp_user extends oeGdprOptinOxcmp_user_parent
     {
         if (false == $this->validateRegistrationOptin()) {
             //show error message on submit but not on page reload.
-            if(\OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter('stoken')) {
+            if (\OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter('stoken')) {
                 \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\UtilsView::class)->addErrorToDisplay('OEGDPROPTIN_CONFIRM_USER_REGISTRATION_OPTIN', false, true);
                 \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\UtilsView::class)->addErrorToDisplay('OEGDPROPTIN_CONFIRM_USER_REGISTRATION_OPTIN', false, true, 'oegdproptin_userregistration');
             }

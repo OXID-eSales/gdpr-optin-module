@@ -21,7 +21,7 @@
 
 $sLangName = 'English';
 
-$aLang = array(
+$aLang = [
     'charset' => 'UTF-8',
     'oegdproptin' => 'OE GDPR opt-in module',
 
@@ -34,4 +34,4 @@ $aLang = array(
     'SHOP_MODULE_OeGdprOptinContactFormMethod' => '', // right side of the inputs, if some notes will be needed
     'SHOP_MODULE_OeGdprOptinContactFormMethod_deletion' => 'Show a note for deletion of the data after processing',
     'SHOP_MODULE_OeGdprOptinContactFormMethod_statistical' => 'Show an opt-in for processing and statistical usage of the data',
-);
+];

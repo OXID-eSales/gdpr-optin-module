@@ -80,8 +80,7 @@ class oeGdprOptinReview extends oeGdprOptinReview_parent
         $review = oxNew(\OxidEsales\Eshop\Application\Controller\ReviewController::class);
         $result = false;
 
-        if ($formSent && !$review->validateOptIn())
-        {
+        if ($formSent && !$review->validateOptIn()) {
             $result = true;
         }
 

@@ -54,6 +54,8 @@ class oeGdprOptinContact extends oeGdprOptinContact_parent
 
     /**
      * Check if validation failed because of the optin checkbox not checked
+     *
+     * @return bool
      */
     public function isOptInError()
     {
