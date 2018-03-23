@@ -201,7 +201,7 @@ class oeGdprOptinFrontendTest extends OxidTestCase
         \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('sTheme', 'flow');
         $expected = \OxidEsales\Eshop\Core\Registry::getLang()->translateString("OEGDPROPTIN_CONTACT_FORM_MESSAGE_DELETION");
 
-        $content = $this->getTemplateOutput('Contact', 'oegdproptin_contact_form.tpl');
+        $content = $this->getTemplateOutput('Contact', 'form/contact.tpl');
 
         $this->assertContains($expected, $content);
         $this->assertNotContains('name="c_oegdproptin"', $content);
@@ -216,7 +216,7 @@ class oeGdprOptinFrontendTest extends OxidTestCase
         \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('sTheme', 'flow');
         $expected = \OxidEsales\Eshop\Core\Registry::getLang()->translateString("OEGDPROPTIN_CONTACT_FORM_MESSAGE_STATISTICAL");
 
-        $content = $this->getTemplateOutput('Contact', 'oegdproptin_contact_form.tpl');
+        $content = $this->getTemplateOutput('Contact', 'form/contact.tpl');
 
         $this->assertContains($expected, $content);
         $this->assertContains('name="c_oegdproptin"', $content);

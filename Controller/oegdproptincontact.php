@@ -24,8 +24,6 @@
  */
 class oeGdprOptinContact extends oeGdprOptinContact_parent
 {
-    protected $_sThisTemplate = 'oegdproptin_contact_form.tpl';
-
     const CONTACT_FORM_METHOD_DEFAULT = 'deletion';
 
     /**

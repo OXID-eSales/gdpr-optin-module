@@ -1,7 +1,7 @@
-[{include file="page/info/contact.tpl" assign="pageContent"}]
+[{$smarty.block.parent}]
 
-[{capture name="optIn" assign="optIn"}]
-    <div style="margin-top: 20px;">
+<div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
         [{if $oView->isOptInValidationRequired()}]
             <label for="c_oegdproptin">
                 <input type="hidden" name="c_oegdproptin" value="0">
@@ -18,8 +18,5 @@
             [{oxmultilang ident="OEGDPROPTIN_CONTACT_FORM_MESSAGE_DELETION"}]
         [{/if}]
     </div>
-[{/capture}]
+</div>
 
-[{assign var=marker value="/<textarea.*?name=\"c_message\".*?>.*?<\/textarea>/"}]
-[{assign var=replacement value='$0'|cat:$optIn}]
-[{$pageContent|regex_replace:$marker:$replacement}]

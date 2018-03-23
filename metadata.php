@@ -54,7 +54,6 @@ $aModule = [
         'oegdproptinmodule' => 'oe/gdproptin/Core/oegdproptinmodule.php'
     ],
     'templates'   => [
-        'oegdproptin_contact_form.tpl' => 'oe/gdproptin/Application/views/form/contact.tpl'
     ],
     'blocks'      => [
         [
@@ -88,14 +87,19 @@ $aModule = [
             'file'     => 'Application/views/blocks/module_config.tpl',
         ],
         [
-            'template' => 'widget/reviews/reviews.tpl',
-            'block'    => 'widget_reviews_form',
-            'file'     => 'Application/views/widget/reviews/reviews.tpl',
-        ],
-        [
             'template' => 'form/fieldset/user_account.tpl',
             'block'    => 'user_account_newsletter',
             'file'     => 'Application/views/blocks/user_account_newsletter.tpl',
+        ],
+        [
+            'template' => 'form/contact.tpl',
+            'block'    => 'contact_form_fields',
+            'file'     => 'Application/views/blocks/contact_form_fields.tpl',
+        ],
+        [
+            'template' => 'widget/reviews/reviews.tpl',
+            'block'    => 'widget_reviews_form_fields',
+            'file'     => 'Application/views/blocks/widget_reviews_form_fields.tpl',
         ]
     ],
     'settings'    => [

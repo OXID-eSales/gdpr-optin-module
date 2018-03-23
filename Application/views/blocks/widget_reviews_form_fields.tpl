@@ -1,5 +1,3 @@
-[{assign var=marker value="@<textarea.*?name=\"rvw_txt\".*?>.*?</textarea>@msi"}]
-
 [{capture name="optInJs" assign="optInJs"}]
     $("#rvw_oegdproptin").parents("form").first().submit(function(event){
         event.preventDefault();
@@ -34,10 +32,6 @@
         [{oxscript add=$optInJs}]
     [{/if}]
 [{/capture}]
-[{assign var=replacement value="\$0"|cat:$optIn}]
 
-[{capture name="currentBlockContent" assign="currentBlockContent"}]
-    [{$smarty.block.parent}]
-[{/capture}]
-
-[{$currentBlockContent|regex_replace:$marker:$replacement}]
+[{$smarty.block.parent}]
+[{$smarty.capture.optIn}]
