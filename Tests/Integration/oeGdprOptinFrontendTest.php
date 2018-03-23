@@ -318,7 +318,7 @@ class oeGdprOptinFrontendTest extends OxidTestCase
                  "('_test_sgvo_icons', 1, '{$shopId}', 'layout/base.tpl', 'theme_svg_icons', 1, 'tests/integration/views/blocks/empty.tpl', 'oegdproptin'), " .
                  "('_test_listitem', 1, '{$shopId}', 'page/review/review.tpl', 'widget_product_listitem_line_picturebox', 1, 'tests/integration/views/blocks/empty.tpl', 'oegdproptin')";
 
-        oxDb::getDb()->execute($query);
+        \OxidEsales\Eshop\Core\DatabaseProvider::getDb()->execute($query);
     }
 
     /**
