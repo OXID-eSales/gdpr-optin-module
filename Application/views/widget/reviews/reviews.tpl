@@ -26,7 +26,7 @@
             </label>
 
             <div id="rvw_oegdproptin_error"
-                 class="[{if !$oView->isReviewOptInError()}]hidden [{/if}][{if $oViewConf->getActiveTheme()=='azure'}]inlineError[{else}]text-danger[{/if}]">
+                 class="[{if !$oView->isReviewOptInError()}]hidden [{/if}] text-danger">
                     [{oxmultilang ident="OEGDPROPTIN_REVIEW_FORM_ERROR_MESSAGE" }]
             </div>
         </div>

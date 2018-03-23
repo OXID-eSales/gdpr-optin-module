@@ -71,9 +71,7 @@ class oeGdprOptinFrontendTest extends OxidTestCase
     {
         return array(
             'enable_optin_true_flow' => array(true, 'assertContains', 'flow'),
-            'enable_optin_false_flow' => array(false, 'assertNotContains', 'flow'),
-            'enable_optin_true_azure' => array(true, 'assertContains', 'azure'),
-            'enable_optin_false_azure' => array(false, 'assertNotContains', 'azure'),
+            'enable_optin_false_flow' => array(false, 'assertNotContains', 'flow')
         );
     }
 
@@ -124,9 +122,7 @@ class oeGdprOptinFrontendTest extends OxidTestCase
     {
         return array(
             'enable_optin_true_flow' => array(true, 'assertContains', 'flow'),
-            'enable_optin_false_flow' => array(false, 'assertNotContains', 'flow'),
-            'enable_optin_true_azure' => array(true, 'assertContains', 'azure'),
-            'enable_optin_false_azure' => array(false, 'assertNotContains', 'azure')
+            'enable_optin_false_flow' => array(false, 'assertNotContains', 'flow')
         );
     }
 
@@ -163,12 +159,8 @@ class oeGdprOptinFrontendTest extends OxidTestCase
         return array(
             'enable_optin_true_flow_noreg' => array(true, 'assertNotContains', 'flow', 1),
             'enable_optin_false_flow_noreg' => array(false, 'assertNotContains', 'flow', 1),
-            'enable_optin_true_azure_noreg' => array(true, 'assertNotContains', 'azure', 1),
-            'enable_optin_false_azure_noreg' => array(false, 'assertNotContains', 'azure', 1),
             'enable_optin_true_flow_reg' => array(true, 'assertContains', 'flow', 3),
-            'enable_optin_false_flow_reg' => array(false, 'assertNotContains', 'flow', 3),
-            'enable_optin_true_azure_reg' => array(true, 'assertContains', 'azure', 3),
-            'enable_optin_false_azure_reg' => array(false, 'assertNotContains', 'azure', 3)
+            'enable_optin_false_flow_reg' => array(false, 'assertNotContains', 'flow', 3)
         );
     }
 
@@ -327,8 +319,7 @@ class oeGdprOptinFrontendTest extends OxidTestCase
     public function providerContactForm()
     {
         return array(
-            'flow' => array('flow'),
-            'azure' => array('azure'),
+            'flow' => array('flow')
         );
     }
 
@@ -339,11 +330,7 @@ class oeGdprOptinFrontendTest extends OxidTestCase
     {
         return array(
             'enable_optin_true_flow_art'   => array(true, 'assertContains', 'flow', 'oxwArticleDetails'),
-            'enable_optin_false_flow_art'  => array(false, 'assertNotContains', 'flow', 'oxwArticleDetails'),
-            'enable_optin_true_azure_art'  => array(true, 'assertContains', 'azure', 'oxwArticleDetails'),
-            'enable_optin_false_azure_art' => array(false, 'assertNotContains', 'azure', 'oxwArticleDetails'),
-            'enable_optin_true_azure_rev'  => array(true, 'assertContains', 'azure', 'review'),
-            'enable_optin_false_azure_rev' => array(false, 'assertNotContains', 'azure', 'review'),
+            'enable_optin_false_flow_art'  => array(false, 'assertNotContains', 'flow', 'oxwArticleDetails')
         );
     }
 
@@ -378,9 +365,7 @@ class oeGdprOptinFrontendTest extends OxidTestCase
     {
         return array(
             'enable_optin_true_flow_art'   => array(true, 'assertContains', 'flow', 1),
-            'enable_optin_false_flow_art'  => array(false, 'assertNotContains', 'flow', 0),
-            'enable_optin_true_azure_art'  => array(true, 'assertContains', 'azure', 1),
-            'enable_optin_false_azure_art' => array(false, 'assertNotContains', 'azure', 0)
+            'enable_optin_false_flow_art'  => array(false, 'assertNotContains', 'flow', 0)
         );
     }
 
@@ -405,44 +390,6 @@ class oeGdprOptinFrontendTest extends OxidTestCase
         $controller->setViewProduct($this->product);
 
         $content = $this->doRender($controller, 'widget/reviews/reviews.tpl');
-
-        $expected = \OxidEsales\Eshop\Core\Registry::getLang()->translateString("OEGDPROPTIN_REVIEW_FORM_ERROR_MESSAGE");
-        $this->$assertMethod($expected, $content);
-    }
-
-    /**
-     * @return array
-     */
-    public function providerOxwReviewOptinError()
-    {
-        return array(
-            'enable_optin_true_azure' => array(true, 'assertContains', 'azure', 1),
-            'enable_optin_false_azure_rev' => array(false, 'assertNotContains', 'azure', 0),
-        );
-    }
-
-    /**
-     * Test review form optin error message visibility.
-     *
-     * @dataProvider providerOxwReviewOptinError
-     *
-     * @param bool   $blOeGdprOptinProductReviews
-     * @param string $assertMethod
-     * @param string $theme
-     * @param int    $count
-     */
-    public function testOxwReviewFormOptInError($blOeGdprOptinProductReviews, $assertMethod, $theme, $count)
-    {
-        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('blOeGdprOptinProductReviews', $blOeGdprOptinProductReviews);
-        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('sTheme', $theme);
-        $this->getConfig()->setRequestParameter('rvw_oegdproptin', 'something');
-
-        $controller = $this->getMock('oegdproptinreview', array('isReviewOptInError'));
-        $controller->expects($this->exactly($count))->method('isReviewOptInError')->will($this->returnValue(true));
-        $controller->init();
-        $controller->setViewProduct($this->product);
-
-        $content = $this->doRender($controller, 'page/review/review.tpl');
 
         $expected = \OxidEsales\Eshop\Core\Registry::getLang()->translateString("OEGDPROPTIN_REVIEW_FORM_ERROR_MESSAGE");
         $this->$assertMethod($expected, $content);
