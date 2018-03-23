@@ -27,106 +27,106 @@ $sMetadataVersion = '1.1';
 /**
  * Module information
  */
-$aModule = array(
+$aModule = [
     'id'          => 'oegdproptin',
-    'title'       => array(
+    'title'       => [
         'de' => 'GDPR Opt-in',
         'en' => 'GDPR Opt-in',
-    ),
-    'description' => array(
+    ],
+    'description' => [
         'de' => 'Das Modul stellt Opt-in-Funktionalit&auml;t f&uuml;r die Datenschutz-Grundverordnung (DSVGO) bereit',
         'en' => 'This module provides the opt-in functionality for the European General Data Protection Regulation (GDPR)',
-    ),
+    ],
     'thumbnail'   => 'logo.png',
     'version'     => '1.0.0',
     'author'      => 'OXID eSales AG',
     'url'         => 'https://www.oxid-esales.com/',
     'email'       => '',
-    'extend'      => array(
-        'oxwarticledetails' => 'oe/gdproptin/components/widgets/oegdproptinoxwarticledetails',
-        'oxwreview' => 'oe/gdproptin/components/widgets/oegdproptinoxwreview',
-        'oxcmp_user' => 'oe/gdproptin/components/oegdproptinoxcmp_user',
-        'review' => 'oe/gdproptin/controllers/oegdproptinreview',
-        'details' => 'oe/gdproptin/controllers/oegdproptindetails',
-        'contact' => 'oe/gdproptin/controllers/oegdproptincontact'
-    ),
-    'files'       => array(
-        'oegdproptinmodule' => 'oe/gdproptin/core/oegdproptinmodule.php'
-    ),
-    'templates'   => array(
-        'oegdproptin_contact_form.tpl' => 'oe/gdproptin/views/form/contact.tpl'
-    ),
-    'blocks'      => array(
-        array(
+    'extend'      => [
+        'oxwarticledetails' => 'oe/gdproptin/Component/Widget/oegdproptinoxwarticledetails',
+        'oxwreview' => 'oe/gdproptin/Component/Widget/oegdproptinoxwreview',
+        'oxcmp_user' => 'oe/gdproptin/Component/oegdproptinoxcmp_user',
+        'review' => 'oe/gdproptin/Controller/oegdproptinreview',
+        'details' => 'oe/gdproptin/Controller/oegdproptindetails',
+        'contact' => 'oe/gdproptin/Controller/oegdproptincontact'
+    ],
+    'files'       => [
+        'oegdproptinmodule' => 'oe/gdproptin/Core/oegdproptinmodule.php'
+    ],
+    'templates'   => [
+        'oegdproptin_contact_form.tpl' => 'oe/gdproptin/Application/views/form/contact.tpl'
+    ],
+    'blocks'      => [
+        [
             'template' => 'form/user.tpl',
             'block'    => 'user_shipping_address_form',
-            'file'     => 'views/blocks/user_shipping_address_form.tpl',
-        ),
-        array(
+            'file'     => 'Application/views/blocks/user_shipping_address_form.tpl',
+        ],
+        [
             'template' => 'form/user.tpl',
             'block'    => 'user_shipping_address',
-            'file'     => 'views/blocks/user_shipping_address.tpl',
-        ),
-        array(
+            'file'     => 'Application/views/blocks/user_shipping_address.tpl',
+        ],
+        [
             'template' => 'form/user.tpl',
             'block'    => 'user',
-            'file'     => 'views/blocks/user.tpl',
-        ),
-        array(
+            'file'     => 'Application/views/blocks/user.tpl',
+        ],
+        [
             'template' => 'form/user_checkout_change.tpl',
             'block'    => 'user_checkout_shipping_change',
-            'file'     => 'views/blocks/user_checkout_shipping_change.tpl',
-        ),
-        array(
+            'file'     => 'Application/views/blocks/user_checkout_shipping_change.tpl',
+        ],
+        [
             'template' => 'form/user_checkout_change.tpl',
             'block'    => 'user_checkout_shipping_feedback',
-            'file'     => 'views/blocks/user_checkout_shipping_feedback.tpl',
-        ),
-        array(
+            'file'     => 'Application/views/blocks/user_checkout_shipping_feedback.tpl',
+        ],
+        [
             'template' => 'module_config.tpl',
             'block'    => 'admin_module_config_var_type_select',
-            'file'     => 'views/blocks/module_config.tpl',
-        ),
-        array(
+            'file'     => 'Application/views/blocks/module_config.tpl',
+        ],
+        [
             'template' => 'widget/reviews/reviews.tpl',
             'block'    => 'widget_reviews_form',
-            'file'     => 'views/widget/reviews/reviews.tpl',
-        ),
-        array(
+            'file'     => 'Application/views/widget/reviews/reviews.tpl',
+        ],
+        [
             'template' => 'form/fieldset/user_account.tpl',
             'block'    => 'user_account_newsletter',
-            'file'     => 'views/blocks/user_account_newsletter.tpl',
-        )
-    ),
-    'settings'    => array(
-        array(
+            'file'     => 'Application/views/blocks/user_account_newsletter.tpl',
+        ]
+    ],
+    'settings'    => [
+        [
             'group' => 'oegdproptin_settings',
             'name' => 'blOeGdprOptinDeliveryAddress',
             'type' => 'bool',
             'value' => 'false'
-        ),
-        array(
+        ],
+        [
             'group' => 'oegdproptin_settings',
             'name'  => 'blOeGdprOptinUserRegistration',
             'type'  => 'bool',
             'value' => 'false'
-        ),
-        array(
+        ],
+        [
             'group' => 'oegdproptin_settings',
             'name' => 'blOeGdprOptinProductReviews',
             'type' => 'bool',
             'value' => 'false'
-        ),
-        array(
+        ],
+        [
             'group' => 'oegdproptin_contact_form',
             'name' => 'OeGdprOptinContactFormMethod',
             'type' => 'select',
             'value' => 'deletion',
             'constraints' => 'deletion|statistical',
-        ),
-    ),
-    'events'      => array(
+        ],
+    ],
+    'events'      => [
         'onActivate'   => 'oeGdprOptinModule::onActivate',
         'onDeactivate' => 'oeGdprOptinModule::onDeactivate',
-    ),
-);
+    ],
+];
