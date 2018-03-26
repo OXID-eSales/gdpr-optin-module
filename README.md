@@ -8,7 +8,16 @@ Module adds opt-in functionality which is required for GDPR law.
 For installation instructions please see /documentation/UserManual_de.pdf in this package. Please note that for previous
 shop releases, this module requires the following OXID eShop versions:
 
-* 5.3/4.10 releases: 5.3.7/4.10.7 or above
+* 6.1 releases: 6.1.0 or above
+
+### Module installation via composer
+
+In order to install the module via composer configure the repository in composer
+* **composer config repositories.oxid-esales/gdpr-optin-module vcs https://github.com/OXID-eSales/gdpr-optin-module**
+and then run one of the following commands in commandline in your shop base directory 
+(where the shop's composer.json file resides).
+* **composer require oxid-esales/gdpr-optin-module:^2.0.0** to install the released version compatible with OXID eShop 6.1.0
+* **composer require oxid-esales/gdpr-optin-module:dev-master** to install the latest unreleased version from github
 
 ## Features
 
