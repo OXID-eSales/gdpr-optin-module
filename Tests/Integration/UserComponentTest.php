@@ -84,15 +84,15 @@ class UserComponentTest extends \OxidEsales\TestingLibrary\UnitTestCase
      *
      * @dataProvider providerDeliveryAddressOptin
      *
-     * @param bool   $blOeGdprOptinDeliveryAddress
+     * @param bool   $requireGdprOptinDeliveryAddress
      * @param bool   $checkboxChecked
-     * @param string $sAssertDisplayExc
+     * @param string $assertDisplayExc
      * @param bool   $showShip
      * @param array  $parameters
      */
-    public function testDeliveryAddressOptinValidationCheckoutUser($blOeGdprOptinDeliveryAddress, $checkboxChecked, $sAssertDisplayExc, $showShip, $parameters)
+    public function testDeliveryAddressOptinValidationCheckoutUser($requireGdprOptinDeliveryAddress, $checkboxChecked, $assertDisplayExc, $showShip, $parameters)
     {
-        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('blOeGdprOptinDeliveryAddress', $blOeGdprOptinDeliveryAddress);
+        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('blOeGdprOptinDeliveryAddress', $requireGdprOptinDeliveryAddress);
 
         $parameters['oegdproptin_deliveryaddress'] = (int) $checkboxChecked;
         $parameters['blshowshipaddress'] = (int) $showShip;
@@ -102,7 +102,7 @@ class UserComponentTest extends \OxidEsales\TestingLibrary\UnitTestCase
         $cmpUser->changeuser();
 
         $displayErrors = \OxidEsales\Eshop\Core\Registry::getSession()->getVariable('Errors');
-        $this->$sAssertDisplayExc(array_key_exists('oegdproptin_deliveryaddress', $displayErrors));
+        $this->$assertDisplayExc(array_key_exists('oegdproptin_deliveryaddress', $displayErrors));
     }
 
     /**
@@ -110,15 +110,15 @@ class UserComponentTest extends \OxidEsales\TestingLibrary\UnitTestCase
      *
      * @dataProvider providerDeliveryAddressOptin
      *
-     * @param bool   $blOeGdprOptinDeliveryAddress
+     * @param bool   $requireGdprOptinDeliveryAddress
      * @param bool   $checkboxChecked
-     * @param string $sAssertDisplayExc
+     * @param string $assertDisplayExc
      * @param bool   $showShip
      * @param array  $parameters
      */
-    public function testDeliveryAddressOptinValidationAccountUser($blOeGdprOptinDeliveryAddress, $checkboxChecked, $sAssertDisplayExc, $showShip, $parameters)
+    public function testDeliveryAddressOptinValidationAccountUser($requireGdprOptinDeliveryAddress, $checkboxChecked, $assertDisplayExc, $showShip, $parameters)
     {
-        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('blOeGdprOptinDeliveryAddress', $blOeGdprOptinDeliveryAddress);
+        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('blOeGdprOptinDeliveryAddress', $requireGdprOptinDeliveryAddress);
 
         $parameters['oegdproptin_deliveryaddress'] = (int) $checkboxChecked;
         $parameters['blshowshipaddress'] = (int) $showShip;
@@ -128,7 +128,7 @@ class UserComponentTest extends \OxidEsales\TestingLibrary\UnitTestCase
         $cmpUser->changeuser_testvalues();
 
         $displayErrors = \OxidEsales\Eshop\Core\Registry::getSession()->getVariable('Errors');
-        $this->$sAssertDisplayExc(array_key_exists('oegdproptin_deliveryaddress', $displayErrors));
+        $this->$assertDisplayExc(array_key_exists('oegdproptin_deliveryaddress', $displayErrors));
     }
 
     /**

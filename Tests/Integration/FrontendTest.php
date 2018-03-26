@@ -82,14 +82,14 @@ class FrontendTest extends \OxidEsales\TestingLibrary\UnitTestCase
      *
      * @dataProvider providerDeliveryAddressOptin
      *
-     * @param bool   $blOeGdprOptinDeliveryAddress
+     * @param bool   $reqireOptinDeliveryAddress
      * @param string $assertMethod
      * @param string $theme
      */
-    public function testDeliveryAddressOptinForCheckout($blOeGdprOptinDeliveryAddress, $assertMethod, $theme)
+    public function testDeliveryAddressOptinForCheckout($reqireOptinDeliveryAddress, $assertMethod, $theme)
     {
         \OxidEsales\Eshop\Core\Registry::getSession()->setVariable('blshowshipaddress', true);
-        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('blOeGdprOptinDeliveryAddress', $blOeGdprOptinDeliveryAddress);
+        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('blOeGdprOptinDeliveryAddress', $reqireOptinDeliveryAddress);
         \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('sTheme', $theme);
 
         $content = $this->getTemplateOutput(\OxidEsales\Eshop\Application\Controller\UserController::class, 'form/user_checkout_change.tpl');
@@ -102,14 +102,14 @@ class FrontendTest extends \OxidEsales\TestingLibrary\UnitTestCase
      *
      * @dataProvider providerDeliveryAddressOptin
      *
-     * @param bool $blOeGdprOptinDeliveryAddress
+     * @param bool $reqireOptinDeliveryAddress
      * @param string $assertMethod
      * @param string $theme
      */
-    public function testDeliveryAddressOptinForUserAccount($blOeGdprOptinDeliveryAddress, $assertMethod, $theme)
+    public function testDeliveryAddressOptinForUserAccount($reqireOptinDeliveryAddress, $assertMethod, $theme)
     {
         \OxidEsales\Eshop\Core\Registry::getSession()->setVariable('blshowshipaddress', true);
-        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('blOeGdprOptinDeliveryAddress', $blOeGdprOptinDeliveryAddress);
+        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('blOeGdprOptinDeliveryAddress', $reqireOptinDeliveryAddress);
         \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('sTheme', $theme);
 
         $content = $this->getTemplateOutput(\OxidEsales\Eshop\Application\Controller\AccountUserController::class, 'form/user.tpl');

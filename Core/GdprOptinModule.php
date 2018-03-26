@@ -31,7 +31,6 @@ namespace OxidEsales\GdprOptinModule\Core;
  */
 class GdprOptinModule extends \OxidEsales\Eshop\Core\Module\Module
 {
-
     /**
      * Class constructor.
      * Sets current module main data and loads the rest module info.
@@ -52,8 +51,7 @@ class GdprOptinModule extends \OxidEsales\Eshop\Core\Module\Module
 
         \OxidEsales\Eshop\Core\Registry::set('oeGdprOptinModule', $this);
     }
-
-
+    
     /**
      * Module activation script.
      */
@@ -73,95 +71,61 @@ class GdprOptinModule extends \OxidEsales\Eshop\Core\Module\Module
     /**
      * Clean temp folder content.
      *
-     * @param string $sClearFolderPath Sub-folder path to delete from. Should be a full, valid path inside temp folder.
+     * @param string $clearFolderPath Sub-folder path to delete from. Should be a full, valid path inside temp folder.
      *
      * @return boolean
      */
-    public static function clearTmp($sClearFolderPath = '')
+    public static function clearTmp($clearFolderPath = '')
     {
-        $sFolderPath = self::_getFolderToClear($sClearFolderPath);
-        $hDirHandler = opendir($sFolderPath);
+        $folderPath = self::_getFolderToClear($clearFolderPath);
+        $directoryHandler = opendir($folderPath);
 
-        if (!empty($hDirHandler)) {
-            while (false !== ($sFileName = readdir($hDirHandler))) {
-                $sFilePath = $sFolderPath . DIRECTORY_SEPARATOR . $sFileName;
-                self::_clear($sFileName, $sFilePath);
+        if (!empty($directoryHandler)) {
+            while (false !== ($fileName = readdir($directoryHandler))) {
+                $filePath = $folderPath . DIRECTORY_SEPARATOR . $fileName;
+                self::_clear($fileName, $filePath);
             }
 
-            closedir($hDirHandler);
+            closedir($directoryHandler);
         }
 
         return true;
     }
-
-    /**
-     * Get translated string by the translation code.
-     *
-     * @param string  $sCode
-     * @param boolean $blUseModulePrefix If True - adds the module translations prefix, if False - not.
-     *
-     * @return string
-     */
-    public function translate($sCode, $blUseModulePrefix = true)
-    {
-        if ($blUseModulePrefix) {
-            $sCode = 'OE_GDPROPTIN_' . $sCode;
-        }
-
-        return \OxidEsales\Eshop\Core\Registry::getLang()->translateString($sCode, \OxidEsales\Eshop\Core\Registry::getLang()->getBaseLanguage(), false);
-    }
-
-    /**
-     * Get module setting value.
-     *
-     * @param string  $sModuleSettingName Module setting parameter name (key).
-     * @param boolean $blUseModulePrefix  If True - adds the module settings prefix, if False - not.
-     *
-     * @return mixed
-     */
-    public function getSetting($sModuleSettingName, $blUseModulePrefix = true)
-    {
-        if ($blUseModulePrefix) {
-            $sModuleSettingName = 'oeGdprOptin' . (string) $sModuleSettingName;
-        }
-
-        return \OxidEsales\Eshop\Core\Registry::getConfig()->getConfigParam((string) $sModuleSettingName);
-    }
-
+    
     /**
      * Check if provided path is inside eShop `tpm/` folder or use the `tmp/` folder path.
      *
-     * @param string $sClearFolderPath
+     * @param string $clearFolderPath
      *
      * @return string
      */
-    protected static function _getFolderToClear($sClearFolderPath = '')
+    protected static function _getFolderToClear($clearFolderPath = '')
     {
-        $sTempFolderPath = (string) \OxidEsales\Eshop\Core\Registry::getConfig()->getConfigParam('sCompileDir');
+        $templateFolderPath = (string) \OxidEsales\Eshop\Core\Registry::getConfig()->getConfigParam('sCompileDir');
 
-        if (!empty($sClearFolderPath) and (strpos($sClearFolderPath, $sTempFolderPath) !== false)) {
-            $sFolderPath = $sClearFolderPath;
+        if (!empty($clearFolderPath) and (strpos($clearFolderPath, $templateFolderPath) !== false)) {
+            $folderPath = $clearFolderPath;
         } else {
-            $sFolderPath = $sTempFolderPath;
+            $folderPath = $templateFolderPath;
         }
 
-        return $sFolderPath;
+        return $folderPath;
     }
 
     /**
      * Check if resource could be deleted, then delete it's a file or
      * call recursive folder deletion if it's a directory.
      *
-     * @param string $sFileName
-     * @param string $sFilePath
+     * @param string $fileName
+     * @param string $filePath
      */
-    protected static function _clear($sFileName, $sFilePath)
+    protected static function _clear($fileName, $filePath)
     {
-        if (!in_array($sFileName, ['.', '..', '.gitkeep', '.htaccess'])) {
-            if (is_file($sFilePath)) {
-                @unlink($sFilePath);
+        if (!in_array($fileName, ['.', '..', '.gitkeep', '.htaccess'])) {
+            if (is_file($filePath)) {
+                @unlink($filePath);
             } else {
-                self::clearTmp($sFilePath);
+                self::clearTmp($filePath);
             }
         }
     }
