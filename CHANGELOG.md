@@ -10,7 +10,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 ### Changed
-
+- The GDPR Opt-In Module was fully ported as described in
+  [modules porting guide](https://docs.oxid-esales.com/developer/en/6.0/update/eshop_from_53_to_6/modules.html).
+ 
 ### Deprecated
 
 ### Removed
