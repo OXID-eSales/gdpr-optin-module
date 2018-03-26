@@ -19,7 +19,14 @@
  * @copyright (C) OXID eSales AG 2003-2018
  */
 
-class oeGdprOptinReviewTest extends OxidTestCase
+namespace OxidEsales\GdprOptinModule\Tests\Integration;
+
+/**
+ * Class ReviewControllerTest
+ *
+ * @package OxidEsales\GdprOptinModule\Tests\Integration
+ */
+class ReviewControllerTest extends \OxidEsales\TestingLibrary\UnitTestCase
 {
     /**
      * Test validation error appears if needed

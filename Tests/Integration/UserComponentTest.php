@@ -19,7 +19,14 @@
  * @copyright (C) OXID eSales AG 2003-2018
  */
 
-class oeGdprOptinOxcmp_userTest extends OxidTestCase
+namespace OxidEsales\GdprOptinModule\Tests\Integration;
+
+/**
+ * Class UserComponentTest
+ *
+ * @package OxidEsales\GdprOptinModule\Tests\Integration
+ */
+class UserComponentTest extends \OxidEsales\TestingLibrary\UnitTestCase
 {
     const TEST_USER_ID = '_gdprtest';
 

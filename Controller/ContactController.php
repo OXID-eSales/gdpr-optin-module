@@ -19,10 +19,15 @@
  * @copyright (C) OXID eSales AG 2003-2018
  */
 
+namespace OxidEsales\GdprOptinModule\Controller;
+
 /**
- * Class  extends the contact controller.
+ * Class ContactController
+ * Extends \OxidEsales\Eshop\Application\Controller\ContactController
+ *
+ * @package OxidEsales\GdprOptinModule\Controller
  */
-class oeGdprOptinContact extends oeGdprOptinContact_parent
+class ContactController extends ContactController_parent
 {
     const CONTACT_FORM_METHOD_DEFAULT = 'deletion';
 

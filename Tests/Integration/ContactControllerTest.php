@@ -19,7 +19,14 @@
  * @copyright (C) OXID eSales AG 2003-2018
  */
 
-class oeGdprOptinContactTest extends OxidTestCase
+namespace OxidEsales\GdprOptinModule\Tests\Integration;
+
+/**
+ * Class ContactControllerTest
+ *
+ * @package OxidEsales\GdprOptinModule\Tests\Integration
+ */
+class ContactControllerTest extends \OxidEsales\TestingLibrary\UnitTestCase
 {
     /**
      * Test checkbox validation.

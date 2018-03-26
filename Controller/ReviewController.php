@@ -19,13 +19,16 @@
  * @copyright (C) OXID eSales AG 2003-2018
  */
 
+namespace OxidEsales\GdprOptinModule\Controller;
+
 /**
- * Class oeGdprOptinReview.
- * Extends details.
+ * Class ReviewController
+ * Extends \OxidEsales\Eshop\Application\Controller\ArticleDetailsController.
  *
+ * @package OxidEsales\GdprOptinModule\Controller
  * @see \OxidEsales\Eshop\Application\Controller\ArticleDetailsController
  */
-class oeGdprOptinReview extends oeGdprOptinReview_parent
+class ReviewController extends ReviewController_parent
 {
     const REVIEW_OPTIN_PARAM = 'blOeGdprOptinProductReviews';
 

@@ -19,13 +19,17 @@
  * @copyright (C) OXID eSales AG 2003-2018
  */
 
+namespace OxidEsales\GdprOptinModule\Core;
+
 /**
- * Class oeGdprOptinModule
+ * Class GdprOptinModule
  * Handles module setup, provides additional tools and module related helpers.
  *
  * @codeCoverageIgnore
+ *
+ * @package OxidEsales\GdprOptinModule\Core
  */
-class oeGdprOptinModule extends \OxidEsales\Eshop\Core\Module\Module
+class GdprOptinModule extends \OxidEsales\Eshop\Core\Module\Module
 {
 
     /**
@@ -34,17 +38,17 @@ class oeGdprOptinModule extends \OxidEsales\Eshop\Core\Module\Module
      */
     public function __construct()
     {
-        $sModuleId = 'oegdproptin';
+        $moduleId = 'oegdproptin';
 
         $this->setModuleData(
             [
-                'id'          => $sModuleId,
+                'id'          => $moduleId,
                 'title'       => 'oegdproptin',
                 'description' => 'OE GDPR opt-in Module',
             ]
         );
 
-        $this->load($sModuleId);
+        $this->load($moduleId);
 
         \OxidEsales\Eshop\Core\Registry::set('oeGdprOptinModule', $this);
     }

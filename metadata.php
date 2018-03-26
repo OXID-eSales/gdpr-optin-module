@@ -22,7 +22,7 @@
 /**
  * Metadata version
  */
-$sMetadataVersion = '1.1';
+$sMetadataVersion = '2.0';
 
 /**
  * Module information
@@ -38,22 +38,17 @@ $aModule = [
         'en' => 'This module provides the opt-in functionality for the European General Data Protection Regulation (GDPR)',
     ],
     'thumbnail'   => 'logo.png',
-    'version'     => '1.0.0',
+    'version'     => '2.0.0',
     'author'      => 'OXID eSales AG',
     'url'         => 'https://www.oxid-esales.com/',
     'email'       => '',
     'extend'      => [
-        'oxwarticledetails' => 'oe/gdproptin/Component/Widget/oegdproptinoxwarticledetails',
-        'oxwreview' => 'oe/gdproptin/Component/Widget/oegdproptinoxwreview',
-        'oxcmp_user' => 'oe/gdproptin/Component/oegdproptinoxcmp_user',
-        'review' => 'oe/gdproptin/Controller/oegdproptinreview',
-        'details' => 'oe/gdproptin/Controller/oegdproptindetails',
-        'contact' => 'oe/gdproptin/Controller/oegdproptincontact'
-    ],
-    'files'       => [
-        'oegdproptinmodule' => 'oe/gdproptin/Core/oegdproptinmodule.php'
-    ],
-    'templates'   => [
+        \OxidEsales\Eshop\Application\Component\Widget\ArticleDetails::class => \OxidEsales\GdprOptinModule\Component\Widget\ArticleDetails::class,
+        \OxidEsales\Eshop\Application\Component\Widget\Review::class => \OxidEsales\GdprOptinModule\Component\Widget\Review::class,
+        \OxidEsales\Eshop\Application\Component\UserComponent::class => \OxidEsales\GdprOptinModule\Component\UserComponent::class,
+        \OxidEsales\Eshop\Application\Controller\ReviewController::class => \OxidEsales\GdprOptinModule\Controller\ReviewController::class,
+        \OxidEsales\Eshop\Application\Controller\ArticleDetailsController::class => \OxidEsales\GdprOptinModule\Controller\ArticleDetailsController::class,
+        \OxidEsales\Eshop\Application\Controller\ContactController::class => \OxidEsales\GdprOptinModule\Controller\ContactController::class
     ],
     'blocks'      => [
         [
@@ -130,7 +125,7 @@ $aModule = [
         ],
     ],
     'events'      => [
-        'onActivate'   => 'oeGdprOptinModule::onActivate',
-        'onDeactivate' => 'oeGdprOptinModule::onDeactivate',
+        'onActivate'   => '\OxidEsales\GdprOptinModule\Core\GdprOptinModule::onActivate',
+        'onDeactivate' => '\OxidEsales\GdprOptinModule\Core\GdprOptinModule::onDeactivate',
     ],
 ];

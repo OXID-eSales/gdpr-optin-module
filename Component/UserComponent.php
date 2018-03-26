@@ -19,13 +19,15 @@
  * @copyright (C) OXID eSales AG 2003-2018
  */
 
+namespace OxidEsales\GdprOptinModule\Component;
+
 /**
  * Class oeGdprOptinOxcmp_user.
  * Extends oxcmp_user.
  *
  * @see \OxidEsales\Eshop\Application\Component\UserComponent
  */
-class oeGdprOptinOxcmp_user extends oeGdprOptinOxcmp_user_parent
+class UserComponent extends UserComponent_parent
 {
     /**
      * Create new user.

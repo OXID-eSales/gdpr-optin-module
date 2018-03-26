@@ -19,13 +19,16 @@
  * @copyright (C) OXID eSales AG 2003-2018
  */
 
+namespace OxidEsales\GdprOptinModule\Component\Widget;
+
 /**
- * Class oeGdprOptinOxwarticledetails.
- * Extends oxwArticleDetails.
+ * Class Review
+ * Extends \OxidEsales\Eshop\Application\Component\Widget\Review.
  *
- * @see \OxidEsales\Eshop\Application\Component\Widget\ArticleDetails
+ * @package OxidEsales\GdprOptinModule\Component\Widget
+ * @see \OxidEsales\Eshop\Application\Component\Widget\Review
  */
-class oeGdprOptinOxwarticledetails extends oeGdprOptinOxwarticledetails_parent
+class Review extends Review_parent
 {
     /**
      * Is optin for product review required.

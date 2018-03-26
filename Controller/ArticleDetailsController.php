@@ -19,13 +19,16 @@
  * @copyright (C) OXID eSales AG 2003-2018
  */
 
+namespace OxidEsales\GdprOptinModule\Controller;
+
 /**
- * Class oeGdprOptinDetails.
- * Extends details.
+ * Class ArticleDetailsController
+ * Extends \OxidEsales\Eshop\Application\Controller\ArticleDetailsController.
  *
+ * @package OxidEsales\GdprOptinModule\Controller
  * @see \OxidEsales\Eshop\Application\Controller\ArticleDetailsController
  */
-class oeGdprOptinDetails extends oeGdprOptinDetails_parent
+class ArticleDetailsController extends ArticleDetailsController_parent
 {
     /**
      * Saves user ratings and review text (oxReview object)
