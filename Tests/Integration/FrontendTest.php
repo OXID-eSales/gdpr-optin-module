@@ -306,11 +306,11 @@ class FrontendTest extends \OxidEsales\TestingLibrary\UnitTestCase
     {
         $shopId = \OxidEsales\Eshop\Core\Registry::getConfig()->getShopId();
         $query = "INSERT INTO oxtplblocks (OXID, OXACTIVE, OXSHOPID, OXTEMPLATE, OXBLOCKNAME, OXPOS, OXFILE, OXMODULE) VALUES " .
-                 "('_test_header', 1, '{$shopId}', 'layout/page.tpl', 'layout_header', 1, 'tests/integration/views/blocks/empty.tpl', 'oegdproptin'), " .
-                 "('_test_footer', 1, '{$shopId}', 'layout/footer.tpl', 'footer_main', 1, 'tests/integration/views/blocks/empty.tpl', 'oegdproptin'), " .
-                 "('_test_sidebar', 1, '{$shopId}', 'layout/sidebar.tpl', 'sidebar', 1, 'tests/integration/views/blocks/empty.tpl', 'oegdproptin'), " .
-                 "('_test_sgvo_icons', 1, '{$shopId}', 'layout/base.tpl', 'theme_svg_icons', 1, 'tests/integration/views/blocks/empty.tpl', 'oegdproptin'), " .
-                 "('_test_listitem', 1, '{$shopId}', 'page/review/review.tpl', 'widget_product_listitem_line_picturebox', 1, 'tests/integration/views/blocks/empty.tpl', 'oegdproptin')";
+                 "('_test_header', 1, '{$shopId}', 'layout/page.tpl', 'layout_header', 1, 'Tests/Integration/views/blocks/empty.tpl', 'oegdproptin'), " .
+                 "('_test_footer', 1, '{$shopId}', 'layout/footer.tpl', 'footer_main', 1, 'Tests/Integration/views/blocks/empty.tpl', 'oegdproptin'), " .
+                 "('_test_sidebar', 1, '{$shopId}', 'layout/sidebar.tpl', 'sidebar', 1, 'Tests/Integration/views/blocks/empty.tpl', 'oegdproptin'), " .
+                 "('_test_sgvo_icons', 1, '{$shopId}', 'layout/base.tpl', 'theme_svg_icons', 1, 'Tests/Integration/views/blocks/empty.tpl', 'oegdproptin'), " .
+                 "('_test_listitem', 1, '{$shopId}', 'page/review/review.tpl', 'widget_product_listitem_line_picturebox', 1, 'Tests/Integration/views/blocks/empty.tpl', 'oegdproptin')";
 
         \OxidEsales\Eshop\Core\DatabaseProvider::getDb()->execute($query);
     }
