@@ -8,10 +8,10 @@ OXID eSales AG
 oe
 
 ==Shop Version==
-5.3.x/4.10.x
+6.0.x
 
 ==Version==
-1.0.0
+2.0.0
 
 ==Link==
 https://www.oxid-esales.com/
