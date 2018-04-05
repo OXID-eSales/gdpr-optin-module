@@ -11,10 +11,6 @@ This module requires the following OXID eShop compilation versions: 6.0.2 or abo
 
 ### Module installation via composer
 
-In order to install the module via composer configure the repository in composer
-* **composer config repositories.oxid-esales/gdpr-optin-module vcs https://github.com/OXID-eSales/gdpr-optin-module**
-and then run one of the following commands in commandline in your shop base directory 
-(where the shop's composer.json file resides).
 * **composer require oxid-esales/gdpr-optin-module:^2.0.0** to install the released version compatible with OXID eShop 6.0.2 compilation
 * **composer require oxid-esales/gdpr-optin-module:dev-master** to install the latest unreleased version from github
 
