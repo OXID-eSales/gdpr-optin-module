@@ -25,7 +25,7 @@ $aLang = [
     'charset' => 'UTF-8', // Supports german language specific chars like: ä, ö. ß, etc.
     'oegdproptin' => 'OE GDPR Opt-in Modul',
 
-    'SHOP_MODULE_GROUP_oegdproptin_settings' => 'DSVGO-Einstellungen',
+    'SHOP_MODULE_GROUP_oegdproptin_settings' => 'DSGVO-Einstellungen',
     'SHOP_MODULE_blOeGdprOptinDeliveryAddress' => 'Opt-in für Lieferadresse anzeigen',
     'SHOP_MODULE_blOeGdprOptinUserRegistration' => 'Opt-in für die Benutzerregistrierung anzeigen',
     'SHOP_MODULE_blOeGdprOptinProductReviews' => 'Opt-in für Artikelbewertungen anzeigen',

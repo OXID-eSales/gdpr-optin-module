@@ -34,7 +34,7 @@ $aModule = [
         'en' => 'GDPR Opt-in',
     ],
     'description' => [
-        'de' => 'Das Modul stellt Opt-in-Funktionalit&auml;t f&uuml;r die Datenschutz-Grundverordnung (DSVGO) bereit',
+        'de' => 'Das Modul stellt Opt-in-Funktionalit&auml;t f&uuml;r die Datenschutz-Grundverordnung (DSGVO) bereit',
         'en' => 'This module provides the opt-in functionality for the European General Data Protection Regulation (GDPR)',
     ],
     'thumbnail'   => 'logo.png',
