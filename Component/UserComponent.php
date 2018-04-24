@@ -72,12 +72,21 @@ class UserComponent extends UserComponent_parent
             return;
         }
 
-        $return = false;
-        if (true == $this->validateDeliveryAddressOptIn()) {
-            $return = parent::_changeUser_noRedirect();
-        } else {
+        $deliveryOptinValid = $this->validateDeliveryAddressOptIn();
+        $invoiceOptinValid = $this->validateInvoiceAddressOptIn();
+
+        if (false == $deliveryOptinValid) {
             \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\UtilsView::class)->addErrorToDisplay('OEGDPROPTIN_CONFIRM_STORE_DELIVERY_ADDRESS', false, true);
             \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\UtilsView::class)->addErrorToDisplay('OEGDPROPTIN_CONFIRM_STORE_DELIVERY_ADDRESS', false, true, 'oegdproptin_deliveryaddress');
+        }
+        if (false == $invoiceOptinValid) {
+            \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\UtilsView::class)->addErrorToDisplay('OEGDPROPTIN_CONFIRM_STORE_INVOICE_ADDRESS', false, true);
+            \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\UtilsView::class)->addErrorToDisplay('OEGDPROPTIN_CONFIRM_STORE_INVOICE_ADDRESS', false, true, 'oegdproptin_invoiceaddress');
+        }
+
+        $return = false;
+        if ( (true == $deliveryOptinValid) && (true == $invoiceOptinValid)) {
+            $return = parent::_changeUser_noRedirect();
         }
 
         return $return;
@@ -125,6 +134,27 @@ class UserComponent extends UserComponent_parent
     }
 
     /**
+     * Validate invoice address optin.
+     * Needed if user changes invoice address.
+     *
+     * @return bool
+     */
+    protected function validateInvoiceAddressOptIn()
+    {
+        $return = true;
+        $optin = (int) $this->getRequestParameter('oegdproptin_invoiceaddress');
+        $changeExistigAddress = (int) $this->getRequestParameter('oegdproptin_changeInvAddress');
+
+        if (\OxidEsales\Eshop\Core\Registry::getConfig()->getConfigParam('blOeGdprOptinInvoiceAddress')
+            && (1 == $changeExistigAddress)
+            && (1 !== $optin)
+        ) {
+            $return = false;
+        }
+        return $return;
+    }
+
+    /**
      * Wrapper for \OxidEsales\Eshop\Core\Request::getRequestParameter()
      *
      * @param string $name Parameter name
@@ -135,6 +165,6 @@ class UserComponent extends UserComponent_parent
     {
         $request = \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\Request::class);
 
-        return $request->getRequstParameter($name);
+        return $request->getRequestParameter($name);
     }
 }

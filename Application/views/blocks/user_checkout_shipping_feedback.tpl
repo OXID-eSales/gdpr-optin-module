@@ -4,26 +4,6 @@
   [{assign var="oConfig" value=$oViewConf->getConfig()}]
 [{/if}]
 
-[{capture assign="optinValidationJS"}]
-  [{strip}]
-    $("#userNextStepBottom, #userNextStepTop").click(function(event){
-      $("#oegdproptin_deliveryaddress_error").hide();
-        if ($('#oegdproptin_deliveryaddress').is(':visible') && $('#oegdproptin_deliveryaddress').is(':not(:checked)'))
-        {
-          event.preventDefault();
-          $("#oegdproptin_deliveryaddress_error").show();
-          $(this).submit();
-          return false;
-        } else {
-          $("#oegdproptin_deliveryaddress_error").hide();
-          $(this).submit();
-        }
-    });
-  [{/strip}]
-[{/capture}]
-
-[{oxscript add=$optinValidationJS}]
-
 [{if true == $oConfig->getConfigParam('blOeGdprOptinDeliveryAddress')}]
   <div class="form-group[{if $Errors.oegdproptin_deliveryaddress}] oxInValid[{/if}]" id="GdprOptinShipAddress" class="checkbox" style="display: none;">
     <div class="col-lg-9 col-lg-offset-3">
@@ -35,7 +15,7 @@
       </div>
     </div>
     <div class="col-lg-9 col-lg-offset-3">
-       <div id="oegdproptin_deliveryaddress_error" style="display:none;" class="text-danger">[{oxmultilang ident="OEGDPROPTIN_CONFIRM_USER_REGISTRATION_OPTIN" }]</div>
+       <div id="oegdproptin_deliveryaddress_error" style="display:none;" class="text-danger">[{oxmultilang ident="OEGDPROPTIN_CONFIRM_STORE_DELIVERY_ADDRESS" }]</div>
        <div class="help-block"></div>
     </div>
   </div>

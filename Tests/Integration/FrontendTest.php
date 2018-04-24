@@ -120,6 +120,55 @@ class FrontendTest extends \OxidEsales\TestingLibrary\UnitTestCase
     /**
      * @return array
      */
+    public function providerInvoiceAddressOptin()
+    {
+        return [
+            'enable_optin_true_flow' => [true, 'assertContains', 'flow'],
+            'enable_optin_false_flow' => [false, 'assertNotContains', 'flow']
+        ];
+    }
+
+    /**
+     * Test checkbox visibility.
+     *
+     * @dataProvider providerInvoiceAddressOptin
+     *
+     * @param bool   $reqireOptinInvoiceAddress
+     * @param string $assertMethod
+     * @param string $theme
+     */
+    public function testInvoiceAddressOptinForCheckout($reqireOptinInvoiceAddress, $assertMethod, $theme)
+    {
+        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('blOeGdprOptinInvoiceAddress', $reqireOptinInvoiceAddress);
+        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('sTheme', $theme);
+
+        $content = $this->getTemplateOutput(\OxidEsales\Eshop\Application\Controller\UserController::class, 'form/user_checkout_change.tpl');
+
+        $this->$assertMethod('id="oegdproptin_invoiceaddress"', $content);
+    }
+
+    /**
+     * Test checkbox visibility.
+     *
+     * @dataProvider providerInvoiceAddressOptin
+     *
+     * @param bool   $reqireOptinInvoiceAddress
+     * @param string $assertMethod
+     * @param string $theme
+     */
+    public function testInvoiceAddressOptinForUserAccount($reqireOptinInvoiceAddress, $assertMethod, $theme)
+    {
+        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('blOeGdprOptinInvoiceAddress', $reqireOptinInvoiceAddress);
+        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('sTheme', $theme);
+
+        $content = $this->getTemplateOutput(\OxidEsales\Eshop\Application\Controller\AccountUserController::class, 'form/user.tpl');
+
+        $this->$assertMethod('id="oegdproptin_invoiceaddress"', $content);
+    }
+
+    /**
+     * @return array
+     */
     public function providerUserRegistrationOptin()
     {
         return [

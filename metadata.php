@@ -53,13 +53,18 @@ $aModule = [
     'blocks'      => [
         [
             'template' => 'form/user.tpl',
+            'block'    => 'user_billing_address_form',
+            'file'     => 'Application/views/blocks/user_invoice_address_form.tpl',
+        ],
+        [
+            'template' => 'form/user.tpl',
             'block'    => 'user_shipping_address_form',
             'file'     => 'Application/views/blocks/user_shipping_address_form.tpl',
         ],
         [
             'template' => 'form/user.tpl',
-            'block'    => 'user_shipping_address',
-            'file'     => 'Application/views/blocks/user_shipping_address.tpl',
+            'block'    => 'user_form',
+            'file'     => 'Application/views/blocks/user_address.tpl',
         ],
         [
             'template' => 'form/user.tpl',
@@ -68,13 +73,18 @@ $aModule = [
         ],
         [
             'template' => 'form/user_checkout_change.tpl',
-            'block'    => 'user_checkout_shipping_change',
-            'file'     => 'Application/views/blocks/user_checkout_shipping_change.tpl',
+            'block'    => 'user_checkout_change',
+            'file'     => 'Application/views/blocks/user_checkout_change.tpl',
         ],
         [
             'template' => 'form/user_checkout_change.tpl',
             'block'    => 'user_checkout_shipping_feedback',
             'file'     => 'Application/views/blocks/user_checkout_shipping_feedback.tpl',
+        ],
+        [
+            'template' => 'form/user_checkout_change.tpl',
+            'block'    => 'user_checkout_billing_feedback',
+            'file'     => 'Application/views/blocks/user_checkout_billing_feedback.tpl',
         ],
         [
             'template' => 'module_config.tpl',
@@ -98,6 +108,12 @@ $aModule = [
         ]
     ],
     'settings'    => [
+        [
+            'group' => 'oegdproptin_settings',
+            'name' => 'blOeGdprOptinInvoiceAddress',
+            'type' => 'bool',
+            'value' => 'false'
+        ],
         [
             'group' => 'oegdproptin_settings',
             'name' => 'blOeGdprOptinDeliveryAddress',
