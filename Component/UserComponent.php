@@ -38,7 +38,7 @@ class UserComponent extends UserComponent_parent
     {
         if (false == $this->validateRegistrationOptin()) {
             //show error message on submit but not on page reload.
-            if (\OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter('stoken')) {
+            if ($this->getRequestParameter('stoken')) {
                 \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\UtilsView::class)->addErrorToDisplay('OEGDPROPTIN_CONFIRM_USER_REGISTRATION_OPTIN', false, true);
                 \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\UtilsView::class)->addErrorToDisplay('OEGDPROPTIN_CONFIRM_USER_REGISTRATION_OPTIN', false, true, 'oegdproptin_userregistration');
             }
@@ -92,9 +92,9 @@ class UserComponent extends UserComponent_parent
     protected function validateDeliveryAddressOptIn()
     {
         $return = true;
-        $optin = (int) \OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter('oegdproptin_deliveryaddress');
-        $changeExistigAddress = (int) \OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter('oegdproptin_changeDelAddress');
-        $addressId = \OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter('oxaddressid');
+        $optin = (int) $this->getRequestParameter('oegdproptin_deliveryaddress');
+        $changeExistigAddress = (int) $this->getRequestParameter('oegdproptin_changeDelAddress');
+        $addressId = $this->getRequestParameter('oxaddressid');
         $deliveryAddressData = $this->_getDelAddressData();
 
         if (\OxidEsales\Eshop\Core\Registry::getConfig()->getConfigParam('blOeGdprOptinDeliveryAddress')
@@ -115,12 +115,26 @@ class UserComponent extends UserComponent_parent
     protected function validateRegistrationOptin()
     {
         $return = true;
-        $optin = (int) \OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter('oegdproptin_userregistration');
+        $optin = (int) $this->getRequestParameter('oegdproptin_userregistration');
         //1 is for guest buy, 3 for account creation
-        $registrationOption = (int) \OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter('option');
+        $registrationOption = (int) $this->getRequestParameter('option');
         if (\OxidEsales\Eshop\Core\Registry::getConfig()->getConfigParam('blOeGdprOptinUserRegistration') && (3 == $registrationOption) && (1 !== $optin)) {
             $return = false;
         }
         return $return;
+    }
+
+    /**
+     * Wrapper for \OxidEsales\Eshop\Core\Request::getRequestParameter()
+     *
+     * @param string $name Parameter name
+     *
+     * @return mixed
+     */
+    protected function getRequestParameter($name)
+    {
+        $request = \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\Request::class);
+
+        return $request->getRequstParameter($name);
     }
 }
