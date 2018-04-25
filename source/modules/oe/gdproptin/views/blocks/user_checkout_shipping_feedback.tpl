@@ -4,26 +4,6 @@
   [{assign var="oConfig" value=$oViewConf->getConfig()}]
 [{/if}]
 
-[{capture assign="optinValidationJS"}]
-  [{strip}]
-    $("#userNextStepBottom, #userNextStepTop").click(function(event){
-      $("#oegdproptin_deliveryaddress_error").hide();
-        if ($('#oegdproptin_deliveryaddress').is(':visible') && $('#oegdproptin_deliveryaddress').is(':not(:checked)'))
-        {
-          event.preventDefault();
-          $("#oegdproptin_deliveryaddress_error").show();
-          $(this).submit();
-          return false;
-        } else {
-          $("#oegdproptin_deliveryaddress_error").hide();
-          $(this).submit();
-        }
-    });
-  [{/strip}]
-[{/capture}]
-
-[{oxscript add=$optinValidationJS}]
-
 [{if true == $oConfig->getConfigParam('blOeGdprOptinDeliveryAddress')}]
   [{if $oViewConf->getActiveTheme()=='azure'}]
     <p id="GdprOptinShipAddress" style="[{if $delivadr || !$oView->showShipAddress()}]display: none;[{/if}]">

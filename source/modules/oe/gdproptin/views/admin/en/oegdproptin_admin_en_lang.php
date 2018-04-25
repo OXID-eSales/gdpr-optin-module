@@ -26,6 +26,7 @@ $aLang = array(
     'oegdproptin' => 'OE GDPR opt-in module',
 
     'SHOP_MODULE_GROUP_oegdproptin_settings' => 'GDPR settings',
+    'SHOP_MODULE_blOeGdprOptinInvoiceAddress' => 'Show opt-in for invoice address',
     'SHOP_MODULE_blOeGdprOptinDeliveryAddress' => 'Show opt-in for shipping address',
     'SHOP_MODULE_blOeGdprOptinUserRegistration' => 'Show opt-in for user registration',
     'SHOP_MODULE_blOeGdprOptinProductReviews' => 'Show opt-in for product reviews',

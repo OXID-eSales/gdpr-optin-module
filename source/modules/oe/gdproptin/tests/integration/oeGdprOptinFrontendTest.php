@@ -116,6 +116,57 @@ class oeGdprOptinFrontendTest extends OxidTestCase
 
         $this->$assertMethod('id="oegdproptin_deliveryaddress"', $content);
     }
+    /**
+     * @return array
+     */
+    public function providerInvoiceAddressOptin()
+    {
+        return array(
+            'enable_optin_true_flow' => array(true, 'assertContains', 'flow'),
+            'enable_optin_false_flow' => array(false, 'assertNotContains', 'flow'),
+
+            'enable_optin_true_azure' => array(true, 'assertContains', 'azure'),
+            'enable_optin_false_azure' => array(false, 'assertNotContains', 'azure')
+        );
+    }
+
+    /**
+     * Test checkbox visibility.
+     *
+     * @dataProvider providerInvoiceAddressOptin
+     *
+     * @param bool   $reqireOptinInvoiceAddress
+     * @param string $assertMethod
+     * @param string $theme
+     */
+    public function testInvoiceAddressOptinForCheckout($reqireOptinInvoiceAddress, $assertMethod, $theme)
+    {
+        oxRegistry::getConfig()->setConfigParam('blOeGdprOptinInvoiceAddress', $reqireOptinInvoiceAddress);
+        oxRegistry::getConfig()->setConfigParam('sTheme', $theme);
+
+        $content = $this->getTemplateOutput('user', 'form/user_checkout_change.tpl');
+
+        $this->$assertMethod('id="oegdproptin_invoiceaddress"', $content);
+    }
+
+    /**
+     * Test checkbox visibility.
+     *
+     * @dataProvider providerInvoiceAddressOptin
+     *
+     * @param bool   $reqireOptinInvoiceAddress
+     * @param string $assertMethod
+     * @param string $theme
+     */
+    public function testInvoiceAddressOptinForUserAccount($reqireOptinInvoiceAddress, $assertMethod, $theme)
+    {
+        oxRegistry::getConfig()->setConfigParam('blOeGdprOptinInvoiceAddress', $reqireOptinInvoiceAddress);
+        oxRegistry::getConfig()->setConfigParam('sTheme', $theme);
+
+        $content = $this->getTemplateOutput('account_user', 'form/user.tpl');
+
+        $this->$assertMethod('id="oegdproptin_invoiceaddress"', $content);
+    }
 
     /**
      * @return array

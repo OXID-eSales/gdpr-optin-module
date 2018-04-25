@@ -59,13 +59,18 @@ $aModule = array(
     'blocks'      => array(
         array(
             'template' => 'form/user.tpl',
+            'block'    => 'user_billing_address_form',
+            'file'     => 'views/blocks/user_invoice_address_form.tpl',
+        ),
+        array(
+            'template' => 'form/user.tpl',
             'block'    => 'user_shipping_address_form',
             'file'     => 'views/blocks/user_shipping_address_form.tpl',
         ),
         array(
             'template' => 'form/user.tpl',
-            'block'    => 'user_shipping_address',
-            'file'     => 'views/blocks/user_shipping_address.tpl',
+            'block'    => 'user_form',
+            'file'     => 'views/blocks/user_address.tpl',
         ),
         array(
             'template' => 'form/user.tpl',
@@ -74,13 +79,18 @@ $aModule = array(
         ),
         array(
             'template' => 'form/user_checkout_change.tpl',
-            'block'    => 'user_checkout_shipping_change',
-            'file'     => 'views/blocks/user_checkout_shipping_change.tpl',
+            'block'    => 'user_checkout_change',
+            'file'     => 'views/blocks/user_checkout_change.tpl',
         ),
         array(
             'template' => 'form/user_checkout_change.tpl',
             'block'    => 'user_checkout_shipping_feedback',
             'file'     => 'views/blocks/user_checkout_shipping_feedback.tpl',
+        ),
+        array(
+            'template' => 'form/user_checkout_change.tpl',
+            'block'    => 'user_checkout_billing_feedback',
+            'file'     => 'views/blocks/user_checkout_billing_feedback.tpl',
         ),
         array(
             'template' => 'module_config.tpl',
@@ -101,8 +111,14 @@ $aModule = array(
     'settings'    => array(
         array(
             'group' => 'oegdproptin_settings',
-            'name' => 'blOeGdprOptinDeliveryAddress',
-            'type' => 'bool',
+            'name'  => 'blOeGdprOptinInvoiceAddress',
+            'type'  => 'bool',
+            'value' => 'false'
+        ),
+        array(
+            'group' => 'oegdproptin_settings',
+            'name'  => 'blOeGdprOptinDeliveryAddress',
+            'type'  => 'bool',
             'value' => 'false'
         ),
         array(

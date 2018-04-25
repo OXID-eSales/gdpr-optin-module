@@ -1,9 +1,6 @@
 [{if !isset($oConfig)}]
     [{assign var="oConfig" value=$oViewConf->getConfig()}]
 [{/if}]
-[{if !$deladr}]
-    [{assign var="deladr"  value=$oConfig->getRequestParameter('deladr')}]
-[{/if}]
 
 [{$smarty.block.parent}]
 
@@ -30,3 +27,35 @@
         [{/if}]
     [{/if}]
 [{/if}]
+
+[{if true == $oConfig->getConfigParam('blOeGdprOptinInvoiceAddress')}]
+    [{oxscript add="$('#userChangeAddress').click( function() { $('#GdprInvoiceAddressOptin').toggle();return false;});"}]
+[{/if}]
+
+[{capture assign="optinValidationJS"}]
+    [{strip}]
+        $("#userNextStepBottom, #userNextStepTop").click(function(event){
+            $("#oegdproptin_deliveryaddress_error").hide();
+            $("#oegdproptin_invoiceaddress_error").hide();
+
+            var success = true;
+            if ( $('#oegdproptin_invoiceaddress').is(':visible') && $('#oegdproptin_invoiceaddress').is(':not(:checked)') )
+            {
+                event.preventDefault();
+                $("#oegdproptin_invoiceaddress_error").show();
+            }
+            if ($('#oegdproptin_deliveryaddress').is(':visible') && $('#oegdproptin_deliveryaddress').is(':not(:checked)'))
+            {
+                event.preventDefault();
+                $("#oegdproptin_deliveryaddress_error").show();
+            }
+
+            $(this).submit();
+            if (!success){
+                return false;
+            }
+        });
+    [{/strip}]
+[{/capture}]
+
+[{oxscript add=$optinValidationJS}]

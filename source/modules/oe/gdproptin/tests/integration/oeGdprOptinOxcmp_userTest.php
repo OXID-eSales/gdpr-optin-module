@@ -124,6 +124,78 @@ class oeGdprOptinOxcmp_userTest extends OxidTestCase
         $this->$sAssertDisplayExc(array_key_exists('oegdproptin_deliveryaddress', $aDisplayErrors));
     }
 
+
+    /**
+     * @return array
+     */
+    public function providerInvoiceAddressOptin()
+    {
+        //Optin will be required on changed invoice address
+        $changedAddress = array('oegdproptin_changeInvAddress' => '1');
+
+        return array(
+            'optin_true_checkbox_true_change' => array(true, true, 'assertFalse', $changedAddress),
+            'optin_true_checkbox_true_no_change' => array(true, true, 'assertFalse', array()),
+
+            'optin_true_checkbox_false_change' => array(true, false, 'assertTrue', $changedAddress),
+            'optin_true_checkbox_false_no_change' => array(true, false, 'assertFalse', array()),
+
+            'optin_false_checkbox_false_change' => array(false, false, 'assertFalse', $changedAddress),
+            'optin_false_checkbox_false_no_change' => array(false, false, 'assertFalse', array()),
+
+            'optin_false_checkbox_true_change' => array(false, true, 'assertFalse', $changedAddress),
+            'optin_false_checkbox_true_no_change' => array(false, true, 'assertFalse', array()),
+        );
+    }
+
+    /**
+     * Test checkbox validation.
+     *
+     * @dataProvider providerInvoiceAddressOptin
+     *
+     * @param bool   $requireGdprOptinInvoiceAddress
+     * @param bool   $checkboxChecked
+     * @param string $assertDisplayExc
+     * @param array  $parameters
+     */
+    public function testInvoiceAddressOptinValidationCheckoutUser($requireGdprOptinInvoiceAddress, $checkboxChecked, $assertDisplayExc, $parameters)
+    {
+        oxRegistry::getConfig()->setConfigParam('blOeGdprOptinInvoiceAddress', $requireGdprOptinInvoiceAddress);
+
+        $parameters['oegdproptin_invoiceaddress'] = (int) $checkboxChecked;
+        $this->addRequestParameters($parameters);
+
+        $cmpUser = oxNew('oxcmp_user');
+        $cmpUser->changeuser();
+
+        $displayErrors = oxRegistry::getSession()->getVariable('Errors');
+        $this->$assertDisplayExc(array_key_exists('oegdproptin_invoiceaddress', $displayErrors));
+    }
+
+    /**
+     * Test checkbox validation.
+     *
+     * @dataProvider providerInvoiceAddressOptin
+     *
+     * @param bool   $requireGdprOptinInvoiceAddress
+     * @param bool   $checkboxChecked
+     * @param string $assertDisplayExc
+     * @param array  $parameters
+     */
+    public function testInvoiceAddressOptinValidationAccountUser($requireGdprOptinInvoiceAddress, $checkboxChecked, $assertDisplayExc, $parameters)
+    {
+        oxRegistry::getConfig()->setConfigParam('blOeGdprOptinInvoiceAddress', $requireGdprOptinInvoiceAddress);
+
+        $parameters['oegdproptin_invoiceaddress'] = (int) $checkboxChecked;
+        $this->addRequestParameters($parameters);
+
+        $cmpUser = oxNew('oxcmp_user');
+        $cmpUser->changeuser_testvalues();
+
+        $displayErrors = oxRegistry::getSession()->getVariable('Errors');
+        $this->$assertDisplayExc(array_key_exists('oegdproptin_invoiceaddress', $displayErrors));
+    }
+
     /**
      * @return array
      */

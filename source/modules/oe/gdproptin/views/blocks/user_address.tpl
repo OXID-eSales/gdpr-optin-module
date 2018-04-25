@@ -1,5 +1,3 @@
-[{$smarty.block.parent}]
-
 [{if !isset($oConfig)}]
     [{assign var="oConfig" value=$oViewConf->getConfig()}]
 [{/if}]
@@ -27,3 +25,41 @@
         [{/if}]
     [{/if}]
 [{/if}]
+
+[{if true == $oConfig->getConfigParam('blOeGdprOptinInvoiceAddress')}]
+    [{if $oViewConf->getActiveTheme()=='azure'}]
+        [{oxscript add="$('#userChangeAddress').click( function() { $('#GdprInvoiceAddressOptin').show();return false;});"}]
+    [{else}]
+        [{oxscript add="$('#userChangeAddress').click( function() { $('#GdprInvoiceAddressOptin').show();$('#userChangeAddress').hide();return false;});"}]
+    [{/if}]
+[{/if}]
+
+[{capture assign="optinValidationJS"}]
+    [{strip}]
+        $("#accUserSaveTop").click(function(event){
+            $("#oegdproptin_deliveryaddress_error").hide();
+            $("#oegdproptin_invoiceaddress_error").hide();
+
+            var success = true;
+            if ( $('#oegdproptin_invoiceaddress').is(':visible') && $('#oegdproptin_invoiceaddress').is(':not(:checked)') )
+            {
+                event.preventDefault();
+                $("#oegdproptin_invoiceaddress_error").show();
+            }
+            if ($('#oegdproptin_deliveryaddress').is(':visible') && $('#oegdproptin_deliveryaddress').is(':not(:checked)'))
+            {
+                event.preventDefault();
+                $("#oegdproptin_deliveryaddress_error").show();
+            }
+
+            $(this).submit();
+            if (!success){
+                return false;
+            }
+        });
+    [{/strip}]
+[{/capture}]
+
+[{oxscript add=$optinValidationJS}]
+
+[{$smarty.block.parent}]

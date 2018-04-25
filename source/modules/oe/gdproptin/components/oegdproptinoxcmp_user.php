@@ -70,14 +70,23 @@ class oeGdprOptinOxcmp_user extends oeGdprOptinOxcmp_user_parent
             return;
         }
 
-        $return = false;
-        if (true == $this->validateDeliveryAddressOptIn()) {
-            $return = parent::_changeUser_noRedirect();
-        } else {
+        $deliveryOptinValid = $this->validateDeliveryAddressOptIn();
+        $invoiceOptinValid = $this->validateInvoiceAddressOptIn();
+
+        if (false == $deliveryOptinValid) {
             oxRegistry::get("oxUtilsView")->addErrorToDisplay('OEGDPROPTIN_CONFIRM_STORE_DELIVERY_ADDRESS', false, true);
-            oxRegistry::get('oxUtilsView')->addErrorToDisplay('OEGDPROPTIN_CONFIRM_STORE_DELIVERY_ADDRESS', false, true, 'oegdproptin_deliveryaddress');
+            oxRegistry::get("oxUtilsView")->addErrorToDisplay('OEGDPROPTIN_CONFIRM_STORE_DELIVERY_ADDRESS', false, true, 'oegdproptin_deliveryaddress');
+        }
+        if (false == $invoiceOptinValid) {
+            oxRegistry::get("oxUtilsView")->addErrorToDisplay('OEGDPROPTIN_CONFIRM_STORE_INVOICE_ADDRESS', false, true);
+            oxRegistry::get("oxUtilsView")->addErrorToDisplay('OEGDPROPTIN_CONFIRM_STORE_INVOICE_ADDRESS', false, true, 'oegdproptin_invoiceaddress');
         }
 
+        $return = false;
+        if ( (true == $deliveryOptinValid) && (true == $invoiceOptinValid)) {
+            $return = parent::_changeUser_noRedirect();
+        }
+        
         return $return;
     }
 
@@ -117,6 +126,27 @@ class oeGdprOptinOxcmp_user extends oeGdprOptinOxcmp_user_parent
         //1 is for guest buy, 3 for account creation
         $registrationOption = (int) oxRegistry::getConfig()->getRequestParameter('option');
         if (oxRegistry::getConfig()->getConfigParam('blOeGdprOptinUserRegistration') && (3 == $registrationOption) && (1 !== $optin)) {
+            $return = false;
+        }
+        return $return;
+    }
+
+    /**
+     * Validate invoice address optin.
+     * Needed if user changes invoice address.
+     *
+     * @return bool
+     */
+    protected function validateInvoiceAddressOptIn()
+    {
+        $return = true;
+        $optin = (int) oxRegistry::getConfig()->getRequestParameter('oegdproptin_invoiceaddress');
+        $changeExistigAddress = (int) oxRegistry::getConfig()->getRequestParameter('oegdproptin_changeInvAddress');
+
+        if (oxRegistry::getConfig()->getConfigParam('blOeGdprOptinInvoiceAddress')
+            && (1 == $changeExistigAddress)
+            && (1 !== $optin)
+        ) {
             $return = false;
         }
         return $return;
