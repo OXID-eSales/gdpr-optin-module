@@ -42,5 +42,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - The GDPR Opt-In Module was fully ported as described in
   [modules porting guide](https://docs.oxid-esales.com/developer/en/6.0/update/eshop_from_53_to_6/modules.html).
 
-[Unreleased]: https://github.com/OXID-eSales/paypal/compare/v2.0.0...HEAD
-[v2.0.0]: https://github.com/OXID-eSales/paypal/compare/v1.0.0...v2.0.0
+[Unreleased]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v2.1.0...HEAD
+[v2.1.0]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v2.0.0...v2.1.0
+[v2.0.0]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v1.0.0...v2.0.0
