@@ -11,7 +11,7 @@ oe
 5.3.x/4.10.x
 
 ==Version==
-1.0.0
+1.1.0
 
 ==Link==
 https://www.oxid-esales.com/

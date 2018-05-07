@@ -38,7 +38,7 @@ $aModule = array(
         'en' => 'This module provides the opt-in functionality for the European General Data Protection Regulation (GDPR)',
     ),
     'thumbnail'   => 'out/pictures/logo.png',
-    'version'     => '1.0.0',
+    'version'     => '1.1.0',
     'author'      => 'OXID eSales AG',
     'url'         => 'https://www.oxid-esales.com/',
     'email'       => '',

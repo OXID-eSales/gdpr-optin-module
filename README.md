@@ -13,6 +13,7 @@ shop releases, this module requires the following OXID eShop versions:
 ## Features
 
 Module allows to control:
+* the opt-in option for invoice addresses to be conform with GDPR
 * the opt-in option for delivery addresses to be conform with GDPR
 * the opt-in option for user registration to be conform with GDPR
 * the opt-in option for review writing form to be conform with GDPR
