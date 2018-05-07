@@ -11,7 +11,7 @@ oe
 6.0.x
 
 ==Version==
-2.0.0
+2.1.0
 
 ==Link==
 https://www.oxid-esales.com/
