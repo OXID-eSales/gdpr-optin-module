@@ -87,11 +87,6 @@ $aModule = [
             'file'     => 'Application/views/blocks/user_checkout_billing_feedback.tpl',
         ],
         [
-            'template' => 'module_config.tpl',
-            'block'    => 'admin_module_config_var_type_select',
-            'file'     => 'Application/views/blocks/module_config.tpl',
-        ],
-        [
             'template' => 'form/fieldset/user_account.tpl',
             'block'    => 'user_account_newsletter',
             'file'     => 'Application/views/blocks/user_account_newsletter.tpl',
