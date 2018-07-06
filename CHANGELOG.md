@@ -5,12 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
-## [2.1.1] - unreleased
+## [Unreleased]
 
 ### Added
 
 ### Changed
-- Use dropdown instead of radio buttons for contact form module settings.
  
 ### Deprecated
 
@@ -19,6 +18,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 ### Security
+
+## [2.1.1] - 2018-07-06
+
+### Changed
+- Use dropdown instead of radio buttons for contact form module settings.
 
 ## [2.1.0] - 2018-05-07
 
