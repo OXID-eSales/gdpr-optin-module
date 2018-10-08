@@ -5,12 +5,12 @@
 [{/if}]
 
 [{if true == $oConfig->getConfigParam('blOeGdprOptinInvoiceAddress')}]
-  <div class="form-group[{if $Errors.oegdproptin_invoiceaddress}] oxInValid[{/if}]" id="GdprInvoiceAddressOptin" class="checkbox" style="display: none;">
+  <div class="form-group[{if $Errors.oegdproptin_invoiceaddress}] oxInValid[{/if}]" id="GdprInvoiceAddressOptin" style="display: none;">
     <div class="col-lg-9 col-lg-offset-3">
       <div class="checkbox">
         <label for="oegdproptin_invoiceaddress">
           <input type="hidden" class="hidden" id="oegdproptin_changeInvAddress" name="oegdproptin_changeInvAddress" value="0">
-          <input type="checkbox" name="oegdproptin_invoiceaddress" id="oegdproptin_invoiceaddress" value="1"> <strong>[{oxmultilang ident="OEGDPROPTIN_STORE_INVOICE_ADDRESS"}]<strong>
+          <input type="checkbox" name="oegdproptin_invoiceaddress" id="oegdproptin_invoiceaddress" value="1"> <strong>[{oxmultilang ident="OEGDPROPTIN_STORE_INVOICE_ADDRESS"}]</strong>
         </label>
       </div>
     </div>
