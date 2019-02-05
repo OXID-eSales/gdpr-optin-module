@@ -10,11 +10,15 @@
 
 [{if true == $oConfig->getConfigParam('blOeGdprOptinDeliveryAddress')}]
     [{if $delivadr}]
-        [{oxscript add="$('#showShipAddress').change( function() { $('#GdprOptinShipAddress, #shippingAddressForm').hide($(this).is(':checked'));});"}]
+        [{oxscript add="function toggleGdprOptinShipAddress() { $('#GdprOptinShipAddress, #shippingAddressForm').hide($(this).is(':checked'));}"}]
+        [{oxscript add="$('#showShipAddress').change(toggleGdprOptinShipAddress);"}]
+        [{oxscript add="toggleGdprOptinShipAddress.bind($('#showShipAddress')[0])();"}]
         [{oxscript add="$( '.dd-edit-shipping-address' ).click(function(){ $('#GdprOptinShipAddress').toggle($(this).is(':not(:checked)')); document.getElementById('oegdproptin_changeDelAddress').value=1; });"}]
         [{oxscript add="$( '.dd-add-delivery-address' ).click( function(){ $('#GdprOptinShipAddress').toggle($(this).is(':not(:checked)')); });"}]
     [{else}]
-        [{oxscript add="$('#showShipAddress').change( function() { $('#GdprOptinShipAddress').toggle($(this).is(':not(:checked)')); });"}]
+        [{oxscript add="function toggleGdprOptinShipAddress() { $('#GdprOptinShipAddress').toggle($(this).is(':not(:checked)'));}"}]
+        [{oxscript add="toggleGdprOptinShipAddress.bind($('#showShipAddress')[0])();"}]
+        [{oxscript add="$('#showShipAddress').change(toggleGdprOptinShipAddress);"}]
     [{/if}]
 [{/if}]
 
