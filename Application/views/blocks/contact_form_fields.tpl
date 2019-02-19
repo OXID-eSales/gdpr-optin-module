@@ -1,7 +1,7 @@
 [{$smarty.block.parent}]
 
 <div class="form-group">
-    <div class="col-lg-offset-2 col-lg-10">
+    <div class="col-lg-offset-[{$leftCol|default:2}] col-lg-[{$rightCol|default:10}]">
         [{if $oView->isOptInValidationRequired()}]
             <label for="c_oegdproptin">
                 <input type="hidden" name="c_oegdproptin" value="0">
@@ -19,4 +19,3 @@
         [{/if}]
     </div>
 </div>
-

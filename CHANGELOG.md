@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v2.2.0] - Unreleased
+
+### Added
+- Column witdth is now flexible in contact form [PR-8](https://github.com/OXID-eSales/gdpr-optin-module/pull/8)
+
+### Fixed
+- Check if checkbox should be visible on load [PR-7](https://github.com/OXID-eSales/gdpr-optin-module/pull/7)
 
 ## [v2.1.2] - 2018-10-11
 
@@ -39,6 +46,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - The GDPR Opt-In Module was fully ported as described in
   [modules porting guide](https://docs.oxid-esales.com/developer/en/6.0/update/eshop_from_53_to_6/modules.html).
 
+[v2.2.0]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v2.1.2...HEAD
 [v2.1.2]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v2.1.1...v2.1.2
 [v2.1.1]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v2.1.0...v2.1.1
 [v2.1.0]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v2.0.0...v2.1.0
