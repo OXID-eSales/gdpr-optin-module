@@ -7,13 +7,11 @@ Module adds opt-in functionality which is required for GDPR law.
 
 For installation instructions please see /documentation/UserManual_de.pdf in this package. 
 
-This module requires the following OXID eShop compilation versions: 6.0.2 or above.
-
 ### Compatability
 
-* v3.x for shop releases: 6.3.0+
-* v2.x for shop releases: 6.0.2 to 6.2.x
-* v1.x for shop releases: 5.3.7/4.10.7 or above
+* v3.x for shop compilation: 6.2.0 and up
+* v2.x for shop compilation: 6.0.2 to 6.1.x
+* v1.x for shop compilation: 5.3.7/4.10.7 or above
 
 ### Module installation via composer
 
