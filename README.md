@@ -15,7 +15,7 @@ For installation instructions please see /documentation/UserManual_de.pdf in thi
 
 ### Module installation via composer
 
-* **composer require oxid-esales/gdpr-optin-module:^2.0.0** to install the released version compatible with OXID eShop 6.0.2 compilation
+* **composer require oxid-esales/gdpr-optin-module:^3.0.0** to install the released version compatible with OXID eShop 6.2.0 compilation
 * **composer require oxid-esales/gdpr-optin-module:dev-master** to install the latest unreleased version from github
 
 ## Features
