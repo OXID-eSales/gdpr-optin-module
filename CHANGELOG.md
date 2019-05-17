@@ -4,10 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [v2.2.0] - Unreleased
+## [v3.0.0] - Unreleased
 
 ### Changed
 - Dropped support for PHP 5.6.
+
+## [v2.2.0] - Unreleased
 
 ### Added
 - Column witdth is now flexible in contact form [PR-8](https://github.com/OXID-eSales/gdpr-optin-module/pull/8)
