@@ -62,7 +62,8 @@ class UserComponent extends UserComponent_parent
      */
     protected function _changeUser_noRedirect()
     {
-        if (!$this->getSession()->checkSessionChallenge()) {
+        $session = \OxidEsales\Eshop\Core\Registry::getSession();
+        if (!$session->checkSessionChallenge()) {
             return;
         }
 
