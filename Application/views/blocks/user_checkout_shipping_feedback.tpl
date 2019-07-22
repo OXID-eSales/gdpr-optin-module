@@ -6,7 +6,7 @@
 
 [{if true == $oConfig->getConfigParam('blOeGdprOptinDeliveryAddress')}]
   <div class="form-group[{if $Errors.oegdproptin_deliveryaddress}] oxInValid[{/if}]" id="GdprOptinShipAddress" style="display: none;">
-    <div class="col-lg-9 col-lg-offset-3">
+    <div class="col-lg-9 col-lg-offset-3 offset-lg-3">
       <div class="checkbox">
         <label for="oegdproptin_deliveryaddress">
           <input type="hidden" class="hidden" id="oegdproptin_changeDelAddress" name="oegdproptin_changeDelAddress" value="0">
@@ -14,7 +14,7 @@
         </label>
       </div>
     </div>
-    <div class="col-lg-9 col-lg-offset-3">
+    <div class="col-lg-9 col-lg-offset-3 offset-lg-3">
        <div id="oegdproptin_deliveryaddress_error" style="display:none;" class="text-danger">[{oxmultilang ident="OEGDPROPTIN_CONFIRM_STORE_DELIVERY_ADDRESS" }]</div>
        <div class="help-block"></div>
     </div>
