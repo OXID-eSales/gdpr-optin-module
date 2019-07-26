@@ -5,6 +5,7 @@
 [{/if}]
 
 [{if true == $oConfig->getConfigParam('blOeGdprOptinUserRegistration')}]
+<div class="form-group row">
     <div class="col-lg-9 col-lg-offset-3 offset-lg-3">
         <div class="checkbox">
             <label for="oegdproptin_userregistration">
@@ -16,4 +17,5 @@
             <div class="text-danger">[{$oError->getOxMessage()}]</div>
         [{/if}]
     </div>
+</div>
 [{/if}]
