@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - Add checkboxes offset class for wave theme in registration, billing and shipping forms
+- Fix checkboxes highlight on click (green text) in registration form to work separately for each checkbox.
 
 ## [v2.2.0] - 2019-07-12
 
