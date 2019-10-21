@@ -9,7 +9,8 @@ For installation instructions please see /documentation/UserManual_de.pdf in thi
 
 ### Compatability
 
-* master branch for shop compilation: 6.0.2 and up
+* master branch for shop compilation: 6.2.0 and up
+* b-2.x branch for shop compilation: 6.0.2 and up
 * v1.x branch for shop compilation: 5.3.7/4.10.7 or above
 
 ### Module installation via composer
