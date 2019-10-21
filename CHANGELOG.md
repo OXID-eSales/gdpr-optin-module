@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v2.3.0] - 2019-10-22
+
+### Changed
+- Dropped support for PHP 7.0.
+
 ## [v2.2.1] - 2019-10-21
 
 ### Fixed
