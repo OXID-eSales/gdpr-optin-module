@@ -9,7 +9,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 ### Changed
-- Dropped support for PHP 7.0.
 
 ### Fixed
 - Remove deprecated getSession method usage
