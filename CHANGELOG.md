@@ -13,6 +13,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - Remove deprecated getSession method usage
 
+## [v2.3.0] - 2019-10-22
+
+### Changed
+- Dropped support for PHP 7.0.
+
 ## [v2.2.1] - 2019-10-21
 
 ### Fixed
