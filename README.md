@@ -28,10 +28,10 @@ Module allows to control:
 * the information customer is shown regarding what happens to the contact form data 
   after the request has been processed. 
 
-## Documentation 
-
-The module documentation can be found on our documentation platform: https://docs.oxid-esales.com/modules/gdpr-optin/de/2.1/index.html.
-
 ### Bugs and Issues
 
 If you experience any bugs or issues, please report them in the section **Module GDPR Opt-in** of https://bugs.oxid-esales.com.
+
+### Documentation 
+
+The module documentation can be found on our documentation platform: https://docs.oxid-esales.com/modules/gdpr-optin/de/2.1/index.html.
