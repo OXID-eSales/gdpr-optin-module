@@ -3,9 +3,9 @@ GDPR opt-in module
 
 Module adds opt-in functionality which is required for GDPR law.
 
-## Installation
+### Installation
 
-For installation instructions please see /documentation/UserManual_de.pdf in this package. 
+System requirements and installation instructions are described in the module documentation: https://docs.oxid-esales.com/modules/gdpr-optin/de/2.1/installation.html.
 
 ### Compatability
 
@@ -19,7 +19,7 @@ For installation instructions please see /documentation/UserManual_de.pdf in thi
 * **composer require oxid-esales/gdpr-optin-module:^2.3.0** to install the released version compatible with OXID eShop 6.2.0 compilation
 * **composer require oxid-esales/gdpr-optin-module:dev-master** to install the latest unreleased version from github
 
-## Features
+### Features
 
 Module allows to control:
 * the opt-in option for delivery addresses to be conform with GDPR
@@ -28,6 +28,10 @@ Module allows to control:
 * the information customer is shown regarding what happens to the contact form data 
   after the request has been processed. 
 
-## Bugs and Issues
+## Documentation 
+
+The module documentation can be found on our documentation platform: https://docs.oxid-esales.com/modules/gdpr-optin/de/2.1/index.html.
+
+### Bugs and Issues
 
 If you experience any bugs or issues, please report them in the section **Module GDPR Opt-in** of https://bugs.oxid-esales.com.
