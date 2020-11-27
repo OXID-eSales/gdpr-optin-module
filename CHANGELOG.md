@@ -13,10 +13,23 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - Remove deprecated getSession method usage
 
+## [v2.3.1] - 2020-07-08
+
+### Changed
+- Improved the documentation
+
 ## [v2.3.0] - 2019-10-22
 
 ### Changed
 - Dropped support for PHP 7.0.
+
+## [v2.2.2] - 2020-11-27
+
+### Changed
+- Documentation was removed from repository. Check readme file for the new documentation location.
+
+### Fixed
+- Fixed compatibility section in readme
 
 ## [v2.2.1] - 2019-10-21
 
@@ -70,7 +83,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - The GDPR Opt-In Module was fully ported as described in
   [modules porting guide](https://docs.oxid-esales.com/developer/en/6.0/update/eshop_from_53_to_6/modules.html).
 
+[v2.3.1]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v2.3.0...v2.3.1
 [v2.3.0]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v2.2.1...v2.3.0
+[v2.2.2]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v2.2.1...v2.2.2
 [v2.2.1]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v2.2.0...v2.2.1
 [v2.2.0]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v2.1.2...v2.2.0
 [v2.1.2]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v2.1.1...v2.1.2
