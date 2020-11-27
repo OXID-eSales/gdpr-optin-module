@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - Remove deprecated getSession method usage
+- Renamed language files to be consistant with other modules naming [PR-9](https://github.com/OXID-eSales/gdpr-optin-module/pull/9)
 
 ## [v2.3.1] - 2020-07-08
 
