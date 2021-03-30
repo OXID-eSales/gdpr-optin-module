@@ -88,8 +88,8 @@ class FrontendTest extends UnitTestCase
     public function providerDeliveryAddressOptin()
     {
         return [
-            'enable_optin_true_flow' => [true, 'assertStringContainsString', 'flow'],
-            'enable_optin_false_flow' => [false, 'assertStringNotContainsString', 'flow']
+            'enable_optin_true_flow' => [true, 'doAssertStringContainsString', 'flow'],
+            'enable_optin_false_flow' => [false, 'doAssertStringNotContainsString', 'flow']
         ];
     }
 
@@ -139,8 +139,8 @@ class FrontendTest extends UnitTestCase
     public function providerInvoiceAddressOptin()
     {
         return [
-            'enable_optin_true_flow' => [true, 'assertStringContainsString', 'flow'],
-            'enable_optin_false_flow' => [false, 'assertStringNotContainsString', 'flow']
+            'enable_optin_true_flow' => [true, 'doAssertStringContainsString', 'flow'],
+            'enable_optin_false_flow' => [false, 'doAssertStringNotContainsString', 'flow']
         ];
     }
 
@@ -188,8 +188,8 @@ class FrontendTest extends UnitTestCase
     public function providerUserRegistrationOptin()
     {
         return [
-            'enable_optin_true_flow' => [true, 'assertStringContainsString', 'flow'],
-            'enable_optin_false_flow' => [false, 'assertStringNotContainsString', 'flow']
+            'enable_optin_true_flow' => [true, 'doAssertStringContainsString', 'flow'],
+            'enable_optin_false_flow' => [false, 'doAssertStringNotContainsString', 'flow']
         ];
     }
 
@@ -224,10 +224,10 @@ class FrontendTest extends UnitTestCase
     public function providerUserCheckoutRegistrationOptin()
     {
         return [
-            'enable_optin_true_flow_noreg' => [true, 'assertStringNotContainsString', 'flow', 1],
-            'enable_optin_false_flow_noreg' => [false, 'assertStringNotContainsString', 'flow', 1],
-            'enable_optin_true_flow_reg' => [true, 'assertStringContainsString', 'flow', 3],
-            'enable_optin_false_flow_reg' => [false, 'assertStringNotContainsString', 'flow', 3]
+            'enable_optin_true_flow_noreg' => [true, 'doAssertStringNotContainsString', 'flow', 1],
+            'enable_optin_false_flow_noreg' => [false, 'doAssertStringNotContainsString', 'flow', 1],
+            'enable_optin_true_flow_reg' => [true, 'doAssertStringContainsString', 'flow', 3],
+            'enable_optin_false_flow_reg' => [false, 'doAssertStringNotContainsString', 'flow', 3]
         ];
     }
 
@@ -270,8 +270,8 @@ class FrontendTest extends UnitTestCase
 
         $content = $this->getTemplateOutput(ContactController::class, 'form/contact.tpl');
 
-        $this->assertStringContainsString($expected, $content);
-        $this->assertStringNotContainsString('name="c_oegdproptin"', $content);
+        $this->doAssertStringContainsString($expected, $content);
+        $this->doAssertStringNotContainsString('name="c_oegdproptin"', $content);
     }
 
     /**
@@ -285,8 +285,8 @@ class FrontendTest extends UnitTestCase
 
         $content = $this->getTemplateOutput(ContactController::class, 'form/contact.tpl');
 
-        $this->assertStringContainsString($expected, $content);
-        $this->assertStringContainsString('name="c_oegdproptin"', $content);
+        $this->doAssertStringContainsString($expected, $content);
+        $this->doAssertStringContainsString('name="c_oegdproptin"', $content);
     }
 
     /**
@@ -396,8 +396,8 @@ class FrontendTest extends UnitTestCase
     public function providerDetailsReviewOptin()
     {
         return [
-            'enable_optin_true_flow_art'   => [true, 'assertStringContainsString', 'flow', 'oxwArticleDetails'],
-            'enable_optin_false_flow_art'  => [false, 'assertStringNotContainsString', 'flow', 'oxwArticleDetails']
+            'enable_optin_true_flow_art'   => [true, 'doAssertStringContainsString', 'flow', 'oxwArticleDetails'],
+            'enable_optin_false_flow_art'  => [false, 'doAssertStringNotContainsString', 'flow', 'oxwArticleDetails']
         ];
     }
 
@@ -431,8 +431,8 @@ class FrontendTest extends UnitTestCase
     public function providerOxwArticleDetailsReviewOptinError()
     {
         return [
-            'enable_optin_true_flow_art'   => [true, 'assertStringContainsString', 'flow', 1],
-            'enable_optin_false_flow_art'  => [false, 'assertStringNotContainsString', 'flow', 0]
+            'enable_optin_true_flow_art'   => [true, 'doAssertStringContainsString', 'flow', 1],
+            'enable_optin_false_flow_art'  => [false, 'doAssertStringNotContainsString', 'flow', 0]
         ];
     }
 
@@ -505,5 +505,33 @@ class FrontendTest extends UnitTestCase
 
         $controller->setViewData($viewData);
         return Registry::get(UtilsView::class)->getTemplateOutput($template, $controller);
+    }
+
+    /**
+     * @param string $needle
+     * @param string $haystack
+     * @param string $message
+     */
+    protected function doAssertStringContainsString($needle, $haystack, $message = '')
+    {
+        if (method_exists($this, 'assertStringContainsString')) {
+            parent::assertStringContainsString($needle, $haystack, $message);
+        } else {
+            parent::assertContains($needle, $haystack, $message);
+        }
+    }
+
+    /**
+     * @param string $needle
+     * @param string $haystack
+     * @param string $message
+     */
+    protected function doAssertStringNotContainsString($needle, $haystack, $message = '')
+    {
+        if (method_exists($this, 'assertStringNotContainsString')) {
+            parent::assertStringNotContainsString($needle, $haystack, $message);
+        } else {
+            parent::assertNotContains($needle, $haystack, $message);
+        }
     }
 }
