@@ -21,12 +21,28 @@
 
 namespace OxidEsales\GdprOptinModule\Tests\Integration;
 
+use OxidEsales\Eshop\Application\Component\BasketComponent;
+use OxidEsales\Eshop\Application\Component\Widget\ArticleDetails;
+use OxidEsales\Eshop\Application\Controller\AccountUserController;
+use OxidEsales\Eshop\Application\Controller\ContactController;
+use OxidEsales\Eshop\Application\Controller\RegisterController;
+use OxidEsales\Eshop\Application\Controller\UserController;
+use OxidEsales\Eshop\Application\Model\Article;
+use OxidEsales\Eshop\Application\Model\Basket;
+use OxidEsales\Eshop\Application\Model\User;
+use OxidEsales\Eshop\Core\DatabaseProvider;
+use OxidEsales\Eshop\Core\Field;
+use OxidEsales\Eshop\Core\Output;
+use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\Eshop\Core\UtilsView;
+use OxidEsales\TestingLibrary\UnitTestCase;
+
 /**
  * Class FrontendTest
  *
  * @package OxidEsales\GdprOptinModule\Tests\Integration
  */
-class FrontendTest extends \OxidEsales\TestingLibrary\UnitTestCase
+class FrontendTest extends UnitTestCase
 {
     const TEST_USER_ID = '_gdprtest';
 
@@ -35,14 +51,14 @@ class FrontendTest extends \OxidEsales\TestingLibrary\UnitTestCase
     /**
      * Test product.
      *
-     * @var \OxidEsales\Eshop\Application\Model\Article
+     * @var Article
      */
     private $product =null;
 
     /**
      * Test set up.
      */
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -51,13 +67,13 @@ class FrontendTest extends \OxidEsales\TestingLibrary\UnitTestCase
         $this->createTestUser();
         $this->createTestProduct();
         $this->createBasket();
-        \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\UtilsView::class)->getSmarty(true);
+        Registry::get(UtilsView::class)->getSmarty(true);
     }
 
     /**
      * Tear down.
      */
-    public function tearDown()
+    protected function tearDown(): void
     {
         $this->cleanUpTable('oxuser', 'oxid');
         $this->cleanUpTable('oxarticles', 'oxid');
@@ -72,8 +88,8 @@ class FrontendTest extends \OxidEsales\TestingLibrary\UnitTestCase
     public function providerDeliveryAddressOptin()
     {
         return [
-            'enable_optin_true_flow' => [true, 'assertContains', 'flow'],
-            'enable_optin_false_flow' => [false, 'assertNotContains', 'flow']
+            'enable_optin_true_flow' => [true, 'doAssertStringContainsString', 'flow'],
+            'enable_optin_false_flow' => [false, 'doAssertStringNotContainsString', 'flow']
         ];
     }
 
@@ -88,11 +104,11 @@ class FrontendTest extends \OxidEsales\TestingLibrary\UnitTestCase
      */
     public function testDeliveryAddressOptinForCheckout($reqireOptinDeliveryAddress, $assertMethod, $theme)
     {
-        \OxidEsales\Eshop\Core\Registry::getSession()->setVariable('blshowshipaddress', true);
-        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('blOeGdprOptinDeliveryAddress', $reqireOptinDeliveryAddress);
-        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('sTheme', $theme);
+        Registry::getSession()->setVariable('blshowshipaddress', true);
+        Registry::getConfig()->setConfigParam('blOeGdprOptinDeliveryAddress', $reqireOptinDeliveryAddress);
+        Registry::getConfig()->setConfigParam('sTheme', $theme);
 
-        $content = $this->getTemplateOutput(\OxidEsales\Eshop\Application\Controller\UserController::class, 'form/user_checkout_change.tpl');
+        $content = $this->getTemplateOutput(UserController::class, 'form/user_checkout_change.tpl');
 
         $this->$assertMethod('id="oegdproptin_deliveryaddress"', $content);
     }
@@ -108,11 +124,11 @@ class FrontendTest extends \OxidEsales\TestingLibrary\UnitTestCase
      */
     public function testDeliveryAddressOptinForUserAccount($reqireOptinDeliveryAddress, $assertMethod, $theme)
     {
-        \OxidEsales\Eshop\Core\Registry::getSession()->setVariable('blshowshipaddress', true);
-        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('blOeGdprOptinDeliveryAddress', $reqireOptinDeliveryAddress);
-        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('sTheme', $theme);
+        Registry::getSession()->setVariable('blshowshipaddress', true);
+        Registry::getConfig()->setConfigParam('blOeGdprOptinDeliveryAddress', $reqireOptinDeliveryAddress);
+        Registry::getConfig()->setConfigParam('sTheme', $theme);
 
-        $content = $this->getTemplateOutput(\OxidEsales\Eshop\Application\Controller\AccountUserController::class, 'form/user.tpl');
+        $content = $this->getTemplateOutput(AccountUserController::class, 'form/user.tpl');
 
         $this->$assertMethod('id="oegdproptin_deliveryaddress"', $content);
     }
@@ -123,8 +139,8 @@ class FrontendTest extends \OxidEsales\TestingLibrary\UnitTestCase
     public function providerInvoiceAddressOptin()
     {
         return [
-            'enable_optin_true_flow' => [true, 'assertContains', 'flow'],
-            'enable_optin_false_flow' => [false, 'assertNotContains', 'flow']
+            'enable_optin_true_flow' => [true, 'doAssertStringContainsString', 'flow'],
+            'enable_optin_false_flow' => [false, 'doAssertStringNotContainsString', 'flow']
         ];
     }
 
@@ -139,10 +155,10 @@ class FrontendTest extends \OxidEsales\TestingLibrary\UnitTestCase
      */
     public function testInvoiceAddressOptinForCheckout($reqireOptinInvoiceAddress, $assertMethod, $theme)
     {
-        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('blOeGdprOptinInvoiceAddress', $reqireOptinInvoiceAddress);
-        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('sTheme', $theme);
+        Registry::getConfig()->setConfigParam('blOeGdprOptinInvoiceAddress', $reqireOptinInvoiceAddress);
+        Registry::getConfig()->setConfigParam('sTheme', $theme);
 
-        $content = $this->getTemplateOutput(\OxidEsales\Eshop\Application\Controller\UserController::class, 'form/user_checkout_change.tpl');
+        $content = $this->getTemplateOutput(UserController::class, 'form/user_checkout_change.tpl');
 
         $this->$assertMethod('id="oegdproptin_invoiceaddress"', $content);
     }
@@ -158,10 +174,10 @@ class FrontendTest extends \OxidEsales\TestingLibrary\UnitTestCase
      */
     public function testInvoiceAddressOptinForUserAccount($reqireOptinInvoiceAddress, $assertMethod, $theme)
     {
-        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('blOeGdprOptinInvoiceAddress', $reqireOptinInvoiceAddress);
-        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('sTheme', $theme);
+        Registry::getConfig()->setConfigParam('blOeGdprOptinInvoiceAddress', $reqireOptinInvoiceAddress);
+        Registry::getConfig()->setConfigParam('sTheme', $theme);
 
-        $content = $this->getTemplateOutput(\OxidEsales\Eshop\Application\Controller\AccountUserController::class, 'form/user.tpl');
+        $content = $this->getTemplateOutput(AccountUserController::class, 'form/user.tpl');
 
         $this->$assertMethod('id="oegdproptin_invoiceaddress"', $content);
     }
@@ -172,8 +188,8 @@ class FrontendTest extends \OxidEsales\TestingLibrary\UnitTestCase
     public function providerUserRegistrationOptin()
     {
         return [
-            'enable_optin_true_flow' => [true, 'assertContains', 'flow'],
-            'enable_optin_false_flow' => [false, 'assertNotContains', 'flow']
+            'enable_optin_true_flow' => [true, 'doAssertStringContainsString', 'flow'],
+            'enable_optin_false_flow' => [false, 'doAssertStringNotContainsString', 'flow']
         ];
     }
 
@@ -189,16 +205,16 @@ class FrontendTest extends \OxidEsales\TestingLibrary\UnitTestCase
      */
     public function testUserRegistrationOptin($blOeGdprOptinUserRegistration, $assertMethod, $theme)
     {
-        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('blOeGdprOptinUserRegistration', $blOeGdprOptinUserRegistration);
-        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('sTheme', $theme);
-        \OxidEsales\Eshop\Core\Registry::getSession()->setUser(null);
+        Registry::getConfig()->setConfigParam('blOeGdprOptinUserRegistration', $blOeGdprOptinUserRegistration);
+        Registry::getConfig()->setConfigParam('sTheme', $theme);
+        Registry::getSession()->setUser(null);
 
         $addViewData = [];
-        $addViewData['oxcmp_basket'] = oxNew(\OxidEsales\Eshop\Application\Model\Basket::class);
-        $addViewData['oConfig'] = \OxidEsales\Eshop\Core\Registry::getConfig();
+        $addViewData['oxcmp_basket'] = oxNew(Basket::class);
+        $addViewData['oConfig'] = Registry::getConfig();
         $addViewData['sidebar'] = '';
 
-        $content = $this->getTemplateOutput(\OxidEsales\Eshop\Application\Controller\RegisterController::class, 'page/account/register.tpl', $addViewData);
+        $content = $this->getTemplateOutput(RegisterController::class, 'page/account/register.tpl', $addViewData);
         $this->$assertMethod('id="oegdproptin_userregistration"', $content);
     }
 
@@ -208,10 +224,10 @@ class FrontendTest extends \OxidEsales\TestingLibrary\UnitTestCase
     public function providerUserCheckoutRegistrationOptin()
     {
         return [
-            'enable_optin_true_flow_noreg' => [true, 'assertNotContains', 'flow', 1],
-            'enable_optin_false_flow_noreg' => [false, 'assertNotContains', 'flow', 1],
-            'enable_optin_true_flow_reg' => [true, 'assertContains', 'flow', 3],
-            'enable_optin_false_flow_reg' => [false, 'assertNotContains', 'flow', 3]
+            'enable_optin_true_flow_noreg' => [true, 'doAssertStringNotContainsString', 'flow', 1],
+            'enable_optin_false_flow_noreg' => [false, 'doAssertStringNotContainsString', 'flow', 1],
+            'enable_optin_true_flow_reg' => [true, 'doAssertStringContainsString', 'flow', 3],
+            'enable_optin_false_flow_reg' => [false, 'doAssertStringNotContainsString', 'flow', 3]
         ];
     }
 
@@ -229,16 +245,16 @@ class FrontendTest extends \OxidEsales\TestingLibrary\UnitTestCase
     public function testUserRegistrationOptinDuringCheckout($blOeGdprOptinUserRegistration, $assertMethod, $theme, $option)
     {
         $this->setRequestParameter('option', $option);
-        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('blOeGdprOptinUserRegistration', $blOeGdprOptinUserRegistration);
-        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('sTheme', $theme);
-        \OxidEsales\Eshop\Core\Registry::getSession()->setUser(null);
+        Registry::getConfig()->setConfigParam('blOeGdprOptinUserRegistration', $blOeGdprOptinUserRegistration);
+        Registry::getConfig()->setConfigParam('sTheme', $theme);
+        Registry::getSession()->setUser(null);
 
         $addViewData = [];
-        $addViewData['oxcmp_basket'] = oxNew(\OxidEsales\Eshop\Application\Model\Basket::class);
-        $addViewData['oConfig'] = \OxidEsales\Eshop\Core\Registry::getConfig();
+        $addViewData['oxcmp_basket'] = oxNew(Basket::class);
+        $addViewData['oConfig'] = Registry::getConfig();
         $addViewData['sidebar'] = '';
 
-        $content = $this->getTemplateOutput(\OxidEsales\Eshop\Application\Controller\UserController::class, 'page/checkout/user.tpl', $addViewData);
+        $content = $this->getTemplateOutput(UserController::class, 'page/checkout/user.tpl', $addViewData);
 
         $this->$assertMethod('id="oegdproptin_userregistration"', $content);
     }
@@ -248,14 +264,14 @@ class FrontendTest extends \OxidEsales\TestingLibrary\UnitTestCase
      */
     public function testContactFormDeletionOptIn()
     {
-        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('OeGdprOptinContactFormMethod', 'deletion');
-        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('sTheme', 'flow');
-        $expected = \OxidEsales\Eshop\Core\Registry::getLang()->translateString("OEGDPROPTIN_CONTACT_FORM_MESSAGE_DELETION");
+        Registry::getConfig()->setConfigParam('OeGdprOptinContactFormMethod', 'deletion');
+        Registry::getConfig()->setConfigParam('sTheme', 'flow');
+        $expected = Registry::getLang()->translateString("OEGDPROPTIN_CONTACT_FORM_MESSAGE_DELETION");
 
-        $content = $this->getTemplateOutput(\OxidEsales\Eshop\Application\Controller\ContactController::class, 'form/contact.tpl');
+        $content = $this->getTemplateOutput(ContactController::class, 'form/contact.tpl');
 
-        $this->assertContains($expected, $content);
-        $this->assertNotContains('name="c_oegdproptin"', $content);
+        $this->doAssertStringContainsString($expected, $content);
+        $this->doAssertStringNotContainsString('name="c_oegdproptin"', $content);
     }
 
     /**
@@ -263,14 +279,14 @@ class FrontendTest extends \OxidEsales\TestingLibrary\UnitTestCase
      */
     public function testContactFormStatisticalOptIn()
     {
-        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('OeGdprOptinContactFormMethod', 'statistical');
-        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('sTheme', 'flow');
-        $expected = \OxidEsales\Eshop\Core\Registry::getLang()->translateString("OEGDPROPTIN_CONTACT_FORM_MESSAGE_STATISTICAL");
+        Registry::getConfig()->setConfigParam('OeGdprOptinContactFormMethod', 'statistical');
+        Registry::getConfig()->setConfigParam('sTheme', 'flow');
+        $expected = Registry::getLang()->translateString("OEGDPROPTIN_CONTACT_FORM_MESSAGE_STATISTICAL");
 
-        $content = $this->getTemplateOutput(\OxidEsales\Eshop\Application\Controller\ContactController::class, 'form/contact.tpl');
+        $content = $this->getTemplateOutput(ContactController::class, 'form/contact.tpl');
 
-        $this->assertContains($expected, $content);
-        $this->assertContains('name="c_oegdproptin"', $content);
+        $this->doAssertStringContainsString($expected, $content);
+        $this->doAssertStringContainsString('name="c_oegdproptin"', $content);
     }
 
     /**
@@ -278,15 +294,15 @@ class FrontendTest extends \OxidEsales\TestingLibrary\UnitTestCase
      */
     private function createBasket()
     {
-        \OxidEsales\Eshop\Core\Registry::getSession()->getBasket();
-        $this->assertNull(\OxidEsales\Eshop\Core\Registry::getSession()->getVariable('_newitem'));
+        Registry::getSession()->getBasket();
+        $this->assertNull(Registry::getSession()->getVariable('_newitem'));
 
-        $basketComponent = oxNew(\OxidEsales\Eshop\Application\Component\BasketComponent::class);
+        $basketComponent = oxNew(BasketComponent::class);
         $basketComponent->toBasket(self::TEST_ARTICLE_OXID, 1);
         $basket = $basketComponent->render();
         $this->assertEquals(1, $basket->getProductsCount());
 
-        \OxidEsales\Eshop\Core\Registry::getSession()->setBasket($basket);
+        Registry::getSession()->setBasket($basket);
     }
 
     /**
@@ -294,11 +310,11 @@ class FrontendTest extends \OxidEsales\TestingLibrary\UnitTestCase
      */
     private function createTestProduct()
     {
-        $product = oxNew(\OxidEsales\Eshop\Application\Model\Article::class);
+        $product = oxNew(Article::class);
         $product->setId(self::TEST_ARTICLE_OXID);
-        $product->oxarticles__oxshopid = new \OxidEsales\Eshop\Core\Field(1);
-        $product->oxarticles__oxtitle = new \OxidEsales\Eshop\Core\Field(self::TEST_ARTICLE_OXID);
-        $product->oxarticles__oxprice = new \OxidEsales\Eshop\Core\Field(6.66);
+        $product->oxarticles__oxshopid = new Field(1);
+        $product->oxarticles__oxtitle = new Field(self::TEST_ARTICLE_OXID);
+        $product->oxarticles__oxprice = new Field(6.66);
         $product->save();
 
         $this->product = $product;
@@ -309,7 +325,7 @@ class FrontendTest extends \OxidEsales\TestingLibrary\UnitTestCase
      */
     private function createTestUser()
     {
-        $user = oxNew(\OxidEsales\Eshop\Application\Model\User::class);
+        $user = oxNew(User::class);
         $user->setId(self::TEST_USER_ID);
         $user->assign(
             [
@@ -341,9 +357,9 @@ class FrontendTest extends \OxidEsales\TestingLibrary\UnitTestCase
         $this->setSessionParam('usr', self::TEST_USER_ID);
         $this->setSessionParam('auth', self::TEST_USER_ID);
 
-        $user = oxNew(\OxidEsales\Eshop\Application\Model\User::class);
+        $user = oxNew(User::class);
         $user->load(self::TEST_USER_ID);
-        \OxidEsales\Eshop\Core\Registry::getSession()->setUser($user);
+        Registry::getSession()->setUser($user);
         $user->setUser($user);
         $this->assertTrue($user->loadActiveUser());
     }
@@ -353,7 +369,7 @@ class FrontendTest extends \OxidEsales\TestingLibrary\UnitTestCase
      */
     private function replaceBlocks()
     {
-        $shopId = \OxidEsales\Eshop\Core\Registry::getConfig()->getShopId();
+        $shopId = Registry::getConfig()->getShopId();
         $query = "INSERT INTO oxtplblocks (OXID, OXACTIVE, OXSHOPID, OXTEMPLATE, OXBLOCKNAME, OXPOS, OXFILE, OXMODULE) VALUES " .
                  "('_test_header', 1, '{$shopId}', 'layout/page.tpl', 'layout_header', 1, 'Tests/Integration/views/blocks/empty.tpl', 'oegdproptin'), " .
                  "('_test_footer', 1, '{$shopId}', 'layout/footer.tpl', 'footer_main', 1, 'Tests/Integration/views/blocks/empty.tpl', 'oegdproptin'), " .
@@ -361,7 +377,7 @@ class FrontendTest extends \OxidEsales\TestingLibrary\UnitTestCase
                  "('_test_sgvo_icons', 1, '{$shopId}', 'layout/base.tpl', 'theme_svg_icons', 1, 'Tests/Integration/views/blocks/empty.tpl', 'oegdproptin'), " .
                  "('_test_listitem', 1, '{$shopId}', 'page/review/review.tpl', 'widget_product_listitem_line_picturebox', 1, 'Tests/Integration/views/blocks/empty.tpl', 'oegdproptin')";
 
-        \OxidEsales\Eshop\Core\DatabaseProvider::getDb()->execute($query);
+        DatabaseProvider::getDb()->execute($query);
     }
 
     /**
@@ -380,8 +396,8 @@ class FrontendTest extends \OxidEsales\TestingLibrary\UnitTestCase
     public function providerDetailsReviewOptin()
     {
         return [
-            'enable_optin_true_flow_art'   => [true, 'assertContains', 'flow', 'oxwArticleDetails'],
-            'enable_optin_false_flow_art'  => [false, 'assertNotContains', 'flow', 'oxwArticleDetails']
+            'enable_optin_true_flow_art'   => [true, 'doAssertStringContainsString', 'flow', 'oxwArticleDetails'],
+            'enable_optin_false_flow_art'  => [false, 'doAssertStringNotContainsString', 'flow', 'oxwArticleDetails']
         ];
     }
 
@@ -397,15 +413,15 @@ class FrontendTest extends \OxidEsales\TestingLibrary\UnitTestCase
      */
     public function testDetailsReviewFormOptIn($blOeGdprOptinProductReviews, $assertMethod, $theme, $class)
     {
-        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('blOeGdprOptinProductReviews', $blOeGdprOptinProductReviews);
-        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('sTheme', $theme);
+        Registry::getConfig()->setConfigParam('blOeGdprOptinProductReviews', $blOeGdprOptinProductReviews);
+        Registry::getConfig()->setConfigParam('sTheme', $theme);
 
         $content = $this->getTemplateOutput($class, 'widget/reviews/reviews.tpl', null, true);
 
         $this->$assertMethod('id="rvw_oegdproptin"', $content);
 
         //Error message always present in DOM, if checkbox present, but is hidden by default
-        $message = \OxidEsales\Eshop\Core\Registry::getLang()->translateString("OEGDPROPTIN_REVIEW_FORM_ERROR_MESSAGE");
+        $message = Registry::getLang()->translateString("OEGDPROPTIN_REVIEW_FORM_ERROR_MESSAGE");
         $this->$assertMethod($message, $content);
     }
 
@@ -415,8 +431,8 @@ class FrontendTest extends \OxidEsales\TestingLibrary\UnitTestCase
     public function providerOxwArticleDetailsReviewOptinError()
     {
         return [
-            'enable_optin_true_flow_art'   => [true, 'assertContains', 'flow', 1],
-            'enable_optin_false_flow_art'  => [false, 'assertNotContains', 'flow', 0]
+            'enable_optin_true_flow_art'   => [true, 'doAssertStringContainsString', 'flow', 1],
+            'enable_optin_false_flow_art'  => [false, 'doAssertStringNotContainsString', 'flow', 0]
         ];
     }
 
@@ -432,17 +448,17 @@ class FrontendTest extends \OxidEsales\TestingLibrary\UnitTestCase
      */
     public function testOxwArticleDetailsReviewFormOptInError($blOeGdprOptinProductReviews, $assertMethod, $theme, $count)
     {
-        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('blOeGdprOptinProductReviews', $blOeGdprOptinProductReviews);
-        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('sTheme', $theme);
+        Registry::getConfig()->setConfigParam('blOeGdprOptinProductReviews', $blOeGdprOptinProductReviews);
+        Registry::getConfig()->setConfigParam('sTheme', $theme);
 
-        $controller = $this->getMock(\OxidEsales\Eshop\Application\Component\Widget\ArticleDetails::class, ['isReviewOptInError']);
+        $controller = $this->getMock(ArticleDetails::class, ['isReviewOptInError']);
         $controller->expects($this->exactly($count))->method('isReviewOptInError')->will($this->returnValue(true));
         $controller->init();
         $controller->setViewProduct($this->product);
 
         $content = $this->doRender($controller, 'widget/reviews/reviews.tpl');
 
-        $expected = \OxidEsales\Eshop\Core\Registry::getLang()->translateString("OEGDPROPTIN_REVIEW_FORM_ERROR_MESSAGE");
+        $expected = Registry::getLang()->translateString("OEGDPROPTIN_REVIEW_FORM_ERROR_MESSAGE");
         $this->$assertMethod($expected, $content);
     }
 
@@ -477,17 +493,45 @@ class FrontendTest extends \OxidEsales\TestingLibrary\UnitTestCase
     protected function doRender($controller, $template, $addViewData = null)
     {
         //prepare output
-        $output = oxNew(\OxidEsales\Eshop\Core\Output::class);
+        $output = oxNew(Output::class);
         $viewData = $output->processViewArray($controller->getViewData(), $controller->getClassName());
         if (is_array($addViewData)) {
             $viewData = array_merge($viewData, $addViewData);
         } else {
-            $viewData['oxcmp_user'] = \OxidEsales\Eshop\Core\Registry::getSession()->getUser();
-            $viewData['oxcmp_basket'] = \OxidEsales\Eshop\Core\Registry::getSession()->getBasket();
-            $viewData['oConfig'] = \OxidEsales\Eshop\Core\Registry::getConfig();
+            $viewData['oxcmp_user'] = Registry::getSession()->getUser();
+            $viewData['oxcmp_basket'] = Registry::getSession()->getBasket();
+            $viewData['oConfig'] = Registry::getConfig();
         }
 
         $controller->setViewData($viewData);
-        return \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\UtilsView::class)->getTemplateOutput($template, $controller);
+        return Registry::get(UtilsView::class)->getTemplateOutput($template, $controller);
+    }
+
+    /**
+     * @param string $needle
+     * @param string $haystack
+     * @param string $message
+     */
+    protected function doAssertStringContainsString($needle, $haystack, $message = '')
+    {
+        if (method_exists($this, 'assertStringContainsString')) {
+            parent::assertStringContainsString($needle, $haystack, $message);
+        } else {
+            parent::assertContains($needle, $haystack, $message);
+        }
+    }
+
+    /**
+     * @param string $needle
+     * @param string $haystack
+     * @param string $message
+     */
+    protected function doAssertStringNotContainsString($needle, $haystack, $message = '')
+    {
+        if (method_exists($this, 'assertStringNotContainsString')) {
+            parent::assertStringNotContainsString($needle, $haystack, $message);
+        } else {
+            parent::assertNotContains($needle, $haystack, $message);
+        }
     }
 }

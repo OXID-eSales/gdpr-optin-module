@@ -1,0 +1,24 @@
+<phpunit backupGlobals="true"
+         backupStaticAttributes="false"
+         cacheTokens="true"
+         colors="false"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         forceCoversAnnotation="false"
+         printerClass="\OxidEsales\TestingLibrary\Printer"
+         processIsolation="false"
+         stopOnError="false"
+         stopOnFailure="false"
+         stopOnIncomplete="false"
+         stopOnSkipped="false"
+         verbose="false">
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">../Component</directory>
+            <directory suffix=".php">../Controller</directory>
+            <directory suffix=".php">../Core</directory>
+            <directory suffix=".php">../Application</directory>
+        </whitelist>
+    </filter>
+</phpunit>
