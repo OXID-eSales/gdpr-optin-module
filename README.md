@@ -9,9 +9,10 @@ System requirements and installation instructions are described in the module do
 
 ### Compatibility
 
-* master branch for shop compilation: 6.1 and up (requires php 7.1+)
-* b-2.2.x branch for shop compilation: 6.0.2 and up to 6.1.x
-* v1.x branch for shop compilation: 5.3.7/4.10.7 or above
+* master module branch for shop master
+* b-6.x module branch for shop compilation: 6.2 and up to 6.3.x
+* b-2.2.x module branch for shop compilation: 6.0.2 and up to 6.1.x
+* v1.x module branch for shop compilation: 5.3.7/4.10.7 or above
 
 ### Module installation via composer
 
