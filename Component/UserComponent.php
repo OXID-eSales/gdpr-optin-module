@@ -60,7 +60,7 @@ class UserComponent extends UserComponent_parent
      *
      * @return  bool true on success, false otherwise
      */
-    protected function _changeUser_noRedirect()
+    protected function changeUserWithoutRedirect()
     {
         $session = \OxidEsales\Eshop\Core\Registry::getSession();
         if (!$session->checkSessionChallenge()) {
@@ -87,7 +87,7 @@ class UserComponent extends UserComponent_parent
 
         $return = false;
         if ( (true == $deliveryOptinValid) && (true == $invoiceOptinValid)) {
-            $return = parent::_changeUser_noRedirect();
+            $return = parent::changeUserWithoutRedirect();
         }
 
         return $return;
