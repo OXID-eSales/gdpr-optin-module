@@ -494,7 +494,7 @@ class FrontendTest extends UnitTestCase
     {
         //prepare output
         $output = oxNew(Output::class);
-        $viewData = $output->processViewArray($controller->getViewData(), $controller->getClassName());
+        $viewData = $output->processViewArray($controller->getViewData(), $controller->getClassKey());
         if (is_array($addViewData)) {
             $viewData = array_merge($viewData, $addViewData);
         } else {
