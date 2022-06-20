@@ -10,7 +10,7 @@ System requirements and installation instructions are described in the module do
 ### Compatibility
 
 * master module branch for shop master
-* b-6.x module branch for shop compilation: 6.2.x and up to 6.4.x
+* b-6.x module branch for shop compilation: 6.2.x and up to 6.5.x
 * v1.x module branch for shop compilation: 5.3.7/4.10.7 or above
 
 ### Module installation via composer
