@@ -23,16 +23,29 @@ namespace OxidEsales\GdprOptinModule\Tests\Integration;
 
 use OxidEsales\Eshop\Application\Controller\ReviewController;
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
+use OxidEsales\GdprOptinModule\Core\GdprOptinModule;
+use OxidEsales\GdprOptInModule\Service\ModuleSettings;
+use OxidEsales\GdprOptinModule\Traits\ServiceContainer;
 
 class ReviewControllerTest extends IntegrationBaseTest
 {
+    use ServiceContainer;
+
     /**
      * Test validation error appears if needed
      */
     public function testSendError()
     {
+        $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
+        $settingsService->saveBoolean(
+            ModuleSettings::REVIEW_OPT_IN,
+            true,
+            GdprOptinModule::MODULE_ID
+        );
+
         $controller = oxNew(ReviewController::class);
-        Registry::getConfig()->setConfigParam($controller::REVIEW_OPTIN_PARAM, true);
+
         $this->assertFalse($controller->saveReview());
     }
 
@@ -41,8 +54,15 @@ class ReviewControllerTest extends IntegrationBaseTest
      */
     public function testSendNotError()
     {
+        $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
+        $settingsService->saveBoolean(
+            ModuleSettings::REVIEW_OPT_IN,
+            false,
+            GdprOptinModule::MODULE_ID
+        );
+
         $controller = oxNew(ReviewController::class);
-        Registry::getConfig()->setConfigParam($controller::REVIEW_OPTIN_PARAM, false);
+
         $this->assertNull($controller->saveReview());
     }
 
@@ -53,8 +73,15 @@ class ReviewControllerTest extends IntegrationBaseTest
      */
     public function testReviewOptInValidationRequired($configValue, $expected)
     {
+        $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
+        $settingsService->saveBoolean(
+            ModuleSettings::REVIEW_OPT_IN,
+            $configValue,
+            GdprOptinModule::MODULE_ID
+        );
+
         $controller = oxNew(ReviewController::class);
-        Registry::getConfig()->setConfigParam($controller::REVIEW_OPTIN_PARAM, $configValue);
+
         $this->assertSame($expected, $controller->isReviewOptInValidationRequired());
     }
 
@@ -76,9 +103,15 @@ class ReviewControllerTest extends IntegrationBaseTest
      */
     public function testValidateOptIn($configValue, $checkboxStatus, $expectedValue)
     {
-        $controller = oxNew(ReviewController::class);
-        Registry::getConfig()->setConfigParam($controller::REVIEW_OPTIN_PARAM, $configValue);
+        $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
+        $settingsService->saveBoolean(
+            ModuleSettings::REVIEW_OPT_IN,
+            $configValue,
+            GdprOptinModule::MODULE_ID
+        );
         $this->addRequestParameters(['rvw_oegdproptin' => $checkboxStatus]);
+
+        $controller = oxNew(ReviewController::class);
 
         $this->assertSame($expectedValue, $controller->validateOptIn());
     }
@@ -105,9 +138,15 @@ class ReviewControllerTest extends IntegrationBaseTest
      */
     public function testReviewOptInError($configValue, $checkboxStatus, $expectedValue)
     {
-        $controller = oxNew(ReviewController::class);
-        Registry::getConfig()->setConfigParam($controller::REVIEW_OPTIN_PARAM, $configValue);
+        $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
+        $settingsService->saveBoolean(
+            ModuleSettings::REVIEW_OPT_IN,
+            $configValue,
+            GdprOptinModule::MODULE_ID
+        );
         $this->addRequestParameters(['rvw_oegdproptin' => $checkboxStatus]);
+
+        $controller = oxNew(ReviewController::class);
 
         $this->assertSame($expectedValue, $controller->isReviewOptInError());
     }

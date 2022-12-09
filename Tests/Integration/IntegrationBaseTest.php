@@ -25,13 +25,18 @@ use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\Eshop\Application\Model\User;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\Request;
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
 use OxidEsales\EshopCommunity\Internal\Framework\Templating\TemplateEngineInterface;
 use OxidEsales\EshopCommunity\Internal\Framework\Templating\TemplateRendererBridgeInterface;
 use OxidEsales\GdprOptinModule\Core\GdprOptinModule;
+use OxidEsales\GdprOptinModule\Service\ModuleSettings;
 use PHPUnit\Framework\TestCase;
+use OxidEsales\GdprOptinModule\Traits\ServiceContainer;
 
 abstract class IntegrationBaseTest extends TestCase
 {
+    use ServiceContainer;
+
     protected const TEST_USER_ID = '_gdprtest';
 
     protected function setUp(): void
@@ -40,12 +45,13 @@ abstract class IntegrationBaseTest extends TestCase
 
         GdprOptinModule::clearCache();
         $this->createTestUser();
+        $this->disableOptins();
     }
 
     /**
      * Create a test user.
      */
-    public function createTestUser()
+    protected function createTestUser()
     {
         $user = oxNew(User::class);
         $user->setId(self::TEST_USER_ID);
@@ -74,7 +80,7 @@ abstract class IntegrationBaseTest extends TestCase
     /**
      * Make sure we have the test user as active user.
      */
-    public function ensureActiveUser()
+    protected function ensureActiveUser()
     {
         $this->setSessionParam('usr', self::TEST_USER_ID);
         $this->setSessionParam('auth', self::TEST_USER_ID);
@@ -91,7 +97,7 @@ abstract class IntegrationBaseTest extends TestCase
      *
      * @param array $parameters
      */
-    public function addRequestParameters($additionalParameters = [])
+    protected function addRequestParameters($additionalParameters = [])
     {
         $address = 'a:13:{s:16:"oxaddress__oxsal";s:2:"MR";s:18:"oxaddress__oxfname";s:4:"Moxi";' .
             's:18:"oxaddress__oxlname";s:6:"Muster";s:20:"oxaddress__oxcompany";s:0:"";' .
@@ -122,8 +128,27 @@ abstract class IntegrationBaseTest extends TestCase
         Registry::set(Request::class, $request);
     }
 
-    public function setSessionParam($name, $value): void
+    protected function setSessionParam($name, $value): void
     {
         Registry::getSession()->setVariable($name, $value);
+    }
+
+    protected function disableOptins(): void
+    {
+        $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
+
+        $settings = [
+            ModuleSettings::INVOICE_OPT_IN,
+            ModuleSettings::DELIVERY_OPT_IN,
+            ModuleSettings::REGISTRATION_OPT_IN,
+            ModuleSettings::REVIEW_OPT_IN
+        ];
+       foreach ($settings as $name) {
+           $settingsService->saveBoolean(
+               $name,
+               false,
+               GdprOptinModule::MODULE_ID
+           );
+       }
     }
 }

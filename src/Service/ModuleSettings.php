@@ -7,6 +7,7 @@
 
 namespace OxidEsales\GdprOptinModule\Service;
 
+use OxidEsales\EshopCommunity\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
 use OxidEsales\GdprOptinModule\Core\GdprOptinModule;
 
@@ -15,11 +16,11 @@ final class ModuleSettings
     /** @var ModuleSettingServiceInterface */
     private $moduleSettingService;
 
-    private const INVOICE_OPT_IN = 'blOeGdprOptinInvoiceAddress';
-    private const DELIVERY_OPT_IN = 'blOeGdprOptinDeliveryAddress';
-    private const REGISTRATION_OPT_IN = 'blOeGdprOptinUserRegistration';
-    private const REVIEW_OPT_IN = 'blOeGdprOptinProductReviews';
-    private const CONTACT_CHOICE = 'OeGdprOptinContactFormMethod';
+    public const INVOICE_OPT_IN = 'blOeGdprOptinInvoiceAddress';
+    public const DELIVERY_OPT_IN = 'blOeGdprOptinDeliveryAddress';
+    public const REGISTRATION_OPT_IN = 'blOeGdprOptinUserRegistration';
+    public const REVIEW_OPT_IN = 'blOeGdprOptinProductReviews';
+    public const CONTACT_CHOICE = 'OeGdprOptinContactFormMethod';
 
     public function __construct(
         ModuleSettingServiceInterface $moduleSettingService

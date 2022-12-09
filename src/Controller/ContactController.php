@@ -23,6 +23,8 @@ namespace OxidEsales\GdprOptinModule\Controller;
 
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\UtilsView;
+use OxidEsales\GdprOptinModule\Service\ModuleSettings;
+use OxidEsales\GdprOptinModule\Traits\ServiceContainer;
 
 /**
  * Class ContactController
@@ -32,6 +34,8 @@ use OxidEsales\Eshop\Core\UtilsView;
  */
 class ContactController extends ContactController_parent
 {
+    use ServiceContainer;
+
     const CONTACT_FORM_METHOD_DEFAULT = 'deletion';
 
     /**
@@ -86,8 +90,9 @@ class ContactController extends ContactController_parent
     private function getContactFormMethod()
     {
         $method = self::CONTACT_FORM_METHOD_DEFAULT;
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
 
-        if ($configMethod = Registry::getConfig()->getConfigParam('OeGdprOptinContactFormMethod')) {
+        if ($configMethod = $moduleSettings->getContactOptIn()) {
             $method = $configMethod;
         }
 

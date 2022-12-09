@@ -27,9 +27,15 @@ use OxidEsales\Eshop\Application\Controller\UserController;
 use OxidEsales\Eshop\Application\Model\User;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\Request;
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
+use OxidEsales\GdprOptinModule\Core\GdprOptinModule;
+use OxidEsales\GdprOptInModule\Service\ModuleSettings;
+use OxidEsales\GdprOptinModule\Traits\ServiceContainer;
 
 class UserComponentTest extends IntegrationBaseTest
 {
+    use ServiceContainer;
+
     /**
      * @return array
      */
@@ -72,7 +78,12 @@ class UserComponentTest extends IntegrationBaseTest
      */
     public function testDeliveryAddressOptinValidationCheckoutUser($requireGdprOptinDeliveryAddress, $checkboxChecked, $assertDisplayExc, $showShip, $parameters)
     {
-        Registry::getConfig()->setConfigParam('blOeGdprOptinDeliveryAddress', $requireGdprOptinDeliveryAddress);
+        $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
+        $settingsService->saveBoolean(
+            ModuleSettings::DELIVERY_OPT_IN,
+            $requireGdprOptinDeliveryAddress,
+            GdprOptinModule::MODULE_ID
+        );
 
         $parameters['oegdproptin_deliveryaddress'] = (int) $checkboxChecked;
         $parameters['blshowshipaddress'] = (int) $showShip;
@@ -98,7 +109,12 @@ class UserComponentTest extends IntegrationBaseTest
      */
     public function testDeliveryAddressOptinValidationAccountUser($requireGdprOptinDeliveryAddress, $checkboxChecked, $assertDisplayExc, $showShip, $parameters)
     {
-        Registry::getConfig()->setConfigParam('blOeGdprOptinDeliveryAddress', $requireGdprOptinDeliveryAddress);
+        $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
+        $settingsService->saveBoolean(
+            ModuleSettings::DELIVERY_OPT_IN,
+            $requireGdprOptinDeliveryAddress,
+            GdprOptinModule::MODULE_ID
+        );
 
         $parameters['oegdproptin_deliveryaddress'] = (int) $checkboxChecked;
         $parameters['blshowshipaddress'] = (int) $showShip;
@@ -146,7 +162,12 @@ class UserComponentTest extends IntegrationBaseTest
      */
     public function testInvoiceAddressOptinValidationCheckoutUser($requireGdprOptinInvoiceAddress, $checkboxChecked, $assertDisplayExc, $parameters)
     {
-        Registry::getConfig()->setConfigParam('blOeGdprOptinInvoiceAddress', $requireGdprOptinInvoiceAddress);
+        $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
+        $settingsService->saveBoolean(
+            ModuleSettings::INVOICE_OPT_IN,
+            $requireGdprOptinInvoiceAddress,
+            GdprOptinModule::MODULE_ID
+        );
 
         $parameters['oegdproptin_invoiceaddress'] = (int) $checkboxChecked;
         $this->addRequestParameters($parameters);
@@ -170,7 +191,12 @@ class UserComponentTest extends IntegrationBaseTest
      */
     public function testInvoiceAddressOptinValidationAccountUser($requireGdprOptinInvoiceAddress, $checkboxChecked, $assertDisplayExc, $parameters)
     {
-        Registry::getConfig()->setConfigParam('blOeGdprOptinInvoiceAddress', $requireGdprOptinInvoiceAddress);
+        $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
+        $settingsService->saveBoolean(
+            ModuleSettings::INVOICE_OPT_IN,
+            $requireGdprOptinInvoiceAddress,
+            GdprOptinModule::MODULE_ID
+        );
 
         $parameters['oegdproptin_invoiceaddress'] = (int) $checkboxChecked;
         $this->addRequestParameters($parameters);
@@ -208,7 +234,13 @@ class UserComponentTest extends IntegrationBaseTest
     public function testUserRegistrationOptinValidation($oeGdprUserRegistrationAddress, $checkboxChecked, $assertDisplayExc)
     {
         Registry::getSession()->setUser(null);
-        Registry::getConfig()->setConfigParam('blOeGdprOptinUserRegistration', $oeGdprUserRegistrationAddress);
+
+        $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
+        $settingsService->saveBoolean(
+            ModuleSettings::REGISTRATION_OPT_IN,
+            $oeGdprUserRegistrationAddress,
+            GdprOptinModule::MODULE_ID
+        );
 
         $parameters = ['oegdproptin_userregistration' => (int) $checkboxChecked,
                        'option' => 3];
@@ -252,7 +284,13 @@ class UserComponentTest extends IntegrationBaseTest
     public function testUserRegistrationOptinValidationCheckoutUser($oeGdprUserRegistrationAddress, $checkboxChecked, $assertDisplayExc, $option)
     {
         Registry::getSession()->setUser(null);
-        Registry::getConfig()->setConfigParam('blOeGdprOptinUserRegistration', $oeGdprUserRegistrationAddress);
+
+        $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
+        $settingsService->saveBoolean(
+            ModuleSettings::REGISTRATION_OPT_IN,
+            $oeGdprUserRegistrationAddress,
+            GdprOptinModule::MODULE_ID
+        );
 
         $parameters = ['oegdproptin_userregistration' => (int) $checkboxChecked,
                        'option' => $option];

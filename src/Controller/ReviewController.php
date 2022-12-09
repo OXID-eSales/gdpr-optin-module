@@ -24,6 +24,8 @@ namespace OxidEsales\GdprOptinModule\Controller;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\UtilsView;
 use OxidEsales\Eshop\Application\Controller\ReviewController as EshopReviewController;
+use OxidEsales\GdprOptinModule\Service\ModuleSettings;
+use OxidEsales\GdprOptinModule\Traits\ServiceContainer;
 
 /**
  * Class ReviewController
@@ -34,6 +36,8 @@ use OxidEsales\Eshop\Application\Controller\ReviewController as EshopReviewContr
  */
 class ReviewController extends ReviewController_parent
 {
+    use ServiceContainer;
+
     const REVIEW_OPTIN_PARAM = 'blOeGdprOptinProductReviews';
 
     /**
@@ -56,9 +60,11 @@ class ReviewController extends ReviewController_parent
      *
      * @return bool
      */
-    public function isReviewOptInValidationRequired()
+    public function isReviewOptInValidationRequired(): bool
     {
-        return (bool)Registry::getConfig()->getConfigParam(self::REVIEW_OPTIN_PARAM);
+        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+
+        return $moduleSettings->showReviewOptIn();
     }
 
     /**

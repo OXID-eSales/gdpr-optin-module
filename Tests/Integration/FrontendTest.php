@@ -35,10 +35,15 @@ use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Output;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\UtilsView;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
+use OxidEsales\GdprOptinModule\Core\GdprOptinModule;
+use OxidEsales\GdprOptinModule\Traits\ServiceContainer;
+use OxidEsales\GdprOptinModule\Service\ModuleSettings;
 
 class FrontendTest extends IntegrationBaseTest
 {
+    use ServiceContainer;
+
     const TEST_ARTICLE_OXID = '_gdpr_test_product';
 
     /**
@@ -55,22 +60,8 @@ class FrontendTest extends IntegrationBaseTest
     {
         parent::setUp();
 
-      #  $this->replaceBlocks();
-
         $this->createTestProduct();
         $this->createBasket();
-    }
-
-    /**
-     * Tear down.
-     */
-    protected function tearDown(): void
-    {
-      #  $this->cleanUpTable('oxuser', 'oxid');
-      #  $this->cleanUpTable('oxarticles', 'oxid');
-      #  $this->cleanUpTable('oxtplblocks', 'oxid');
-
-        parent::tearDown();
     }
 
     /**
@@ -96,8 +87,14 @@ class FrontendTest extends IntegrationBaseTest
     public function testDeliveryAddressOptinForCheckout($reqireOptinDeliveryAddress, $assertMethod, $theme)
     {
         Registry::getSession()->setVariable('blshowshipaddress', true);
-        Registry::getConfig()->setConfigParam('blOeGdprOptinDeliveryAddress', $reqireOptinDeliveryAddress);
         Registry::getConfig()->setConfigParam('sTheme', $theme);
+
+        $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
+        $settingsService->saveBoolean(
+            ModuleSettings::DELIVERY_OPT_IN,
+            $reqireOptinDeliveryAddress,
+            GdprOptinModule::MODULE_ID
+        );
 
         $content = $this->getTemplateOutput(UserController::class, 'form/user_checkout_change.tpl');
 
@@ -116,8 +113,14 @@ class FrontendTest extends IntegrationBaseTest
     public function testDeliveryAddressOptinForUserAccount($reqireOptinDeliveryAddress, $assertMethod, $theme)
     {
         Registry::getSession()->setVariable('blshowshipaddress', true);
-        Registry::getConfig()->setConfigParam('blOeGdprOptinDeliveryAddress', $reqireOptinDeliveryAddress);
         Registry::getConfig()->setConfigParam('sTheme', $theme);
+
+        $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
+        $settingsService->saveBoolean(
+            ModuleSettings::DELIVERY_OPT_IN,
+            $reqireOptinDeliveryAddress,
+            GdprOptinModule::MODULE_ID
+        );
 
         $content = $this->getTemplateOutput(AccountUserController::class, 'form/user.tpl');
 
@@ -146,8 +149,14 @@ class FrontendTest extends IntegrationBaseTest
      */
     public function testInvoiceAddressOptinForCheckout($reqireOptinInvoiceAddress, $assertMethod, $theme)
     {
-        Registry::getConfig()->setConfigParam('blOeGdprOptinInvoiceAddress', $reqireOptinInvoiceAddress);
         Registry::getConfig()->setConfigParam('sTheme', $theme);
+
+        $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
+        $settingsService->saveBoolean(
+            ModuleSettings::INVOICE_OPT_IN,
+            $reqireOptinInvoiceAddress,
+            GdprOptinModule::MODULE_ID
+        );
 
         $content = $this->getTemplateOutput(UserController::class, 'form/user_checkout_change.tpl');
 
@@ -165,8 +174,14 @@ class FrontendTest extends IntegrationBaseTest
      */
     public function testInvoiceAddressOptinForUserAccount($reqireOptinInvoiceAddress, $assertMethod, $theme)
     {
-        Registry::getConfig()->setConfigParam('blOeGdprOptinInvoiceAddress', $reqireOptinInvoiceAddress);
         Registry::getConfig()->setConfigParam('sTheme', $theme);
+
+        $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
+        $settingsService->saveBoolean(
+            ModuleSettings::INVOICE_OPT_IN,
+            $reqireOptinInvoiceAddress,
+            GdprOptinModule::MODULE_ID
+        );
 
         $content = $this->getTemplateOutput(AccountUserController::class, 'form/user.tpl');
 
@@ -176,7 +191,7 @@ class FrontendTest extends IntegrationBaseTest
     public function providerUserRegistrationOptin(): array
     {
         return [
-          #  'enable_optin_true_flow' => [true, 'assertStringContainsString', 'flow'],
+            'enable_optin_true_flow' => [true, 'assertStringContainsString', 'flow'],
             'enable_optin_false_flow' => [false, 'assertStringNotContainsString', 'flow']
         ];
     }
@@ -193,9 +208,17 @@ class FrontendTest extends IntegrationBaseTest
      */
     public function testUserRegistrationOptin($blOeGdprOptinUserRegistration, $assertMethod, $theme)
     {
-        Registry::getConfig()->setConfigParam('blOeGdprOptinUserRegistration', $blOeGdprOptinUserRegistration);
+        $this->markTestIncomplete('TODO');
+
         Registry::getConfig()->setConfigParam('sTheme', $theme);
         Registry::getSession()->setUser(null);
+
+        $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
+        $settingsService->saveBoolean(
+            ModuleSettings::REGISTRATION_OPT_IN,
+            $blOeGdprOptinUserRegistration,
+            GdprOptinModule::MODULE_ID
+        );
 
         $addViewData = [];
         $addViewData['oxcmp_basket'] = oxNew(Basket::class);
@@ -229,10 +252,18 @@ class FrontendTest extends IntegrationBaseTest
      */
     public function testUserRegistrationOptinDuringCheckout($blOeGdprOptinUserRegistration, $assertMethod, $theme, $option)
     {
+        $this->markTestIncomplete('TODO');
+
         $this->addRequestParameters(['option' => $option]);
-        Registry::getConfig()->setConfigParam('blOeGdprOptinUserRegistration', $blOeGdprOptinUserRegistration);
         Registry::getConfig()->setConfigParam('sTheme', $theme);
         Registry::getSession()->setUser(null);
+
+        $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
+        $settingsService->saveBoolean(
+            ModuleSettings::REGISTRATION_OPT_IN,
+            $blOeGdprOptinUserRegistration,
+            GdprOptinModule::MODULE_ID
+        );
 
         $addViewData = [];
         $addViewData['oxcmp_basket'] = oxNew(Basket::class);
@@ -249,8 +280,15 @@ class FrontendTest extends IntegrationBaseTest
      */
     public function testContactFormDeletionOptIn()
     {
-        Registry::getConfig()->setConfigParam('OeGdprOptinContactFormMethod', 'deletion');
         Registry::getConfig()->setConfigParam('sTheme', 'flow');
+
+        $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
+        $settingsService->saveString(
+            ModuleSettings::CONTACT_CHOICE,
+            'deletion',
+            GdprOptinModule::MODULE_ID
+        );
+
         $expected = Registry::getLang()->translateString("OEGDPROPTIN_CONTACT_FORM_MESSAGE_DELETION");
 
         $content = $this->getTemplateOutput(ContactController::class, 'form/contact.tpl');
@@ -264,8 +302,15 @@ class FrontendTest extends IntegrationBaseTest
      */
     public function testContactFormStatisticalOptIn()
     {
-        Registry::getConfig()->setConfigParam('OeGdprOptinContactFormMethod', 'statistical');
         Registry::getConfig()->setConfigParam('sTheme', 'flow');
+
+        $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
+        $settingsService->saveString(
+            ModuleSettings::CONTACT_CHOICE,
+            'statistical',
+            GdprOptinModule::MODULE_ID
+        );
+
         $expected = Registry::getLang()->translateString("OEGDPROPTIN_CONTACT_FORM_MESSAGE_STATISTICAL");
 
         $content = $this->getTemplateOutput(ContactController::class, 'form/contact.tpl');
@@ -274,52 +319,6 @@ class FrontendTest extends IntegrationBaseTest
         $this->assertStringContainsString('name="c_oegdproptin"', $content);
     }
 
-    /**
-     * Creates filled basket object and stores it in session.
-     */
-    private function createBasket()
-    {
-        Registry::getSession()->getBasket();
-        $this->assertNull(Registry::getSession()->getVariable('_newitem'));
-
-        $basketComponent = oxNew(BasketComponent::class);
-        $basketComponent->toBasket(self::TEST_ARTICLE_OXID, 1);
-        $basket = $basketComponent->render();
-        $this->assertEquals(1, $basket->getProductsCount());
-
-        Registry::getSession()->setBasket($basket);
-    }
-
-    /**
-     * Create a test product.
-     */
-    private function createTestProduct()
-    {
-        $product = oxNew(Article::class);
-        $product->setId(self::TEST_ARTICLE_OXID);
-        $product->oxarticles__oxshopid = new Field(1);
-        $product->oxarticles__oxtitle = new Field(self::TEST_ARTICLE_OXID);
-        $product->oxarticles__oxprice = new Field(6.66);
-        $product->save();
-
-        $this->product = $product;
-    }
-
-    /**
-     * Test helper to replace header and footer as they are not needed for our tests.
-     */
-    private function replaceBlocks()
-    {
-        $shopId = Registry::getConfig()->getShopId();
-        $query = "REPLACE INTO oxtplblocks (OXID, OXACTIVE, OXSHOPID, OXTEMPLATE, OXBLOCKNAME, OXPOS, OXFILE, OXMODULE) VALUES " .
-                 "('_test_header', 1, '{$shopId}', 'layout/page.tpl', 'layout_header', 1, 'Tests/Integration/views/blocks/empty.tpl', 'oegdproptin'), " .
-                 "('_test_footer', 1, '{$shopId}', 'layout/footer.tpl', 'footer_main', 1, 'Tests/Integration/views/blocks/empty.tpl', 'oegdproptin'), " .
-                 "('_test_sidebar', 1, '{$shopId}', 'layout/sidebar.tpl', 'sidebar', 1, 'Tests/Integration/views/blocks/empty.tpl', 'oegdproptin'), " .
-                 "('_test_sgvo_icons', 1, '{$shopId}', 'layout/base.tpl', 'theme_svg_icons', 1, 'Tests/Integration/views/blocks/empty.tpl', 'oegdproptin'), " .
-                 "('_test_listitem', 1, '{$shopId}', 'page/review/review.tpl', 'widget_product_listitem_line_picturebox', 1, 'Tests/Integration/views/blocks/empty.tpl', 'oegdproptin')";
-
-        DatabaseProvider::getDb()->execute($query);
-    }
 
     /**
      * @return array
@@ -354,8 +353,14 @@ class FrontendTest extends IntegrationBaseTest
      */
     public function testDetailsReviewFormOptIn($blOeGdprOptinProductReviews, $assertMethod, $theme, $class)
     {
-        Registry::getConfig()->setConfigParam('blOeGdprOptinProductReviews', $blOeGdprOptinProductReviews);
         Registry::getConfig()->setConfigParam('sTheme', $theme);
+
+        $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
+        $settingsService->saveBoolean(
+            ModuleSettings::REVIEW_OPT_IN,
+            $blOeGdprOptinProductReviews,
+            GdprOptinModule::MODULE_ID
+        );
 
         $content = $this->getTemplateOutput($class, 'widget/reviews/reviews.tpl', null, true);
 
@@ -389,10 +394,19 @@ class FrontendTest extends IntegrationBaseTest
      */
     public function testOxwArticleDetailsReviewFormOptInError($blOeGdprOptinProductReviews, $assertMethod, $theme, $count)
     {
-        Registry::getConfig()->setConfigParam('blOeGdprOptinProductReviews', $blOeGdprOptinProductReviews);
+        $this->markTestIncomplete('TODO');
+
         Registry::getConfig()->setConfigParam('sTheme', $theme);
 
-        $controller = $this->getMock(ArticleDetails::class, ['isReviewOptInError']);
+        $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
+        $settingsService->saveBoolean(
+            ModuleSettings::REVIEW_OPT_IN,
+            $blOeGdprOptinProductReviews,
+            GdprOptinModule::MODULE_ID
+        );
+
+        $controller = $this->getMockBuilder(ArticleDetails::class)
+            ->getMock();
         $controller->expects($this->exactly($count))->method('isReviewOptInError')->will($this->returnValue(true));
         $controller->init();
         $controller->setViewProduct($this->product);
@@ -411,7 +425,7 @@ class FrontendTest extends IntegrationBaseTest
      *
      * @return mixed
      */
-    protected function getTemplateOutput($controllerName, $template, $addViewData = null, $setProduct = false)
+    private function getTemplateOutput($controllerName, $template, $addViewData = null, $setProduct = false)
     {
         $controller = oxNew($controllerName);
         $controller->init();
@@ -431,7 +445,7 @@ class FrontendTest extends IntegrationBaseTest
      *
      * @return string
      */
-    protected function doRender($controller, $template, $addViewData = null)
+    private function doRender($controller, $template, $addViewData = null)
     {
         //prepare output
         $output = oxNew(Output::class);
@@ -446,5 +460,36 @@ class FrontendTest extends IntegrationBaseTest
 
         $controller->setViewData($viewData);
         return Registry::get(UtilsView::class)->getTemplateOutput($template, $controller);
+    }
+
+    /**
+     * Creates filled basket object and stores it in session.
+     */
+    private function createBasket()
+    {
+        Registry::getSession()->getBasket();
+        $this->assertNull(Registry::getSession()->getVariable('_newitem'));
+
+        $basketComponent = oxNew(BasketComponent::class);
+        $basketComponent->toBasket(self::TEST_ARTICLE_OXID, 1);
+        $basket = $basketComponent->render();
+        $this->assertEquals(1, $basket->getProductsCount());
+
+        Registry::getSession()->setBasket($basket);
+    }
+
+    /**
+     * Create a test product.
+     */
+    private function createTestProduct()
+    {
+        $product = oxNew(Article::class);
+        $product->setId(self::TEST_ARTICLE_OXID);
+        $product->oxarticles__oxshopid = new Field(1);
+        $product->oxarticles__oxtitle = new Field(self::TEST_ARTICLE_OXID);
+        $product->oxarticles__oxprice = new Field(6.66);
+        $product->save();
+
+        $this->product = $product;
     }
 }
