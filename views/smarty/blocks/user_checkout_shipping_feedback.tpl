@@ -1,10 +1,6 @@
 [{$smarty.block.parent}]
 
-[{if !isset($oConfig)}]
-  [{assign var="oConfig" value=$oViewConf->getConfig()}]
-[{/if}]
-
-[{if true == $oConfig->getConfigParam('blOeGdprOptinDeliveryAddress')}]
+[{if true == $oViewConf->showGdprDeliveryOptIn()}]
   <div class="form-group[{if $Errors.oegdproptin_deliveryaddress}] oxInValid[{/if}]" id="GdprOptinShipAddress" style="display: none;">
     <div class="col-lg-9 col-lg-offset-3 offset-lg-3">
       <div class="checkbox">

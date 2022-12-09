@@ -1,10 +1,6 @@
 [{$smarty.block.parent}]
 
-[{if !isset($oConfig)}]
-    [{assign var="oConfig" value=$oViewConf->getConfig()}]
-[{/if}]
-
-[{if true == $oConfig->getConfigParam('blOeGdprOptinUserRegistration')}]
+[{if true == $oViewConf->showGdprRegistrationOptIn()}]
 <div class="form-group row">
     <div class="col-lg-9 col-lg-offset-3 offset-lg-3">
         <div class="checkbox">

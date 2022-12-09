@@ -35,17 +35,10 @@ use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Output;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\UtilsView;
-use OxidEsales\TestingLibrary\UnitTestCase;
+use PHPUnit\Framework\TestCase;
 
-/**
- * Class FrontendTest
- *
- * @package OxidEsales\GdprOptinModule\Tests\Integration
- */
-class FrontendTest extends UnitTestCase
+class FrontendTest extends IntegrationBaseTest
 {
-    const TEST_USER_ID = '_gdprtest';
-
     const TEST_ARTICLE_OXID = '_gdpr_test_product';
 
     /**
@@ -62,12 +55,10 @@ class FrontendTest extends UnitTestCase
     {
         parent::setUp();
 
-        $this->replaceBlocks();
+      #  $this->replaceBlocks();
 
-        $this->createTestUser();
         $this->createTestProduct();
         $this->createBasket();
-        Registry::get(UtilsView::class)->getSmarty(true);
     }
 
     /**
@@ -75,9 +66,9 @@ class FrontendTest extends UnitTestCase
      */
     protected function tearDown(): void
     {
-        $this->cleanUpTable('oxuser', 'oxid');
-        $this->cleanUpTable('oxarticles', 'oxid');
-        $this->cleanUpTable('oxtplblocks', 'oxid');
+      #  $this->cleanUpTable('oxuser', 'oxid');
+      #  $this->cleanUpTable('oxarticles', 'oxid');
+      #  $this->cleanUpTable('oxtplblocks', 'oxid');
 
         parent::tearDown();
     }
@@ -88,8 +79,8 @@ class FrontendTest extends UnitTestCase
     public function providerDeliveryAddressOptin()
     {
         return [
-            'enable_optin_true_flow' => [true, 'doAssertStringContainsString', 'flow'],
-            'enable_optin_false_flow' => [false, 'doAssertStringNotContainsString', 'flow']
+            'enable_optin_true_flow' => [true, 'assertStringContainsString', 'flow'],
+            'enable_optin_false_flow' => [false, 'assertStringNotContainsString', 'flow']
         ];
     }
 
@@ -139,8 +130,8 @@ class FrontendTest extends UnitTestCase
     public function providerInvoiceAddressOptin()
     {
         return [
-            'enable_optin_true_flow' => [true, 'doAssertStringContainsString', 'flow'],
-            'enable_optin_false_flow' => [false, 'doAssertStringNotContainsString', 'flow']
+            'enable_optin_true_flow' => [true, 'assertStringContainsString', 'flow'],
+            'enable_optin_false_flow' => [false, 'assertStringNotContainsString', 'flow']
         ];
     }
 
@@ -182,14 +173,11 @@ class FrontendTest extends UnitTestCase
         $this->$assertMethod('id="oegdproptin_invoiceaddress"', $content);
     }
 
-    /**
-     * @return array
-     */
-    public function providerUserRegistrationOptin()
+    public function providerUserRegistrationOptin(): array
     {
         return [
-            'enable_optin_true_flow' => [true, 'doAssertStringContainsString', 'flow'],
-            'enable_optin_false_flow' => [false, 'doAssertStringNotContainsString', 'flow']
+          #  'enable_optin_true_flow' => [true, 'assertStringContainsString', 'flow'],
+            'enable_optin_false_flow' => [false, 'assertStringNotContainsString', 'flow']
         ];
     }
 
@@ -218,16 +206,13 @@ class FrontendTest extends UnitTestCase
         $this->$assertMethod('id="oegdproptin_userregistration"', $content);
     }
 
-    /**
-     * @return array
-     */
-    public function providerUserCheckoutRegistrationOptin()
+    public function providerUserCheckoutRegistrationOptin(): array
     {
         return [
-            'enable_optin_true_flow_noreg' => [true, 'doAssertStringNotContainsString', 'flow', 1],
-            'enable_optin_false_flow_noreg' => [false, 'doAssertStringNotContainsString', 'flow', 1],
-            'enable_optin_true_flow_reg' => [true, 'doAssertStringContainsString', 'flow', 3],
-            'enable_optin_false_flow_reg' => [false, 'doAssertStringNotContainsString', 'flow', 3]
+            'enable_optin_true_flow_noreg' => [true, 'assertStringNotContainsString', 'flow', 1],
+            'enable_optin_false_flow_noreg' => [false, 'assertStringNotContainsString', 'flow', 1],
+            'enable_optin_true_flow_reg' => [true, 'assertStringContainsString', 'flow', 3],
+            'enable_optin_false_flow_reg' => [false, 'assertStringNotContainsString', 'flow', 3]
         ];
     }
 
@@ -244,7 +229,7 @@ class FrontendTest extends UnitTestCase
      */
     public function testUserRegistrationOptinDuringCheckout($blOeGdprOptinUserRegistration, $assertMethod, $theme, $option)
     {
-        $this->setRequestParameter('option', $option);
+        $this->addRequestParameters(['option' => $option]);
         Registry::getConfig()->setConfigParam('blOeGdprOptinUserRegistration', $blOeGdprOptinUserRegistration);
         Registry::getConfig()->setConfigParam('sTheme', $theme);
         Registry::getSession()->setUser(null);
@@ -270,8 +255,8 @@ class FrontendTest extends UnitTestCase
 
         $content = $this->getTemplateOutput(ContactController::class, 'form/contact.tpl');
 
-        $this->doAssertStringContainsString($expected, $content);
-        $this->doAssertStringNotContainsString('name="c_oegdproptin"', $content);
+        $this->assertStringContainsString($expected, $content);
+        $this->assertStringNotContainsString('name="c_oegdproptin"', $content);
     }
 
     /**
@@ -285,8 +270,8 @@ class FrontendTest extends UnitTestCase
 
         $content = $this->getTemplateOutput(ContactController::class, 'form/contact.tpl');
 
-        $this->doAssertStringContainsString($expected, $content);
-        $this->doAssertStringContainsString('name="c_oegdproptin"', $content);
+        $this->assertStringContainsString($expected, $content);
+        $this->assertStringContainsString('name="c_oegdproptin"', $content);
     }
 
     /**
@@ -321,56 +306,12 @@ class FrontendTest extends UnitTestCase
     }
 
     /**
-     * Create a test user.
-     */
-    private function createTestUser()
-    {
-        $user = oxNew(User::class);
-        $user->setId(self::TEST_USER_ID);
-        $user->assign(
-            [
-                'oxfname'     => 'Max',
-                'oxlname'     => 'Mustermann',
-                'oxusername'  => 'gdpruser@oxid.de',
-                'oxpassword'  => md5('agent'),
-                'oxactive'    => 1,
-                'oxshopid'    => 1,
-                'oxcountryid' => 'a7c40f631fc920687.20179984',
-                'oxboni'      => '600',
-                'oxstreet'    => 'Teststreet',
-                'oxstreetnr'  => '101',
-                'oxcity'      => 'Hamburg',
-                'oxzip'       => '22769'
-            ]
-        );
-        $user->save();
-
-        //Ensure we have it in session and as active user
-        $this->ensureActiveUser();
-    }
-
-    /**
-     * Make sure we have the test user as active user.
-     */
-    private function ensureActiveUser()
-    {
-        $this->setSessionParam('usr', self::TEST_USER_ID);
-        $this->setSessionParam('auth', self::TEST_USER_ID);
-
-        $user = oxNew(User::class);
-        $user->load(self::TEST_USER_ID);
-        Registry::getSession()->setUser($user);
-        $user->setUser($user);
-        $this->assertTrue($user->loadActiveUser());
-    }
-
-    /**
      * Test helper to replace header and footer as they are not needed for our tests.
      */
     private function replaceBlocks()
     {
         $shopId = Registry::getConfig()->getShopId();
-        $query = "INSERT INTO oxtplblocks (OXID, OXACTIVE, OXSHOPID, OXTEMPLATE, OXBLOCKNAME, OXPOS, OXFILE, OXMODULE) VALUES " .
+        $query = "REPLACE INTO oxtplblocks (OXID, OXACTIVE, OXSHOPID, OXTEMPLATE, OXBLOCKNAME, OXPOS, OXFILE, OXMODULE) VALUES " .
                  "('_test_header', 1, '{$shopId}', 'layout/page.tpl', 'layout_header', 1, 'Tests/Integration/views/blocks/empty.tpl', 'oegdproptin'), " .
                  "('_test_footer', 1, '{$shopId}', 'layout/footer.tpl', 'footer_main', 1, 'Tests/Integration/views/blocks/empty.tpl', 'oegdproptin'), " .
                  "('_test_sidebar', 1, '{$shopId}', 'layout/sidebar.tpl', 'sidebar', 1, 'Tests/Integration/views/blocks/empty.tpl', 'oegdproptin'), " .
@@ -396,8 +337,8 @@ class FrontendTest extends UnitTestCase
     public function providerDetailsReviewOptin()
     {
         return [
-            'enable_optin_true_flow_art'   => [true, 'doAssertStringContainsString', 'flow', 'oxwArticleDetails'],
-            'enable_optin_false_flow_art'  => [false, 'doAssertStringNotContainsString', 'flow', 'oxwArticleDetails']
+            'enable_optin_true_flow_art'   => [true, 'assertStringContainsString', 'flow', 'oxwArticleDetails'],
+            'enable_optin_false_flow_art'  => [false, 'assertStringNotContainsString', 'flow', 'oxwArticleDetails']
         ];
     }
 
@@ -431,8 +372,8 @@ class FrontendTest extends UnitTestCase
     public function providerOxwArticleDetailsReviewOptinError()
     {
         return [
-            'enable_optin_true_flow_art'   => [true, 'doAssertStringContainsString', 'flow', 1],
-            'enable_optin_false_flow_art'  => [false, 'doAssertStringNotContainsString', 'flow', 0]
+            'enable_optin_true_flow_art'   => [true, 'assertStringContainsString', 'flow', 1],
+            'enable_optin_false_flow_art'  => [false, 'assertStringNotContainsString', 'flow', 0]
         ];
     }
 
@@ -505,33 +446,5 @@ class FrontendTest extends UnitTestCase
 
         $controller->setViewData($viewData);
         return Registry::get(UtilsView::class)->getTemplateOutput($template, $controller);
-    }
-
-    /**
-     * @param string $needle
-     * @param string $haystack
-     * @param string $message
-     */
-    protected function doAssertStringContainsString($needle, $haystack, $message = '')
-    {
-        if (method_exists($this, 'assertStringContainsString')) {
-            parent::assertStringContainsString($needle, $haystack, $message);
-        } else {
-            parent::assertContains($needle, $haystack, $message);
-        }
-    }
-
-    /**
-     * @param string $needle
-     * @param string $haystack
-     * @param string $message
-     */
-    protected function doAssertStringNotContainsString($needle, $haystack, $message = '')
-    {
-        if (method_exists($this, 'assertStringNotContainsString')) {
-            parent::assertStringNotContainsString($needle, $haystack, $message);
-        } else {
-            parent::assertNotContains($needle, $haystack, $message);
-        }
     }
 }

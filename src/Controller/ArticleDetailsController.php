@@ -21,6 +21,9 @@
 
 namespace OxidEsales\GdprOptinModule\Controller;
 
+use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\Eshop\Core\UtilsView;
+
 /**
  * Class ArticleDetailsController
  * Extends \OxidEsales\Eshop\Application\Controller\ArticleDetailsController.
@@ -39,7 +42,7 @@ class ArticleDetailsController extends ArticleDetailsController_parent
     {
         $reviewController = oxNew(\OxidEsales\Eshop\Application\Controller\ReviewController::class);
         if (!$reviewController->validateOptIn()) {
-            \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\UtilsView::class)->addErrorToDisplay('OEGDPROPTIN_REVIEW_FORM_ERROR_MESSAGE');
+            Registry::get(UtilsView::class)->addErrorToDisplay('OEGDPROPTIN_REVIEW_FORM_ERROR_MESSAGE');
             return false;
         }
 

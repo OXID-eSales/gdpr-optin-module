@@ -1,0 +1,9 @@
+services:
+
+  _defaults:
+    public: false
+    autowire: true
+
+  OxidEsales\GdprOptinModule\Service\ModuleSettings:
+    class: OxidEsales\GdprOptinModule\Service\ModuleSettings
+    public: true

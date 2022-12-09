@@ -26,37 +26,10 @@ use OxidEsales\Eshop\Application\Controller\RegisterController;
 use OxidEsales\Eshop\Application\Controller\UserController;
 use OxidEsales\Eshop\Application\Model\User;
 use OxidEsales\Eshop\Core\Registry;
-use OxidEsales\TestingLibrary\UnitTestCase;
+use OxidEsales\Eshop\Core\Request;
 
-/**
- * Class UserComponentTest
- *
- * @package OxidEsales\GdprOptinModule\Tests\Integration
- */
-class UserComponentTest extends UnitTestCase
+class UserComponentTest extends IntegrationBaseTest
 {
-    const TEST_USER_ID = '_gdprtest';
-
-    /**
-     * Test set up.
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->createTestUser();
-    }
-
-    /**
-     * Tear down.
-     */
-    protected function tearDown(): void
-    {
-        $this->cleanUpTable('oxuser', 'oxid');
-
-        parent::tearDown();
-    }
-
     /**
      * @return array
      */
@@ -292,75 +265,5 @@ class UserComponentTest extends UnitTestCase
 
         $displayErrors = Registry::getSession()->getVariable('Errors');
         $this->$assertDisplayExc(array_key_exists('oegdproptin_userregistration', $displayErrors));
-    }
-
-    /**
-     * Create a test user.
-     */
-    private function createTestUser()
-    {
-        $user = oxNew(User::class);
-        $user->setId(self::TEST_USER_ID);
-        $user->assign(
-            [
-                'oxfname'             => 'Max',
-                'oxlname'             => 'Mustermann',
-                'oxusername'          => 'gdpruser@oxid.de',
-                'oxpassword'          => md5('agent'),
-                'oxactive'            => 1,
-                'oxshopid'            => 1,
-                'oxcountryid'         => 'a7c40f631fc920687.20179984',
-                'oxboni'              => '600',
-                'oxstreet'            => 'Teststreet',
-                'oxstreetnr'          => '101',
-                'oxcity'              => 'Hamburg',
-                'oxzip'               => '22769'
-            ]
-        );
-        $user->save();
-
-        //Ensure we have it in session and as active user
-        $this->ensureActiveUser();
-    }
-
-    /**
-     * Make sure we have the test user as active user.
-     */
-    private function ensureActiveUser()
-    {
-        $this->setSessionParam('usr', self::TEST_USER_ID);
-        $this->setSessionParam('auth', self::TEST_USER_ID);
-
-        $user = oxNew(User::class);
-        $user->load(self::TEST_USER_ID);
-        Registry::getSession()->setUser($user);
-        $user->setUser($user);
-        $this->assertTrue($user->loadActiveUser());
-    }
-
-    /**
-     * Test helper for setting requets parameters.
-     *
-     * @param array $parameters
-     */
-    private function addRequestParameters($additionalParameters = [])
-    {
-        $address = 'a:13:{s:16:"oxaddress__oxsal";s:2:"MR";s:18:"oxaddress__oxfname";s:4:"Moxi";' .
-                   's:18:"oxaddress__oxlname";s:6:"Muster";s:20:"oxaddress__oxcompany";s:0:"";' .
-                   's:20:"oxaddress__oxaddinfo";s:0:"";s:19:"oxaddress__oxstreet";s:10:"Nicestreet";' .
-                   's:21:"oxaddress__oxstreetnr";s:3:"666";s:16:"oxaddress__oxzip";s:5:"12345";' .
-                   's:17:"oxaddress__oxcity";s:9:"Somewhere";s:22:"oxaddress__oxcountryid";' .
-                   's:26:"a7c40f631fc920687.20179984";s:20:"oxaddress__oxstateid";s:0:"";' .
-                   's:16:"oxaddress__oxfon";s:0:"";s:16:"oxaddress__oxfax";s:0:"";}';
-
-        $deliveryAddress = unserialize($address);
-        $parameters = ['deladr' => $deliveryAddress,
-                       'stoken' => Registry::getSession()->getSessionChallengeToken()];
-
-        $parameters = array_merge($parameters, $additionalParameters);
-
-        foreach ($parameters as $key => $value) {
-            $this->setRequestParameter($key, $value);
-        }
     }
 }

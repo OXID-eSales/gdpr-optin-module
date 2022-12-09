@@ -21,6 +21,8 @@
 
 namespace OxidEsales\GdprOptinModule\Component\Widget;
 
+use \OxidEsales\Eshop\Application\Controller\ReviewController;
+
 /**
  * Class ArticleDetails
  * Extends \OxidEsales\Eshop\Application\Component\Widget\ArticleDetails
@@ -37,7 +39,7 @@ class ArticleDetails extends ArticleDetails_parent
      */
     public function isReviewOptInValidationRequired()
     {
-        $review = oxNew(\OxidEsales\Eshop\Application\Controller\ReviewController::class);
+        $review = oxNew(ReviewController::class);
         return $review->isReviewOptInValidationRequired();
     }
 
@@ -48,7 +50,7 @@ class ArticleDetails extends ArticleDetails_parent
      */
     public function isReviewOptInError()
     {
-        $review = oxNew(\OxidEsales\Eshop\Application\Controller\ReviewController::class);
+        $review = oxNew(ReviewController::class);
         return $review->isReviewOptInError();
     }
 }

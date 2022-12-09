@@ -21,6 +21,9 @@
 
 namespace OxidEsales\GdprOptinModule\Controller;
 
+use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\Eshop\Core\UtilsView;
+
 /**
  * Class ContactController
  * Extends \OxidEsales\Eshop\Application\Controller\ContactController
@@ -45,9 +48,9 @@ class ContactController extends ContactController_parent
      */
     public function send()
     {
-        $optInValue = \OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter('c_oegdproptin');
+        $optInValue = Registry::getRequest()->getRequestParameter('c_oegdproptin');
         if ($this->isOptInValidationRequired() && !$optInValue) {
-            \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\UtilsView::class)->addErrorToDisplay('OEGDPROPTIN_CONTACT_FORM_ERROR_MESSAGE');
+            Registry::get(UtilsView::class)->addErrorToDisplay('OEGDPROPTIN_CONTACT_FORM_ERROR_MESSAGE');
             $this->optInError = true;
             return false;
         }
@@ -84,7 +87,7 @@ class ContactController extends ContactController_parent
     {
         $method = self::CONTACT_FORM_METHOD_DEFAULT;
 
-        if ($configMethod = \OxidEsales\Eshop\Core\Registry::getConfig()->getConfigParam('OeGdprOptinContactFormMethod')) {
+        if ($configMethod = Registry::getConfig()->getConfigParam('OeGdprOptinContactFormMethod')) {
             $method = $configMethod;
         }
 

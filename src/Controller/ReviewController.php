@@ -21,6 +21,10 @@
 
 namespace OxidEsales\GdprOptinModule\Controller;
 
+use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\Eshop\Core\UtilsView;
+use OxidEsales\Eshop\Application\Controller\ReviewController as EshopReviewController;
+
 /**
  * Class ReviewController
  * Extends \OxidEsales\Eshop\Application\Controller\ArticleDetailsController.
@@ -40,7 +44,7 @@ class ReviewController extends ReviewController_parent
     public function saveReview()
     {
         if (!$this->validateOptIn()) {
-            \OxidEsales\Eshop\Core\Registry::get(\OxidEsales\Eshop\Core\UtilsView::class)->addErrorToDisplay('OEGDPROPTIN_REVIEW_FORM_ERROR_MESSAGE');
+            Registry::get(UtilsView::class)->addErrorToDisplay('OEGDPROPTIN_REVIEW_FORM_ERROR_MESSAGE');
             return false;
         }
 
@@ -54,7 +58,7 @@ class ReviewController extends ReviewController_parent
      */
     public function isReviewOptInValidationRequired()
     {
-        return (bool)\OxidEsales\Eshop\Core\Registry::getConfig()->getConfigParam(self::REVIEW_OPTIN_PARAM);
+        return (bool)Registry::getConfig()->getConfigParam(self::REVIEW_OPTIN_PARAM);
     }
 
     /**
@@ -64,7 +68,7 @@ class ReviewController extends ReviewController_parent
      */
     public function validateOptIn()
     {
-        $optInValue = \OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter('rvw_oegdproptin');
+        $optInValue = Registry::getRequest()->getRequestParameter('rvw_oegdproptin');
         if ($this->isReviewOptInValidationRequired() && !$optInValue) {
             return false;
         }
@@ -79,8 +83,8 @@ class ReviewController extends ReviewController_parent
      */
     public function isReviewOptInError()
     {
-        $formSent = \OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter('rvw_oegdproptin') !== null;
-        $review = oxNew(\OxidEsales\Eshop\Application\Controller\ReviewController::class);
+        $formSent = Registry::getRequest()->getRequestParameter('rvw_oegdproptin') !== null;
+        $review = oxNew(EshopReviewController::class);
         $result = false;
 
         if ($formSent && !$review->validateOptIn()) {

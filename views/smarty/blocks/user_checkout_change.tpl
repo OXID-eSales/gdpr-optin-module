@@ -1,14 +1,10 @@
-[{if !isset($oConfig)}]
-    [{assign var="oConfig" value=$oViewConf->getConfig()}]
-[{/if}]
-
 [{$smarty.block.parent}]
 
 [{if $oxcmp_user}]
     [{assign var="delivadr" value=$oxcmp_user->getSelectedAddress()}]
 [{/if}]
 
-[{if true == $oConfig->getConfigParam('blOeGdprOptinDeliveryAddress')}]
+[{if true == $oViewConf->showGdprDeliveryOptIn()}]
     [{if $delivadr}]
         [{oxscript add="function toggleGdprOptinShipAddress() { $('#GdprOptinShipAddress, #shippingAddressForm').hide($(this).is(':checked'));}"}]
         [{oxscript add="$('#showShipAddress').change(toggleGdprOptinShipAddress);"}]
@@ -22,12 +18,8 @@
     [{/if}]
 [{/if}]
 
-[{if true == $oConfig->getConfigParam('blOeGdprOptinInvoiceAddress')}]
+[{if true == $oViewConf->showGdprInvoiceOptIn()}]
     [{oxscript add="$('#userChangeAddress').click( function() { $('#GdprInvoiceAddressOptin').toggle();return false;});"}]
-[{/if}]
-
-[{if !isset($oConfig)}]
-  [{assign var="oConfig" value=$oViewConf->getConfig()}]
 [{/if}]
 
 [{capture assign="optinValidationJS"}]

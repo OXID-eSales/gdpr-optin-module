@@ -21,13 +21,18 @@
 
 namespace OxidEsales\GdprOptinModule\Tests\Integration;
 
+use PHPUnit\Framework\TestCase;
+use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\Eshop\Application\Controller\ContactController;
+
 /**
  * Class ContactControllerTest
  *
  * @package OxidEsales\GdprOptinModule\Tests\Integration
  */
-class ContactControllerTest extends \OxidEsales\TestingLibrary\UnitTestCase
+class ContactControllerTest extends IntegrationBaseTest
 {
+
     /**
      * Test checkbox validation.
      *
@@ -35,9 +40,9 @@ class ContactControllerTest extends \OxidEsales\TestingLibrary\UnitTestCase
      */
     public function testOptInValidationRequired($configValue, $expected)
     {
-        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('OeGdprOptinContactFormMethod', $configValue);
+        Registry::getConfig()->setConfigParam('OeGdprOptinContactFormMethod', $configValue);
 
-        $controller = oxNew(\OxidEsales\Eshop\Application\Controller\ContactController::class);
+        $controller = oxNew(ContactController::class);
         $this->assertSame($expected, $controller->isOptInValidationRequired());
     }
 
@@ -57,9 +62,10 @@ class ContactControllerTest extends \OxidEsales\TestingLibrary\UnitTestCase
      */
     public function testSendError()
     {
-        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('OeGdprOptinContactFormMethod', "statistical");
+        Registry::getConfig()->setConfigParam('OeGdprOptinContactFormMethod', "statistical");
 
-        $controller = oxNew(\OxidEsales\Eshop\Application\Controller\ContactController::class);
+        $controller = oxNew(ContactController::class);
+
         $this->assertFalse($controller->isOptInError());
         $this->assertFalse($controller->send());
         $this->assertTrue($controller->isOptInError());

@@ -1,12 +1,8 @@
-[{if !isset($oConfig)}]
-    [{assign var="oConfig" value=$oViewConf->getConfig()}]
-[{/if}]
-
 [{if $oxcmp_user}]
     [{assign var="delivadr" value=$oxcmp_user->getSelectedAddress()}]
 [{/if}]
 
-[{if true == $oConfig->getConfigParam('blOeGdprOptinDeliveryAddress')}]
+[{if true == $oViewConf->showGdprDeliveryOptIn()}]
     [{if $delivadr}]
         [{oxscript add="$('#showShipAddress').change( function() { $('#GdprShippingAddressOptin, #shippingAddressForm').hide($(this).is(':checked'));});"}]
         [{oxscript add="$('.dd-edit-shipping-address').click(function(){ $('#GdprShippingAddressOptin').toggle($(this).is(':not(:checked)')); document.getElementById('oegdproptin_changeDelAddress').value=1; });"}]
@@ -16,7 +12,7 @@
     [{/if}]
 [{/if}]
 
-[{if true == $oConfig->getConfigParam('blOeGdprOptinInvoiceAddress')}]
+[{if true == $oViewConf->showGdprInvoiceOptIn()}]
     [{oxscript add="$('#userChangeAddress').click( function() { $('#GdprInvoiceAddressOptin').show();$('#userChangeAddress').hide();return false;});"}]
 [{/if}]
 

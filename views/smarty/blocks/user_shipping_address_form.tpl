@@ -1,14 +1,10 @@
-[{if !isset($oConfig)}]
-    [{assign var="oConfig" value=$oViewConf->getConfig()}]
-[{/if}]
-
 [{$smarty.block.parent}]
 
 [{if $oxcmp_user}]
     [{assign var="delivadr" value=$oxcmp_user->getSelectedAddress()}]
 [{/if}]
 
-[{if true == $oConfig->getConfigParam('blOeGdprOptinDeliveryAddress')}]
+[{if true == $oViewConf->showGdprDeliveryOptIn()}]
     <div class="clearfix"></div>
     <div id="GdprShippingAddressOptin" class="form-group" style="[{if $delivadr || !$oView->showShipAddress()}]display: none;[{/if}]">
         <div class="col-lg-9 col-lg-offset-3 offset-lg-3">
