@@ -35,7 +35,7 @@ env:
   PACKAGE_NAME: 'oxid-esales/gdpr-optin-module'
   MODULE_IDS: 'oegdproptin'
   SONARCLOUD_ORGANIZATION: 'oxid-esales'
-  SONARCLOUD_PROJECT_KEY: 'OXID-eSales_nginx-module'
+  SONARCLOUD_PROJECT_KEY: 'OXID-eSales_gdpr-optin-module'
   DEFAULT_THEME_ID: 'smarty'
   DEFAULT_PHP_VERSION: '8.0'
   DEFAULT_MYSQL_VERSION: '5.7.37'
@@ -455,7 +455,7 @@ jobs:
           wget https://phar.phpunit.de/phpcov-7.0.2.phar
           mv phpcov-7.0.2.phar source/phpcov.phar
           docker-compose run -T php php phpcov.phar merge --clover coverage.xml ./coverage
-          sed -i 's+/var/www/source/modules/oe/nginx/+./+' source/coverage.xml
+          sed -i 's+/var/www/source/modules/oe/gdproptin/+./+' source/coverage.xml
       - name: Upload log artifact
         uses: actions/upload-artifact@v3
         with:
@@ -473,7 +473,7 @@ jobs:
       - name: Checkout current module
         uses: actions/checkout@v3
         with:
-          path: source/source/modules/oe/nginx
+          path: source/source/modules/oe/gdproptin
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -484,25 +484,25 @@ jobs:
 
       - name: Install module dependencies
         id: dependencies
-        working-directory: source/source/modules/oe/nginx
+        working-directory: source/source/modules/oe/gdproptin
         run: composer install
 
       - name: Run phpcs
         id: phpcs
         if: always()
-        working-directory: source/source/modules/oe/nginx
+        working-directory: source/source/modules/oe/gdproptin
         run: composer phpcs
 
       - name: Run phpstan
         id: phpstan
         if: always()
-        working-directory: source/source/modules/oe/nginx
+        working-directory: source/source/modules/oe/gdproptin
         run: composer phpstan-report || composer phpstan
 
       - name: Run phpmd
         id: phpmd
         if: always()
-        working-directory: source/source/modules/oe/nginx
+        working-directory: source/source/modules/oe/gdproptin
         run: composer phpmd-report || composer phpmd
 
       - name: Upload log artifact
@@ -511,8 +511,8 @@ jobs:
         with:
           name: StylesLog-${{ env.PHP_VERSION }}-${{ github.sha }}
           path: |
-            source/source/modules/oe/nginx/phpstan.report.json
-            source/source/modules/oe/nginx/phpmd.report.json
+            source/source/modules/oe/gdproptin/phpstan.report.json
+            source/source/modules/oe/gdproptin/phpmd.report.json
 
   sonarcloud:
     needs: [ prepare_environment, styles, prepare_coverage_results ]
