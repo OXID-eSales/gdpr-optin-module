@@ -70,8 +70,8 @@ class FrontendTest extends IntegrationBaseTest
     public function providerDeliveryAddressOptin()
     {
         return [
-            'enable_optin_true_flow' => [true, 'assertStringContainsString', 'flow'],
-            'enable_optin_false_flow' => [false, 'assertStringNotContainsString', 'flow']
+            'enable_optin_true' => [true, 'assertStringContainsString'],
+            'enable_optin_false' => [false, 'assertStringNotContainsString']
         ];
     }
 
@@ -82,12 +82,10 @@ class FrontendTest extends IntegrationBaseTest
      *
      * @param bool   $reqireOptinDeliveryAddress
      * @param string $assertMethod
-     * @param string $theme
      */
-    public function testDeliveryAddressOptinForCheckout($reqireOptinDeliveryAddress, $assertMethod, $theme)
+    public function testDeliveryAddressOptinForCheckout($reqireOptinDeliveryAddress, $assertMethod)
     {
         Registry::getSession()->setVariable('blshowshipaddress', true);
-        Registry::getConfig()->setConfigParam('sTheme', $theme);
 
         $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
         $settingsService->saveBoolean(
@@ -108,12 +106,10 @@ class FrontendTest extends IntegrationBaseTest
      *
      * @param bool $reqireOptinDeliveryAddress
      * @param string $assertMethod
-     * @param string $theme
      */
-    public function testDeliveryAddressOptinForUserAccount($reqireOptinDeliveryAddress, $assertMethod, $theme)
+    public function testDeliveryAddressOptinForUserAccount($reqireOptinDeliveryAddress, $assertMethod)
     {
         Registry::getSession()->setVariable('blshowshipaddress', true);
-        Registry::getConfig()->setConfigParam('sTheme', $theme);
 
         $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
         $settingsService->saveBoolean(
@@ -133,8 +129,8 @@ class FrontendTest extends IntegrationBaseTest
     public function providerInvoiceAddressOptin()
     {
         return [
-            'enable_optin_true_flow' => [true, 'assertStringContainsString', 'flow'],
-            'enable_optin_false_flow' => [false, 'assertStringNotContainsString', 'flow']
+            'enable_optin_true' => [true, 'assertStringContainsString'],
+            'enable_optin_false' => [false, 'assertStringNotContainsString']
         ];
     }
 
@@ -145,12 +141,9 @@ class FrontendTest extends IntegrationBaseTest
      *
      * @param bool   $reqireOptinInvoiceAddress
      * @param string $assertMethod
-     * @param string $theme
      */
-    public function testInvoiceAddressOptinForCheckout($reqireOptinInvoiceAddress, $assertMethod, $theme)
+    public function testInvoiceAddressOptinForCheckout($reqireOptinInvoiceAddress, $assertMethod)
     {
-        Registry::getConfig()->setConfigParam('sTheme', $theme);
-
         $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
         $settingsService->saveBoolean(
             ModuleSettings::INVOICE_OPT_IN,
@@ -170,12 +163,9 @@ class FrontendTest extends IntegrationBaseTest
      *
      * @param bool   $reqireOptinInvoiceAddress
      * @param string $assertMethod
-     * @param string $theme
      */
-    public function testInvoiceAddressOptinForUserAccount($reqireOptinInvoiceAddress, $assertMethod, $theme)
+    public function testInvoiceAddressOptinForUserAccount($reqireOptinInvoiceAddress, $assertMethod)
     {
-        Registry::getConfig()->setConfigParam('sTheme', $theme);
-
         $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
         $settingsService->saveBoolean(
             ModuleSettings::INVOICE_OPT_IN,
@@ -191,8 +181,8 @@ class FrontendTest extends IntegrationBaseTest
     public function providerUserRegistrationOptin(): array
     {
         return [
-            'enable_optin_true_flow' => [true, 'assertStringContainsString', 'flow'],
-            'enable_optin_false_flow' => [false, 'assertStringNotContainsString', 'flow']
+            'enable_optin_true' => [true, 'assertStringContainsString'],
+            'enable_optin_false' => [false, 'assertStringNotContainsString']
         ];
     }
 
@@ -204,13 +194,11 @@ class FrontendTest extends IntegrationBaseTest
      *
      * @param bool   $blOeGdprOptinUserRegistration
      * @param string $assertMethod
-     * @param string $theme
      */
-    public function testUserRegistrationOptin($blOeGdprOptinUserRegistration, $assertMethod, $theme)
+    public function testUserRegistrationOptin($blOeGdprOptinUserRegistration, $assertMethod)
     {
         $this->markTestIncomplete('TODO');
 
-        Registry::getConfig()->setConfigParam('sTheme', $theme);
         Registry::getSession()->setUser(null);
 
         $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
@@ -232,10 +220,10 @@ class FrontendTest extends IntegrationBaseTest
     public function providerUserCheckoutRegistrationOptin(): array
     {
         return [
-            'enable_optin_true_flow_noreg' => [true, 'assertStringNotContainsString', 'flow', 1],
-            'enable_optin_false_flow_noreg' => [false, 'assertStringNotContainsString', 'flow', 1],
-            'enable_optin_true_flow_reg' => [true, 'assertStringContainsString', 'flow', 3],
-            'enable_optin_false_flow_reg' => [false, 'assertStringNotContainsString', 'flow', 3]
+            'enable_optin_true_noreg' => [true, 'assertStringNotContainsString', 1],
+            'enable_optin_false_noreg' => [false, 'assertStringNotContainsString', 1],
+            'enable_optin_true_reg' => [true, 'assertStringContainsString', 3],
+            'enable_optin_false_reg' => [false, 'assertStringNotContainsString', 3]
         ];
     }
 
@@ -247,15 +235,13 @@ class FrontendTest extends IntegrationBaseTest
      *
      * @param bool   $blOeGdprOptinUserRegistration
      * @param string $assertMethod
-     * @param string $theme
      * @param int    $option
      */
-    public function testUserRegistrationOptinDuringCheckout($blOeGdprOptinUserRegistration, $assertMethod, $theme, $option)
+    public function testUserRegistrationOptinDuringCheckout($blOeGdprOptinUserRegistration, $assertMethod, $option)
     {
         $this->markTestIncomplete('TODO');
 
         $this->addRequestParameters(['option' => $option]);
-        Registry::getConfig()->setConfigParam('sTheme', $theme);
         Registry::getSession()->setUser(null);
 
         $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
@@ -280,8 +266,6 @@ class FrontendTest extends IntegrationBaseTest
      */
     public function testContactFormDeletionOptIn()
     {
-        Registry::getConfig()->setConfigParam('sTheme', 'flow');
-
         $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
         $settingsService->saveString(
             ModuleSettings::CONTACT_CHOICE,
@@ -302,8 +286,6 @@ class FrontendTest extends IntegrationBaseTest
      */
     public function testContactFormStatisticalOptIn()
     {
-        Registry::getConfig()->setConfigParam('sTheme', 'flow');
-
         $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
         $settingsService->saveString(
             ModuleSettings::CONTACT_CHOICE,
@@ -319,25 +301,11 @@ class FrontendTest extends IntegrationBaseTest
         $this->assertStringContainsString('name="c_oegdproptin"', $content);
     }
 
-
-    /**
-     * @return array
-     */
-    public function providerContactForm()
+    public function providerDetailsReviewOptin(): array
     {
         return [
-            'flow' => ['flow']
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public function providerDetailsReviewOptin()
-    {
-        return [
-            'enable_optin_true_flow_art'   => [true, 'assertStringContainsString', 'flow', 'oxwArticleDetails'],
-            'enable_optin_false_flow_art'  => [false, 'assertStringNotContainsString', 'flow', 'oxwArticleDetails']
+            'enable_optin_true_art'   => [true, 'assertStringContainsString', 'oxwArticleDetails'],
+            'enable_optin_false_art'  => [false, 'assertStringNotContainsString', 'oxwArticleDetails']
         ];
     }
 
@@ -348,13 +316,10 @@ class FrontendTest extends IntegrationBaseTest
      *
      * @param bool   $blOeGdprOptinProductReviews
      * @param string $assertMethod
-     * @param string $theme
      * @param string $class
      */
-    public function testDetailsReviewFormOptIn($blOeGdprOptinProductReviews, $assertMethod, $theme, $class)
+    public function testDetailsReviewFormOptIn($blOeGdprOptinProductReviews, $assertMethod, $class)
     {
-        Registry::getConfig()->setConfigParam('sTheme', $theme);
-
         $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
         $settingsService->saveBoolean(
             ModuleSettings::REVIEW_OPT_IN,
@@ -377,8 +342,8 @@ class FrontendTest extends IntegrationBaseTest
     public function providerOxwArticleDetailsReviewOptinError()
     {
         return [
-            'enable_optin_true_flow_art'   => [true, 'assertStringContainsString', 'flow', 1],
-            'enable_optin_false_flow_art'  => [false, 'assertStringNotContainsString', 'flow', 0]
+            'enable_optin_true_art'   => [true, 'assertStringContainsString', 1],
+            'enable_optin_false_art'  => [false, 'assertStringNotContainsString', 0]
         ];
     }
 
@@ -389,14 +354,11 @@ class FrontendTest extends IntegrationBaseTest
      *
      * @param bool   $blOeGdprOptinProductReviews
      * @param string $assertMethod
-     * @param string $theme
      * @param int    $count
      */
-    public function testOxwArticleDetailsReviewFormOptInError($blOeGdprOptinProductReviews, $assertMethod, $theme, $count)
+    public function testOxwArticleDetailsReviewFormOptInError($blOeGdprOptinProductReviews, $assertMethod, $count)
     {
         $this->markTestIncomplete('TODO');
-
-        Registry::getConfig()->setConfigParam('sTheme', $theme);
 
         $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
         $settingsService->saveBoolean(

@@ -5,7 +5,6 @@
  * See LICENSE file for license details.
  */
 
-
 namespace OxidEsales\GdprOptinModule\Tests\Integration\Core;
 
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
@@ -14,7 +13,6 @@ use OxidEsales\GdprOptinModule\Core\GdprOptinModule;
 use OxidEsales\GdprOptinModule\Service\ModuleSettings;
 use OxidEsales\GdprOptinModule\Tests\Integration\IntegrationBaseTest;
 use OxidEsales\GdprOptinModule\Traits\ServiceContainer;
-
 
 final class ViewConfigTest extends IntegrationBaseTest
 {
