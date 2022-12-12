@@ -65,7 +65,7 @@ jobs:
           if [[ "smarty" == "${{ inputs.template_engine }}" ]]; then echo -n "THEME_ID=flow"; else echo -n "THEME_ID=$DEFAULT_THEME_ID"; fi >> $GITHUB_OUTPUT
       - id: module_codecept_test_group
         run: |
-          echo 'gdproptin_module'  >> $GITHUB_OUTPUT
+          echo "gdproptin_module" >> $GITHUB_OUTPUT
 
   install_shop_with_module:
     needs: [ prepare_environment ]
@@ -468,6 +468,9 @@ jobs:
   codeception_tests_module:
     needs: [ prepare_environment, install_shop_with_module ]
     runs-on: ubuntu-latest
+    matrix:
+      group:
+        - 'gdproptin_module'
     steps:
       - name: context php_version
         run: |
@@ -522,7 +525,7 @@ jobs:
             -e MODULE_IDS=${{ env.MODULE_IDS }} \
             php vendor/bin/codecept run acceptance \
                 --bootstrap=/var/www/source/bootstrap.php \
-                -c /var/www/vendor/${{ env.PACKAGE_NAME }}/Tests/codeception.yml -g ${{ needs.prepare_environment.outputs.MODULE_CODECEPT_TEST_GROUP }}
+                -c /var/www/vendor/${{ env.PACKAGE_NAME }}/Tests/codeception.yml -g ${{ matrix.group }}
       - name: Upload log artifact
         if: always()
         uses: actions/upload-artifact@v3

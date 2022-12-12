@@ -15,7 +15,6 @@ use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Home;
 use OxidEsales\Codeception\Step\Basket;
 use OxidEsales\GdprOptinModule\Service\ModuleSettings;
-use OxidEsales\NginxModule\Tests\Codeception\Page\Component\NginxBasket;
 
 /**
  * @group gdproptin_module
@@ -58,16 +57,19 @@ final class ReviewCest extends BaseCest
         $I->see(Translator::translate('NO_REVIEW_AVAILABLE'));
         $I->retryClick(Translator::translate('WRITE_REVIEW'));
 
-        $I->see(Translator::translate('OEGDPROPTIN_REVIEW_FORM_MESSAGE'));
+        $I->seeElementInDOM('#rvw_oegdproptin');
+        $I->scrollTo('#rvw_oegdproptin');
+
         $detailsPage->addReviewAndRating('my shiny other review', 5);
         $I->waitForPageLoad();
-
         $I->see(Translator::translate('OEGDPROPTIN_REVIEW_FORM_ERROR_MESSAGE'));
 
-        $I->click('#c_oegdproptin');
-        $I->seeCheckboxIsChecked('#c_oegdproptin');
-        $detailsPage->addReviewAndRating('my shiny other review', 5);
+        $I->seeElementInDOM('#rvw_oegdproptin');
+        $I->scrollTo('#rvw_oegdproptin');
+        $I->click('#rvw_oegdproptin');
+        $I->click($detailsPage->saveRatingAndReviewButton);
 
+        $I->reloadPage();
         $I->see('my shiny other review');
         $I->dontSee(Translator::translate('OEGDPROPTIN_REVIEW_FORM_ERROR_MESSAGE'));
     }
