@@ -36,7 +36,7 @@ env:
   MODULE_IDS: 'oegdproptin'
   SONARCLOUD_ORGANIZATION: 'oxid-esales'
   SONARCLOUD_PROJECT_KEY: 'OXID-eSales_gdpr-optin-module'
-  DEFAULT_THEME_ID: 'smarty'
+  DEFAULT_THEME_ID: 'flow'
   DEFAULT_PHP_VERSION: '8.0'
   DEFAULT_MYSQL_VERSION: '5.7.37'
   DEFAULT_TEMPLATE_ENGINE: 'smarty'
