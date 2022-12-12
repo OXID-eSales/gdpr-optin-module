@@ -652,7 +652,7 @@ jobs:
             -Dsonar.cpd.php.minimumLines=5
 
   notify_slack_module:
-    needs: [ unit_tests_module, integration_tests_module, styles ]
+    needs: [ unit_tests_module, integration_tests_module, codeception_tests_module, styles ]
     runs-on: ubuntu-latest
     if: always()
     steps:
@@ -662,16 +662,17 @@ jobs:
           payload: >
             { "text": "
             ${{ github.event_name == 'workflow_dispatch' && 'Manual run of' || 'Scheduled run of' }} ${{ github.workflow }} on ${{ github.repository }} by ${{ github.actor }}
-            ${{ needs.unit_tests_module.result=='success' && needs.integration_tests_module.result=='success' && 'Successful' || 'Failed' }}
+            ${{ needs.unit_tests_module.result=='success' && needs.integration_tests_module.result=='success' && needs.codeception_tests_module.result=='success' && 'Successful' || 'Failed' }}
             ", "blocks": [ { "type": "header","text": { "type": "plain_text", "emoji": true, "text": "
             ${{ github.event_name == 'workflow_dispatch' && 'Manual run of' || 'Scheduled' }} ${{ github.workflow }} on ${{ github.repository }} by ${{ github.actor }}
             " } },{ "type": "section","fields": [ { "type": "mrkdwn","text": "
-            *Status:* ${{ needs.unit_tests_module.result=='success' && needs.integration_tests_module.result=='success' && ':white_check_mark:' || ':x:' }}
+            *Status:* ${{ needs.unit_tests_module.result=='success' && needs.integration_tests_module.result=='success' && needs.codeception_tests_module.result=='success' && ':white_check_mark:' || ':x:' }}
             " },{ "type": "mrkdwn","text": "
             Repository: <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ github.repository }}/actions/runs/${{ github.run_id }}>
             " } ] },{ "type": "section", "text": { "type": "mrkdwn", "text": "
             \n* Module Unit ${{ (needs.unit_tests_module.result=='success') && ':white_check_mark:' || ':x:' }}
             \n* Module Integration ${{ (needs.integration_tests_module.result=='success') && ':white_check_mark:' || ':x:' }}
+            \n* Module Codeception ${{ (needs.codeception_tests_module.result=='success') && ':white_check_mark:' || ':x:' }}
             \n* Module Styles ${{ (needs.styles.result=='success') && ':white_check_mark:' || ':x:' }}
             " } }, { "type": "divider" } ] }
         env:

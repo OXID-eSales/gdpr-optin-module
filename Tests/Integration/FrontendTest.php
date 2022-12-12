@@ -186,37 +186,6 @@ class FrontendTest extends IntegrationBaseTest
         ];
     }
 
-    /**
-     * Test checkbox visibility.
-     * NOTE: user must not be logged in here. Need to simulate user registration.
-     *
-     * @dataProvider providerUserRegistrationOptin
-     *
-     * @param bool   $blOeGdprOptinUserRegistration
-     * @param string $assertMethod
-     */
-    public function testUserRegistrationOptin($blOeGdprOptinUserRegistration, $assertMethod)
-    {
-        $this->markTestIncomplete('TODO');
-
-        Registry::getSession()->setUser(null);
-
-        $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
-        $settingsService->saveBoolean(
-            ModuleSettings::REGISTRATION_OPT_IN,
-            $blOeGdprOptinUserRegistration,
-            GdprOptinModule::MODULE_ID
-        );
-
-        $addViewData = [];
-        $addViewData['oxcmp_basket'] = oxNew(Basket::class);
-        $addViewData['oConfig'] = Registry::getConfig();
-        $addViewData['sidebar'] = '';
-
-        $content = $this->getTemplateOutput(RegisterController::class, 'page/account/register.tpl', $addViewData);
-        $this->$assertMethod('id="oegdproptin_userregistration"', $content);
-    }
-
     public function providerUserCheckoutRegistrationOptin(): array
     {
         return [
