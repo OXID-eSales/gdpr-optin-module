@@ -26,11 +26,19 @@ final class RegistrationCest extends BaseCest
     {
         $I->wantToTest('that user does not see registration optin');
 
-        $I->openShop()
+        $registrationPage = $I->openShop()
             ->openUserRegistrationPage();
 
         $I->dontSeeElementInDOM('#oegdproptin_userregistration');
         $I->dontSee(Translator::translate('OEGDPROPTIN_USER_REGISTRATION_OPTIN'));
+
+        $userForm = $registrationPage->enterUserLoginData($this->getUserLoginData('first'))
+            ->enterAddressData($this->getUserAddressData());
+
+        $I->click($userForm->saveFormButton);
+        $I->waitForPageLoad();
+
+        $I->see(Translator::translate('MESSAGE_WELCOME_REGISTERED_USER'));
     }
 
     public function testRegistrationOptinRequired(AcceptanceTester $I): void
@@ -46,14 +54,14 @@ final class RegistrationCest extends BaseCest
         $I->seeElementInDOM('#oegdproptin_userregistration');
         $I->see(Translator::translate('OEGDPROPTIN_USER_REGISTRATION_OPTIN'));
 
-        $userForm = $registrationPage->enterUserLoginData($this->getUserLoginData())
+        $userForm = $registrationPage->enterUserLoginData($this->getUserLoginData('second'))
             ->enterAddressData($this->getUserAddressData());
 
         $I->click($userForm->saveFormButton);
         $I->waitForPageLoad();
         $I->see(Translator::translate('OEGDPROPTIN_CONFIRM_USER_REGISTRATION_OPTIN'));
 
-        $userForm = $registrationPage->enterUserLoginData($this->getUserLoginData())
+        $userForm = $registrationPage->enterUserLoginData($this->getUserLoginData('second'))
             ->enterAddressData($this->getUserAddressData());
         $I->click('#oegdproptin_userregistration');
         $I->seeCheckboxIsChecked('#oegdproptin_userregistration');
@@ -63,10 +71,10 @@ final class RegistrationCest extends BaseCest
         $I->see(Translator::translate('MESSAGE_WELCOME_REGISTERED_USER'));
     }
 
-    private function getUserLoginData(): array
+    private function getUserLoginData(string $name): array
     {
         return [
-            'userLoginNameField' => 'example_gdpr@oxid-esales.dev',
+            'userLoginNameField' => $name . '_gdpr@oxid-esales.dev',
             'userPasswordField' => 'useruser'
         ];
     }

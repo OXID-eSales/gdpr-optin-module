@@ -48,7 +48,6 @@ jobs:
       PHP_VERSION: ${{ steps.php_version.outputs.PHP_VERSION }}
       MYSQL_VERSION: ${{ steps.mysql_version.outputs.MYSQL_VERSION }}
       TEMPLATE_ENGINE: ${{ steps.template_engine.outputs.TEMPLATE_ENGINE }}
-      MODULE_CODECEPT_TEST_GROUP: ${{ steps.module_codecept_test_group.outputs.MODULE_CODECEPT_TEST_GROUP }}
       THEME_ID: ${{ steps.theme_id.outputs.THEME_ID }}
     steps:
       - id: php_version
@@ -63,9 +62,6 @@ jobs:
       - id: theme_id
         run: |
           if [[ "smarty" == "${{ inputs.template_engine }}" ]]; then echo -n "THEME_ID=flow"; else echo -n "THEME_ID=$DEFAULT_THEME_ID"; fi >> $GITHUB_OUTPUT
-      - id: module_codecept_test_group
-        run: |
-          echo "gdproptin_module" >> $GITHUB_OUTPUT
 
   install_shop_with_module:
     needs: [ prepare_environment ]
@@ -468,9 +464,10 @@ jobs:
   codeception_tests_module:
     needs: [ prepare_environment, install_shop_with_module ]
     runs-on: ubuntu-latest
-    matrix:
-      group:
-        - 'gdproptin_module'
+    strategy:
+      matrix:
+        group:
+          - 'gdproptin_module'
     steps:
       - name: context php_version
         run: |
