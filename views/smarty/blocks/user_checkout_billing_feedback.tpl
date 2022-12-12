@@ -1,9 +1,5 @@
 [{$smarty.block.parent}]
 
-[{if !isset($oConfig)}]
-  [{assign var="oConfig" value=$oViewConf->getConfig()}]
-[{/if}]
-
 [{if true == $oViewConf->showGdprInvoiceOptIn()}]
   <div class="form-group[{if $Errors.oegdproptin_invoiceaddress}] oxInValid[{/if}]" id="GdprInvoiceAddressOptin" style="display: none;">
     <div class="col-lg-9 col-lg-offset-3 offset-lg-3">

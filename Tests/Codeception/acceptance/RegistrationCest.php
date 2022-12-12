@@ -46,7 +46,6 @@ final class RegistrationCest extends BaseCest
         $I->wantToTest('that user needs to agree to registration optin');
 
         $I->setModuleSettingBoolean(ModuleSettings::REGISTRATION_OPT_IN, true);
-        $I->updateConfigInDatabase('blShowBirthdayFields', false, 'bool');
 
         $registrationPage = $I->openShop()
             ->openUserRegistrationPage();
@@ -69,32 +68,5 @@ final class RegistrationCest extends BaseCest
         $I->waitForPageLoad();
 
         $I->see(Translator::translate('MESSAGE_WELCOME_REGISTERED_USER'));
-    }
-
-    private function getUserLoginData(string $name): array
-    {
-        return [
-            'userLoginNameField' => $name . '_gdpr@oxid-esales.dev',
-            'userPasswordField' => 'useruser'
-        ];
-    }
-
-    private function getUserAddressData(): array
-    {
-        return [
-            'userSalutation' => 'Mrs',
-            'userFirstName' => 'first_šÄßüл',
-            'userLastName' => 'last_šÄßüл',
-            'companyName' => 'company_šÄßüл',
-            'street' => 'street_šÄßüл',
-            'streetNr' => '123',
-            'ZIP' => '12345',
-            'city' => 'userregcity_šÄßüл',
-            'additionalInfo' => 'userregadditional info_šÄßüл',
-            'fonNr' => '111-111-123',
-            'faxNr' => '111-111-111-7',
-            'countryId' => 'Germany',
-            'stateId' => 'Berlin',
-        ];
     }
 }

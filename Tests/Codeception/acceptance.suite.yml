@@ -14,7 +14,7 @@ modules:
         host: '%SELENIUM_SERVER_HOST%'
         browser: '%BROWSER_NAME%'
         port: '%SELENIUM_SERVER_PORT%'
-        window_size: 2200x2000
+        window_size: 2200x3600
         clear_cookies: true
     - \OxidEsales\Codeception\Module\ShopSetup:
         dump: '%DUMP_PATH%'

@@ -197,40 +197,6 @@ class FrontendTest extends IntegrationBaseTest
     }
 
     /**
-     * Test checkbox visibility during registration.
-     * NOTE: user must not be logged in here. Need to simulate user registration.
-     *
-     * @dataProvider providerUserCheckoutRegistrationOptin
-     *
-     * @param bool   $blOeGdprOptinUserRegistration
-     * @param string $assertMethod
-     * @param int    $option
-     */
-    public function testUserRegistrationOptinDuringCheckout($blOeGdprOptinUserRegistration, $assertMethod, $option)
-    {
-        $this->markTestIncomplete('TODO');
-
-        $this->addRequestParameters(['option' => $option]);
-        Registry::getSession()->setUser(null);
-
-        $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
-        $settingsService->saveBoolean(
-            ModuleSettings::REGISTRATION_OPT_IN,
-            $blOeGdprOptinUserRegistration,
-            GdprOptinModule::MODULE_ID
-        );
-
-        $addViewData = [];
-        $addViewData['oxcmp_basket'] = oxNew(Basket::class);
-        $addViewData['oConfig'] = Registry::getConfig();
-        $addViewData['sidebar'] = '';
-
-        $content = $this->getTemplateOutput(UserController::class, 'page/checkout/user.tpl', $addViewData);
-
-        $this->$assertMethod('id="oegdproptin_userregistration"', $content);
-    }
-
-    /**
      * Test contact form deletion optin
      */
     public function testContactFormDeletionOptIn()
@@ -314,38 +280,6 @@ class FrontendTest extends IntegrationBaseTest
             'enable_optin_true_art'   => [true, 'assertStringContainsString', 1],
             'enable_optin_false_art'  => [false, 'assertStringNotContainsString', 0]
         ];
-    }
-
-    /**
-     * Test review form optin error message visibility.
-     *
-     * @dataProvider providerOxwArticleDetailsReviewOptinError
-     *
-     * @param bool   $blOeGdprOptinProductReviews
-     * @param string $assertMethod
-     * @param int    $count
-     */
-    public function testOxwArticleDetailsReviewFormOptInError($blOeGdprOptinProductReviews, $assertMethod, $count)
-    {
-        $this->markTestIncomplete('TODO');
-
-        $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
-        $settingsService->saveBoolean(
-            ModuleSettings::REVIEW_OPT_IN,
-            $blOeGdprOptinProductReviews,
-            GdprOptinModule::MODULE_ID
-        );
-
-        $controller = $this->getMockBuilder(ArticleDetails::class)
-            ->getMock();
-        $controller->expects($this->exactly($count))->method('isReviewOptInError')->will($this->returnValue(true));
-        $controller->init();
-        $controller->setViewProduct($this->product);
-
-        $content = $this->doRender($controller, 'widget/reviews/reviews.tpl');
-
-        $expected = Registry::getLang()->translateString("OEGDPROPTIN_REVIEW_FORM_ERROR_MESSAGE");
-        $this->$assertMethod($expected, $content);
     }
 
     /**

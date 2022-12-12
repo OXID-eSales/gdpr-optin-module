@@ -21,7 +21,7 @@ use OxidEsales\Codeception\Page\Account\UserAddress;
  * @group gdproptin_module
  * @group gdproptin_module_address
  */
-final class AccountAddressOptinCest extends BaseCest
+final class UserAddressOptinCest extends BaseCest
 {
     function testNoInvoiceAddressOptinNecessary(AcceptanceTester $I): void
     {
@@ -130,23 +130,5 @@ final class AccountAddressOptinCest extends BaseCest
         $I->waitForPageLoad();
         $I->dontSee(Translator::translate('OEGDPROPTIN_CONFIRM_STORE_DELIVERY_ADDRESS'));
         $I->dontSeeElement($userAddress->shipAddressForm);
-    }
-
-    private function getUserAddressFormData(): array
-    {
-        return [
-            'userSalutation' => 'Mrs',
-            'userFirstName' => 'some-name',
-            'userLastName' => 'some-last-name',
-            'street' => 'some-street',
-            'streetNr' => '1',
-            'ZIP' => 'zip-1234',
-            'city' => 'some-city',
-            'countryId' => 'Germany',
-            'companyName' => '',
-            'additionalInfo' => '',
-            'fonNr' => '',
-            'faxNr' => '',
-        ];
     }
 }
