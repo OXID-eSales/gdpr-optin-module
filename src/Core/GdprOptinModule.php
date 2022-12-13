@@ -25,7 +25,7 @@ class GdprOptinModule
     /**
      * Module activation script.
      */
-    public static function onActivate()
+    public static function onActivate(): void
     {
         self::clearCache();
     }
@@ -33,15 +33,12 @@ class GdprOptinModule
     /**
      * Module deactivation script.
      */
-    public static function onDeactivate()
+    public static function onDeactivate(): void
     {
         self::clearCache();
     }
 
-    /**
-     * Try to clean caches on module activation.
-     */
-    public static function clearCache()
+    public static function clearCache(): void
     {
         try {
             $facts = new Facts();

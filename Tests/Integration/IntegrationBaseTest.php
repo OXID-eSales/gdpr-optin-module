@@ -5,6 +5,8 @@
  * See LICENSE file for license details.
  */
 
+declare(strict_types=1);
+
 namespace OxidEsales\GdprOptinModule\Tests\Integration;
 
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
@@ -34,10 +36,7 @@ abstract class IntegrationBaseTest extends TestCase
         $this->disableOptins();
     }
 
-    /**
-     * Create a test user.
-     */
-    protected function createTestUser()
+    protected function createTestUser(): void
     {
         $user = oxNew(User::class);
         $user->setId(self::TEST_USER_ID);
@@ -66,7 +65,7 @@ abstract class IntegrationBaseTest extends TestCase
     /**
      * Make sure we have the test user as active user.
      */
-    protected function ensureActiveUser()
+    protected function ensureActiveUser(): void
     {
         $this->setSessionParam('usr', self::TEST_USER_ID);
         $this->setSessionParam('auth', self::TEST_USER_ID);
@@ -80,10 +79,8 @@ abstract class IntegrationBaseTest extends TestCase
 
     /**
      * Test helper for setting request parameters.
-     *
-     * @param array $parameters
      */
-    protected function addRequestParameters($additionalParameters = [])
+    protected function addRequestParameters(array $additionalParameters = []): void
     {
         $address = 'a:13:{s:16:"oxaddress__oxsal";s:2:"MR";s:18:"oxaddress__oxfname";s:4:"Moxi";' .
             's:18:"oxaddress__oxlname";s:6:"Muster";s:20:"oxaddress__oxcompany";s:0:"";' .

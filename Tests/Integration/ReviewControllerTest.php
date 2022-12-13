@@ -5,6 +5,8 @@
  * See LICENSE file for license details.
  */
 
+declare(strict_types=1);
+
 namespace OxidEsales\GdprOptinModule\Tests\Integration;
 
 use OxidEsales\Eshop\Application\Controller\ReviewController;
@@ -18,10 +20,7 @@ class ReviewControllerTest extends IntegrationBaseTest
 {
     use ServiceContainer;
 
-    /**
-     * Test validation error appears if needed
-     */
-    public function testSendError()
+    public function testSendError(): void
     {
         $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
         $settingsService->saveBoolean(
@@ -35,10 +34,7 @@ class ReviewControllerTest extends IntegrationBaseTest
         $this->assertFalse($controller->saveReview());
     }
 
-    /**
-     * Test validation error appears if needed
-     */
-    public function testSendNotError()
+    public function testSendNotError(): void
     {
         $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
         $settingsService->saveBoolean(
@@ -53,11 +49,9 @@ class ReviewControllerTest extends IntegrationBaseTest
     }
 
     /**
-     * Test if validation is required.
-     *
      * @dataProvider dataProviderReviewOptInValidationRequired
      */
-    public function testReviewOptInValidationRequired($configValue, $expected)
+    public function testReviewOptInValidationRequired(bool $configValue, bool $expected): void
     {
         $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
         $settingsService->saveBoolean(
@@ -71,10 +65,7 @@ class ReviewControllerTest extends IntegrationBaseTest
         $this->assertSame($expected, $controller->isReviewOptInValidationRequired());
     }
 
-    /**
-     * @return array
-     */
-    public function dataProviderReviewOptInValidationRequired()
+    public function dataProviderReviewOptInValidationRequired(): array
     {
         return [
             'required' => [true, true],
@@ -83,11 +74,9 @@ class ReviewControllerTest extends IntegrationBaseTest
     }
 
     /**
-     * Test opt in validation
-     *
      * @dataProvider dataProviderValidateOptIn
      */
-    public function testValidateOptIn($configValue, $checkboxStatus, $expectedValue)
+    public function testValidateOptIn(bool $configValue, int|null $checkboxStatus, bool $expectedValue)
     {
         $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
         $settingsService->saveBoolean(
@@ -102,10 +91,7 @@ class ReviewControllerTest extends IntegrationBaseTest
         $this->assertSame($expectedValue, $controller->validateOptIn());
     }
 
-    /**
-     * @return array
-     */
-    public function dataProviderValidateOptIn()
+    public function dataProviderValidateOptIn(): array
     {
         return [
             'required-checked' => [true, 1, true],
@@ -118,11 +104,9 @@ class ReviewControllerTest extends IntegrationBaseTest
     }
 
     /**
-     * Test opt in validation
-     *
      * @dataProvider dataProviderReviewOptInError
      */
-    public function testReviewOptInError($configValue, $checkboxStatus, $expectedValue)
+    public function testReviewOptInError(bool $configValue, int|null $checkboxStatus, bool $expectedValue): void
     {
         $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
         $settingsService->saveBoolean(
@@ -137,10 +121,7 @@ class ReviewControllerTest extends IntegrationBaseTest
         $this->assertSame($expectedValue, $controller->isReviewOptInError());
     }
 
-    /**
-     * @return array
-     */
-    public function dataProviderReviewOptInError()
+    public function dataProviderReviewOptInError(): array
     {
         return [
             'required-checked' => [true, 1, false],

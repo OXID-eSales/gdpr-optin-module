@@ -5,6 +5,8 @@
  * See LICENSE file for license details.
  */
 
+declare(strict_types=1);
+
 namespace OxidEsales\GdprOptinModule\Tests\Integration;
 
 use OxidEsales\Eshop\Application\Component\UserComponent;
@@ -79,8 +81,6 @@ final class UserComponentTest extends IntegrationBaseTest
     }
 
     /**
-     * Test checkbox validation.
-     *
      * @dataProvider providerDeliveryAddressOptin
      */
     public function testDeliveryAddressOptinValidationAccountUser(
@@ -108,10 +108,7 @@ final class UserComponentTest extends IntegrationBaseTest
         $this->$assertDisplayExc(array_key_exists('oegdproptin_deliveryaddress', $displayErrors));
     }
 
-    /**
-     * @return array
-     */
-    public function providerInvoiceAddressOptin()
+    public function providerInvoiceAddressOptin(): array
     {
         //Optin will be required on changed invoice address
         $changedAddress = ['oegdproptin_changeInvAddress' => '1'];
@@ -132,14 +129,7 @@ final class UserComponentTest extends IntegrationBaseTest
     }
 
     /**
-     * Test checkbox validation.
-     *
      * @dataProvider providerInvoiceAddressOptin
-     *
-     * @param bool   $requireGdprOptinInvoiceAddress
-     * @param bool   $checkboxChecked
-     * @param string $assertDisplayExc
-     * @param array  $parameters
      */
     public function testInvoiceAddressOptinValidationCheckoutUser(
         bool $requireGdprOptinInvoiceAddress,
@@ -165,8 +155,6 @@ final class UserComponentTest extends IntegrationBaseTest
     }
 
     /**
-     * Test checkbox validation.
-     *
      * @dataProvider providerInvoiceAddressOptin
      */
     public function testInvoiceAddressOptinValidationAccountUser(
@@ -192,10 +180,7 @@ final class UserComponentTest extends IntegrationBaseTest
         $this->$assertDisplayExc(array_key_exists('oegdproptin_invoiceaddress', $displayErrors));
     }
 
-    /**
-     * @return array
-     */
-    public function providerUserRegistrationOptin()
+    public function providerUserRegistrationOptin(): array
     {
         return [
             'enable_true_optin_true_register' => [true, true, 'assertFalse'],
@@ -206,8 +191,6 @@ final class UserComponentTest extends IntegrationBaseTest
     }
 
     /**
-     * Test checkbox validation.
-     *
      * @dataProvider providerUserRegistrationOptin
      */
     public function testUserRegistrationOptinValidation(
@@ -251,21 +234,14 @@ final class UserComponentTest extends IntegrationBaseTest
         ];
     }
     /**
-     * Test checkbox validation.
-     *
      * @dataProvider  providerUserCheckoutRegistrationOptin
-     *
-     * @param bool   $oeGdprUserRegistrationAddress
-     * @param bool   $checkboxChecked
-     * @param string $assertDisplayExc
-     * @param int    $option (1 = guest buy/no optin, 3 = create account)
      */
     public function testUserRegistrationOptinValidationCheckoutUser(
         bool $oeGdprUserRegistrationAddress,
         bool $checkboxChecked,
         string $assertDisplayExc,
-        $option
-    ) {
+        int $option //(1 = guest buy/no optin, 3 = create account)
+    ): void {
         Registry::getSession()->setUser(null);
 
         $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);

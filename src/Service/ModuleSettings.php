@@ -53,7 +53,7 @@ final class ModuleSettings
         return $this->getStringSettingValue(self::CONTACT_CHOICE);
     }
 
-    protected function getStringSettingValue($key): string
+    protected function getStringSettingValue(string $key): string
     {
         return $this->moduleSettingService->getString(
             $key,
@@ -61,7 +61,7 @@ final class ModuleSettings
         )->trim()->toString();
     }
 
-    protected function getBoolSettingValue($key): bool
+    protected function getBoolSettingValue(string $key): bool
     {
         return $this->moduleSettingService->getBoolean(
             $key,

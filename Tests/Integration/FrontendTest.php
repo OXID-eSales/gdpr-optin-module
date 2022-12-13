@@ -5,6 +5,8 @@
  * See LICENSE file for license details.
  */
 
+declare(strict_types=1);
+
 namespace OxidEsales\GdprOptinModule\Tests\Integration;
 
 use OxidEsales\Eshop\Application\Component\BasketComponent;
@@ -26,7 +28,7 @@ use OxidEsales\GdprOptinModule\Core\GdprOptinModule;
 use OxidEsales\GdprOptinModule\Traits\ServiceContainer;
 use OxidEsales\GdprOptinModule\Service\ModuleSettings;
 
-class FrontendTest extends IntegrationBaseTest
+final class FrontendTest extends IntegrationBaseTest
 {
     use ServiceContainer;
 
@@ -39,9 +41,6 @@ class FrontendTest extends IntegrationBaseTest
      */
     private $product = null;
 
-    /**
-     * Test set up.
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -50,10 +49,7 @@ class FrontendTest extends IntegrationBaseTest
         $this->createBasket();
     }
 
-    /**
-     * @return array
-     */
-    public function providerDeliveryAddressOptin()
+    public function providerDeliveryAddressOptin(): array
     {
         return [
             'enable_optin_true' => [true, 'assertStringContainsString'],
@@ -62,14 +58,9 @@ class FrontendTest extends IntegrationBaseTest
     }
 
     /**
-     * Test checkbox visibility.
-     *
      * @dataProvider providerDeliveryAddressOptin
-     *
-     * @param bool   $reqireOptinDeliveryAddress
-     * @param string $assertMethod
      */
-    public function testDeliveryAddressOptinForCheckout($reqireOptinDeliveryAddress, $assertMethod)
+    public function testDeliveryAddressOptinForCheckout(bool $reqireOptinDeliveryAddress, string $assertMethod): void
     {
         Registry::getSession()->setVariable('blshowshipaddress', true);
 
@@ -86,14 +77,9 @@ class FrontendTest extends IntegrationBaseTest
     }
 
     /**
-     * Test checkbox visibility.
-     *
      * @dataProvider providerDeliveryAddressOptin
-     *
-     * @param bool $reqireOptinDeliveryAddress
-     * @param string $assertMethod
      */
-    public function testDeliveryAddressOptinForUserAccount($reqireOptinDeliveryAddress, $assertMethod)
+    public function testDeliveryAddressOptinForUserAccount(bool $reqireOptinDeliveryAddress, string $assertMethod): void
     {
         Registry::getSession()->setVariable('blshowshipaddress', true);
 
@@ -109,10 +95,7 @@ class FrontendTest extends IntegrationBaseTest
         $this->$assertMethod('id="oegdproptin_deliveryaddress"', $content);
     }
 
-    /**
-     * @return array
-     */
-    public function providerInvoiceAddressOptin()
+    public function providerInvoiceAddressOptin(): array
     {
         return [
             'enable_optin_true' => [true, 'assertStringContainsString'],
@@ -121,14 +104,9 @@ class FrontendTest extends IntegrationBaseTest
     }
 
     /**
-     * Test checkbox visibility.
-     *
      * @dataProvider providerInvoiceAddressOptin
-     *
-     * @param bool   $reqireOptinInvoiceAddress
-     * @param string $assertMethod
      */
-    public function testInvoiceAddressOptinForCheckout($reqireOptinInvoiceAddress, $assertMethod)
+    public function testInvoiceAddressOptinForCheckout(bool $reqireOptinInvoiceAddress, string $assertMethod): void
     {
         $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
         $settingsService->saveBoolean(
@@ -137,20 +115,18 @@ class FrontendTest extends IntegrationBaseTest
             GdprOptinModule::MODULE_ID
         );
 
-        $content = $this->getTemplateOutput(UserController::class, 'form/user_checkout_change.tpl');
+        $content = $this->getTemplateOutput(
+            UserController::class,
+            'form/user_checkout_change.tpl'
+        );
 
         $this->$assertMethod('id="oegdproptin_invoiceaddress"', $content);
     }
 
     /**
-     * Test checkbox visibility.
-     *
      * @dataProvider providerInvoiceAddressOptin
-     *
-     * @param bool   $reqireOptinInvoiceAddress
-     * @param string $assertMethod
      */
-    public function testInvoiceAddressOptinForUserAccount($reqireOptinInvoiceAddress, $assertMethod)
+    public function testInvoiceAddressOptinForUserAccount(bool $reqireOptinInvoiceAddress, string $assertMethod): void
     {
         $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
         $settingsService->saveBoolean(
@@ -182,10 +158,7 @@ class FrontendTest extends IntegrationBaseTest
         ];
     }
 
-    /**
-     * Test contact form deletion optin
-     */
-    public function testContactFormDeletionOptIn()
+    public function testContactFormDeletionOptIn(): void
     {
         $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
         $settingsService->saveString(
@@ -202,10 +175,7 @@ class FrontendTest extends IntegrationBaseTest
         $this->assertStringNotContainsString('name="c_oegdproptin"', $content);
     }
 
-    /**
-     * Test contact form statistical optin
-     */
-    public function testContactFormStatisticalOptIn()
+    public function testContactFormStatisticalOptIn(): void
     {
         $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
         $settingsService->saveString(
@@ -231,16 +201,13 @@ class FrontendTest extends IntegrationBaseTest
     }
 
     /**
-     * Test review form optin visibility.
-     *
      * @dataProvider providerDetailsReviewOptin
-     *
-     * @param bool   $blOeGdprOptinProductReviews
-     * @param string $assertMethod
-     * @param string $class
      */
-    public function testDetailsReviewFormOptIn($blOeGdprOptinProductReviews, $assertMethod, $class)
-    {
+    public function testDetailsReviewFormOptIn(
+        bool $blOeGdprOptinProductReviews,
+        string $assertMethod,
+        string $class
+    ): void {
         $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
         $settingsService->saveBoolean(
             ModuleSettings::REVIEW_OPT_IN,
@@ -248,7 +215,12 @@ class FrontendTest extends IntegrationBaseTest
             GdprOptinModule::MODULE_ID
         );
 
-        $content = $this->getTemplateOutput($class, 'widget/reviews/reviews.tpl', null, true);
+        $content = $this->getTemplateOutput(
+            $class,
+            'widget/reviews/reviews.tpl',
+            null,
+            true
+        );
 
         $this->$assertMethod('id="rvw_oegdproptin"', $content);
 
@@ -257,27 +229,20 @@ class FrontendTest extends IntegrationBaseTest
         $this->$assertMethod($message, $content);
     }
 
-    /**
-     * @return array
-     */
-    public function providerOxwArticleDetailsReviewOptinError()
+    public function providerOxwArticleDetailsReviewOptinError(): array
     {
         return [
-            'enable_optin_true_art'   => [true, 'assertStringContainsString', 1],
-            'enable_optin_false_art'  => [false, 'assertStringNotContainsString', 0]
+            'enable_optin_true_art' => [true, 'assertStringContainsString', 1],
+            'enable_optin_false_art' => [false, 'assertStringNotContainsString', 0]
         ];
     }
 
-    /**
-     * @param string $controllerName
-     * @param string $template
-     * @param null   $addViewData
-     * @param bool   $setProduct Set true to add test product to view (needed for review tests)
-     *
-     * @return mixed
-     */
-    private function getTemplateOutput($controllerName, $template, $addViewData = null, $setProduct = false)
-    {
+    private function getTemplateOutput(
+        string $controllerName,
+        string $template,
+        array $addViewData = null,
+        bool $setProduct = false //Set true to add test product to view (needed for review tests)
+    ): string {
         $controller = oxNew($controllerName);
         $controller->init();
 
@@ -290,13 +255,8 @@ class FrontendTest extends IntegrationBaseTest
 
     /**
      * Test helper to render output.
-     *
-     * @param object $controller
-     * @param string $template
-     *
-     * @return string
      */
-    private function doRender($controller, $template, $addViewData = null)
+    private function doRender(object $controller, string $template, array $addViewData = null): string
     {
         //prepare output
         $output = oxNew(Output::class);
@@ -316,7 +276,7 @@ class FrontendTest extends IntegrationBaseTest
     /**
      * Creates filled basket object and stores it in session.
      */
-    private function createBasket()
+    private function createBasket(): void
     {
         Registry::getSession()->getBasket();
         $this->assertNull(Registry::getSession()->getVariable('_newitem'));
@@ -329,10 +289,7 @@ class FrontendTest extends IntegrationBaseTest
         Registry::getSession()->setBasket($basket);
     }
 
-    /**
-     * Create a test product.
-     */
-    private function createTestProduct()
+    private function createTestProduct(): void
     {
         $product = oxNew(Article::class);
         $product->setId(self::TEST_ARTICLE_OXID);

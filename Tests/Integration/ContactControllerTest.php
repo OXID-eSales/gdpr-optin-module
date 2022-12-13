@@ -5,6 +5,8 @@
  * See LICENSE file for license details.
  */
 
+declare(strict_types=1);
+
 namespace OxidEsales\GdprOptinModule\Tests\Integration;
 
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
@@ -15,21 +17,14 @@ use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Application\Controller\ContactController;
 use OxidEsales\GdprOptinModule\Service\ModuleSettings;
 
-/**
- * Class ContactControllerTest
- *
- * @package OxidEsales\GdprOptinModule\Tests\Integration
- */
-class ContactControllerTest extends IntegrationBaseTest
+final class ContactControllerTest extends IntegrationBaseTest
 {
     use ServiceContainer;
 
     /**
-     * Test checkbox validation.
-     *
      * @dataProvider dataProviderOptInValidationRequired
      */
-    public function testOptInValidationRequired($configValue, $expected)
+    public function testOptInValidationRequired(string $configValue, bool $expected): void
     {
         $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
         $settingsService->saveString(
@@ -42,10 +37,7 @@ class ContactControllerTest extends IntegrationBaseTest
         $this->assertSame($expected, $controller->isOptInValidationRequired());
     }
 
-    /**
-     * @return array
-     */
-    public function dataProviderOptInValidationRequired()
+    public function dataProviderOptInValidationRequired(): array
     {
         return [
             'formMethod-deletion' => ['deletion', false],
@@ -56,7 +48,7 @@ class ContactControllerTest extends IntegrationBaseTest
     /**
      * Test validation error appears if needed
      */
-    public function testSendError()
+    public function testSendError(): void
     {
         $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
         $settingsService->saveString(

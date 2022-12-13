@@ -5,6 +5,8 @@
  * See LICENSE file for license details.
  */
 
+declare(strict_types=1);
+
 namespace OxidEsales\GdprOptinModule\Tests\Unit\Service;
 
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingService;
@@ -16,12 +18,12 @@ use Symfony\Component\String\UnicodeString;
 /**
  * @covers \OxidEsales\GdprOptinModule\Service\ModuleSettings
  */
-class ModuleSettingsTest extends TestCase
+final class ModuleSettingsTest extends TestCase
 {
     /**
      * @dataProvider gettersDataProvider
      */
-    public function testGetters($method, $systemMethod, $key, $systemValue, $expectedValue)
+    public function testGetters($method, $systemMethod, $key, $systemValue, $expectedValue): void
     {
         $mssMock = $this->createPartialMock(ModuleSettingService::class, [$systemMethod]);
         $mssMock->expects($this->once())->method($systemMethod)->with(
