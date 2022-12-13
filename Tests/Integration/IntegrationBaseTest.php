@@ -9,13 +9,10 @@ declare(strict_types=1);
 
 namespace OxidEsales\GdprOptinModule\Tests\Integration;
 
-use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\Eshop\Application\Model\User;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\Request;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
-use OxidEsales\EshopCommunity\Internal\Framework\Templating\TemplateEngineInterface;
-use OxidEsales\EshopCommunity\Internal\Framework\Templating\TemplateRendererBridgeInterface;
 use OxidEsales\GdprOptinModule\Core\GdprOptinModule;
 use OxidEsales\GdprOptinModule\Service\ModuleSettings;
 use PHPUnit\Framework\TestCase;
@@ -103,6 +100,7 @@ abstract class IntegrationBaseTest extends TestCase
 
         $request = $this->getMockBuilder(Request::class)
             ->onlyMethods(['getRequestParameter'])
+            ->setMockClassName('Request_' . md5(serialize($parameters)))
             ->getMock();
         $request->expects($this->any())
             ->method('getRequestParameter')

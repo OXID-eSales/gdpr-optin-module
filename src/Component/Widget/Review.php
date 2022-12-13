@@ -7,7 +7,7 @@
 
 namespace OxidEsales\GdprOptinModule\Component\Widget;
 
-use OxidEsales\Eshop\Application\Controller\ReviewController;
+use OxidEsales\GdprOptinModule\Traits\ReviewOptIn;
 
 /**
  * Class Review
@@ -18,25 +18,5 @@ use OxidEsales\Eshop\Application\Controller\ReviewController;
  */
 class Review extends Review_parent
 {
-    /**
-     * Is optin for product review required.
-     *
-     * @return bool
-     */
-    public function isReviewOptInValidationRequired()
-    {
-        $review = oxNew(ReviewController::class);
-        return $review->isReviewOptInValidationRequired();
-    }
-
-    /**
-     * Was there an error for shop side review optin validation?
-     *
-     * @return bool
-     */
-    public function isReviewOptInError()
-    {
-        $review = oxNew(ReviewController::class);
-        return $review->isReviewOptInError();
-    }
+    use ReviewOptIn;
 }

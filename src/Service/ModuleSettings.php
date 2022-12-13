@@ -7,7 +7,6 @@
 
 namespace OxidEsales\GdprOptinModule\Service;
 
-use OxidEsales\EshopCommunity\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
 use OxidEsales\GdprOptinModule\Core\GdprOptinModule;
 

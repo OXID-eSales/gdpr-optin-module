@@ -11,7 +11,9 @@ use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\UtilsView;
 use OxidEsales\Eshop\Application\Controller\ReviewController as EshopReviewController;
 use OxidEsales\GdprOptinModule\Service\ModuleSettings;
+use OxidEsales\GdprOptinModule\Traits\ReviewOptIn;
 use OxidEsales\GdprOptinModule\Traits\ServiceContainer;
+use OxidEsales\GdprOptinModule\Service\ReviewOptIn as ReviewOptInService;
 
 /**
  * Class ReviewController
@@ -23,6 +25,7 @@ use OxidEsales\GdprOptinModule\Traits\ServiceContainer;
 class ReviewController extends ReviewController_parent
 {
     use ServiceContainer;
+    use ReviewOptIn;
 
     /**
      * Saves user ratings and review text (oxReview object)
@@ -31,56 +34,12 @@ class ReviewController extends ReviewController_parent
      */
     public function saveReview()
     {
-        if (!$this->validateOptIn()) {
+        $service = $this->getServiceFromContainer(ReviewOptInService::class);
+        if (!$service->validateOptIn()) {
             Registry::get(UtilsView::class)->addErrorToDisplay('OEGDPROPTIN_REVIEW_FORM_ERROR_MESSAGE');
             return false;
         }
 
         return parent::saveReview();
-    }
-
-    /**
-     * Check if opt in validation for review is required.
-     *
-     * @return bool
-     */
-    public function isReviewOptInValidationRequired(): bool
-    {
-        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
-
-        return $moduleSettings->showReviewOptIn();
-    }
-
-    /**
-     * Validate current request data, regardless if form was submitted or not
-     *
-     * @return bool
-     */
-    public function validateOptIn()
-    {
-        $optInValue = Registry::getRequest()->getRequestParameter('rvw_oegdproptin');
-        if ($this->isReviewOptInValidationRequired() && !$optInValue) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Check if form was sent but optin not checked when required
-     *
-     * @return bool
-     */
-    public function isReviewOptInError()
-    {
-        $formSent = Registry::getRequest()->getRequestParameter('rvw_oegdproptin') !== null;
-        $review = oxNew(EshopReviewController::class);
-        $result = false;
-
-        if ($formSent && !$review->validateOptIn()) {
-            $result = true;
-        }
-
-        return $result;
     }
 }

@@ -4,6 +4,12 @@ services:
     public: false
     autowire: true
 
-  OxidEsales\GdprOptinModule\Service\ModuleSettings:
-    class: OxidEsales\GdprOptinModule\Service\ModuleSettings
+  OxidEsales\Eshop\Core\Registry:
+    class: OxidEsales\Eshop\Core\Registry
+
+  OxidEsales\Eshop\Core\Request:
+    factory: [ '@OxidEsales\Eshop\Core\Registry', 'getRequest' ]
+
+  OxidEsales\GdprOptinModule\Service\:
+    resource: 'src/Service/*'
     public: true

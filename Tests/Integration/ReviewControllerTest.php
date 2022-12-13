@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace OxidEsales\GdprOptinModule\Tests\Integration;
 
 use OxidEsales\Eshop\Application\Controller\ReviewController;
-use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
 use OxidEsales\GdprOptinModule\Core\GdprOptinModule;
 use OxidEsales\GdprOptInModule\Service\ModuleSettings;
@@ -74,36 +73,6 @@ class ReviewControllerTest extends IntegrationBaseTest
     }
 
     /**
-     * @dataProvider dataProviderValidateOptIn
-     */
-    public function testValidateOptIn(bool $configValue, int|null $checkboxStatus, bool $expectedValue)
-    {
-        $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
-        $settingsService->saveBoolean(
-            ModuleSettings::REVIEW_OPT_IN,
-            $configValue,
-            GdprOptinModule::MODULE_ID
-        );
-        $this->addRequestParameters(['rvw_oegdproptin' => $checkboxStatus]);
-
-        $controller = oxNew(ReviewController::class);
-
-        $this->assertSame($expectedValue, $controller->validateOptIn());
-    }
-
-    public function dataProviderValidateOptIn(): array
-    {
-        return [
-            'required-checked' => [true, 1, true],
-            'required-not-checked' => [true, 0, false],
-            'required-not-exist' => [true, null, false],
-            'not-required-checked' => [false, 1, true],
-            'not-required-not-checked' => [false, 0, true],
-            'not-required-not-exits' => [false, null, true]
-        ];
-    }
-
-    /**
      * @dataProvider dataProviderReviewOptInError
      */
     public function testReviewOptInError(bool $configValue, int|null $checkboxStatus, bool $expectedValue): void
@@ -114,7 +83,9 @@ class ReviewControllerTest extends IntegrationBaseTest
             $configValue,
             GdprOptinModule::MODULE_ID
         );
-        $this->addRequestParameters(['rvw_oegdproptin' => $checkboxStatus]);
+
+        //simulate genuine request instead of mocking
+        $_POST = ['rvw_oegdproptin' => $checkboxStatus];
 
         $controller = oxNew(ReviewController::class);
 
