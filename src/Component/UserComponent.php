@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of OXID eSales GDPR opt-in module.
  *
@@ -46,8 +47,17 @@ class UserComponent extends UserComponent_parent
         if (false == $this->validateRegistrationOptin()) {
             //show error message on submit but not on page reload.
             if ($this->getRequestParameter('stoken')) {
-                Registry::get(UtilsView::class)->addErrorToDisplay('OEGDPROPTIN_CONFIRM_USER_REGISTRATION_OPTIN', false, true);
-                Registry::get(UtilsView::class)->addErrorToDisplay('OEGDPROPTIN_CONFIRM_USER_REGISTRATION_OPTIN', false, true, 'oegdproptin_userregistration');
+                Registry::get(UtilsView::class)->addErrorToDisplay(
+                    'OEGDPROPTIN_CONFIRM_USER_REGISTRATION_OPTIN',
+                    false,
+                    true
+                );
+                Registry::get(UtilsView::class)->addErrorToDisplay(
+                    'OEGDPROPTIN_CONFIRM_USER_REGISTRATION_OPTIN',
+                    false,
+                    true,
+                    'oegdproptin_userregistration'
+                );
             }
         } else {
             return parent::createUser();
@@ -57,7 +67,8 @@ class UserComponent extends UserComponent_parent
     /**
      * Mostly used for customer profile editing screen (OXID eShop ->
      * MY ACCOUNT). Checks if oUser is set (\OxidEsales\Eshop\Application\Component\UserComponent::oUser) - if
-     * not - executes \OxidEsales\Eshop\Application\Component\UserComponent::_loadSessionUser(). If user unchecked newsletter
+     * not - executes \OxidEsales\Eshop\Application\Component\UserComponent::_loadSessionUser().
+     * If user unchecked newsletter
      * subscription option - removes him from this group. There is an
      * additional MUST FILL fields checking. Function returns true or false
      * according to user data submission status.
@@ -84,16 +95,34 @@ class UserComponent extends UserComponent_parent
         $invoiceOptinValid = $this->validateInvoiceAddressOptIn();
 
         if (false == $deliveryOptinValid) {
-            Registry::get(UtilsView::class)->addErrorToDisplay('OEGDPROPTIN_CONFIRM_STORE_DELIVERY_ADDRESS', false, true);
-            Registry::get(UtilsView::class)->addErrorToDisplay('OEGDPROPTIN_CONFIRM_STORE_DELIVERY_ADDRESS', false, true, 'oegdproptin_deliveryaddress');
+            Registry::get(UtilsView::class)->addErrorToDisplay(
+                'OEGDPROPTIN_CONFIRM_STORE_DELIVERY_ADDRESS',
+                false,
+                true
+            );
+            Registry::get(UtilsView::class)->addErrorToDisplay(
+                'OEGDPROPTIN_CONFIRM_STORE_DELIVERY_ADDRESS',
+                false,
+                true,
+                'oegdproptin_deliveryaddress'
+            );
         }
         if (false == $invoiceOptinValid) {
-            Registry::get(UtilsView::class)->addErrorToDisplay('OEGDPROPTIN_CONFIRM_STORE_INVOICE_ADDRESS', false, true);
-            Registry::get(UtilsView::class)->addErrorToDisplay('OEGDPROPTIN_CONFIRM_STORE_INVOICE_ADDRESS', false, true, 'oegdproptin_invoiceaddress');
+            Registry::get(UtilsView::class)->addErrorToDisplay(
+                'OEGDPROPTIN_CONFIRM_STORE_INVOICE_ADDRESS',
+                false,
+                true
+            );
+            Registry::get(UtilsView::class)->addErrorToDisplay(
+                'OEGDPROPTIN_CONFIRM_STORE_INVOICE_ADDRESS',
+                false,
+                true,
+                'oegdproptin_invoiceaddress'
+            );
         }
 
         $return = false;
-        if ( (true == $deliveryOptinValid) && (true == $invoiceOptinValid)) {
+        if ((true == $deliveryOptinValid) && (true == $invoiceOptinValid)) {
             $return = parent::changeUserWithoutRedirect();
         }
 
@@ -116,11 +145,12 @@ class UserComponent extends UserComponent_parent
 
         $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
 
-        if ($moduleSettings->showDeliveryOptIn()
+        if (
+            $moduleSettings->showDeliveryOptIn()
             && ((null == $addressId) || ('-1' == $addressId) || (1 == $changeExistigAddress))
             && !empty($deliveryAddressData)
             && (1 !== $optin)
-            ) {
+        ) {
             $return = false;
         }
         return $return;
@@ -160,7 +190,8 @@ class UserComponent extends UserComponent_parent
 
         $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
 
-        if ($moduleSettings->showInvoiceOptIn()
+        if (
+            $moduleSettings->showInvoiceOptIn()
             && (1 == $changeExistigAddress)
             && (1 !== $optin)
         ) {

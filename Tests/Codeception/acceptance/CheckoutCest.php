@@ -113,7 +113,7 @@ final class CheckoutCest extends BaseCest
 
         $I->openShop()
             ->loginUser($this->username, $this->password);
-        
+
         $basket = new Basket($I);
         $userCheckout = $basket
             ->addProductToBasketAndOpenUserCheckout('1000', 1)

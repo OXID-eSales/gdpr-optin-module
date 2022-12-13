@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of OXID eSales GDPR opt-in module.
  *
@@ -44,14 +45,14 @@ class FrontendTest extends IntegrationBaseTest
 {
     use ServiceContainer;
 
-    const TEST_ARTICLE_OXID = '_gdpr_test_product';
+    private const TEST_ARTICLE_OXID = '_gdpr_test_product';
 
     /**
      * Test product.
      *
      * @var Article
      */
-    private $product =null;
+    private $product = null;
 
     /**
      * Test set up.

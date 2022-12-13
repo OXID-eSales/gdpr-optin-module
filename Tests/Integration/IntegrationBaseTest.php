@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of OXID eSales GDPR opt-in module.
  *
@@ -143,12 +144,12 @@ abstract class IntegrationBaseTest extends TestCase
             ModuleSettings::REGISTRATION_OPT_IN,
             ModuleSettings::REVIEW_OPT_IN
         ];
-       foreach ($settings as $name) {
-           $settingsService->saveBoolean(
-               $name,
-               false,
-               GdprOptinModule::MODULE_ID
-           );
-       }
+        foreach ($settings as $name) {
+            $settingsService->saveBoolean(
+                $name,
+                false,
+                GdprOptinModule::MODULE_ID
+            );
+        }
     }
 }

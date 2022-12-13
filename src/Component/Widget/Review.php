@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of OXID eSales GDPR opt-in module.
  *
@@ -21,7 +22,7 @@
 
 namespace OxidEsales\GdprOptinModule\Component\Widget;
 
-use \OxidEsales\Eshop\Application\Controller\ReviewController;
+use OxidEsales\Eshop\Application\Controller\ReviewController;
 
 /**
  * Class Review

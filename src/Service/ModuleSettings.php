@@ -27,7 +27,7 @@ final class ModuleSettings
     ) {
         $this->moduleSettingService = $moduleSettingService;
     }
-    
+
     public function showInvoiceOptIn(): bool
     {
         return $this->getBoolSettingValue(self::INVOICE_OPT_IN);

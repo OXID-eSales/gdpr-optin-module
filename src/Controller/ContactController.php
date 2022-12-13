@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of OXID eSales GDPR opt-in module.
  *
@@ -36,7 +37,7 @@ class ContactController extends ContactController_parent
 {
     use ServiceContainer;
 
-    const CONTACT_FORM_METHOD_DEFAULT = 'deletion';
+    private const CONTACT_FORM_METHOD_DEFAULT = 'deletion';
 
     /**
      * Flag which shows if validation failed because of optin is not checked
@@ -44,7 +45,7 @@ class ContactController extends ContactController_parent
      * @var bool
      */
     protected $optInError = false;
-    
+
     /**
      * Validation and contacts email sending
      *

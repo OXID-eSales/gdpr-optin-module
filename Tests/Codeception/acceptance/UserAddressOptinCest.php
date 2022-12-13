@@ -23,7 +23,7 @@ use OxidEsales\Codeception\Page\Account\UserAddress;
  */
 final class UserAddressOptinCest extends BaseCest
 {
-    function testNoInvoiceAddressOptinNecessary(AcceptanceTester $I): void
+    public function testNoInvoiceAddressOptinNecessary(AcceptanceTester $I): void
     {
         $I->wantToTest('that user does not see invoice address optin');
 
@@ -78,7 +78,7 @@ final class UserAddressOptinCest extends BaseCest
         $I->dontSeeElement($userAddress->billCountryId);
     }
 
-    function testNoDeliveryAddressOptinNecessary(AcceptanceTester $I): void
+    public function testNoDeliveryAddressOptinNecessary(AcceptanceTester $I): void
     {
         $I->wantToTest('that user does not see delivery address optin');
 

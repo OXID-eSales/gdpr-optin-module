@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of OXID eSales GDPR opt-in module.
  *
@@ -37,8 +38,6 @@ use OxidEsales\GdprOptinModule\Traits\ServiceContainer;
 class ReviewController extends ReviewController_parent
 {
     use ServiceContainer;
-
-    const REVIEW_OPTIN_PARAM = 'blOeGdprOptinProductReviews';
 
     /**
      * Saves user ratings and review text (oxReview object)

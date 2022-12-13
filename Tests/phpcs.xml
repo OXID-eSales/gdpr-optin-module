@@ -10,7 +10,7 @@
     <file>../migration</file>
     -->
 
-    <exclude-pattern>./tests/Codeception/Config</exclude-pattern>
+    <exclude-pattern>./Tests/Codeception/Config</exclude-pattern>
 
     <!-- display progress -->
     <arg value="p"/>

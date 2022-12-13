@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of OXID eSales GDPR opt-in module.
  *
@@ -36,7 +37,6 @@ use OxidEsales\GdprOptinModule\Service\ModuleSettings;
  */
 class ContactControllerTest extends IntegrationBaseTest
 {
-
     use ServiceContainer;
 
     /**
