@@ -44,7 +44,7 @@ modules:
         theme_id: '%THEME_ID%'
     - \OxidEsales\Codeception\Module\Translation\TranslationsModule:
         shop_path: '%SHOP_SOURCE_PATH%'
-        paths: 'Application/views/flow/translations,Application/views/admin_smarty,../vendor/oxid-esales/gdpr-optin-module/views/admin_smarty,../vendor/oxid-esales/gdpr-optin-module/translations'
+        paths: 'Application/views/twig,Application/views/admin_twig,../vendor/oxid-esales/gdpr-optin-module/views/admin_twig,../vendor/oxid-esales/gdpr-optin-module/translations'
     - \OxidEsales\Codeception\Module\OxideshopAdmin:
         screen_shot_url: '%SCREEN_SHOT_URL%'
         depends:

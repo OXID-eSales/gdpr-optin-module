@@ -79,7 +79,6 @@ final class CheckoutCest extends BaseCest
         $userCheckout = $basket
             ->addProductToBasketAndOpenUserCheckout('1000', 1)
             ->selectOptionRegisterNewAccount();
-        $userCheckout->openShippingAddressForm();
 
         $I->seeElementInDOM('#oegdproptin_userregistration');
         $I->dontSeeElementInDOM('#oegdproptin_invoiceaddress');
@@ -89,7 +88,6 @@ final class CheckoutCest extends BaseCest
 
         $userCheckout->enterUserLoginData($this->getUserLoginData('checkout3'))
             ->enterAddressData($this->getUserAddressFormData())
-            ->enterShippingAddressData($this->getUserAddressFormData())
             ->goToNextStep();
 
         $I->see(Translator::translate('OEGDPROPTIN_CONFIRM_USER_REGISTRATION_OPTIN'));
@@ -97,7 +95,10 @@ final class CheckoutCest extends BaseCest
 
         $I->click('#oegdproptin_userregistration');
         $I->seeCheckboxIsChecked('#oegdproptin_userregistration');
+
+        $userCheckout->openShippingAddressForm();
         $userCheckout->enterUserLoginData($this->getUserLoginData('checkout3'))
+            ->enterShippingAddressData($this->getUserAddressFormData())
             ->goToNextStep();
 
         $I->see(Translator::translate('SELECT_SHIPPING_METHOD'));

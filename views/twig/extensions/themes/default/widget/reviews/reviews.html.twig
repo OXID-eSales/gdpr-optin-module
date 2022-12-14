@@ -1,0 +1,42 @@
+{% extends "widget/reviews/reviews.html.twig" %}
+
+{% block widget_reviews_form_fields %}
+
+    {{ parent() }}
+
+    {% if oView.isReviewOptInValidationRequired() %}
+        <div style="margin-top:10px;" class="rvw_oegdproptin_block">
+            <input type="hidden" name="rvw_oegdproptin" value="0">
+            <label for="rvw_oegdproptin">
+                <input type="checkbox"
+                       name="rvw_oegdproptin"
+                       id="rvw_oegdproptin"
+                       value="1">
+                <strong>{{ translate({ ident: "OEGDPROPTIN_REVIEW_FORM_MESSAGE" }) }}</strong>
+            </label>
+
+            <div id="rvw_oegdproptin_error"
+                 class="{% if not oView.isReviewOptInError() %}hidden {% endif %} text-danger">
+                {{ translate({ ident: "OEGDPROPTIN_REVIEW_FORM_ERROR_MESSAGE" }) }}
+            </div>
+        </div>
+
+        <script>
+            function optInJs() {
+                $("#rvw_oegdproptin").parents("form").first().submit(function(event){
+                    event.preventDefault();
+                    $("#rvw_oegdproptin_error").addClass("hidden");
+
+                    if ($("#rvw_oegdproptin:checked").length === 1) {
+                        this.submit();
+                    } else {
+                        $("#rvw_oegdproptin_error").removeClass("hidden");
+                    }
+                });
+            }
+        </script>
+
+        {{ script({ add: "optInJs();", dynamic: __oxid_include_dynamic }) }}
+    {% endif %}
+
+{% endblock %}

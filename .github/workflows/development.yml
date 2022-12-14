@@ -3,7 +3,7 @@ name: Module GDPR opt-in actions workflow
 on:
   push:
     branches:
-      - b-7.0.x-adapt_module-OXDEV-6639
+      - b-7.0.x-twig_support-OXDEV-6640
   workflow_dispatch:
     inputs:
       php:
@@ -36,10 +36,10 @@ env:
   MODULE_IDS: 'oegdproptin'
   SONARCLOUD_ORGANIZATION: 'oxid-esales'
   SONARCLOUD_PROJECT_KEY: 'OXID-eSales_gdpr-optin-module'
-  DEFAULT_THEME_ID: 'flow'
+  DEFAULT_THEME_ID: 'twig'
   DEFAULT_PHP_VERSION: '8.0'
   DEFAULT_MYSQL_VERSION: '5.7.37'
-  DEFAULT_TEMPLATE_ENGINE: 'smarty'
+  DEFAULT_TEMPLATE_ENGINE: 'twig'
 
 jobs:
   prepare_environment:
@@ -61,7 +61,7 @@ jobs:
           if [[ "${{ inputs.template_engine }}" ]]; then echo -n "TEMPLATE_ENGINE=${{ inputs.template_engine }}"; else echo -n "TEMPLATE_ENGINE=$DEFAULT_TEMPLATE_ENGINE"; fi >> $GITHUB_OUTPUT
       - id: theme_id
         run: |
-          if [[ "smarty" == "${{ inputs.template_engine }}" ]]; then echo -n "THEME_ID=flow"; else echo -n "THEME_ID=$DEFAULT_THEME_ID"; fi >> $GITHUB_OUTPUT
+          if [[ "twig" == "${{ inputs.template_engine }}" ]]; then echo -n "THEME_ID=twig"; else echo -n "THEME_ID=$DEFAULT_THEME_ID"; fi >> $GITHUB_OUTPUT
 
   install_shop_with_module:
     needs: [ prepare_environment ]
