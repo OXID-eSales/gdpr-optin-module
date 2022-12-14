@@ -10,6 +10,10 @@ services:
   OxidEsales\Eshop\Core\Request:
     factory: [ '@OxidEsales\Eshop\Core\Registry', 'getRequest' ]
 
+  OxidEsales\Eshop\Core\Session:
+    factory: [ '@OxidEsales\Eshop\Core\Registry', 'getSession' ]
+    public: true
+
   OxidEsales\GdprOptinModule\Service\:
     resource: 'src/Service/*'
     public: true

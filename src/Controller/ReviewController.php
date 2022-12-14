@@ -19,7 +19,6 @@ use OxidEsales\GdprOptinModule\Service\ReviewOptIn as ReviewOptInService;
  */
 class ReviewController extends ReviewController_parent
 {
-    use ServiceContainer;
     use ReviewOptIn;
 
     /**

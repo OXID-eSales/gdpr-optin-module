@@ -68,18 +68,12 @@ class ContactController extends ContactController_parent
 
     /**
      * Get currently selected contact form opt in method
-     *
-     * @return string
      */
-    private function getContactFormMethod()
+    private function getContactFormMethod(): string
     {
-        $method = self::CONTACT_FORM_METHOD_DEFAULT;
         $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
 
-        if ($configMethod = $moduleSettings->getContactOptIn()) {
-            $method = $configMethod;
-        }
-
-        return $method;
+        return $moduleSettings->getContactOptIn() ?
+            $moduleSettings->getContactOptIn() : self::CONTACT_FORM_METHOD_DEFAULT;
     }
 }

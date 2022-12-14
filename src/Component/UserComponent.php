@@ -7,6 +7,7 @@
 
 namespace OxidEsales\GdprOptinModule\Component;
 
+use OxidEsales\Eshop\Core\Session;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\UtilsView;
 use OxidEsales\GdprOptinModule\Service\ModuleSettings;
@@ -23,7 +24,7 @@ class UserComponent extends UserComponent_parent
     /**
      * Create new user.
      *
-     * @return mixed
+     * @return bool
      */
     public function createUser()
     {
@@ -42,9 +43,10 @@ class UserComponent extends UserComponent_parent
                     'oegdproptin_userregistration'
                 );
             }
-        } else {
-            return parent::createUser();
+            return false;
         }
+
+        return parent::createUser();
     }
 
     /**
@@ -63,7 +65,7 @@ class UserComponent extends UserComponent_parent
      */
     protected function changeUserWithoutRedirect()
     {
-        $session = Registry::getSession();
+        $session = $this->getServiceFromContainer(Session::class);
         if (!$session->checkSessionChallenge()) {
             return;
         }
