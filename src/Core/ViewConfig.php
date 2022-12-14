@@ -10,6 +10,10 @@ namespace OxidEsales\GdprOptinModule\Core;
 use OxidEsales\GdprOptinModule\Traits\ServiceContainer;
 use OxidEsales\GdprOptinModule\Service\ModuleSettings;
 
+/**
+ * @eshopExtension
+ * @mixin \OxidEsales\Eshop\Core\ViewConfig
+ */
 class ViewConfig extends ViewConfig_parent
 {
     use ServiceContainer;

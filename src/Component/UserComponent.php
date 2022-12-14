@@ -13,10 +13,8 @@ use OxidEsales\GdprOptinModule\Service\ModuleSettings;
 use OxidEsales\GdprOptinModule\Traits\ServiceContainer;
 
 /**
- * Class oeGdprOptinOxcmp_user.
- * Extends oxcmp_user.
- *
- * @see \OxidEsales\Eshop\Application\Component\UserComponent
+ * @eshopExtension
+ * @mixin \OxidEsales\Eshop\Application\Component\UserComponent
  */
 class UserComponent extends UserComponent_parent
 {
@@ -61,7 +59,7 @@ class UserComponent extends UserComponent_parent
      * Session variables:
      * <b>ordrem</b>
      *
-     * @return  bool true on success, false otherwise
+     * @return  bool|void true on success, false otherwise
      */
     protected function changeUserWithoutRedirect()
     {
@@ -72,7 +70,7 @@ class UserComponent extends UserComponent_parent
 
         // no user ?
         $user = $this->getUser();
-        if (!$user) {
+        if (!is_object($user)) {
             return;
         }
 

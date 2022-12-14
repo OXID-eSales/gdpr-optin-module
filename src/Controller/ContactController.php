@@ -13,11 +13,9 @@ use OxidEsales\GdprOptinModule\Service\ModuleSettings;
 use OxidEsales\GdprOptinModule\Traits\ServiceContainer;
 
 /**
- * Class ContactController
- * Extends \OxidEsales\Eshop\Application\Controller\ContactController
- *
- * @package OxidEsales\GdprOptinModule\Controller
- */
+* @eshopExtension
+* @mixin \OxidEsales\Eshop\Application\Controller\ContactController;
+*/
 class ContactController extends ContactController_parent
 {
     use ServiceContainer;

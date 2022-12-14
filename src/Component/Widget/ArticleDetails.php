@@ -7,16 +7,11 @@
 
 namespace OxidEsales\GdprOptinModule\Component\Widget;
 
-use OxidEsales\Eshop\Application\Controller\ReviewController;
-use OxidEsales\GdprOptinModule\Service\ReviewOptIn as ReviewOptInService;
 use OxidEsales\GdprOptinModule\Traits\ReviewOptIn;
 
 /**
- * Class ArticleDetails
- * Extends \OxidEsales\Eshop\Application\Component\Widget\ArticleDetails
- *
- * @package OxidEsales\GdprOptinModule\Component\Widget
- * @see \OxidEsales\Eshop\Application\Component\Widget\ArticleDetails
+ * @eshopExtension
+ * @mixin \OxidEsales\Eshop\Application\Component\Widget\ArticleDetails
  */
 class ArticleDetails extends ArticleDetails_parent
 {
