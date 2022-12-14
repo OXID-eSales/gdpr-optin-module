@@ -16,10 +16,11 @@
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
   <coverage includeUncoveredFiles="true" processUncoveredFiles="true">
     <include>
-      <directory suffix=".php">../Component</directory>
-      <directory suffix=".php">../Controller</directory>
-      <directory suffix=".php">../Core</directory>
-      <directory suffix=".php">../Application</directory>
+      <directory suffix=".php">../src/Component</directory>
+      <directory suffix=".php">../src/Controller</directory>
+      <directory suffix=".php">../src/Core</directory>
+      <directory suffix=".php">../src/Service</directory>
+      <directory suffix=".php">../src/Traits</directory>
     </include>
   </coverage>
   <testsuites>
