@@ -535,7 +535,7 @@ jobs:
             source/source/config.inc.php
             source/source/log/oxideshop.log
             data/php/logs/error_log.txt
-            source/tests/Codeception/_output
+            source/Tests/Codeception/_output
       - name: Stop containers
         if: always()
         run: |
@@ -621,7 +621,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: TestsLog-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ github.sha }}
-          path: ./tests/
+          path: ./Tests/
 
       - name: Download styles artifacts
         uses: actions/download-artifact@v3
@@ -644,9 +644,9 @@ jobs:
             -Dsonar.organization=${{ env.SONARCLOUD_ORGANIZATION }}
             -Dsonar.projectKey=${{ env.SONARCLOUD_PROJECT_KEY }}
             -Dsonar.sources=src
-            -Dsonar.tests=tests
+            -Dsonar.tests=Tests
             -Dsonar.sourceEncoding=UTF-8
-            -Dsonar.php.coverage.reportPaths=tests/coverage.xml
+            -Dsonar.php.coverage.reportPaths=Tests/coverage.xml
             -Dsonar.php.phpstan.reportPaths=styles/phpstan.report.json
             -Dsonar.cpd.php.minimumTokens=25
             -Dsonar.cpd.php.minimumLines=5
