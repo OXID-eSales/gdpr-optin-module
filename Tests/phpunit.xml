@@ -2,7 +2,6 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          backupGlobals="true"
          backupStaticAttributes="false"
-         colors="false"
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
@@ -12,20 +11,20 @@
          stopOnFailure="false"
          stopOnIncomplete="false"
          stopOnSkipped="false"
+         beStrictAboutTestsThatDoNotTestAnything="false"
          verbose="false"
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
-  <coverage includeUncoveredFiles="true" processUncoveredFiles="true">
+  <coverage includeUncoveredFiles="true" processUncoveredFiles="false">
     <include>
-      <directory suffix=".php">../src/Component</directory>
-      <directory suffix=".php">../src/Controller</directory>
-      <directory suffix=".php">../src/Core</directory>
-      <directory suffix=".php">../src/Service</directory>
-      <directory suffix=".php">../src/Traits</directory>
+      <directory suffix=".php">../src</directory>
     </include>
   </coverage>
   <testsuites>
-    <testsuite name="UnitTests">
-      <directory>Unit</directory>
+    <testsuite name="Unit">
+      <directory>Unit/</directory>
+    </testsuite>
+    <testsuite name="Integration">
+      <directory>Integration/</directory>
     </testsuite>
   </testsuites>
 </phpunit>

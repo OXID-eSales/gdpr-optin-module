@@ -1,9 +1,24 @@
-name: Module GDPR opt-in actions workflow
+name: Development
 
 on:
-  push:
-    branches:
-      - b-7.0.x-twig_support-OXDEV-6640
+  workflow_call:
+    inputs:
+      php:
+        required: true
+        type: string
+      mysql:
+        required: true
+        type: string
+      template_engine:
+        type: string
+        default: 'both'
+      module_codecept_test_group:
+        type: string
+        default: 'gdproptin_module'
+      report_sonarcloud:
+        type: boolean
+        default: false
+
   workflow_dispatch:
     inputs:
       php:
@@ -28,70 +43,41 @@ on:
         default: 'twig'
         type: choice
         options:
+          - 'both'
           - 'twig'
           - 'smarty'
+      module_codecept_test_group:
+        description: 'Module codeception test group'
+        required: true
+        default: 'gdproptin_module'
+        type: string
+      report_sonarcloud:
+        description: 'Trigger sonarcloud analize?'
+        required: true
+        default: true
+        type: boolean
 
 env:
   PACKAGE_NAME: 'oxid-esales/gdpr-optin-module'
   MODULE_IDS: 'oegdproptin'
+  TEST_MODULE_ID: 'oegdproptin'
   SONARCLOUD_ORGANIZATION: 'oxid-esales'
   SONARCLOUD_PROJECT_KEY: 'OXID-eSales_gdpr-optin-module'
-  DEFAULT_THEME_ID: 'twig'
-  DEFAULT_PHP_VERSION: '8.0'
-  DEFAULT_MYSQL_VERSION: '5.7.37'
-  DEFAULT_TEMPLATE_ENGINE: 'twig'
 
 jobs:
-  prepare_environment:
-    runs-on: ubuntu-latest
-    outputs:
-      PHP_VERSION: ${{ steps.php_version.outputs.PHP_VERSION }}
-      MYSQL_VERSION: ${{ steps.mysql_version.outputs.MYSQL_VERSION }}
-      TEMPLATE_ENGINE: ${{ steps.template_engine.outputs.TEMPLATE_ENGINE }}
-      THEME_ID: ${{ steps.theme_id.outputs.THEME_ID }}
-    steps:
-      - id: php_version
-        run: |
-         if [[ "${{ inputs.php }}" ]]; then echo -n "PHP_VERSION=${{ inputs.php }}"; else echo -n "PHP_VERSION=$DEFAULT_PHP_VERSION"; fi >> $GITHUB_OUTPUT
-      - id: mysql_version
-        run: |
-          if [[ "${{ inputs.mysql }}" ]]; then echo -n "MYSQL_VERSION=${{ inputs.mysql }}"; else echo -n "MYSQL_VERSION=$DEFAULT_MYSQL_VERSION"; fi >> $GITHUB_OUTPUT
-      - id: template_engine
-        run: |
-          if [[ "${{ inputs.template_engine }}" ]]; then echo -n "TEMPLATE_ENGINE=${{ inputs.template_engine }}"; else echo -n "TEMPLATE_ENGINE=$DEFAULT_TEMPLATE_ENGINE"; fi >> $GITHUB_OUTPUT
-      - id: theme_id
-        run: |
-          if [[ "twig" == "${{ inputs.template_engine }}" ]]; then echo -n "THEME_ID=twig"; else echo -n "THEME_ID=$DEFAULT_THEME_ID"; fi >> $GITHUB_OUTPUT
-
   install_shop_with_module:
-    needs: [ prepare_environment ]
     runs-on: ubuntu-latest
     steps:
-      - name: print test parameters
+      - name: Print run parameters
         run: |
-          echo "Running job with PHP version ${{ needs.prepare_environment.outputs.PHP_VERSION}}"
-          echo "Running job with MySQL version ${{ needs.prepare_environment.outputs.MYSQL_VERSION }}"
-          echo "Running job with template engine ${{ needs.prepare_environment.outputs.TEMPLATE_ENGINE }}"
-          echo "Running job with theme ${{ needs.prepare_environment.outputs.THEME_ID }}"
+          echo "Running job with:\
+            PHP version: ${{ inputs.php }}\
+            MySQL version: ${{ inputs.mysql }}\
+            Template engine: ${{ inputs.template_engine }}\
+            Tests group: ${{ inputs.module_codecept_test_group }}\
+            Trigger event: ${{ github.event_name }}"
 
-      - name: context php_version
-        run: |
-          echo -n "PHP_VERSION=${{ needs.prepare_environment.outputs.PHP_VERSION}}" >> $GITHUB_ENV
-      - name: context mysql_version
-        run: |
-          echo -n "MYSQL_VERSION=${{ needs.prepare_environment.outputs.MYSQL_VERSION}}" >> $GITHUB_ENV
-      - name: context template_engine
-        run: |
-          echo -n "TEMPLATE_ENGINE=${{ needs.prepare_environment.outputs.TEMPLATE_ENGINE}}" >> $GITHUB_ENV
-
-      - name: Cleanup workspace
-        run: |
-          ls -la ./
-          sudo rm -rf ./* || true
-          sudo rm -rf ./.??* || true
-          ls -la ./
-
-      - name: Clone testing environment master
+      - name: Clone testing environment
         run: git clone https://github.com/OXID-eSales/docker-eshop-sdk.git .
 
       - name: Clone the shop
@@ -102,124 +88,72 @@ jobs:
         with:
           path: |
             ./*
-          key: gdprModule-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.TEMPLATE_ENGINE }}-${{ github.sha }}
+          key: installation-${{ join(inputs, '-') }}-${{ github.run_number }}-${{ github.run_attempt }}
 
       - name: Prepare container configuration
         run: |
-          # Prepare services configuration
           make setup
           make addbasicservices
           make file=services/selenium-chrome.yml addservice
 
           perl -pi\
-            -e 's#PHP_VERSION=.*#PHP_VERSION=${{ env.PHP_VERSION }}#g;'\
-            -e "s#MYSQL_VERSION=.*#MYSQL_VERSION='${{ env.MYSQL_VERSION }}'#g;"\
+            -e 's#PHP_VERSION=.*#PHP_VERSION=${{ inputs.php }}#g;'\
+            -e "s#MYSQL_VERSION=.*#MYSQL_VERSION=${{ inputs.mysql }}#g;"\
             .env
 
-          # error reporting
           perl -pi\
             -e 's#display_errors =.*#display_errors = false#g;'\
             -e 's#error_reporting = .*#error_reporting = E_ALL ^ E_WARNING ^ E_DEPRECATED#g;'\
             -e 'print "xdebug.max_nesting_level=1000\nxdebug.mode=coverage\n\n"'\
             containers/php/custom.ini
 
-          # Configure containers
           perl -pi\
             -e 's#/var/www/#/var/www/source/#g;'\
             containers/httpd/project.conf
 
       - name: Prepare shop configuration
         run: |
-          # Configure debug
-          perl -pi\
-            -e 's#display_errors = .*#display_errors = false#g;'\
-            containers/php/custom.ini
-          perl -pi\
-            -e "s#'display_errors', '1'#'display_errors', '0'#g;"\
-            source/source/bootstrap.php
-
           cp source/source/config.inc.php.dist source/source/config.inc.php
-
-          perl -pi\
-            -e 's#<dbHost>#mysql#g;'\
-            -e 's#<dbUser>#root#g;'\
-            -e 's#<dbName>#example#g;'\
-            -e 's#<dbPwd>#root#g;'\
-            -e 's#<dbPort>#3306#g;'\
-            -e 's#<sShopURL>#http://localhost.local/#g;'\
-            -e 's#<sShopDir>#/var/www/source/#g;'\
-            -e 's#<sCompileDir>#/var/www/source/tmp/#g;'\
-            -e 's#iDebug = 0;#iDebug = -1;#g;'\
-            source/source/config.inc.php
+          sed -i "1s+^+SetEnvIf Authorization "\(.*\)" HTTP_AUTHORIZATION=\$1\n\n+" source/source/.htaccess
+          sed -i -e 's/<dbHost>/mysql/'\
+                 -e 's/<dbUser>/root/'\
+                 -e 's/<dbName>/example/'\
+                 -e 's/<dbPwd>/root/'\
+                 -e 's/<dbPort>/3306/'\
+                 -e 's/<sShopURL>/http:\/\/localhost.local\//'\
+                 -e 's/<sShopDir>/\/var\/www\/source\//'\
+                 -e 's/<sCompileDir>/\/var\/www\/source\/tmp\//'\
+              source/source/config.inc.php
 
       - name: Checkout current module
         uses: actions/checkout@v3
         with:
-          path: source/source/modules/oe/gdproptin
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_HUB_USER }}
-          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+          path: source/test-module
 
       - name: Start containers
         run: |
           make up
           sleep 2
 
-      - name: Install EE
-        run: |
-          docker-compose exec -T php composer config github-protocols https
-          docker-compose exec -T php composer config repositories.oxid-esales/oxideshop-demodata-ce git https://github.com/OXID-eSales/oxideshop_demodata_ce.git
-          docker-compose exec -T php composer require oxid-esales/oxideshop-demodata-ce:dev-master --no-update
-
-      - name: Install smarty template engine and flow theme
-        if: ${{ env.TEMPLATE_ENGINE == 'smarty' }}
-        run: |
-          docker-compose exec -T php composer config github-protocols https
-          docker-compose exec -T php composer require oxid-esales/smarty-component:dev-b-7.0.x --no-update
-          docker-compose exec -T php composer require oxid-esales/smarty-admin-theme:dev-b-7.0.x --no-update
-          docker-compose exec -T php composer require oxid-esales/flow-theme:dev-b-7.0.x --no-update
-
-      - name: Install twig template engine and twig theme
-        if: ${{ env.TEMPLATE_ENGINE == 'twig' }}
-        run: |
-          docker-compose exec -T php composer config github-protocols https
-          docker-compose exec -T php composer require oxid-esales/twig-component:dev-b-7.0.x --no-update
-          docker-compose exec -T php composer require oxid-esales/twig-admin-theme:dev-b-7.0.x --no-update
-          docker-compose exec -T php composer require oxid-esales/twig-theme:dev-b-7.0.x --no-update
-
       - name: Install module
         run: |
           docker-compose exec -T \
-            php composer config repositories.oxid-esales/gdpr-optin-module \
-            --json '{"type":"path", "url":"./source/modules/oe/gdproptin", "options": {"symlink": true}}'
-          docker-compose exec -T php composer require oxid-esales/gdpr-optin-module:* --no-update
+            php composer config repositories.${{ env.PACKAGE_NAME }} \
+            --json '{"type":"path", "url":"./test-module", "options": {"symlink": true}}'
+          docker-compose exec -T \
+            php composer require ${{ env.PACKAGE_NAME }}:* --no-interaction --no-update
 
-      - name: Install dependencies
+      - name: Install dependencies and reset shop
         run: |
           docker-compose exec -T php composer update --no-interaction
-
-      - name: Reset and prepare
-        run: |
-          docker-compose exec -T php bin/oe-console oe:database:reset --db-host=mysql --db-port=3306 \
-                     --db-name=example --db-user=root --db-password=root --force
-          docker-compose exec -T php bin/oe-console oe:setup:demodata
-          docker-compose exec -T php bin/oe-console oe:module:install ./vendor/oxid-esales/gdpr-optin-module/
-          docker-compose exec -T php bin/oe-console oe:module:install-assets
-          docker-compose exec -T php bin/oe-console oe:module:activate oegdproptin
+          docker-compose exec -T php bin/oe-console oe:database:reset \
+            --db-host=mysql --db-port=3306 --db-name=example --db-user=root --db-password=root --force
+          docker-compose exec -T php bin/oe-console oe:module:activate ${{ env.TEST_MODULE_ID }}
 
       - name: Stop containers
-        if: always()
         run: |
           docker-compose down
           sleep 2
-
-      - name: Cleanup Docker
-        run: |
-          c=$(docker ps -q) && [[ $c ]] && docker kill $c
-          docker system prune --force
 
       - name: Show docker log
         if: always()
@@ -230,161 +164,107 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v3
         with:
-          name: Configs-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.TEMPLATE_ENGINE }}-${{ github.sha }}
+          name: Configs-${{ inputs.php }}-${{ inputs.mysql }}-${{ inputs.template_engine }}
           path: |
             docker-compose.yml
             source/composer.json
             source/composer.lock
             source/source/config.inc.php
 
-  unit_tests_module:
-    needs: [ prepare_environment, install_shop_with_module ]
+  styles:
+    needs: [ install_shop_with_module ]
     runs-on: ubuntu-latest
     steps:
-      - name: context php_version
-        run: |
-          echo -n "PHP_VERSION=${{ needs.prepare_environment.outputs.PHP_VERSION}}" >> $GITHUB_ENV
-      - name: context mysql_version
-        run: |
-          echo -n "MYSQL_VERSION=${{ needs.prepare_environment.outputs.MYSQL_VERSION}}" >> $GITHUB_ENV
-      - name: context template_engine
-        run: |
-          echo -n "TEMPLATE_ENGINE=${{ needs.prepare_environment.outputs.TEMPLATE_ENGINE}}" >> $GITHUB_ENV
-
-      - name: Cleanup workspace
-        run: |
-          ls -la ./
-          rm -rf ./* || true
-          sudo rm -rf ./.??* || true
-          ls -la ./
-
       - name: Load current installation from cache
         uses: actions/cache@v3
         with:
           path: |
             ./*
-          key: gdprModule-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.TEMPLATE_ENGINE }}-${{ github.sha }}
+          key: installation-${{ join(inputs, '-') }}-${{ github.run_number }}-${{ github.run_attempt }}
           restore-keys: |
-            gdprModule-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.TEMPLATE_ENGINE }}-${{ github.sha }}
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_HUB_USER }}
-          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+            installation-${{ join(inputs, '-') }}-${{ github.run_number }}-${{ github.run_attempt }}
 
       - name: Start containers
         run: |
           make up
           sleep 2
 
-      - name: Reset and prepare
-        run: |
-          docker-compose exec -T php bin/oe-console oe:cache:clear
-          docker-compose exec -T php bin/oe-console oe:database:reset --db-host=mysql --db-port=3306 \
-                     --db-name=example --db-user=root --db-password=root --force
-          docker-compose exec -T php bin/oe-console oe:setup:demodata
-          docker-compose exec -T php bin/oe-console oe:module:reset-configurations
-          docker-compose exec -T php bin/oe-console oe:module:install ./vendor/oxid-esales/gdpr-optin-module/
-          docker-compose exec -T php bin/oe-console oe:module:install-assets
-          docker-compose exec -T php bin/oe-console oe:module:activate oegdproptin
-
-      - name: Run tests
+      - name: Install module dependencies
         run: |
           docker-compose exec -T \
-          -e XDEBUG_MODE=coverage \
-          php php vendor/bin/phpunit \
-           -c /var/www/vendor/${{ env.PACKAGE_NAME }}/Tests/phpunit.xml \
-           --coverage-php=/var/www/unit.cov
+            --workdir=/var/www/test-module \
+            php composer install
 
-      - name: Upload log artifact
+      - name: Run phpcs
         if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: ModuleUnitTestsLog-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.TEMPLATE_ENGINE }}-${{ github.sha }}
-          path: |
-            source/unit.cov
-            source/source/log/oxideshop.log
-            data/php/logs/error_log.txt
+        run: |
+          docker-compose exec -T \
+            --workdir=/var/www/test-module \
+            php composer phpcs
+
+      - name: Run phpstan scan and show results
+        id: phpstan
+        if: always()
+        run: |
+          docker-compose exec -T \
+            --workdir=/var/www/test-module \
+            php composer phpstan
+
+      - name: Run phpstan scan and generate report for further processing
+        if: always()
+        run: |
+          docker-compose exec -T \
+            --workdir=/var/www/test-module \
+            php composer phpstan-report
 
       - name: Stop containers
         if: always()
         run: |
-          docker-compose down
+          make down
           sleep 2
 
-      - name: Cleanup Docker
-        run: |
-          c=$(docker ps -q) && [[ $c ]] && docker kill $c
-          docker system prune --force
+      - name: Upload log artifact
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: StylesLog-${{ inputs.php }}
+          path: |
+            source/test-module/phpstan.report.json
+            source/test-module/phpmd.report.json
 
-
-  integration_tests_module:
-    needs: [ prepare_environment, install_shop_with_module ]
+  integration_tests:
+    needs: [ install_shop_with_module ]
     runs-on: ubuntu-latest
     steps:
-      - name: context php_version
-        run: |
-          echo -n "PHP_VERSION=${{ needs.prepare_environment.outputs.PHP_VERSION}}" >> $GITHUB_ENV
-      - name: context mysql_version
-        run: |
-          echo -n "MYSQL_VERSION=${{ needs.prepare_environment.outputs.MYSQL_VERSION}}" >> $GITHUB_ENV
-      - name: context template_engine
-        run: |
-          echo -n "TEMPLATE_ENGINE=${{ needs.prepare_environment.outputs.TEMPLATE_ENGINE}}" >> $GITHUB_ENV
-
-      - name: Cleanup workspace
-        run: |
-          ls -la ./
-          rm -rf ./* || true
-          sudo rm -rf ./.??* || true
-          ls -la ./
-
       - name: Load current installation from cache
         uses: actions/cache@v3
         with:
           path: |
             ./*
-          key: gdprModule-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.TEMPLATE_ENGINE }}-${{ github.sha }}
+          key: installation-${{ join(inputs, '-') }}-${{ github.run_number }}-${{ github.run_attempt }}
           restore-keys: |
-            gdprModule-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.TEMPLATE_ENGINE }}-${{ github.sha }}
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_HUB_USER }}
-          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+            installation-${{ join(inputs, '-') }}-${{ github.run_number }}-${{ github.run_attempt }}
 
       - name: Start containers
         run: |
           make up
           sleep 2
 
-      - name: Reset and prepare
-        run: |
-          docker-compose exec -T php bin/oe-console oe:cache:clear
-          docker-compose exec -T php bin/oe-console oe:database:reset --db-host=mysql --db-port=3306 \
-                     --db-name=example --db-user=root --db-password=root --force
-          docker-compose exec -T php bin/oe-console oe:setup:demodata
-          docker-compose exec -T php bin/oe-console oe:module:reset-configurations
-          docker-compose exec -T php bin/oe-console oe:module:install ./vendor/oxid-esales/gdpr-optin-module/
-          docker-compose exec -T php bin/oe-console oe:module:install-assets
-          docker-compose exec -T php bin/oe-console oe:module:activate oegdproptin
-
       - name: Run tests
         run: |
           docker-compose exec -T \
-          -e XDEBUG_MODE=coverage \
-          php php vendor/bin/phpunit \
-           --bootstrap=/var/www/source/bootstrap.php \
-           -c /var/www/vendor/${{ env.PACKAGE_NAME }}/Tests/phpunitintegration.xml \
-           --coverage-php=/var/www/integration.cov
+            -e XDEBUG_MODE=coverage \
+            php php vendor/bin/phpunit \
+              -c /var/www/vendor/${{ env.PACKAGE_NAME }}/Tests/phpunit.xml \
+              --bootstrap=/var/www/source/bootstrap.php \
+              --coverage-php=/var/www/integration.cov \
+              /var/www/vendor/${{ env.PACKAGE_NAME }}/Tests/Integration
 
       - name: Upload log artifact
         if: always()
         uses: actions/upload-artifact@v3
         with:
-          name: ModuleIntegrationTestsLog-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.TEMPLATE_ENGINE }}-${{ github.sha }}
+          name: ModuleIntegrationTestsLog-${{ inputs.php }}-${{ inputs.mysql }}-${{ inputs.template_engine }}
           path: |
             source/integration.cov
             source/source/log/oxideshop.log
@@ -396,51 +276,198 @@ jobs:
           docker-compose down
           sleep 2
 
-      - name: Cleanup Docker
-        run: |
-          c=$(docker ps -q) && [[ $c ]] && docker kill $c
-          docker system prune --force
-
-  prepare_coverage_results:
-    needs: [ prepare_environment, unit_tests_module, integration_tests_module ]
+  unit_tests:
+    needs: [ install_shop_with_module ]
     runs-on: ubuntu-latest
     steps:
-      - name: context php_version
-        run: |
-          echo -n "PHP_VERSION=${{ needs.prepare_environment.outputs.PHP_VERSION}}" >> $GITHUB_ENV
-      - name: context mysql_version
-        run: |
-          echo -n "MYSQL_VERSION=${{ needs.prepare_environment.outputs.MYSQL_VERSION}}" >> $GITHUB_ENV
-      - name: context template_engine
-        run: |
-          echo -n "TEMPLATE_ENGINE=${{ needs.prepare_environment.outputs.TEMPLATE_ENGINE}}" >> $GITHUB_ENV
-
       - name: Load current installation from cache
         uses: actions/cache@v3
         with:
           path: |
             ./*
-          key: gdprModule-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.TEMPLATE_ENGINE }}-${{ github.sha }}
+          key: installation-${{ join(inputs, '-') }}-${{ github.run_number }}-${{ github.run_attempt }}
           restore-keys: |
-            gdprModule-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.TEMPLATE_ENGINE }}-${{ github.sha }}
+            installation-${{ join(inputs, '-') }}-${{ github.run_number }}-${{ github.run_attempt }}
+
+      - name: Start containers
+        run: |
+          make up
+          sleep 2
+
+      - name: Run tests
+        run: |
+          docker-compose exec -T \
+            -e XDEBUG_MODE=coverage \
+            php php vendor/bin/phpunit \
+              -c /var/www/vendor/${{ env.PACKAGE_NAME }}/Tests/phpunit.xml \
+            --coverage-php=/var/www/unit.cov \
+              /var/www/vendor/${{ env.PACKAGE_NAME }}/Tests/Unit
+
+      - name: Upload log artifact
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: ModuleUnitTestsLog-${{ inputs.php }}-${{ inputs.mysql }}-${{ inputs.template_engine }}
+          path: |
+            source/unit.cov
+            source/source/log/oxideshop.log
+            data/php/logs/error_log.txt
+
+      - name: Stop containers
+        if: always()
+        run: |
+          docker-compose down
+          sleep 2
+
+  codeception_twig:
+    needs: [ install_shop_with_module ]
+    if: ${{ inputs.template_engine == 'both' || inputs.template_engine == 'twig' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Load current installation from cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ./*
+          key: installation-${{ join(inputs, '-') }}-${{ github.run_number }}-${{ github.run_attempt }}
+          restore-keys: |
+            installation-${{ join(inputs, '-') }}-${{ github.run_number }}-${{ github.run_attempt }}
+
+      - name: Start containers
+        run: |
+          make up
+          sleep 2
+
+      - name: Install twig template engine and twig theme
+        run: |
+          docker-compose exec -T php composer require oxid-esales/twig-component:dev-b-7.0.x --no-update
+          docker-compose exec -T php composer require oxid-esales/twig-admin-theme:dev-b-7.0.x --no-update
+          docker-compose exec -T php composer require oxid-esales/twig-theme:dev-b-7.0.x --no-update
+          docker-compose exec -T php composer update --no-interaction
+
+      - name: Run tests
+        run: |
+          docker-compose exec -T \
+            -e SELENIUM_SERVER_HOST=selenium \
+            -e BROWSER_NAME=chrome \
+            -e THEME_ID=twig \
+            -e MODULE_IDS=${{ env.MODULE_IDS }} \
+            php vendor/bin/codecept run acceptance \
+                -c /var/www/vendor/${{ env.PACKAGE_NAME }}/Tests/codeception.yml -g ${{ inputs.module_codecept_test_group }}
+
+      - name: Upload log artifact
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: ModuleCodeceptionTestsLog-${{ inputs.php }}-${{ inputs.mysql }}-${{ inputs.template_engine }}
+          path: |
+            docker-compose.yml
+            source/composer.json
+            source/composer.lock
+            source/source/config.inc.php
+            source/source/log/oxideshop.log
+            data/php/logs/error_log.txt
+            source/Tests/Codeception/_output
+
+      - name: Stop containers
+        if: always()
+        run: |
+          make down
+          sleep 2
+
+  codeception_smarty:
+    needs: [ install_shop_with_module ]
+    if: ${{ inputs.template_engine == 'both' || inputs.template_engine == 'smarty' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Load current installation from cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ./*
+          key: installation-${{ join(inputs, '-') }}-${{ github.run_number }}-${{ github.run_attempt }}
+          restore-keys: |
+            installation-${{ join(inputs, '-') }}-${{ github.run_number }}-${{ github.run_attempt }}
+
+      - name: Reconfigure codeception for smarty themes
+        run: |
+          perl -pi \
+          -e 's#admin_twig#admin_smarty#g;' \
+          source/test-module/Tests/Codeception/acceptance.suite.yml
+          perl -pi \
+          -e 's#views/twig#views/flow/translations#g;' \
+          source/test-module/Tests/Codeception/acceptance.suite.yml
+          perl -pi \
+          -e 's#theme_id:\s?twig#theme_id: flow#g;' \
+          source/test-module/Tests/Codeception/acceptance.suite.yml
+
+      - name: Start containers
+        run: |
+          make up
+          sleep 2
+
+      - name: Install smarty template engine and flow theme
+        run: |
+          docker-compose exec -T php composer require oxid-esales/smarty-component:dev-b-7.0.x --no-update
+          docker-compose exec -T php composer require oxid-esales/smarty-admin-theme:dev-b-7.0.x --no-update
+          docker-compose exec -T php composer require oxid-esales/flow-theme:dev-b-7.0.x --no-update
+          docker-compose exec -T php composer update --no-interaction
+
+      - name: Run tests
+        run: |
+          docker-compose exec -T \
+            -e SELENIUM_SERVER_HOST=selenium \
+            -e BROWSER_NAME=chrome \
+            -e THEME_ID=flow \
+            -e MODULE_IDS=${{ env.MODULE_IDS }} \
+            php vendor/bin/codecept run acceptance \
+                -c /var/www/vendor/${{ env.PACKAGE_NAME }}/Tests/codeception.yml -g ${{ inputs.module_codecept_test_group }}
+
+      - name: Upload log artifact
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: sModuleCodeceptionTestsLog-${{ inputs.php }}-${{ inputs.mysql }}-${{ inputs.template_engine }}
+          path: |
+            docker-compose.yml
+            source/composer.json
+            source/composer.lock
+            source/source/config.inc.php
+            source/source/log/oxideshop.log
+            data/php/logs/error_log.txt
+            source/Tests/Codeception/_output
+
+      - name: Stop containers
+        if: always()
+        run: |
+          make down
+          sleep 2
+
+  prepare_coverage_results:
+    needs: [ unit_tests, integration_tests ]
+    if: ${{ always() && inputs.report_sonarcloud }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Load current installation from cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ./*
+          key: installation-${{ join(inputs, '-') }}-${{ github.run_number }}-${{ github.run_attempt }}
+          restore-keys: |
+            installation-${{ join(inputs, '-') }}-${{ github.run_number }}-${{ github.run_attempt }}
 
       - name: Download unit artifacts
         uses: actions/download-artifact@v3
         with:
-          name: ModuleUnitTestsLog-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.TEMPLATE_ENGINE }}-${{ github.sha }}
+          name: ModuleUnitTestsLog-${{ inputs.php }}-${{ inputs.mysql }}-${{ inputs.template_engine }}
           path: ./source/coverage/
 
       - name: Download integration artifacts
         uses: actions/download-artifact@v3
         with:
-          name: ModuleIntegrationTestsLog-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.TEMPLATE_ENGINE }}-${{ github.sha }}
+          name: ModuleIntegrationTestsLog-${{ inputs.php }}-${{ inputs.mysql }}-${{ inputs.template_engine }}
           path: ./source/coverage/
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_HUB_USER }}
-          password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
       - name: Start containers
         run: |
@@ -454,165 +481,19 @@ jobs:
           wget https://phar.phpunit.de/phpcov-7.0.2.phar
           mv phpcov-7.0.2.phar source/phpcov.phar
           docker-compose run -T php php phpcov.phar merge --clover coverage.xml ./coverage
-          sed -i 's+/var/www/source/modules/oe/gdproptin/+./+' source/coverage.xml
+          sed -i 's+/var/www/source/test-module/+./+' source/coverage.xml
+
       - name: Upload log artifact
         uses: actions/upload-artifact@v3
         with:
-          name: TestsLog-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.TEMPLATE_ENGINE }}-${{ github.sha }}
+          name: TestsLog-${{ inputs.php }}-${{ inputs.mysql }}
           path: source/coverage.xml
 
-  codeception_tests_module:
-    needs: [ prepare_environment, install_shop_with_module ]
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        group:
-          - 'gdproptin_module'
-    steps:
-      - name: context php_version
-        run: |
-          echo -n "PHP_VERSION=${{ needs.prepare_environment.outputs.PHP_VERSION}}" >> $GITHUB_ENV
-      - name: context mysql_version
-        run: |
-          echo -n "MYSQL_VERSION=${{ needs.prepare_environment.outputs.MYSQL_VERSION}}" >> $GITHUB_ENV
-      - name: context template_engine
-        run: |
-          echo -n "TEMPLATE_ENGINE=${{ needs.prepare_environment.outputs.TEMPLATE_ENGINE}}" >> $GITHUB_ENV
-      - name: Load current installation from cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            ./*
-          key: gdprModule-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.TEMPLATE_ENGINE }}-${{ github.sha }}
-          restore-keys: |
-            gdprModule-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.TEMPLATE_ENGINE }}-${{ github.sha }}
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_HUB_USER }}
-          password: ${{ secrets.DOCKER_HUB_TOKEN }}
-
-      - name: Start containers
-        run: |
-          make up
-          sleep 2
-      - name: Install codeception dependencies
-        run: |
-          docker-compose exec -T php composer require codeception/module-rest:^3.0.0 --dev --no-update
-          docker-compose exec -T php composer require codeception/module-phpbrowser:^3.0.0 --dev --no-update
-          docker-compose exec -T php composer update
-      - name: Reset and prepare
-        run: |
-          docker-compose exec -T php bin/oe-console oe:cache:clear
-          docker-compose exec -T php bin/oe-console oe:database:reset --db-host=mysql --db-port=3306 \
-                     --db-name=example --db-user=root --db-password=root --force
-          docker-compose exec -T php bin/oe-console oe:setup:demodata
-          docker-compose exec -T php bin/oe-console oe:module:reset-configurations
-          docker-compose exec -T php bin/oe-console oe:module:activate gdproptin
-      - name: prepare log
-        run: |
-          docker-compose exec -T php touch  ./source/log/oxideshop.log
-          docker-compose exec -T php chmod +777  ./source/log/oxideshop.log
-      - name: Run tests
-        run: |
-          docker-compose exec -T \
-            -e SELENIUM_SERVER_HOST=selenium \
-            -e BROWSER_NAME=chrome \
-            -e THEME_ID=${{ needs.prepare_environment.outputs.THEME_ID }} \
-            -e MODULE_IDS=${{ env.MODULE_IDS }} \
-            php vendor/bin/codecept run acceptance \
-                --bootstrap=/var/www/source/bootstrap.php \
-                -c /var/www/vendor/${{ env.PACKAGE_NAME }}/Tests/codeception.yml -g ${{ matrix.group }}
-      - name: Upload log artifact
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: ModuleCodeceptionTestsLog-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.TEMPLATE_ENGINE }}-${{ github.sha }}
-          path: |
-            docker-compose.yml
-            source/composer.json
-            source/composer.lock
-            source/source/config.inc.php
-            source/source/log/oxideshop.log
-            data/php/logs/error_log.txt
-            source/Tests/Codeception/_output
-      - name: Stop containers
-        if: always()
-        run: |
-          docker-compose down
-          sleep 2
-      - name: Cleanup Docker
-        run: |
-          c=$(docker ps -q) && [[ $c ]] && docker kill $c
-          docker system prune --force
-
-  styles:
-    needs: [ prepare_environment, install_shop_with_module ]
-    runs-on: ubuntu-latest
-    steps:
-      - name: context php_version
-        run: |
-          echo -n "PHP_VERSION=${{ needs.prepare_environment.outputs.PHP_VERSION}}" >> $GITHUB_ENV
-
-      - name: Checkout current module
-        uses: actions/checkout@v3
-        with:
-          path: source/source/modules/oe/gdproptin
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ env.PHP_VERSION }}
-          coverage: xdebug
-          extensions: gd, zip
-
-      - name: Install module dependencies
-        id: dependencies
-        working-directory: source/source/modules/oe/gdproptin
-        run: composer install
-
-      - name: Run phpcs
-        id: phpcs
-        if: always()
-        working-directory: source/source/modules/oe/gdproptin
-        run: composer phpcs
-
-      - name: Run phpstan
-        id: phpstan
-        if: always()
-        working-directory: source/source/modules/oe/gdproptin
-        run: composer phpstan-report || composer phpstan
-
-      - name: Run phpmd
-        id: phpmd
-        if: always()
-        working-directory: source/source/modules/oe/gdproptin
-        run: composer phpmd-report || composer phpmd
-
-      - name: Upload log artifact
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: StylesLog-${{ env.PHP_VERSION }}-${{ github.sha }}
-          path: |
-            source/source/modules/oe/gdproptin/phpstan.report.json
-            source/source/modules/oe/gdproptin/phpmd.report.json
-
   sonarcloud:
-    needs: [ prepare_environment, styles, prepare_coverage_results ]
-    if: always()
+    needs: [ prepare_coverage_results ]
+    if: ${{ always() && inputs.report_sonarcloud }}
     runs-on: ubuntu-latest
     steps:
-      - name: context php_version
-        run: |
-          echo -n "PHP_VERSION=${{ needs.prepare_environment.outputs.PHP_VERSION}}" >> $GITHUB_ENV
-      - name: context mysql_version
-        run: |
-          echo -n "MYSQL_VERSION=${{ needs.prepare_environment.outputs.MYSQL_VERSION}}" >> $GITHUB_ENV
-      - name: context template_engine
-        run: |
-          echo -n "TEMPLATE_ENGINE=${{ needs.prepare_environment.outputs.TEMPLATE_ENGINE}}" >> $GITHUB_ENV
-
       - name: Checkout current module
         uses: actions/checkout@v3
 
@@ -620,25 +501,14 @@ jobs:
         continue-on-error: true
         uses: actions/download-artifact@v3
         with:
-          name: TestsLog-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ github.sha }}
+          name: TestsLog-${{ inputs.php }}-${{ inputs.mysql }}
           path: ./Tests/
-
-      - name: Download styles artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: StylesLog-${{ env.PHP_VERSION }}-${{ github.sha }}
-          path: ./styles/
-
-      - name: Fix paths in styles logs
-        continue-on-error: true
-        run: |
-          sed -i 's+\/home\/runner\/work\/.*?\/.*?\/source\/source\/modules\/oe\/gdproptin\/++' styles/phpstan.report.json
 
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           args: >
             -Dsonar.organization=${{ env.SONARCLOUD_ORGANIZATION }}
@@ -647,12 +517,11 @@ jobs:
             -Dsonar.tests=Tests
             -Dsonar.sourceEncoding=UTF-8
             -Dsonar.php.coverage.reportPaths=Tests/coverage.xml
-            -Dsonar.php.phpstan.reportPaths=styles/phpstan.report.json
             -Dsonar.cpd.php.minimumTokens=25
             -Dsonar.cpd.php.minimumLines=5
 
   notify_slack_module:
-    needs: [ unit_tests_module, integration_tests_module, codeception_tests_module, styles ]
+    needs: [ unit_tests, integration_tests, codeception_twig, codeception_smarty, styles ]
     runs-on: ubuntu-latest
     if: always()
     steps:
@@ -662,17 +531,17 @@ jobs:
           payload: >
             { "text": "
             ${{ github.event_name == 'workflow_dispatch' && 'Manual run of' || 'Scheduled run of' }} ${{ github.workflow }} on ${{ github.repository }} by ${{ github.actor }}
-            ${{ needs.unit_tests_module.result=='success' && needs.integration_tests_module.result=='success' && needs.codeception_tests_module.result=='success' && 'Successful' || 'Failed' }}
+            ${{ needs.unit_tests.result=='success' && needs.integration_tests.result=='success' && ((inputs.template_engine=='twig' && needs.codeception_twig.result=='success') || (inputs.template_engine=='smarty' && needs.codeception_smarty.result=='success') || (inputs.template_engine=='both' && needs.codeception_twig.result=='success' && needs.codeception_smarty.result=='success')) && 'Successful' || 'Failed' }}
             ", "blocks": [ { "type": "header","text": { "type": "plain_text", "emoji": true, "text": "
             ${{ github.event_name == 'workflow_dispatch' && 'Manual run of' || 'Scheduled' }} ${{ github.workflow }} on ${{ github.repository }} by ${{ github.actor }}
             " } },{ "type": "section","fields": [ { "type": "mrkdwn","text": "
-            *Status:* ${{ needs.unit_tests_module.result=='success' && needs.integration_tests_module.result=='success' && needs.codeception_tests_module.result=='success' && ':white_check_mark:' || ':x:' }}
+            *Status:* ${{ needs.unit_tests.result=='success' && needs.integration_tests.result=='success' && ((inputs.template_engine=='twig' && needs.codeception_twig.result=='success') || (inputs.template_engine=='smarty' && needs.codeception_smarty.result=='success') || (inputs.template_engine=='both' && needs.codeception_twig.result=='success' && needs.codeception_smarty.result=='success')) && ':white_check_mark:' || ':x:' }}
             " },{ "type": "mrkdwn","text": "
             Repository: <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ github.repository }}/actions/runs/${{ github.run_id }}>
             " } ] },{ "type": "section", "text": { "type": "mrkdwn", "text": "
-            \n* Module Unit ${{ (needs.unit_tests_module.result=='success') && ':white_check_mark:' || ':x:' }}
-            \n* Module Integration ${{ (needs.integration_tests_module.result=='success') && ':white_check_mark:' || ':x:' }}
-            \n* Module Codeception ${{ (needs.codeception_tests_module.result=='success') && ':white_check_mark:' || ':x:' }}
+            \n* Module Unit ${{ (needs.unit_tests.result=='success') && ':white_check_mark:' || ':x:' }}
+            \n* Module Integration ${{ (needs.integration_tests.result=='success') && ':white_check_mark:' || ':x:' }}
+            \n* Module Codeception ${{ ((inputs.template_engine=='twig' && needs.codeception_twig.result=='success') || (inputs.template_engine=='smarty' && needs.codeception_smarty.result=='success') || (inputs.template_engine=='both' && needs.codeception_twig.result=='success' && needs.codeception_smarty.result=='success')) && ':white_check_mark:' || ':x:' }}
             \n* Module Styles ${{ (needs.styles.result=='success') && ':white_check_mark:' || ':x:' }}
             " } }, { "type": "divider" } ] }
         env:
