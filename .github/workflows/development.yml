@@ -18,6 +18,9 @@ on:
       report_sonarcloud:
         type: boolean
         default: false
+      report_slack:
+        type: boolean
+        default: true
 
   workflow_dispatch:
     inputs:
@@ -56,11 +59,15 @@ on:
         required: true
         default: true
         type: boolean
+      report_slack:
+        description: 'Trigger slack notification?'
+        required: true
+        default: true
+        type: boolean
 
 env:
   PACKAGE_NAME: 'oxid-esales/gdpr-optin-module'
-  MODULE_IDS: 'oegdproptin'
-  TEST_MODULE_ID: 'oegdproptin'
+  MODULE_ID: 'oegdproptin'
   SONARCLOUD_ORGANIZATION: 'oxid-esales'
   SONARCLOUD_PROJECT_KEY: 'OXID-eSales_gdpr-optin-module'
 
@@ -148,7 +155,7 @@ jobs:
           docker-compose exec -T php composer update --no-interaction
           docker-compose exec -T php bin/oe-console oe:database:reset \
             --db-host=mysql --db-port=3306 --db-name=example --db-user=root --db-password=root --force
-          docker-compose exec -T php bin/oe-console oe:module:activate ${{ env.TEST_MODULE_ID }}
+          docker-compose exec -T php bin/oe-console oe:module:activate ${{ env.MODULE_ID }}
 
       - name: Stop containers
         run: |
@@ -351,7 +358,7 @@ jobs:
             -e SELENIUM_SERVER_HOST=selenium \
             -e BROWSER_NAME=chrome \
             -e THEME_ID=twig \
-            -e MODULE_IDS=${{ env.MODULE_IDS }} \
+            -e MODULE_IDS=${{ env.MODULE_ID }} \
             php vendor/bin/codecept run acceptance \
                 -c /var/www/vendor/${{ env.PACKAGE_NAME }}/Tests/codeception.yml -g ${{ inputs.module_codecept_test_group }}
 
@@ -419,7 +426,7 @@ jobs:
             -e SELENIUM_SERVER_HOST=selenium \
             -e BROWSER_NAME=chrome \
             -e THEME_ID=flow \
-            -e MODULE_IDS=${{ env.MODULE_IDS }} \
+            -e MODULE_IDS=${{ env.MODULE_ID }} \
             php vendor/bin/codecept run acceptance \
                 -c /var/www/vendor/${{ env.PACKAGE_NAME }}/Tests/codeception.yml -g ${{ inputs.module_codecept_test_group }}
 
@@ -520,10 +527,10 @@ jobs:
             -Dsonar.cpd.php.minimumTokens=25
             -Dsonar.cpd.php.minimumLines=5
 
-  notify_slack_module:
+  notify_slack:
     needs: [ unit_tests, integration_tests, codeception_twig, codeception_smarty, styles ]
     runs-on: ubuntu-latest
-    if: always()
+    if: ${{ always() && inputs.report_slack }}
     steps:
       - name: Send custom JSON data to Slack workflow
         uses: slackapi/slack-github-action@v1.23.0
