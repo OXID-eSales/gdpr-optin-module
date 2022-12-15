@@ -14,7 +14,7 @@ use OxidEsales\Eshop\Application\Controller\RegisterController;
 use OxidEsales\Eshop\Application\Controller\UserController;
 use OxidEsales\Eshop\Application\Model\User;
 use OxidEsales\Eshop\Core\Registry;
-use OxidEsales\Eshop\Core\Request;
+use OxidEsales\Eshop\Core\Session;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
 use OxidEsales\GdprOptinModule\Core\GdprOptinModule;
 use OxidEsales\GdprOptInModule\Service\ModuleSettings;
@@ -178,6 +178,39 @@ final class UserComponentTest extends IntegrationBaseTest
 
         $displayErrors = Registry::getSession()->getVariable('Errors');
         $this->$assertDisplayExc(array_key_exists('oegdproptin_invoiceaddress', $displayErrors));
+    }
+
+    public function testAccountUserSessionChallengeFail(): void
+    {
+        $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
+        $settingsService->saveBoolean(
+            ModuleSettings::INVOICE_OPT_IN,
+            true,
+            GdprOptinModule::MODULE_ID
+        );
+
+        $parameters['oegdproptin_invoiceaddress'] = 1;
+        $this->addRequestParameters($parameters, false); //we will fail session challenge
+
+        $cmpUser = oxNew(UserComponent::class);
+        $this->assertNull($cmpUser->changeuser_testvalues());
+    }
+
+    public function testAccountNoSessionUser(): void
+    {
+        $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
+        $settingsService->saveBoolean(
+            ModuleSettings::INVOICE_OPT_IN,
+            true,
+            GdprOptinModule::MODULE_ID
+        );
+
+        $parameters['oegdproptin_invoiceaddress'] = 1;
+        $this->addRequestParameters($parameters);
+
+        $cmpUser = oxNew(UserComponent::class);
+        $cmpUser->setUser(false);
+        $this->assertNull($cmpUser->changeuser_testvalues());
     }
 
     public function providerUserRegistrationOptin(): array

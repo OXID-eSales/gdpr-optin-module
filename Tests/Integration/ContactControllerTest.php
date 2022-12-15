@@ -21,6 +21,14 @@ final class ContactControllerTest extends IntegrationBaseTest
 {
     use ServiceContainer;
 
+    public function dataProviderOptInValidationRequired(): array
+    {
+        return [
+            'formMethod-deletion' => ['deletion', false],
+            'formMethod-statistical' => ['statistical', true],
+        ];
+    }
+
     /**
      * @dataProvider dataProviderOptInValidationRequired
      */
@@ -37,23 +45,15 @@ final class ContactControllerTest extends IntegrationBaseTest
         $this->assertSame($expected, $controller->isOptInValidationRequired());
     }
 
-    public function dataProviderOptInValidationRequired(): array
-    {
-        return [
-            'formMethod-deletion' => ['deletion', false],
-            'formMethod-statistical' => ['statistical', true],
-        ];
-    }
-
     /**
-     * Test validation error appears if needed
+     * @dataProvider dataProviderOptInValidationRequired
      */
-    public function testSendError(): void
+    public function testErrorOnSend(string $configValue, bool $expected): void
     {
         $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
         $settingsService->saveString(
             ModuleSettings::CONTACT_CHOICE,
-            'statistical',
+            $configValue,
             GdprOptinModule::MODULE_ID
         );
 
@@ -61,6 +61,6 @@ final class ContactControllerTest extends IntegrationBaseTest
 
         $this->assertFalse($controller->isOptInError());
         $this->assertFalse($controller->send());
-        $this->assertTrue($controller->isOptInError());
+        $this->assertSame($expected, $controller->isOptInError());
     }
 }

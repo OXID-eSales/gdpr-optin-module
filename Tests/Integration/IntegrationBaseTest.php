@@ -77,7 +77,7 @@ abstract class IntegrationBaseTest extends TestCase
     /**
      * Test helper for setting request parameters.
      */
-    protected function addRequestParameters(array $additionalParameters = []): void
+    protected function addRequestParameters(array $additionalParameters = [], bool $addToken = true): void
     {
         $address = 'a:13:{s:16:"oxaddress__oxsal";s:2:"MR";s:18:"oxaddress__oxfname";s:4:"Moxi";' .
             's:18:"oxaddress__oxlname";s:6:"Muster";s:20:"oxaddress__oxcompany";s:0:"";' .
@@ -88,8 +88,10 @@ abstract class IntegrationBaseTest extends TestCase
             's:16:"oxaddress__oxfon";s:0:"";s:16:"oxaddress__oxfax";s:0:"";}';
 
         $deliveryAddress = unserialize($address);
-        $parameters = ['deladr' => $deliveryAddress,
-            'stoken' => Registry::getSession()->getSessionChallengeToken()];
+        $parameters = ['deladr' => $deliveryAddress];
+        if ($addToken) {
+            $parameters['stoken'] = Registry::getSession()->getSessionChallengeToken();
+        }
 
         $parameters = array_merge($parameters, $additionalParameters);
 
