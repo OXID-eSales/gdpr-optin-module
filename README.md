@@ -9,7 +9,7 @@ System requirements and installation instructions are described in the module do
 
 ### Compatibility
 
-* master module branch for shop master
+* b-7.0.x module branch for shop branch 7.0.x
 * b-6.x module branch for shop compilation: 6.2 and up to 6.3.x
 * b-2.2.x module branch for shop compilation: 6.0.2 and up to 6.1.x
 * v1.x module branch for shop compilation: 5.3.7/4.10.7 or above
@@ -17,7 +17,7 @@ System requirements and installation instructions are described in the module do
 ### Module installation via composer
 
 * **composer require oxid-esales/gdpr-optin-module:^2.3.0** to install the released version compatible with OXID eShop 6.2.0 compilation
-* **composer require oxid-esales/gdpr-optin-module:dev-master** to install the latest unreleased version from github
+* **composer require oxid-esales/gdpr-optin-module:dev-b-7.0.x ** to install the latest unreleased version from github
 
 ### Features
 
