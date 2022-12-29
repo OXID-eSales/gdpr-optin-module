@@ -265,6 +265,7 @@ jobs:
               -c /var/www/vendor/${{ env.PACKAGE_NAME }}/Tests/phpunit.xml \
               --bootstrap=/var/www/source/bootstrap.php \
               --coverage-php=/var/www/integration.cov \
+              --coverage-text \
               /var/www/vendor/${{ env.PACKAGE_NAME }}/Tests/Integration
 
       - name: Upload log artifact
@@ -307,7 +308,8 @@ jobs:
             -e XDEBUG_MODE=coverage \
             php php vendor/bin/phpunit \
               -c /var/www/vendor/${{ env.PACKAGE_NAME }}/Tests/phpunit.xml \
-            --coverage-php=/var/www/unit.cov \
+              --coverage-php=/var/www/unit.cov \
+              --coverage-text \
               /var/www/vendor/${{ env.PACKAGE_NAME }}/Tests/Unit
 
       - name: Upload log artifact
@@ -485,10 +487,10 @@ jobs:
         continue-on-error: true
         run: |
           ls -alh source/coverage
-          wget https://phar.phpunit.de/phpcov-7.0.2.phar
-          mv phpcov-7.0.2.phar source/phpcov.phar
-          docker-compose run -T php php phpcov.phar merge --clover coverage.xml ./coverage
-          sed -i 's+/var/www/source/test-module/+./+' source/coverage.xml
+          wget https://phar.phpunit.de/phpcov.phar
+          mv phpcov.phar source/phpcov.phar
+          docker-compose exec -T php php phpcov.phar merge --clover coverage.xml ./coverage
+          sed -i 's+/var/www/test-module/+./+' source/coverage.xml
 
       - name: Upload log artifact
         uses: actions/upload-artifact@v3
