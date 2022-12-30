@@ -4,14 +4,14 @@
 
     <!-- Paths to check -->
     <file>../src/</file>
-    <file>../Tests/</file>
+    <file>../tests/</file>
     <file>./</file>
     <!--
     <file>../translations</file>
     <file>../migration</file>
     -->
 
-    <exclude-pattern>./Tests/Codeception/Config</exclude-pattern>
+    <exclude-pattern>./tests/Codeception/Config</exclude-pattern>
 
     <!-- display progress -->
     <arg value="p"/>
