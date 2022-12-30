@@ -1,0 +1,116 @@
+{% extends "form/user.html.twig" %}
+
+{% block user %}
+    {% if true == oViewConf.showGdprDeliveryOptIn() %}
+        {% if Errors.oegdproptin_deliveryaddress %}
+            {% set oError = Errors.oegdproptin_deliveryaddress.0 %}
+                <div class="alert alert-danger">{{ oError.getOxMessage() }}</div>
+                <div class="help-block"></div>
+        {% endif %}
+    {% endif %}
+
+    {% if true == oViewConf.showGdprInvoiceOptIn() %}
+        {% if Errors.oegdproptin_invoiceaddress %}
+            {% set oError = Errors.oegdproptin_invoiceaddress.0 %}
+            <div class="alert alert-danger">{{ oError.getOxMessage() }}</div>
+            <div class="help-block"></div>
+        {% endif %}
+    {% endif %}
+
+    {{ parent() }}
+{% endblock %}
+
+
+{% block user_shipping_address_form %}
+    {{ parent() }}
+
+    {% if oxcmp_user %}
+        {% set delivadr = oxcmp_user.getSelectedAddress() %}
+    {% endif %}
+
+    {% if true == oViewConf.showGdprDeliveryOptIn() %}
+        <div class="clearfix"></div>
+        <div id="GdprShippingAddressOptin" class="form-group" style="{% if delivadr or not oView.showShipAddress() %}display: none;{% endif %}">
+            <div class="col-lg-9 col-lg-offset-3 offset-lg-3">
+                <div class="checkbox">
+                    <label class="req">
+                        <input type="hidden" class="hidden" id="oegdproptin_changeDelAddress" name="oegdproptin_changeDelAddress" value="0">
+                        <input type="checkbox" name="oegdproptin_deliveryaddress" id="oegdproptin_deliveryaddress" value="1" >
+                        <strong>{{ translate({ ident: "OEGDPROPTIN_STORE_DELIVERY_ADDRESS" }) }}</strong>
+                    </label>
+                </div>
+                <div id="oegdproptin_deliveryaddress_error" style="display:none;" class="text-danger">{{ translate({ ident: "OEGDPROPTIN_CONFIRM_STORE_DELIVERY_ADDRESS" }) }}</div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+
+{% block user_billing_address_form %}
+    {{ parent() }}
+
+    {% if true == oViewConf.showGdprInvoiceOptIn() %}
+        <div class="clearfix"></div>
+        <div id="GdprInvoiceAddressOptin" class="form-group" style="display: none;">
+            <div class="col-lg-9 col-lg-offset-3 offset-lg-3">
+                <div class="checkbox">
+                    <label class="req">
+                        <input type="hidden" class="hidden" id="oegdproptin_changeInvAddress" name="oegdproptin_changeInvAddress" value="0">
+                        <input type="checkbox" name="oegdproptin_invoiceaddress" id="oegdproptin_invoiceaddress" value="1" >
+                        <strong>{{ translate({ ident: "OEGDPROPTIN_STORE_INVOICE_ADDRESS" }) }}</strong>
+                    </label>
+                </div>
+                <div id="oegdproptin_invoiceaddress_error" style="display:none;" class="text-danger">{{ translate({ ident: "OEGDPROPTIN_CONFIRM_STORE_INVOICE_ADDRESS" }) }}</div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+
+{% block user_form %}
+    {% if oxcmp_user %}
+        {% set delivadr = oxcmp_user.getSelectedAddress() %}
+    {% endif %}
+
+    {% if true == oViewConf.showGdprDeliveryOptIn() %}
+        {% if delivadr %}
+            {{ script({ add: "$('#showShipAddress').change( function() { $('#GdprShippingAddressOptin, #shippingAddressForm').hide($(this).is(':checked'));});", dynamic: __oxid_include_dynamic }) }}
+            {{ script({ add: "$('.dd-edit-shipping-address').click(function(){ $('#GdprShippingAddressOptin').toggle($(this).is(':not(:checked)')); document.getElementById('oegdproptin_changeDelAddress').value=1; });", dynamic: __oxid_include_dynamic }) }}
+            {{ script({ add: "$('.dd-add-delivery-address').click( function(){ $('#GdprShippingAddressOptin').toggle($(this).is(':not(:checked)')); });", dynamic: __oxid_include_dynamic }) }}
+        {% else %}
+            {{ script({ add: "$('#showShipAddress').change( function() { $('#GdprShippingAddressOptin').toggle($(this).is(':not(:checked)')); });", dynamic: __oxid_include_dynamic }) }}
+        {% endif %}
+    {% endif %}
+
+    {% if true == oViewConf.showGdprInvoiceOptIn() %}
+        {{ script({ add: "$('#userChangeAddress').click( function() { $('#GdprInvoiceAddressOptin').show();$('#userChangeAddress').hide();return false;});", dynamic: __oxid_include_dynamic }) }}
+    {% endif %}
+
+    <script>
+        function optinValidationJS() {
+            $("#accUserSaveTop").click(function(event){
+                $("#oegdproptin_deliveryaddress_error").hide();
+                $("#oegdproptin_invoiceaddress_error").hide();
+
+                var success = true;
+                if ($('#oegdproptin_invoiceaddress').is(':visible') && $('#oegdproptin_invoiceaddress').is(':not(:checked)')){
+                    event.preventDefault();
+                    $("#oegdproptin_invoiceaddress_error").show();
+                }
+                if ($('#oegdproptin_deliveryaddress').is(':visible') && $('#oegdproptin_deliveryaddress').is(':not(:checked)')){
+                    event.preventDefault();
+                    $("#oegdproptin_deliveryaddress_error").show();
+                }
+
+                $(this).submit();
+                if (!success){
+                    return false;
+                }
+            });
+        }
+    </script>
+
+    {{ script({ add: "optinValidationJS();", dynamic: __oxid_include_dynamic }) }}
+
+    {{ parent() }}
+{% endblock %}

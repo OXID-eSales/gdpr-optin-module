@@ -1,50 +1,27 @@
 <?php
+
 /**
- * This file is part of OXID eSales GDPR opt-in module.
- *
- * OXID eSales GDPR opt-in module is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * OXID eSales GDPR opt-in module is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with OXID eSales GDPR opt-in module.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @link      http://www.oxid-esales.com
- * @copyright (C) OXID eSales AG 2003-2018
+ * Copyright © OXID eSales AG. All rights reserved.
+ * See LICENSE file for license details.
  */
+
+declare(strict_types=1);
 
 namespace OxidEsales\GdprOptinModule\Tests\Integration;
 
-/**
- * Class ContactControllerTest
- *
- * @package OxidEsales\GdprOptinModule\Tests\Integration
- */
-class ContactControllerTest extends \OxidEsales\TestingLibrary\UnitTestCase
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
+use OxidEsales\GdprOptinModule\Core\GdprOptinModule;
+use OxidEsales\GdprOptinModule\Traits\ServiceContainer;
+use PHPUnit\Framework\TestCase;
+use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\Eshop\Application\Controller\ContactController;
+use OxidEsales\GdprOptinModule\Service\ModuleSettings;
+
+final class ContactControllerTest extends IntegrationBaseTest
 {
-    /**
-     * Test checkbox validation.
-     *
-     * @dataProvider dataProviderOptInValidationRequired
-     */
-    public function testOptInValidationRequired($configValue, $expected)
-    {
-        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('OeGdprOptinContactFormMethod', $configValue);
+    use ServiceContainer;
 
-        $controller = oxNew(\OxidEsales\Eshop\Application\Controller\ContactController::class);
-        $this->assertSame($expected, $controller->isOptInValidationRequired());
-    }
-
-    /**
-     * @return array
-     */
-    public function dataProviderOptInValidationRequired()
+    public function dataProviderOptInValidationRequired(): array
     {
         return [
             'formMethod-deletion' => ['deletion', false],
@@ -53,15 +30,37 @@ class ContactControllerTest extends \OxidEsales\TestingLibrary\UnitTestCase
     }
 
     /**
-     * Test validation error appears if needed
+     * @dataProvider dataProviderOptInValidationRequired
      */
-    public function testSendError()
+    public function testOptInValidationRequired(string $configValue, bool $expected): void
     {
-        \OxidEsales\Eshop\Core\Registry::getConfig()->setConfigParam('OeGdprOptinContactFormMethod', "statistical");
+        $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
+        $settingsService->saveString(
+            ModuleSettings::CONTACT_CHOICE,
+            $configValue,
+            GdprOptinModule::MODULE_ID
+        );
 
-        $controller = oxNew(\OxidEsales\Eshop\Application\Controller\ContactController::class);
+        $controller = oxNew(ContactController::class);
+        $this->assertSame($expected, $controller->isOptInValidationRequired());
+    }
+
+    /**
+     * @dataProvider dataProviderOptInValidationRequired
+     */
+    public function testErrorOnSend(string $configValue, bool $expected): void
+    {
+        $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
+        $settingsService->saveString(
+            ModuleSettings::CONTACT_CHOICE,
+            $configValue,
+            GdprOptinModule::MODULE_ID
+        );
+
+        $controller = oxNew(ContactController::class);
+
         $this->assertFalse($controller->isOptInError());
         $this->assertFalse($controller->send());
-        $this->assertTrue($controller->isOptInError());
+        $this->assertSame($expected, $controller->isOptInError());
     }
 }

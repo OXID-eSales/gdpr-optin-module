@@ -6,8 +6,29 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [v3.0.0] - Unreleased
 
-### Fixed
-- Fix shop 7.0 compatibility issues.
+### Added
+- Support for twig template engine
+- Support for PHP version 8.1
+- Code quality tools: phpcs, phpstan, phpmd
+- Development workflows with test and code style check runners
+- Module works on smarty engine (Smarty related extensions in views/smarty resp. views/admin_smarty directory)
+- Module works on twig engine (Twig related extensions in views/twig resp. views/admin_twig directory)
+- Added codeception tests.
+- Trait `OxidEsales\GdprOptinModule\Traits\ReviewOptin`
+- Trait `OxidEsales\GdprOptinModule\Traits\ServiceContainer`
+- Service `OxidEsales\GdprOptinModule\Service\ModuleSettings`
+- Service `OxidEsales\GdprOptinModule\Service\Reviewoptin`
+
+### Changed
+- Adapted module to work with OXID eShop 7.0.x
+- Small refactoring: extracted services
+- Adapted test to work with OXID eShop 7.0.x and without testing library
+- File copyright headers updated.
+- On moudule activation and deactivation, console command for clearing cache is used.
+
+### Removed
+- Support for PHP 7.4
+
 
 ## [v2.3.3] - 2021-04-09
 

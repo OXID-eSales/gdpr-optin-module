@@ -19,6 +19,14 @@
  * @copyright (C) OXID eSales AG 2003-2018
  */
 
+use OxidEsales\Eshop\Application\Component\Widget\ArticleDetails;
+use OxidEsales\Eshop\Application\Component\Widget\Review;
+use OxidEsales\Eshop\Application\Component\UserComponent;
+use OxidEsales\Eshop\Application\Controller\ReviewController;
+use OxidEsales\Eshop\Application\Controller\ArticleDetailsController;
+use OxidEsales\Eshop\Application\Controller\ContactController;
+use OxidEsales\Eshop\Core\ViewConfig;
+
 /**
  * Metadata version
  */
@@ -43,63 +51,64 @@ $aModule = [
     'url'         => 'https://www.oxid-esales.com/',
     'email'       => '',
     'extend'      => [
-        \OxidEsales\Eshop\Application\Component\Widget\ArticleDetails::class => \OxidEsales\GdprOptinModule\Component\Widget\ArticleDetails::class,
-        \OxidEsales\Eshop\Application\Component\Widget\Review::class => \OxidEsales\GdprOptinModule\Component\Widget\Review::class,
-        \OxidEsales\Eshop\Application\Component\UserComponent::class => \OxidEsales\GdprOptinModule\Component\UserComponent::class,
-        \OxidEsales\Eshop\Application\Controller\ReviewController::class => \OxidEsales\GdprOptinModule\Controller\ReviewController::class,
-        \OxidEsales\Eshop\Application\Controller\ArticleDetailsController::class => \OxidEsales\GdprOptinModule\Controller\ArticleDetailsController::class,
-        \OxidEsales\Eshop\Application\Controller\ContactController::class => \OxidEsales\GdprOptinModule\Controller\ContactController::class
+        ViewConfig::class => \OxidEsales\GdprOptinModule\Core\ViewConfig::class,
+        ArticleDetails::class => \OxidEsales\GdprOptinModule\Component\Widget\ArticleDetails::class,
+        Review::class => \OxidEsales\GdprOptinModule\Component\Widget\Review::class,
+        UserComponent::class => \OxidEsales\GdprOptinModule\Component\UserComponent::class,
+        ReviewController::class => \OxidEsales\GdprOptinModule\Controller\ReviewController::class,
+        ArticleDetailsController::class => \OxidEsales\GdprOptinModule\Controller\ArticleDetailsController::class,
+        ContactController::class => \OxidEsales\GdprOptinModule\Controller\ContactController::class
     ],
     'blocks'      => [
         [
             'template' => 'form/user.tpl',
             'block'    => 'user_billing_address_form',
-            'file'     => 'Application/views/blocks/user_invoice_address_form.tpl',
+            'file'     => 'views/smarty/blocks/user_invoice_address_form.tpl',
         ],
         [
             'template' => 'form/user.tpl',
             'block'    => 'user_shipping_address_form',
-            'file'     => 'Application/views/blocks/user_shipping_address_form.tpl',
+            'file'     => 'views/smarty/blocks/user_shipping_address_form.tpl',
         ],
         [
             'template' => 'form/user.tpl',
             'block'    => 'user_form',
-            'file'     => 'Application/views/blocks/user_address.tpl',
+            'file'     => 'views/smarty/blocks/user_address.tpl',
         ],
         [
             'template' => 'form/user.tpl',
             'block'    => 'user',
-            'file'     => 'Application/views/blocks/user.tpl',
+            'file'     => 'views/smarty/blocks/user.tpl',
         ],
         [
             'template' => 'form/user_checkout_change.tpl',
             'block'    => 'user_checkout_change',
-            'file'     => 'Application/views/blocks/user_checkout_change.tpl',
+            'file'     => 'views/smarty/blocks/user_checkout_change.tpl',
         ],
         [
             'template' => 'form/user_checkout_change.tpl',
             'block'    => 'user_checkout_shipping_feedback',
-            'file'     => 'Application/views/blocks/user_checkout_shipping_feedback.tpl',
+            'file'     => 'views/smarty/blocks/user_checkout_shipping_feedback.tpl',
         ],
         [
             'template' => 'form/user_checkout_change.tpl',
             'block'    => 'user_checkout_billing_feedback',
-            'file'     => 'Application/views/blocks/user_checkout_billing_feedback.tpl',
+            'file'     => 'views/smarty/blocks/user_checkout_billing_feedback.tpl',
         ],
         [
             'template' => 'form/fieldset/user_account.tpl',
             'block'    => 'user_account_newsletter',
-            'file'     => 'Application/views/blocks/user_account_newsletter.tpl',
+            'file'     => 'views/smarty/blocks/user_account_newsletter.tpl',
         ],
         [
             'template' => 'form/contact.tpl',
             'block'    => 'contact_form_fields',
-            'file'     => 'Application/views/blocks/contact_form_fields.tpl',
+            'file'     => 'views/smarty/blocks/contact_form_fields.tpl',
         ],
         [
             'template' => 'widget/reviews/reviews.tpl',
             'block'    => 'widget_reviews_form_fields',
-            'file'     => 'Application/views/blocks/widget_reviews_form_fields.tpl',
+            'file'     => 'views/smarty/blocks/widget_reviews_form_fields.tpl',
         ]
     ],
     'settings'    => [
@@ -136,7 +145,7 @@ $aModule = [
         ],
     ],
     'events'      => [
-        'onActivate'   => '\OxidEsales\GdprOptinModule\Core\GdprOptinModule::onActivate',
-        'onDeactivate' => '\OxidEsales\GdprOptinModule\Core\GdprOptinModule::onDeactivate',
+        'onActivate'   => 'OxidEsales\GdprOptinModule\Core\GdprOptinModule::onActivate',
+        'onDeactivate' => 'OxidEsales\GdprOptinModule\Core\GdprOptinModule::onDeactivate',
     ],
 ];
