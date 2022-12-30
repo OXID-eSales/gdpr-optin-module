@@ -23,14 +23,14 @@
   "autoload": {
     "psr-4": {
       "OxidEsales\\GdprOptinModule\\": "src/",
-      "OxidEsales\\GdprOptinModule\\Tests\\": "Tests/"
+      "OxidEsales\\GdprOptinModule\\Tests\\": "tests/"
     }
   },
   "scripts": {
-      "phpcs": "phpcs --standard=Tests/phpcs.xml",
-      "phpcbf": "phpcbf --standard=Tests/phpcs.xml",
-      "phpstan": "phpstan -cTests/PhpStan/phpstan.neon analyse src/",
-      "phpstan-report": "phpstan -cTests/PhpStan/phpstan.neon analyse src/ --error-format=json > phpstan.report.json",
+      "phpcs": "phpcs --standard=tests/phpcs.xml",
+      "phpcbf": "phpcbf --standard=tests/phpcs.xml",
+      "phpstan": "phpstan -ctests/PhpStan/phpstan.neon analyse src/",
+      "phpstan-report": "phpstan -ctests/PhpStan/phpstan.neon analyse src/ --error-format=json > phpstan.report.json",
       "phpmd": "phpmd src text cleancode,codesize,design,naming,unusedcode",
       "phpmd-report": "phpmd src json cleancode,codesize,design,naming,unusedcode --reportfile phpmd.report.json",
       "static": [
