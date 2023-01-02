@@ -28,7 +28,6 @@ abstract class IntegrationBaseTest extends TestCase
     {
         parent::setUp();
 
-        GdprOptinModule::clearCache();
         $this->createTestUser();
         $this->disableOptins();
     }
