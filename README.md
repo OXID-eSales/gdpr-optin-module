@@ -5,19 +5,19 @@ Module adds opt-in functionality which is required for GDPR law.
 
 ### Installation
 
-System requirements and installation instructions are described in the module documentation: https://docs.oxid-esales.com/modules/gdpr-optin/de/2.3/installation.html.
+System requirements and installation instructions are described in the module documentation: https://docs.oxid-esales.com/modules/gdpr-optin/en/3.0/installation.html.
 
 ### Compatibility
 
-* b-7.0.x module branch for shop branch 7.0.x
+* b-7.0.x module branch for shop 7.0.x branches and compilations
 * b-6.x module branch for shop compilation: 6.2 and up to 6.3.x
 * b-2.2.x module branch for shop compilation: 6.0.2 and up to 6.1.x
 * v1.x module branch for shop compilation: 5.3.7/4.10.7 or above
 
 ### Module installation via composer
 
-* **composer require oxid-esales/gdpr-optin-module:^2.3.0** to install the released version compatible with OXID eShop 6.2.0 compilation
-* **composer require oxid-esales/gdpr-optin-module:dev-b-7.0.x ** to install the latest unreleased version from github
+* **composer require oxid-esales/gdpr-optin-module:^2.3.0** to install the released version compatible with OXID eShop 6.2.x - 6.5.x compilations
+* **composer require oxid-esales/gdpr-optin-module:dev-b-7.0.x ** to install the latest unreleased version from github, compatible with shop b-7.0.x branches
 
 ### Features
 
@@ -34,4 +34,4 @@ If you experience any bugs or issues, please report them in the section **Module
 
 ### Documentation 
 
-The module documentation can be found on our documentation platform: https://docs.oxid-esales.com/modules/gdpr-optin/de/2.3/index.html.
+The module documentation can be found on our documentation platform: https://docs.oxid-esales.com/modules/gdpr-optin/en/3.0/.

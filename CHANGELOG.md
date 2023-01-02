@@ -21,10 +21,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - Adapted module to work with OXID eShop 7.0.x
+- Source code moved to ``src`` folder
+- Tests and quality tools configurations collected in ``tests`` folder
 - Small refactoring: extracted services
 - Adapted test to work with OXID eShop 7.0.x and without testing library
 - File copyright headers updated.
-- On module activation and deactivation, console command for clearing cache is used.
 
 ### Removed
 - Support for PHP 7.4
