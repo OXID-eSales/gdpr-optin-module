@@ -7,9 +7,6 @@
 
 namespace OxidEsales\GdprOptinModule\Core;
 
-use OxidEsales\Eshop\Core\Registry;
-use OxidEsales\Facts\Facts;
-
 /**
  * Class GdprOptinModule
  * Handles module setup, provides additional tools and module related helpers.
@@ -27,7 +24,6 @@ class GdprOptinModule
      */
     public static function onActivate(): void
     {
-        self::clearCache();
     }
 
     /**
@@ -35,23 +31,5 @@ class GdprOptinModule
      */
     public static function onDeactivate(): void
     {
-        self::clearCache();
-    }
-
-    public static function clearCache(): void
-    {
-        try {
-            $facts = new Facts();
-            exec(
-                $facts->getCommunityEditionRootPath() .
-                '/bin/oe-console oe:cache:clear'
-            );
-        } catch (\Exception $exception) {
-            Registry::getLogger()
-                ->error(
-                    'GepfOptin Module::clearCachesOnModuleActivateDeactivate failed ' .
-                    $exception->getMessage()
-                );
-        }
     }
 }
