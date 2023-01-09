@@ -12,8 +12,7 @@
     "GPL-3.0-only"
   ],
   "require": {
-    "php": "^8.0 | ^8.1",
-    "oxid-esales/oxideshop-ce": "^7.0.0-rc.2 | 7.0.x-dev"
+    "php": "^8.0 | ^8.1"
   },
   "require-dev": {
       "phpstan/phpstan": "^1.8.11",
