@@ -5,7 +5,7 @@ Module adds opt-in functionality which is required for GDPR law.
 
 ### Installation
 
-System requirements and installation instructions are described in the module documentation: https://docs.oxid-esales.com/modules/gdpr-optin/en/3.0/installation.html.
+System requirements and installation instructions are described in the module documentation: https://docs.oxid-esales.com/modules/gdpr-optin/de/3.0/installation.html.
 
 ### Compatibility
 
@@ -34,4 +34,4 @@ If you experience any bugs or issues, please report them in the section **Module
 
 ### Documentation 
 
-The module documentation can be found on our documentation platform: https://docs.oxid-esales.com/modules/gdpr-optin/en/3.0/.
+The module documentation can be found on our documentation platform: https://docs.oxid-esales.com/modules/gdpr-optin/de/3.0/.
