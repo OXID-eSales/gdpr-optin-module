@@ -1,0 +1,45 @@
+{% extends "widget/reviews/reviews.html.twig" %}
+
+{% block widget_reviews_form_fields %}
+
+    {{ parent() }}
+
+    {% if oView.isReviewOptInValidationRequired() %}
+        <div style="margin-top:10px;" class="rvw_oegdproptin_block">
+            <input type="hidden" name="rvw_oegdproptin" value="0">
+            <label for="rvw_oegdproptin">
+                <input type="checkbox"
+                       name="rvw_oegdproptin"
+                       id="rvw_oegdproptin"
+                       value="1">
+                <strong>{{ translate({ ident: "OEGDPROPTIN_REVIEW_FORM_MESSAGE" }) }}</strong>
+            </label>
+
+            <div id="rvw_oegdproptin_error"
+                 class="{% if not oView.isReviewOptInError() %}hidden visually-hidden {% endif %} text-danger">
+                {{ translate({ ident: "OEGDPROPTIN_REVIEW_FORM_ERROR_MESSAGE" }) }}
+            </div>
+        </div>
+
+        <script>
+            function optInJs() {
+                document.querySelector("#rvw_oegdproptin").closest("form").addEventListener('submit', function (event) {
+                    event.preventDefault();
+
+                    if (document.querySelector("#rvw_oegdproptin_error")) {
+                        document.querySelector("#rvw_oegdproptin_error").className = "hidden visually-hidden text-danger";
+                    }
+
+                    if (document.querySelector("#rvw_oegdproptin:checked")) {
+                        this.submit();
+                    } else if(document.querySelector("#rvw_oegdproptin_error")) {
+                        document.querySelector("#rvw_oegdproptin_error").className = "text-danger";
+                    }
+                });
+            }
+        </script>
+
+        {{ script({ add: "optInJs();", dynamic: __oxid_include_dynamic }) }}
+    {% endif %}
+
+{% endblock %}

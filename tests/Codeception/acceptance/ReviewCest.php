@@ -58,11 +58,19 @@ final class ReviewCest extends BaseCest
         $I->retryClick(Translator::translate('WRITE_REVIEW'));
 
         $I->seeElementInDOM('#rvw_oegdproptin');
+        $I->assertStringContainsString(
+            'hidden',
+            $I->grabAttributeFrom('#rvw_oegdproptin_error', 'class')
+        );
         $I->scrollTo('#rvw_oegdproptin');
 
         $detailsPage->addReviewAndRating('my shiny other review', 5);
         $I->waitForPageLoad();
         $I->see(Translator::translate('OEGDPROPTIN_REVIEW_FORM_ERROR_MESSAGE'));
+        $I->assertStringNotContainsString(
+            'hidden',
+            $I->grabAttributeFrom('#rvw_oegdproptin_error', 'class')
+        );
 
         $I->seeElementInDOM('#rvw_oegdproptin');
         $I->scrollTo('#rvw_oegdproptin');
@@ -71,6 +79,9 @@ final class ReviewCest extends BaseCest
 
         $I->reloadPage();
         $I->see('my shiny other review');
-        $I->dontSee(Translator::translate('OEGDPROPTIN_REVIEW_FORM_ERROR_MESSAGE'));
+        $I->assertStringContainsString(
+            'hidden',
+            $I->grabAttributeFrom('#rvw_oegdproptin_error', 'class')
+        );
     }
 }

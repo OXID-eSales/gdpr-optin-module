@@ -34,8 +34,8 @@ final class ContactCest extends BaseCest
         $I->click(Translator::translate('SEND'));
         $I->waitForPageLoad();
 
-        $I->see(Translator::translate('DD_CONTACT_THANKYOU1'));
-        $I->see(Translator::translate('DD_CONTACT_THANKYOU2'));
+        $I->see(Translator::translate('PAGE_DETAILS_THANKYOUMESSAGE1'));
+        $I->see(Translator::translate('PAGE_DETAILS_THANKYOUMESSAGE2'));
     }
 
     public function testOptinContactMessage(AcceptanceTester $I): void
@@ -63,7 +63,7 @@ final class ContactCest extends BaseCest
         $I->click(Translator::translate('SEND'));
         $I->waitForPageLoad();
 
-        $I->see(Translator::translate('DD_CONTACT_THANKYOU1'));
-        $I->see(Translator::translate('DD_CONTACT_THANKYOU2'));
+        $I->see(Translator::translate('PAGE_DETAILS_THANKYOUMESSAGE1'));
+        $I->see(Translator::translate('PAGE_DETAILS_THANKYOUMESSAGE2'));
     }
 }
