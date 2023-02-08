@@ -38,7 +38,7 @@ final class UserAddressOptinCest extends BaseCest
 
         $userAddress->openUserBillingAddressForm();
 
-        $I->dontSeeElementInDOM('#oegdproptin_invoiceaddress');
+        $I->dontSeeElement('#oegdproptin_invoiceaddress');
         $I->dontSee(Translator::translate('OEGDPROPTIN_STORE_INVOICE_ADDRESS'));
 
         $I->click($userAddress->saveUserAddressButton);
