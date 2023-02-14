@@ -13,7 +13,6 @@ use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Checkout\UserCheckout;
 use OxidEsales\Codeception\Step\Basket;
 use OxidEsales\GdprOptinModule\Service\ModuleSettings;
-use OxidEsales\Codeception\Step\UserRegistrationInCheckout;
 
 /**
  * @group gdproptin_module
@@ -31,6 +30,7 @@ final class CheckoutCest extends BaseCest
         $I->openShop();
         $basket = new Basket($I);
 
+        /** @var UserCheckout $userCheckout */
         $userCheckout = $basket
             ->addProductToBasketAndOpenUserCheckout('1000', 1)
             ->selectOptionRegisterNewAccount();
@@ -53,6 +53,7 @@ final class CheckoutCest extends BaseCest
         $I->openShop();
         $basket = new Basket($I);
 
+        /** @var UserCheckout $userCheckout */
         $userCheckout = $basket
             ->addProductToBasketAndOpenUserCheckout('1000', 1)
             ->selectOptionNoRegistration();
@@ -76,6 +77,7 @@ final class CheckoutCest extends BaseCest
         $I->openShop();
         $basket = new Basket($I);
 
+        /** @var UserCheckout $userCheckout */
         $userCheckout = $basket
             ->addProductToBasketAndOpenUserCheckout('1000', 1)
             ->selectOptionRegisterNewAccount();
@@ -103,7 +105,7 @@ final class CheckoutCest extends BaseCest
         $I->see(Translator::translate('SELECT_SHIPPING_METHOD'));
         $I->dontSee(Translator::translate('OEGDPROPTIN_CONFIRM_USER_REGISTRATION_OPTIN'));
     }
-    /** @group foo */
+
     public function testOptinsForAddressChangeInCheckout(AcceptanceTester $I): void
     {
         $I->wantToTest('that user needs to optin address changes during checkout');
@@ -115,6 +117,8 @@ final class CheckoutCest extends BaseCest
             ->loginUser($this->username, $this->password);
 
         $basket = new Basket($I);
+
+        /** @var UserCheckout $userCheckout */
         $userCheckout = $basket
             ->addProductToBasketAndOpenUserCheckout('1000', 1)
             ->openShippingAddressForm()
@@ -122,7 +126,7 @@ final class CheckoutCest extends BaseCest
         $I->pause();
         $I->seeElementInDOM('#oegdproptin_invoiceaddress');
         $I->see(Translator::translate('OEGDPROPTIN_STORE_INVOICE_ADDRESS'));
-/*
+
         $I->seeElementInDOM('#oegdproptin_deliveryaddress');
         $I->see(Translator::translate('OEGDPROPTIN_STORE_DELIVERY_ADDRESS'));
 
@@ -133,7 +137,6 @@ final class CheckoutCest extends BaseCest
 
         $I->see(Translator::translate('OEGDPROPTIN_CONFIRM_STORE_INVOICE_ADDRESS'));
         $I->see(Translator::translate('OEGDPROPTIN_CONFIRM_STORE_DELIVERY_ADDRESS'));
-        $I->dontSee(Translator::translate('SELECT_SHIPPING_METHOD'));
 
         $I->click('#oegdproptin_invoiceaddress');
         $I->seeCheckboxIsChecked('#oegdproptin_invoiceaddress');
@@ -141,7 +144,6 @@ final class CheckoutCest extends BaseCest
             ->goToNextStep();
 
         $I->see(Translator::translate('OEGDPROPTIN_CONFIRM_STORE_DELIVERY_ADDRESS'));
-        $I->dontSee(Translator::translate('SELECT_SHIPPING_METHOD'));
 
         $I->seeCheckboxIsChecked('#oegdproptin_invoiceaddress');
         $I->click('#oegdproptin_deliveryaddress');
@@ -150,6 +152,6 @@ final class CheckoutCest extends BaseCest
             ->goToNextStep();
 
         $I->see(Translator::translate('SELECT_SHIPPING_METHOD'));
-        $I->dontSee(Translator::translate('OEGDPROPTIN_CONFIRM_STORE_DELIVERY_ADDRESS')); */
+        $I->dontSee(Translator::translate('OEGDPROPTIN_CONFIRM_STORE_DELIVERY_ADDRESS'));
     }
 }
