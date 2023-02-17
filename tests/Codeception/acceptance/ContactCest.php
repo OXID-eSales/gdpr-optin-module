@@ -23,7 +23,7 @@ final class ContactCest extends BaseCest
         $I->wantToTest('that user sees gdpr delete data message');
 
         $I->openShop();
-        $I->click(Translator::translate('CONTACT'));
+        $I->retryClick(Translator::translate('CONTACT'));
         $I->waitForPageLoad();
 
         $I->see(Translator::translate('DD_CONTACT_PAGE_HEADING'));
@@ -31,7 +31,7 @@ final class ContactCest extends BaseCest
         $I->dontSee(Translator::translate('OEGDPROPTIN_CONTACT_FORM_MESSAGE_STATISTICAL'));
 
         $I->fillField('#contactEmail', $this->username);
-        $I->click(Translator::translate('SEND'));
+        $I->retryClick(Translator::translate('SEND'));
         $I->waitForPageLoad();
 
         $I->see(Translator::translate('PAGE_DETAILS_THANKYOUMESSAGE1'));
@@ -45,7 +45,7 @@ final class ContactCest extends BaseCest
         $I->setModuleSettingString(ModuleSettings::CONTACT_CHOICE, 'statistical');
 
         $I->openShop();
-        $I->click(Translator::translate('CONTACT'));
+        $I->retryClick(Translator::translate('CONTACT'));
         $I->waitForPageLoad();
 
         $I->see(Translator::translate('DD_CONTACT_PAGE_HEADING'));
@@ -53,14 +53,14 @@ final class ContactCest extends BaseCest
         $I->see(Translator::translate('OEGDPROPTIN_CONTACT_FORM_MESSAGE_STATISTICAL'));
 
         $I->fillField('#contactEmail', $this->username);
-        $I->click(Translator::translate('SEND'));
+        $I->retryClick(Translator::translate('SEND'));
         $I->waitForPageLoad();
         $I->see(Translator::translate('OEGDPROPTIN_CONTACT_FORM_ERROR_MESSAGE'));
 
         $I->seeElement('#c_oegdproptin');
-        $I->click('#c_oegdproptin');
+        $I->retryClick('#c_oegdproptin');
         $I->seeCheckboxIsChecked('#c_oegdproptin');
-        $I->click(Translator::translate('SEND'));
+        $I->retryClick(Translator::translate('SEND'));
         $I->waitForPageLoad();
 
         $I->see(Translator::translate('PAGE_DETAILS_THANKYOUMESSAGE1'));

@@ -35,7 +35,7 @@ final class RegistrationCest extends BaseCest
         $userForm = $registrationPage->enterUserLoginData($this->getUserLoginData('first'))
             ->enterAddressData($this->getUserAddressData());
 
-        $I->click($userForm->saveFormButton);
+        $I->retryClick($userForm->saveFormButton);
         $I->waitForPageLoad();
 
         $I->see(Translator::translate('MESSAGE_WELCOME_REGISTERED_USER'));
@@ -56,15 +56,15 @@ final class RegistrationCest extends BaseCest
         $userForm = $registrationPage->enterUserLoginData($this->getUserLoginData('second'))
             ->enterAddressData($this->getUserAddressData());
 
-        $I->click($userForm->saveFormButton);
+        $I->retryClick($userForm->saveFormButton);
         $I->waitForPageLoad();
         $I->see(Translator::translate('OEGDPROPTIN_CONFIRM_USER_REGISTRATION_OPTIN'));
 
         $userForm = $registrationPage->enterUserLoginData($this->getUserLoginData('second'))
             ->enterAddressData($this->getUserAddressData());
-        $I->click('#oegdproptin_userregistration');
+        $I->retryClick('#oegdproptin_userregistration');
         $I->seeCheckboxIsChecked('#oegdproptin_userregistration');
-        $I->click($userForm->saveFormButton);
+        $I->retryClick($userForm->saveFormButton);
         $I->waitForPageLoad();
 
         $I->see(Translator::translate('MESSAGE_WELCOME_REGISTERED_USER'));

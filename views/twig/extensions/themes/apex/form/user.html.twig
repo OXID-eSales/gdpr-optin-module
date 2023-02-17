@@ -29,17 +29,16 @@
     {% endif %}
 
     {% if true == oViewConf.showGdprDeliveryOptIn() %}
-        <div class="clearfix"></div>
-        <div id="GdprShippingAddressOptin" class="form-group" style="{% if delivadr or not oView.showShipAddress() %}display: none;{% endif %}">
-            <div class="col-lg-9 col-lg-offset-3 offset-lg-3">
-                <div class="checkbox">
-                    <label class="req">
-                        <input type="hidden" class="hidden" id="oegdproptin_changeDelAddress" name="oegdproptin_changeDelAddress" value="0">
-                        <input type="checkbox" name="oegdproptin_deliveryaddress" id="oegdproptin_deliveryaddress" value="1" >
+        <div id="GdprShippingAddressOptin" style="{% if delivadr or not oView.showShipAddress() %}display: none;{% endif %}">
+            <div class="checkbox">
+                <div class="form-check">
+                    <input type="hidden" class="hidden" id="oegdproptin_changeDelAddress" name="oegdproptin_changeDelAddress" value="0">
+                    <input class="form-check-input" type="checkbox" name="oegdproptin_deliveryaddress" id="oegdproptin_deliveryaddress" value="1">
+                    <label class="form-check-label" for="oegdproptin_deliveryaddress">
                         <strong>{{ translate({ ident: "OEGDPROPTIN_STORE_DELIVERY_ADDRESS" }) }}</strong>
                     </label>
+                    <div id="oegdproptin_deliveryaddress_error" style="display:none;" class="text-danger">{{ translate({ ident: "OEGDPROPTIN_CONFIRM_STORE_DELIVERY_ADDRESS" }) }}</div>
                 </div>
-                <div id="oegdproptin_deliveryaddress_error" style="display:none;" class="text-danger">{{ translate({ ident: "OEGDPROPTIN_CONFIRM_STORE_DELIVERY_ADDRESS" }) }}</div>
             </div>
         </div>
     {% endif %}
@@ -50,17 +49,16 @@
     {{ parent() }}
 
     {% if true == oViewConf.showGdprInvoiceOptIn() %}
-        <div class="clearfix"></div>
-        <div id="GdprInvoiceAddressOptin" class="form-group" style="display: none;">
-            <div class="col-lg-9 col-lg-offset-3 offset-lg-3">
-                <div class="checkbox">
-                    <label class="req">
-                        <input type="hidden" class="hidden" id="oegdproptin_changeInvAddress" name="oegdproptin_changeInvAddress" value="0">
-                        <input type="checkbox" name="oegdproptin_invoiceaddress" id="oegdproptin_invoiceaddress" value="1" >
+        <div id="GdprInvoiceAddressOptin" style="display: none;">
+            <div class="checkbox">
+                <div class="form-check">
+                    <input type="hidden" class="hidden" id="oegdproptin_changeInvAddress" name="oegdproptin_changeInvAddress" value="0">
+                    <input class="form-check-input" type="checkbox" name="oegdproptin_invoiceaddress" id="oegdproptin_invoiceaddress" value="1">
+                    <label class="form-check-label" for="oegdproptin_invoiceaddress">
                         <strong>{{ translate({ ident: "OEGDPROPTIN_STORE_INVOICE_ADDRESS" }) }}</strong>
                     </label>
+                    <div id="oegdproptin_invoiceaddress_error" style="display:none;" class="text-danger">{{ translate({ ident: "OEGDPROPTIN_CONFIRM_STORE_INVOICE_ADDRESS" }) }}</div>
                 </div>
-                <div id="oegdproptin_invoiceaddress_error" style="display:none;" class="text-danger">{{ translate({ ident: "OEGDPROPTIN_CONFIRM_STORE_INVOICE_ADDRESS" }) }}</div>
             </div>
         </div>
     {% endif %}

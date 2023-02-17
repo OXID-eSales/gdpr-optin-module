@@ -376,18 +376,12 @@ jobs:
           perl -pi \
           -e 's#views/twig#views/apexs#g;' \
           source/test-module/tests/Codeception/acceptance.suite.yml
-          perl -pi \
-          -e 's#theme_id:\s?twig#theme_id: apex#g;' \
-          source/test-module/tests/Codeception/acceptance.suite.yml
 
       - name: Reconfigure codeception for twig theme
         if: ${{ inputs.template_engine == 'twig-twig' }}
         run: |
           perl -pi \
           -e 's#views/apex#views/twig#g;' \
-          source/test-module/tests/Codeception/acceptance.suite.yml
-          perl -pi \
-          -e 's#theme_id:\s?apex#theme_id: twig#g;' \
           source/test-module/tests/Codeception/acceptance.suite.yml
 
       - name: Run tests with twig theme
@@ -456,12 +450,6 @@ jobs:
           source/test-module/tests/Codeception/acceptance.suite.yml
           perl -pi \
           -e 's#views/apex#views/flow/translations#g;' \
-          source/test-module/tests/Codeception/acceptance.suite.yml
-          perl -pi \
-          -e 's#theme_id:\s?twig#theme_id: flow#g;' \
-          source/test-module/tests/Codeception/acceptance.suite.yml
-          perl -pi \
-          -e 's#theme_id:\s?apex#theme_id: flow#g;' \
           source/test-module/tests/Codeception/acceptance.suite.yml
 
       - name: Start containers

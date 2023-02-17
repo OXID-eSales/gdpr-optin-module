@@ -74,7 +74,7 @@ final class ReviewCest extends BaseCest
 
         $I->seeElementInDOM('#rvw_oegdproptin');
         $I->scrollTo('#rvw_oegdproptin');
-        $I->click('#rvw_oegdproptin');
+        $I->retryClick('#rvw_oegdproptin');
         $I->click($detailsPage->saveRatingAndReviewButton);
 
         $I->reloadPage();

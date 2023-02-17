@@ -41,7 +41,7 @@ final class UserAddressOptinCest extends BaseCest
         $I->dontSeeElement('#oegdproptin_invoiceaddress');
         $I->dontSee(Translator::translate('OEGDPROPTIN_STORE_INVOICE_ADDRESS'));
 
-        $I->click($userAddress->saveUserAddressButton);
+        $I->retryClick($userAddress->saveUserAddressButton);
 
         $I->waitForPageLoad();
         $I->dontSee(Translator::translate('OEGDPROPTIN_CONFIRM_STORE_INVOICE_ADDRESS'));
@@ -64,7 +64,7 @@ final class UserAddressOptinCest extends BaseCest
 
         $I->seeElementInDOM('#oegdproptin_invoiceaddress');
         $I->see(Translator::translate('OEGDPROPTIN_STORE_INVOICE_ADDRESS'));
-        $I->click($userAddress->saveUserAddressButton);
+        $I->retryClick($userAddress->saveUserAddressButton);
 
         $I->waitForPageLoad();
         $I->see(Translator::translate('OEGDPROPTIN_CONFIRM_STORE_INVOICE_ADDRESS'));
@@ -95,7 +95,7 @@ final class UserAddressOptinCest extends BaseCest
 
         $I->dontSeeElementInDOM('#oegdproptin_deliveryaddress');
         $I->dontSee(Translator::translate('OEGDPROPTIN_STORE_DELIVERY_ADDRESS'));
-        $I->click($userAddress->saveUserAddressButton);
+        $I->retryClick($userAddress->saveUserAddressButton);
 
         $I->waitForPageLoad();
         $I->dontSee(Translator::translate('OEGDPROPTIN_CONFIRM_STORE_DELIVERY_ADDRESS'));
@@ -118,7 +118,7 @@ final class UserAddressOptinCest extends BaseCest
 
         $I->seeElementInDOM('#oegdproptin_deliveryaddress');
         $I->see(Translator::translate('OEGDPROPTIN_STORE_DELIVERY_ADDRESS'));
-        $I->click($userAddress->saveUserAddressButton);
+        $I->retryClick($userAddress->saveUserAddressButton);
 
         $I->waitForPageLoad();
         $I->see(Translator::translate('OEGDPROPTIN_CONFIRM_STORE_DELIVERY_ADDRESS'));

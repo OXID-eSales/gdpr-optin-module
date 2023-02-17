@@ -16,12 +16,12 @@
             </label>
 
             <div id="rvw_oegdproptin_error"
-                 class="{% if not oView.isReviewOptInError() %}hidden visually-hidden {% endif %} text-danger">
+                 class="{% if not oView.isReviewOptInError() %}hidden visually-hidden {% endif %}text-danger">
                 {{ translate({ ident: "OEGDPROPTIN_REVIEW_FORM_ERROR_MESSAGE" }) }}
             </div>
         </div>
 
-        <script>
+        <script type='text/javascript'>
             function optInJs() {
                 document.querySelector("#rvw_oegdproptin").closest("form").addEventListener('submit', function (event) {
                     event.preventDefault();

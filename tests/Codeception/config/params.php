@@ -30,7 +30,7 @@ return [
     'FIXTURES_PATH' => getTestFixtureSqlFilePath(),
     'SELENIUM_SERVER_PORT' => $selenium_server_port,
     'SELENIUM_SERVER_HOST' => getenv('SELENIUM_SERVER_HOST') ?: 'selenium',
-    'THEME_ID' => getenv('THEME_ID') ?: 'flow',
+    'THEME_ID' => getenv('THEME_ID') ?: 'twig',
     'BROWSER_NAME' => getenv('BROWSER_NAME') ?: 'chrome',
     'PHP_BIN' => $php,
 ];
