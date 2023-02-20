@@ -365,27 +365,20 @@ jobs:
           docker-compose exec -T php composer update --no-interaction
 
       - name: Install codeception-page-objects for apex theme
-        if: ${{ inputs.template_engine == 'twig-apex' }}
+        if: ${{ inputs.template_engine == 'both' || inputs.template_engine == 'twig-apex' }}
         run: |
           docker-compose exec -T php composer require oxid-esales/codeception-page-objects:dev-b-7.0.x-apex-gdpr-OXDEV-6695 --no-update
           docker-compose exec -T php composer update --no-interaction
 
-      - name: Reconfigure codeception for apex theme
-        if: ${{ inputs.template_engine == 'twig-apex' }}
-        run: |
-          perl -pi \
-          -e 's#views/twig#views/apexs#g;' \
-          source/test-module/tests/Codeception/acceptance.suite.yml
-
       - name: Reconfigure codeception for twig theme
-        if: ${{ inputs.template_engine == 'twig-twig' }}
+        if: ${{ inputs.template_engine == 'both' || inputs.template_engine == 'twig-twig' }}
         run: |
           perl -pi \
           -e 's#views/apex#views/twig#g;' \
           source/test-module/tests/Codeception/acceptance.suite.yml
 
       - name: Run tests with twig theme
-        if: ${{ inputs.template_engine == 'twig-twig' }}
+        if: ${{ inputs.template_engine == 'both' || inputs.template_engine == 'twig-twig' }}
         run: |
           docker-compose exec -T \
             -e SELENIUM_SERVER_HOST=selenium \
@@ -395,8 +388,15 @@ jobs:
             php vendor/bin/codecept run acceptance \
                 -c /var/www/vendor/${{ env.PACKAGE_NAME }}/tests/codeception.yml -g ${{ inputs.module_codecept_test_group }}
 
+      - name: Reconfigure codeception for apex theme
+        if: ${{ inputs.template_engine == 'both' || inputs.template_engine == 'twig-apex' }}
+        run: |
+          perl -pi \
+          -e 's#views/twig#views/apexs#g;' \
+          source/test-module/tests/Codeception/acceptance.suite.yml
+
       - name: Run tests with apex theme
-        if: ${{ inputs.template_engine == 'twig-apex' }}
+        if: ${{ inputs.template_engine == 'both' || inputs.template_engine == 'twig-apex' }}
         run: |
           docker-compose exec -T \
             -e SELENIUM_SERVER_HOST=selenium \
@@ -582,17 +582,18 @@ jobs:
           payload: >
             { "text": "
             ${{ github.event_name == 'workflow_dispatch' && 'Manual run of' || 'Scheduled run of' }} ${{ github.workflow }} on ${{ github.repository }} by ${{ github.actor }}
-            ${{ needs.unit_tests.result=='success' && needs.integration_tests.result=='success' && ((inputs.template_engine=='twig' && needs.codeception_twig.result=='success') || (inputs.template_engine=='smarty' && needs.codeception_smarty.result=='success') || (inputs.template_engine=='both' && needs.codeception_twig.result=='success' && needs.codeception_smarty.result=='success')) && 'Successful' || 'Failed' }}
+            ${{ needs.unit_tests.result=='success' && needs.integration_tests.result=='success' && ((inputs.template_engine=='twig_apex' && needs.codeception_twig.result=='success') || (inputs.template_engine=='twig_twig' && needs.codeception_twig.result=='success') || (inputs.template_engine=='smarty' && needs.codeception_smarty.result=='success') || (inputs.template_engine=='both' && needs.codeception_twig.result=='success' && needs.codeception_smarty.result=='success')) && 'Successful' || 'Failed' }}
             ", "blocks": [ { "type": "header","text": { "type": "plain_text", "emoji": true, "text": "
             ${{ github.event_name == 'workflow_dispatch' && 'Manual run of' || 'Scheduled' }} ${{ github.workflow }} on ${{ github.repository }} by ${{ github.actor }}
             " } },{ "type": "section","fields": [ { "type": "mrkdwn","text": "
-            *Status:* ${{ needs.unit_tests.result=='success' && needs.integration_tests.result=='success' && ((inputs.template_engine=='twig' && needs.codeception_twig.result=='success') || (inputs.template_engine=='smarty' && needs.codeception_smarty.result=='success') || (inputs.template_engine=='both' && needs.codeception_twig.result=='success' && needs.codeception_smarty.result=='success')) && ':white_check_mark:' || ':x:' }}
+            *Status:* ${{ needs.unit_tests.result=='success' && needs.integration_tests.result=='success' && ((inputs.template_engine=='twig_apex' && needs.codeception_twig.result=='success') || (inputs.template_engine=='twig_twig' && needs.codeception_twig.result=='success') || (inputs.template_engine=='smarty' && needs.codeception_smarty.result=='success') || (inputs.template_engine=='both' && needs.codeception_twig.result=='success' && needs.codeception_smarty.result=='success')) && ':white_check_mark:' || ':x:' }}
             " },{ "type": "mrkdwn","text": "
             Repository: <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ github.repository }}/actions/runs/${{ github.run_id }}>
             " } ] },{ "type": "section", "text": { "type": "mrkdwn", "text": "
             \n* Module Unit ${{ (needs.unit_tests.result=='success') && ':white_check_mark:' || ':x:' }}
             \n* Module Integration ${{ (needs.integration_tests.result=='success') && ':white_check_mark:' || ':x:' }}
-            \n* Module Codeception ${{ ((inputs.template_engine=='twig' && needs.codeception_twig.result=='success') || (inputs.template_engine=='smarty' && needs.codeception_smarty.result=='success') || (inputs.template_engine=='both' && needs.codeception_twig.result=='success' && needs.codeception_smarty.result=='success')) && ':white_check_mark:' || ':x:' }}
+            \n* Module Codeception with Smarty ${{ ((inputs.template_engine=='smarty' && needs.codeception_smarty.result=='success') || (inputs.template_engine=='both' && needs.codeception_smarty.result=='success')) && ':white_check_mark:' || ':x:' }}
+            \n* Module Codeception with Twig ${{ ((inputs.template_engine=='twig-apex' && needs.codeception_twig.result=='success') || (inputs.template_engine=='twig-twig' && needs.codeception_twig.result=='success') || (inputs.template_engine=='both' && needs.codeception_twig.result=='success')) && ':white_check_mark:' || ':x:' }}
             \n* Module Styles ${{ (needs.styles.result=='success') && ':white_check_mark:' || ':x:' }}
             " } }, { "type": "divider" } ] }
         env:
