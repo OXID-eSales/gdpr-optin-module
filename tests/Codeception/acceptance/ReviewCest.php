@@ -62,7 +62,6 @@ final class ReviewCest extends BaseCest
             'hidden',
             $I->grabAttributeFrom('#rvw_oegdproptin_error', 'class')
         );
-        $I->scrollTo('#rvw_oegdproptin');
 
         $detailsPage->addReviewAndRating('my shiny other review', 5);
         $I->waitForPageLoad();
@@ -73,7 +72,6 @@ final class ReviewCest extends BaseCest
         );
 
         $I->seeElementInDOM('#rvw_oegdproptin');
-        $I->scrollTo('#rvw_oegdproptin');
         $I->retryClick('#rvw_oegdproptin');
         $I->click($detailsPage->saveRatingAndReviewButton);
 
