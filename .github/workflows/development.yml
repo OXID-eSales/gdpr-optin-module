@@ -364,12 +364,6 @@ jobs:
           docker-compose exec -T php composer require oxid-esales/apex-theme:dev-main --no-update
           docker-compose exec -T php composer update --no-interaction
 
-      - name: Install codeception-page-objects for apex theme
-        if: ${{ inputs.template_engine == 'both' || inputs.template_engine == 'twig-apex' }}
-        run: |
-          docker-compose exec -T php composer require oxid-esales/codeception-page-objects:dev-b-7.0.x-apex-gdpr-OXDEV-6695 --no-update
-          docker-compose exec -T php composer update --no-interaction
-
       - name: Reconfigure codeception for twig theme
         if: ${{ inputs.template_engine == 'both' || inputs.template_engine == 'twig-twig' }}
         run: |
@@ -388,11 +382,17 @@ jobs:
             php vendor/bin/codecept run acceptance \
                 -c /var/www/vendor/${{ env.PACKAGE_NAME }}/tests/codeception.yml -g ${{ inputs.module_codecept_test_group }}
 
+      - name: Install codeception-page-objects for apex theme
+        if: ${{ inputs.template_engine == 'both' || inputs.template_engine == 'twig-apex' }}
+        run: |
+          docker-compose exec -T php composer require oxid-esales/codeception-page-objects:dev-b-7.0.x-apex-gdpr-OXDEV-6695 --no-update
+          docker-compose exec -T php composer update --no-interaction
+
       - name: Reconfigure codeception for apex theme
         if: ${{ inputs.template_engine == 'both' || inputs.template_engine == 'twig-apex' }}
         run: |
           perl -pi \
-          -e 's#views/twig#views/apexs#g;' \
+          -e 's#views/twig#views/apex#g;' \
           source/test-module/tests/Codeception/acceptance.suite.yml
 
       - name: Run tests with apex theme
