@@ -7,7 +7,7 @@
       "modules",
       "eShop"
   ],
-  "homepage": "https://www.oxid-esales.com/en/home.html",
+  "homepage": "https://www.oxid-esales.com",
   "license": [
     "GPL-3.0-only"
   ],
@@ -22,6 +22,9 @@
       "squizlabs/php_codesniffer": "3.*",
       "phpmd/phpmd": "^2.11",
       "oxid-esales/oxideshop-ce": "dev-b-7.0.x"
+  },
+  "conflict": {
+      "oxid-esales/oxideshop-ce": "<7.0"
   },
   "autoload": {
     "psr-4": {
