@@ -80,26 +80,32 @@ class UserComponent extends UserComponent_parent
         $invoiceOptinValid = $this->validateInvoiceAddressOptIn();
 
         if (false == $deliveryOptinValid) {
+            $translation = Registry::getLang()->translateString('OEGDPROPTIN_CONFIRM_STORE_DELIVERY_ADDRESS');
+            $deliveryException = oxNew(\OxidEsales\Eshop\Core\Exception\InputException::class, $translation);
+            Registry::getInputValidator()->addValidationError('oegdproptin_deliveryaddress', $deliveryException);
             Registry::get(UtilsView::class)->addErrorToDisplay(
-                'OEGDPROPTIN_CONFIRM_STORE_DELIVERY_ADDRESS',
+                $deliveryException,
                 false,
                 true
             );
             Registry::get(UtilsView::class)->addErrorToDisplay(
-                'OEGDPROPTIN_CONFIRM_STORE_DELIVERY_ADDRESS',
+                $deliveryException,
                 false,
                 true,
                 'oegdproptin_deliveryaddress'
             );
         }
         if (false == $invoiceOptinValid) {
+            $translation = Registry::getLang()->translateString('OEGDPROPTIN_CONFIRM_STORE_INVOICE_ADDRESS');
+            $invoiceException = oxNew(\OxidEsales\Eshop\Core\Exception\InputException::class, $translation);
+            Registry::getInputValidator()->addValidationError('oegdproptin_invoiceaddress', $invoiceException);
             Registry::get(UtilsView::class)->addErrorToDisplay(
-                'OEGDPROPTIN_CONFIRM_STORE_INVOICE_ADDRESS',
+                $invoiceException,
                 false,
                 true
             );
             Registry::get(UtilsView::class)->addErrorToDisplay(
-                'OEGDPROPTIN_CONFIRM_STORE_INVOICE_ADDRESS',
+                $invoiceException,
                 false,
                 true,
                 'oegdproptin_invoiceaddress'

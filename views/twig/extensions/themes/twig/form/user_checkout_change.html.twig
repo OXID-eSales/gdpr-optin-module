@@ -23,7 +23,7 @@
     {% endif %}
 
     {% if true == oViewConf.showGdprInvoiceOptIn() %}
-        {{ script({ add: "$('#userChangeAddress').click( function() { $('#GdprInvoiceAddressOptin').toggle();return false;});", dynamic: __oxid_include_dynamic }) }}
+        {{ script({ add: "$('#userChangeAddress').click( function() { $('#GdprInvoiceAddressOptin').toggle(); document.getElementById('oegdproptin_changeInvAddress').value=1; return false;});", dynamic: __oxid_include_dynamic }) }}
     {% endif %}
 
     {% capture assign = "optinValidationJS" %}

@@ -7,6 +7,7 @@
 
 namespace OxidEsales\GdprOptinModule\Core;
 
+use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\GdprOptinModule\Traits\ServiceContainer;
 use OxidEsales\GdprOptinModule\Service\ModuleSettings;
 
@@ -46,5 +47,15 @@ class ViewConfig extends ViewConfig_parent
     {
         return $this->getServiceFromContainer(ModuleSettings::class)
             ->getContactOptIn();
+    }
+
+    public function getInvoiceOptIn(): bool
+    {
+        return (bool) Registry::getRequest()->getRequestEscapedParameter('oegdproptin_invoiceaddress');
+    }
+
+    public function getDeliveryOptIn(): bool
+    {
+        return (bool) Registry::getRequest()->getRequestEscapedParameter('oegdproptin_deliveryaddress');
     }
 }

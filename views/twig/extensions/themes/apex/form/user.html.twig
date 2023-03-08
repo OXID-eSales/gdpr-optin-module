@@ -72,7 +72,7 @@
 
     {% if true == oViewConf.showGdprDeliveryOptIn() %}
         {% if delivadr %}
-            <script>
+            <script type="text/javascript">
                 function editShippingAddressJS() {
                     document.querySelector('.dd-edit-shipping-address').addEventListener('click', function(){
                         if (document.getElementById('oegdproptin_changeDelAddress')) {
@@ -89,27 +89,9 @@
                     });
                 }
             </script>
-            <script>
-                function editDeliveryAddressJS() {
-                    document.querySelector('.dd-add-delivery-address').addEventListener('click', function(){
-                        if (document.getElementById('oegdproptin_changeDelAddress')) {
-                            document.getElementById('oegdproptin_changeDelAddress').value=1;
-                        }
-                        if (!document.querySelector('#GdprShippingAddressOptin')) {
-                            return false;
-                        }
-                        if (document.querySelector('.dd-add-delivery-address').checked) {
-                            document.querySelector('#GdprShippingAddressOptin').setAttribute('style', 'display: none;');
-                        } else {
-                            document.querySelector('#GdprShippingAddressOptin').removeAttribute('style');
-                        }
-                    });
-                }
-            </script>
             {{ script({ add: "editShippingAddressJS();", dynamic: __oxid_include_dynamic }) }}
-            {{ script({ add: "editDeliveryAddressJS();", dynamic: __oxid_include_dynamic }) }}
         {% endif %}
-        <script>
+        <script type="text/javascript">
             function showShipAddressJS() {
                 document.querySelector('#showShipAddress').addEventListener('change', function() {
                     if (!document.querySelector('#GdprShippingAddressOptin')){
@@ -130,7 +112,24 @@
     {% endif %}
 
     {% if true == oViewConf.showGdprInvoiceOptIn() %}
-       <script>
+        <script type="text/javascript">
+            function editInvoiceAddressJS() {
+                document.querySelector('#userChangeAddress').addEventListener('click', function(){
+                    if (document.getElementById('oegdproptin_changeInvAddress')) {
+                        document.getElementById('oegdproptin_changeInvAddress').value=1;
+                    }
+                    if (!document.querySelector('#GdprShippingAddressOptin')) {
+                        return false;
+                    }
+                    if (document.querySelector('.dd-add-delivery-address').checked) {
+                        document.querySelector('#GdprShippingAddressOptin').setAttribute('style', 'display: none;');
+                    } else {
+                        document.querySelector('#GdprShippingAddressOptin').removeAttribute('style');
+                    }
+                });
+            }
+        </script>
+       <script type="text/javascript">
           function userChangeAddressJS() {
               document.querySelector('#userChangeAddress').addEventListener('click', function() {
                   if (document.querySelector('#GdprInvoiceAddressOptin')) {
@@ -144,9 +143,10 @@
           }
        </script>
        {{ script({ add: "userChangeAddressJS();", dynamic: __oxid_include_dynamic }) }}
+       {{ script({ add: "editInvoiceAddressJS();", dynamic: __oxid_include_dynamic }) }}
     {% endif %}
 
-    <script>
+    <script type="text/javascript">
         function optinValidationJS() {
             document.querySelector("#accUserSaveTop").addEventListener('click', function (event) {
                 event.preventDefault();

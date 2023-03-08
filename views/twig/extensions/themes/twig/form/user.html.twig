@@ -83,10 +83,11 @@
     {% endif %}
 
     {% if true == oViewConf.showGdprInvoiceOptIn() %}
+        {{ script({ add: "$('#userChangeAddress').click(function(){ $('#GdprInvoiceAddressOptin').toggle($(this).is(':not(:checked)')); document.getElementById('oegdproptin_changeInvAddress').value=1; });", dynamic: __oxid_include_dynamic }) }}
         {{ script({ add: "$('#userChangeAddress').click( function() { $('#GdprInvoiceAddressOptin').show();$('#userChangeAddress').hide();return false;});", dynamic: __oxid_include_dynamic }) }}
     {% endif %}
 
-    <script>
+    <script type="text/javascript">
         function optinValidationJS() {
             $("#accUserSaveTop").click(function(event){
                 $("#oegdproptin_deliveryaddress_error").hide();
