@@ -17,7 +17,7 @@ use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Application\Controller\ContactController;
 use OxidEsales\GdprOptinModule\Service\ModuleSettings;
 
-final class ContactControllerTest extends IntegrationBaseTest
+final class ContactControllerTest extends BaseTestCase
 {
     use ServiceContainer;
 

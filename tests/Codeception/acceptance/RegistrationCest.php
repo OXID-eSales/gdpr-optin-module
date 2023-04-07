@@ -63,7 +63,8 @@ final class RegistrationCest extends BaseCest
         $userForm = $registrationPage->enterUserLoginData($this->getUserLoginData('second'))
             ->enterAddressData($this->getUserAddressData());
         $I->scrollTo('header');//scroll to top, scrolling to gdpr checkbox will be still hidden by header
-        $I->retryClick('#oegdproptin_userregistration');
+        $I->wait(1);//scroll to top, scrolling to gdpr checkbox will be still hidden by header
+        $I->click('#oegdproptin_userregistration');
         $I->seeCheckboxIsChecked('#oegdproptin_userregistration');
         $I->retryClick($userForm->saveFormButton);
         $I->waitForPageLoad();
