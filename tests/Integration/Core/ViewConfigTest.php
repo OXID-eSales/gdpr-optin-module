@@ -13,10 +13,10 @@ use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServ
 use OxidEsales\Eshop\Core\ViewConfig;
 use OxidEsales\GdprOptinModule\Core\GdprOptinModule;
 use OxidEsales\GdprOptinModule\Service\ModuleSettings;
-use OxidEsales\GdprOptinModule\Tests\Integration\IntegrationBaseTest;
+use OxidEsales\GdprOptinModule\Tests\Integration\BaseTestCase;
 use OxidEsales\GdprOptinModule\Traits\ServiceContainer;
 
-final class ViewConfigTest extends IntegrationBaseTest
+final class ViewConfigTest extends BaseTestCase
 {
     use ServiceContainer;
 

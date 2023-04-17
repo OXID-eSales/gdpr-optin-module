@@ -87,11 +87,4 @@ final class AcceptanceTester extends \Codeception\Actor
                 GdprOptinModule::MODULE_ID
             );
     }
-
-    public function waitForPageLoad(int $timeout = 60): void
-    {
-        if (getenv('THEME_ID') !== 'apex') {
-            $this->getScenario()->runStep(new \Codeception\Step\Action('waitForPageLoad', func_get_args()));
-        }
-    }
 }

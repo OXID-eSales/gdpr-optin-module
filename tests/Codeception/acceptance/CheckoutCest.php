@@ -89,8 +89,8 @@ final class CheckoutCest extends BaseCest
         $I->see(Translator::translate('OEGDPROPTIN_USER_REGISTRATION_OPTIN'));
 
         $userCheckout->enterUserLoginData($this->getUserLoginData('checkout3'))
-            ->enterAddressData($this->getUserAddressFormData())
-            ->goToNextStep();
+            ->enterAddressData($this->getUserAddressFormData());
+        $I->retryClick($userCheckout->nextStepButton);
 
         $I->see(Translator::translate('OEGDPROPTIN_CONFIRM_USER_REGISTRATION_OPTIN'));
 
@@ -132,16 +132,15 @@ final class CheckoutCest extends BaseCest
 
         $userCheckout
             ->enterAddressData($this->getUserAddressFormData())
-            ->enterShippingAddressData($this->getUserAddressFormData())
-            ->goToNextStep();
+            ->enterShippingAddressData($this->getUserAddressFormData());
+        $I->retryClick($userCheckout->nextStepButton);
 
         $I->see(Translator::translate('OEGDPROPTIN_CONFIRM_STORE_INVOICE_ADDRESS'));
         $I->see(Translator::translate('OEGDPROPTIN_CONFIRM_STORE_DELIVERY_ADDRESS'));
 
         $I->retryClick('#oegdproptin_invoiceaddress');
         $I->seeCheckboxIsChecked('#oegdproptin_invoiceaddress');
-        $userCheckout
-            ->goToNextStep();
+        $I->retryClick($userCheckout->nextStepButton);
 
         $I->see(Translator::translate('OEGDPROPTIN_CONFIRM_STORE_DELIVERY_ADDRESS'));
 

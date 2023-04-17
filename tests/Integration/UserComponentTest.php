@@ -20,7 +20,7 @@ use OxidEsales\GdprOptinModule\Core\GdprOptinModule;
 use OxidEsales\GdprOptInModule\Service\ModuleSettings;
 use OxidEsales\GdprOptinModule\Traits\ServiceContainer;
 
-final class UserComponentTest extends IntegrationBaseTest
+final class UserComponentTest extends BaseTestCase
 {
     use ServiceContainer;
 

@@ -18,7 +18,7 @@ use OxidEsales\GdprOptinModule\Service\ModuleSettings;
 use PHPUnit\Framework\TestCase;
 use OxidEsales\GdprOptinModule\Traits\ServiceContainer;
 
-abstract class IntegrationBaseTest extends TestCase
+abstract class BaseTestCase extends TestCase
 {
     use ServiceContainer;
 

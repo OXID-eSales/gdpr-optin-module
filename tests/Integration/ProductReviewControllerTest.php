@@ -16,7 +16,7 @@ use OxidEsales\GdprOptinModule\Core\GdprOptinModule;
 use OxidEsales\GdprOptInModule\Service\ModuleSettings;
 use OxidEsales\GdprOptinModule\Traits\ServiceContainer;
 
-class ProductReviewControllerTest extends IntegrationBaseTest
+class ProductReviewControllerTest extends BaseTestCase
 {
     use ServiceContainer;
 

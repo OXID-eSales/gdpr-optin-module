@@ -23,7 +23,7 @@ use OxidEsales\GdprOptinModule\Traits\ServiceContainer;
  * @covers \OxidEsales\GdprOptinModule\Component\Widget\Review
  * @covers \OxidEsales\GdprOptinModule\Traits\ReviewOptin
  */
-class OptinTraitTest extends IntegrationBaseTest
+class OptinTraitTest extends BaseTestCase
 {
     use ServiceContainer;
 
