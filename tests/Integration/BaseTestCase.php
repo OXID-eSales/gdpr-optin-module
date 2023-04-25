@@ -86,7 +86,7 @@ abstract class BaseTestCase extends TestCase
             's:26:"a7c40f631fc920687.20179984";s:20:"oxaddress__oxstateid";s:0:"";' .
             's:16:"oxaddress__oxfon";s:0:"";s:16:"oxaddress__oxfax";s:0:"";}';
 
-        $deliveryAddress = unserialize($address);
+        $deliveryAddress = $additionalParameters['deladr'] ?: unserialize($address);
         $parameters = ['deladr' => $deliveryAddress];
         if ($addToken) {
             $parameters['stoken'] = Registry::getSession()->getSessionChallengeToken();

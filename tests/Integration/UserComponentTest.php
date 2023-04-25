@@ -13,6 +13,10 @@ use OxidEsales\Eshop\Application\Component\UserComponent;
 use OxidEsales\Eshop\Application\Controller\RegisterController;
 use OxidEsales\Eshop\Application\Controller\UserController;
 use OxidEsales\Eshop\Application\Model\User;
+use OxidEsales\Eshop\Core\Exception\ConnectionException;
+use OxidEsales\Eshop\Core\Exception\InputException;
+use OxidEsales\Eshop\Core\Exception\UserException;
+use OxidEsales\Eshop\Core\InputValidator;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\Session;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
@@ -295,5 +299,107 @@ final class UserComponentTest extends BaseTestCase
 
         $displayErrors = Registry::getSession()->getVariable('Errors');
         $this->$assertDisplayExc(array_key_exists('oegdproptin_userregistration', $displayErrors));
+    }
+
+    public function providerChangeUserDataExceptions(): array
+    {
+        return [
+            'input_exception' => [
+                new InputException('testBlockedUser', 123)
+            ],
+            'user_exception' => [
+                new UserException('testBlockedUser', 123)
+            ],
+            'connection_exception' => [
+                new ConnectionException('testBlockedUser', 123)
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider  providerChangeUserDataExceptions
+     */
+    public function testChangeUserDataExceptions(\Exception $exception): void
+    {
+        $mssMock = $this->createPartialMock(User::class, ['changeUserData']);
+        $mssMock->method('changeUserData')->will($this->throwException($exception));
+        $oSession = $this->createPartialMock(Session::class, ['checkSessionChallenge']);
+        $oSession->expects($this->atLeastOnce())->method('checkSessionChallenge')->will($this->returnValue(true));
+        Registry::set(Session::class, $oSession);
+        $oUserView = $this->createPartialMock(UserComponent::class, ['getUser', 'getDelAddressData']);
+        $oUserView->expects($this->atLeastOnce())->method('getDelAddressData');
+        $oUserView->expects($this->atLeastOnce())->method('getUser')->will($this->returnValue(new User()));
+        $this->assertNull($oUserView->changeuser_testvalues());
+    }
+
+    public function testChangeUserAddress()
+    {
+        Registry::set(InputValidator::class, oxNew(InputValidator::class));
+        $parameters['blnewssubscribed'] = false;
+        $parameters['blshowshipaddress'] = true;
+        $parameters['oegdproptin_deliveryaddress'] = true;
+        $parameters['invadr'] = [
+            // Existing fields which users should not be able to change.
+            'oxuser__oxid'        => 'newId',
+            'oxid'                => 'newId',
+            'oxuser__oxpoints'    => 'newPoints',
+            'oxpoints'            => 'newPoints',
+            'oxuser__oxboni'      => 'newBoni',
+            'oxboni'              => 'newBoni',
+
+            // By default, user should not be capable to change new fields.
+            'oxaddress__newfield' => 'newId',
+            'newfield'            => 'newId',
+
+            // Fields which users should be capable to change.
+            'oxuser__oxusername'  => 'gdpruser@oxid.de',
+            // values have to be trimmed
+            'oxuser__oxfname'     => ' fname ',
+            'oxuser__oxlname'     => ' lname ',
+            'oxuser__oxstreetnr'  => 'nr',
+            'oxuser__oxstreet'    => ' street ',
+            'oxuser__oxzip'       => 'zip',
+            'oxuser__oxcity'      => 'city',
+            'oxuser__oxcountryid' => 'a7c40f631fc920687.20179984'
+        ];
+
+        $parameters['deladr'] = [
+            'oxaddress__oxid'            => 'newId',
+            'oxid'                       => 'newId',
+            'oxaddress__oxuserid'        => 'newId',
+            'oxuserid'                   => 'newId',
+            'oxaddress__oxaddressuserid' => 'newId',
+            'oxaddressuserid'            => 'newId',
+
+            // By default, user should not be capable to change new fields.
+            'oxaddress__newfield'        => 'newId',
+            'newfield'                   => 'newId',
+
+            // Fields which users should be capable to change.
+            'oxuser__oxusername'         => 'gdpruser@oxid.de',
+            // values have to be trimmed
+            'oxaddress__oxfname'         => ' fname ',
+            'oxaddress__oxlname'         => ' lname ',
+            'oxaddress__oxstreetnr'      => 'nr',
+            'oxaddress__oxstreet'        => ' street ',
+            'oxaddress__oxzip'           => 'zip',
+            'oxaddress__oxcity'          => 'city',
+            'oxaddress__oxcountryid'     => 'a7c40f631fc920687.20179984',
+        ];
+        $this->addRequestParameters($parameters);
+        $user = oxNew(User::class);
+        $user->load(self::TEST_USER_ID);
+        $oSession = $this->createPartialMock(Session::class, ['checkSessionChallenge']);
+        $oSession->expects($this->atLeastOnce())->method('checkSessionChallenge')->will($this->returnValue(true));
+        Registry::set(Session::class, $oSession);
+
+        $cmpUser = oxNew(UserComponent::class);
+        $this->assertEquals('account_user', $cmpUser->changeuser_testvalues());
+
+        $user->load(self::TEST_USER_ID);
+        //User cannot change black listed data
+        $this->assertEquals('_gdprtest', $user->getFieldData('oxid'));
+        //Street is changed and trimmed
+        $this->assertEquals('street', $user->getFieldData('oxstreet'));
     }
 }
