@@ -65,7 +65,7 @@ class UserComponent extends UserComponent_parent
      */
     protected function changeUserWithoutRedirect()
     {
-        $session = $this->getServiceFromContainer(Session::class);
+        $session = Registry::getSession();
         if (!$session->checkSessionChallenge()) {
             return;
         }
