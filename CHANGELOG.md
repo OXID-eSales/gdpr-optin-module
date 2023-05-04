@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [v3.0.0] - Unreleased
+## [v3.0.0] - 2023-05-05
 
 ### Added
 - Support for twig template engine
@@ -25,7 +25,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Tests and quality tools configurations collected in ``tests`` folder
 - Small refactoring: extracted services
 - Adapted test to work with OXID eShop 7.0.x and without testing library
-- File copyright headers updated.
+- File copyright headers updated
+- License updated - OXID Module and Component License instead of GPL
+- Readme updated to clarify shop version compatibility
 
 ### Removed
 - Support for PHP 7.4
