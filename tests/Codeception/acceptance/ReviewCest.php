@@ -35,6 +35,7 @@ final class ReviewCest extends BaseCest
         $I->see(Translator::translate('NO_REVIEW_AVAILABLE'));
         $I->retryClick(Translator::translate('WRITE_REVIEW'));
 
+        $I->scrollTo($detailsPage->reviewTextForm);
         $detailsPage->addReviewAndRating('my shiny new review', 4);
         $I->waitForPageLoad();
 
@@ -63,6 +64,7 @@ final class ReviewCest extends BaseCest
             $I->grabAttributeFrom('#rvw_oegdproptin_error', 'class')
         );
 
+        $I->scrollTo($detailsPage->reviewTextForm);
         $detailsPage->addReviewAndRating('my shiny other review', 5);
         $I->waitForPageLoad();
         $I->see(Translator::translate('OEGDPROPTIN_REVIEW_FORM_ERROR_MESSAGE'));
