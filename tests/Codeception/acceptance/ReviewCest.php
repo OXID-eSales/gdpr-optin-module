@@ -64,7 +64,6 @@ final class ReviewCest extends BaseCest
             $I->grabAttributeFrom('#rvw_oegdproptin_error', 'class')
         );
 
-        $I->reloadPage();
         $I->scrollTo($detailsPage->reviewTextForm);
         $detailsPage->addReviewAndRating('my shiny other review', 5);
         $I->waitForPageLoad();
