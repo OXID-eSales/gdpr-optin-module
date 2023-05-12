@@ -35,6 +35,7 @@ final class ReviewCest extends BaseCest
         $I->see(Translator::translate('NO_REVIEW_AVAILABLE'));
         $I->retryClick(Translator::translate('WRITE_REVIEW'));
 
+        $I->reloadPage();
         $I->scrollTo($detailsPage->reviewTextForm);
         $detailsPage->addReviewAndRating('my shiny new review', 4);
         $I->waitForPageLoad();
