@@ -15,7 +15,8 @@
   "prefer-stable": true,
   "prefer-dist": true,
   "require": {
-    "php": "^8.0 | ^8.1"
+    "php": "^8.0 | ^8.1",
+    "symfony/filesystem": "*"
   },
   "require-dev": {
       "phpstan/phpstan": "^1.8.11",
