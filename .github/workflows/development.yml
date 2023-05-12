@@ -458,6 +458,12 @@ jobs:
           make up
           sleep 2
 
+      - name: Install codeception-page-objects for twig theme
+        run: |
+          docker-compose exec -T php composer require oxid-esales/codeception-page-objects:dev-b-7.0.x-twig-theme --no-update
+          docker-compose exec -T php composer require oxid-esales/codeception-modules:dev-b-7.0.x-twig-theme --no-update
+          docker-compose exec -T php composer update --no-interaction
+
       - name: Install smarty template engine and flow theme
         run: |
           docker-compose exec -T php composer require oxid-esales/smarty-component:dev-b-7.0.x --no-update
