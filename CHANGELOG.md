@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v3.0.1] - 2023-05-12
+
+### Fixed
+- Use Symfony filesystem instead of deprecated Webmozart
+- Change Apex to default theme for codeception-modules and codeception-page-objects in GitHub Actions
+
 ## [v3.0.0] - 2023-05-05
 
 ### Added
