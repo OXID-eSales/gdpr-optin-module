@@ -39,6 +39,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Support for PHP 7.4
 
 
+## [v2.3.4] - unreleased
+
+### Changed
+- License updated - now using OXID Module and Component License
+
 ## [v2.3.3] - 2021-04-09
 
 ### Fixed
@@ -121,6 +126,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
   [modules porting guide](https://docs.oxid-esales.com/developer/en/6.0/update/eshop_from_53_to_6/modules.html).
 
 [v3.0.0]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v2.3.3...v3.0.0
+[v2.3.4]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v2.3.3...b-6.x
 [v2.3.3]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v2.3.2...v2.3.3
 [v2.3.2]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v2.3.1...v2.3.2
 [v2.3.1]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v2.3.0...v2.3.1
