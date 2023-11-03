@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GdprOptinModule\Tests\Codeception\Helper;
+namespace OxidEsales\GdprOptinModule\Tests\Codeception\Support\Helper;
 
 use Facebook\WebDriver\Remote\RemoteWebDriver;
 use OxidEsales\Facts\Facts;

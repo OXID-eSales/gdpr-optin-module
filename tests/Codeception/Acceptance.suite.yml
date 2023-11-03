@@ -8,7 +8,7 @@ actor: AcceptanceTester
 modules:
   enabled:
     - Asserts
-    - \OxidEsales\GdprOptinModule\Tests\Codeception\Helper\Acceptance
+    - \OxidEsales\GdprOptinModule\Tests\Codeception\Support\Helper\Acceptance
     - WebDriver:
         url: '%SHOP_URL%'
         host: '%SELENIUM_SERVER_HOST%'
@@ -44,7 +44,12 @@ modules:
         theme_id: '%THEME_ID%'
     - \OxidEsales\Codeception\Module\Translation\TranslationsModule:
         shop_path: '%SHOP_SOURCE_PATH%'
-        paths: 'Application/views/apex,Application/views/admin_twig,../vendor/oxid-esales/gdpr-optin-module/views/admin_twig,../vendor/oxid-esales/gdpr-optin-module/translations'
+        paths:
+          - 'Application/views/apex'
+          - '../vendor/oxid-esales/gdpr-optin-module/translations'
+        paths_admin:
+          - 'Application/views/admin_twig'
+          - '../vendor/oxid-esales/gdpr-optin-module/views/admin_twig'
     - \OxidEsales\Codeception\Module\OxideshopAdmin:
         screen_shot_url: '%SCREEN_SHOT_URL%'
         depends:

@@ -37,12 +37,12 @@ return [
 
 function getTestDataDumpFilePath(): string
 {
-    return getShopTestPath() . '/Codeception/_data/generated/shop-dump.sql';
+    return getShopTestPath() . '/Codeception/Support/Data/generated/shop-dump.sql';
 }
 
 function getTestFixtureSqlFilePath(): string
 {
-    return getShopTestPath() . '/Codeception/_data/dump.sql';
+    return getShopTestPath() . '/Codeception/Support/Data/dump.sql';
 }
 
 function getShopSuitePath($facts)

@@ -7,14 +7,11 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GdprOptinModule\Tests\Codeception;
+namespace OxidEsales\GdprOptinModule\Tests\Codeception\Acceptance;
 
-use Codeception\Scenario;
-use Codeception\Util\Fixtures;
 use OxidEsales\Codeception\Module\Translation\Translator;
-use OxidEsales\Codeception\Page\Home;
-use OxidEsales\Codeception\Step\Basket;
 use OxidEsales\GdprOptinModule\Service\ModuleSettings;
+use OxidEsales\GdprOptinModule\Tests\Codeception\Support\AcceptanceTester;
 
 /**
  * @group gdproptin_module

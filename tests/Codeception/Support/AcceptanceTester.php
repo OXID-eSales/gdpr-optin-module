@@ -5,11 +5,12 @@
  * See LICENSE file for license details.
  */
 
-namespace OxidEsales\GdprOptinModule\Tests\Codeception;
+namespace OxidEsales\GdprOptinModule\Tests\Codeception\Support;
 
 use Codeception\Util\Fixtures;
 use OxidEsales\Codeception\Admin\AdminLoginPage;
 use OxidEsales\Codeception\Admin\AdminPanel;
+use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Home;
 use OxidEsales\GdprOptinModule\Core\GdprOptinModule;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
@@ -44,6 +45,7 @@ final class AcceptanceTester extends \Codeception\Actor
     public function openShop()
     {
         $I = $this;
+        Translator::switchTranslationDomain(Translator::TRANSLATION_DOMAIN_SHOP);
         $homePage = new Home($I);
         $I->amOnPage($homePage->URL);
         return $homePage;
@@ -52,6 +54,7 @@ final class AcceptanceTester extends \Codeception\Actor
     public function openAdmin(): AdminLoginPage
     {
         $I = $this;
+        Translator::switchTranslationDomain(Translator::TRANSLATION_DOMAIN_ADMIN);
         $adminLogin = new AdminLoginPage($I);
         $I->amOnPage($adminLogin->URL);
         return $adminLogin;
