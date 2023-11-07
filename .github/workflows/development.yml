@@ -369,7 +369,7 @@ jobs:
         run: |
           perl -pi \
           -e 's#views/twig#views/apex#g;' \
-          source/test-module/tests/Codeception/acceptance.suite.yml
+          source/test-module/tests/Codeception/Acceptance.suite.yml
 
       - name: Run tests with apex theme
         if: ${{ inputs.template_engine == 'both' || inputs.template_engine == 'twig-apex' }}
@@ -379,7 +379,7 @@ jobs:
             -e BROWSER_NAME=chrome \
             -e THEME_ID=apex \
             -e MODULE_IDS=${{ env.MODULE_ID }} \
-            php vendor/bin/codecept run acceptance \
+            php vendor/bin/codecept run Acceptance \
                 -c /var/www/vendor/${{ env.PACKAGE_NAME }}/tests/codeception.yml -g ${{ inputs.module_codecept_test_group }}
 
       - name: Install codeception-page-objects for twig theme
@@ -394,7 +394,7 @@ jobs:
         run: |
           perl -pi \
           -e 's#views/apex#views/twig#g;' \
-          source/test-module/tests/Codeception/acceptance.suite.yml
+          source/test-module/tests/Codeception/Acceptance.suite.yml
 
       - name: Run tests with twig theme
         if: ${{ inputs.template_engine == 'both' || inputs.template_engine == 'twig-twig' }}
@@ -404,7 +404,7 @@ jobs:
             -e BROWSER_NAME=chrome \
             -e THEME_ID=twig \
             -e MODULE_IDS=${{ env.MODULE_ID }} \
-            php vendor/bin/codecept run acceptance \
+            php vendor/bin/codecept run Acceptance \
                 -c /var/www/vendor/${{ env.PACKAGE_NAME }}/tests/codeception.yml -g ${{ inputs.module_codecept_test_group }}
 
       - name: Upload log artifact
@@ -445,13 +445,13 @@ jobs:
         run: |
           perl -pi \
           -e 's#admin_twig#admin_smarty#g;' \
-          source/test-module/tests/Codeception/acceptance.suite.yml
+          source/test-module/tests/Codeception/Acceptance.suite.yml
           perl -pi \
           -e 's#views/twig#views/flow/translations#g;' \
-          source/test-module/tests/Codeception/acceptance.suite.yml
+          source/test-module/tests/Codeception/Acceptance.suite.yml
           perl -pi \
           -e 's#views/apex#views/flow/translations#g;' \
-          source/test-module/tests/Codeception/acceptance.suite.yml
+          source/test-module/tests/Codeception/Acceptance.suite.yml
 
       - name: Start containers
         run: |
@@ -478,7 +478,7 @@ jobs:
             -e BROWSER_NAME=chrome \
             -e THEME_ID=flow \
             -e MODULE_IDS=${{ env.MODULE_ID }} \
-            php vendor/bin/codecept run acceptance \
+            php vendor/bin/codecept run Acceptance \
                 -c /var/www/vendor/${{ env.PACKAGE_NAME }}/tests/codeception.yml -g ${{ inputs.module_codecept_test_group }}
 
       - name: Upload log artifact
