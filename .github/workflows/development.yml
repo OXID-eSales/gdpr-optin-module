@@ -27,11 +27,11 @@ on:
       php:
         description: 'PHP version'
         required: true
-        default: '8.0'
+        default: '8.1'
         type: choice
         options:
-          - '8.0'
           - '8.1'
+          - '8.2'
       mysql:
         description: 'MySQL version'
         required: true
@@ -89,7 +89,7 @@ jobs:
         run: git clone https://github.com/OXID-eSales/docker-eshop-sdk.git .
 
       - name: Clone the shop
-        run: git clone --depth 1 https://github.com/OXID-eSales/oxideshop_ce.git --branch b-7.0.x --single-branch source
+        run: git clone --depth 1 https://github.com/OXID-eSales/oxideshop_ce.git --branch b-7.1.x --single-branch source
 
       - name: Cache current installation
         uses: actions/cache@v3
@@ -355,9 +355,9 @@ jobs:
 
       - name: Install twig template engine with twig and apex theme
         run: |
-          docker-compose exec -T php composer require oxid-esales/twig-component:dev-b-7.0.x --no-update
-          docker-compose exec -T php composer require oxid-esales/twig-admin-theme:dev-b-7.0.x --no-update
-          docker-compose exec -T php composer require oxid-esales/twig-theme:dev-b-7.0.x --no-update
+          docker-compose exec -T php composer require oxid-esales/twig-component:dev-b-7.1.x --no-update
+          docker-compose exec -T php composer require oxid-esales/twig-admin-theme:dev-b-7.1.x --no-update
+          docker-compose exec -T php composer require oxid-esales/twig-theme:dev-b-7.1.x --no-update
           docker-compose exec -T \
           php composer config repositories.oxid-esales/apex-theme \
             --json '{"type":"git", "url":"https://github.com/OXID-eSales/apex-theme.git"}'
@@ -385,8 +385,8 @@ jobs:
       - name: Install codeception-page-objects for twig theme
         if: ${{ inputs.template_engine == 'both' || inputs.template_engine == 'twig-twig' }}
         run: |
-          docker-compose exec -T php composer require oxid-esales/codeception-page-objects:dev-b-7.0.x-twig-theme --no-update
-          docker-compose exec -T php composer require oxid-esales/codeception-modules:dev-b-7.0.x-twig-theme --no-update
+          docker-compose exec -T php composer require oxid-esales/codeception-page-objects:dev-b-7.1.x-twig-theme --no-update
+          docker-compose exec -T php composer require oxid-esales/codeception-modules:dev-b-7.1.x-twig-theme --no-update
           docker-compose exec -T php composer update --no-interaction
 
       - name: Reconfigure codeception for twig theme
@@ -460,8 +460,8 @@ jobs:
 
       - name: Install codeception-page-objects for twig theme
         run: |
-          docker-compose exec -T php composer require oxid-esales/codeception-page-objects:dev-b-7.0.x-twig-theme --no-update
-          docker-compose exec -T php composer require oxid-esales/codeception-modules:dev-b-7.0.x-twig-theme --no-update
+          docker-compose exec -T php composer require oxid-esales/codeception-page-objects:dev-b-7.1.x-twig-theme --no-update
+          docker-compose exec -T php composer require oxid-esales/codeception-modules:dev-b-7.1.x-twig-theme --no-update
           docker-compose exec -T php composer update --no-interaction
 
       - name: Install smarty template engine and flow theme
