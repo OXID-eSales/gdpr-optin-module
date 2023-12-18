@@ -35,49 +35,49 @@ final class ModuleSettingsTest extends TestCase
         $this->assertSame($expectedValue, $sut->$method());
     }
 
-    public function gettersDataProvider(): array
+    public static function gettersDataProvider(): array
     {
         return [
-            $this->prepareStringTestItem(
+            self::prepareStringTestItem(
                 'getContactOptIn',
                 ModuleSettings::CONTACT_CHOICE
             ),
-            $this->prepareBoolTestItem(
+            self::prepareBoolTestItem(
                 'showInvoiceOptIn',
                 ModuleSettings::INVOICE_OPT_IN,
                 true
             ),
-            $this->prepareBoolTestItem(
+            self::prepareBoolTestItem(
                 'showInvoiceOptIn',
                 ModuleSettings::INVOICE_OPT_IN,
                 false
             ),
-            $this->prepareBoolTestItem(
+            self::prepareBoolTestItem(
                 'showDeliveryOptIn',
                 ModuleSettings::DELIVERY_OPT_IN,
                 true
             ),
-            $this->prepareBoolTestItem(
+            self::prepareBoolTestItem(
                 'showDeliveryOptIn',
                 ModuleSettings::DELIVERY_OPT_IN,
                 false
             ),
-            $this->prepareBoolTestItem(
+            self::prepareBoolTestItem(
                 'showRegistrationOptIn',
                 ModuleSettings::REGISTRATION_OPT_IN,
                 true
             ),
-            $this->prepareBoolTestItem(
+            self::prepareBoolTestItem(
                 'showRegistrationOptIn',
                 ModuleSettings::REGISTRATION_OPT_IN,
                 false
             ),
-            $this->prepareBoolTestItem(
+            self::prepareBoolTestItem(
                 'showReviewOptIn',
                 ModuleSettings::REVIEW_OPT_IN,
                 true
             ),
-            $this->prepareBoolTestItem(
+            self::prepareBoolTestItem(
                 'showReviewOptIn',
                 ModuleSettings::REVIEW_OPT_IN,
                 false
@@ -85,7 +85,7 @@ final class ModuleSettingsTest extends TestCase
         ];
     }
 
-    private function prepareBoolTestItem(string $method, string $key, bool $value): array
+    private static function prepareBoolTestItem(string $method, string $key, bool $value): array
     {
         return [
             'method' => $method,
@@ -96,7 +96,7 @@ final class ModuleSettingsTest extends TestCase
         ];
     }
 
-    private function prepareStringTestItem(string $method, string $key): array
+    private static function prepareStringTestItem(string $method, string $key): array
     {
         $exampleValue = 'exampleValue';
         return [

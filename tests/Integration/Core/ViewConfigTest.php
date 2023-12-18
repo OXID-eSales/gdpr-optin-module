@@ -35,7 +35,7 @@ final class ViewConfigTest extends BaseTestCase
         $this->assertSame($value, $viewConfig->getGdprContactOptIn());
     }
 
-    public function dataProviderBoolean(): array
+    public static function dataProviderBoolean(): array
     {
         return [
             'on' => [true],

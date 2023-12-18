@@ -20,7 +20,7 @@ class ProductReviewControllerTest extends BaseTestCase
 {
     use ServiceContainer;
 
-    public function dataProviderReviewSave(): array
+    public static function dataProviderReviewSave(): array
     {
         return [
             'required_art' => [true, 'assertFalse', ArticleDetailsController::class],
