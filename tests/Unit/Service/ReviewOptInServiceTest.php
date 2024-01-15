@@ -31,7 +31,7 @@ class ReviewOptInServiceTest extends TestCase
         $this->assertSame($expectedValue, $service->validateOptIn());
     }
 
-    public function dataProviderValidateOptIn(): array
+    public static function dataProviderValidateOptIn(): array
     {
         return [
             'required-checked' => [true, 1, true],
@@ -53,7 +53,7 @@ class ReviewOptInServiceTest extends TestCase
         $this->assertSame($expectedValue, $service->isReviewOptInError());
     }
 
-    public function dataProviderReviewOptInError(): array
+    public static function dataProviderReviewOptInError(): array
     {
         return [
             'required-checked' => [true, 1, false],

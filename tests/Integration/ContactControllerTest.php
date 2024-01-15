@@ -21,7 +21,7 @@ final class ContactControllerTest extends BaseTestCase
 {
     use ServiceContainer;
 
-    public function dataProviderOptInValidationRequired(): array
+    public static function dataProviderOptInValidationRequired(): array
     {
         return [
             'formMethod-deletion' => ['deletion', false],

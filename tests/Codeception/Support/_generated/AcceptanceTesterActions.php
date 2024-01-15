@@ -1,4 +1,4 @@
-<?php  //[STAMP] 39579de8acef279e782ec76ae97bb27d
+<?php  //[STAMP] 1fe937e9c1894df1cb6cc469093808b1
 // phpcs:ignoreFile
 namespace OxidEsales\GdprOptinModule\Tests\Codeception\Support\_generated;
 
@@ -4855,15 +4855,15 @@ trait AcceptanceTesterActions
      *
      * ``` php
      * <?php
-     * $I->selectOption('Which OS do you use?', array('Windows','Linux'));
+     * $I->selectOption('Which OS do you use?', ['Windows', 'Linux']);
      * ```
      *
      * Or provide an associative array for the second argument to specifically define which selection method should be used:
      *
      * ``` php
      * <?php
-     * $I->selectOption('Which OS do you use?', array('text' => 'Windows')); // Only search by text 'Windows'
-     * $I->selectOption('Which OS do you use?', array('value' => 'windows')); // Only search by value 'windows'
+     * $I->selectOption('Which OS do you use?', ['text' => 'Windows']); // Only search by text 'Windows'
+     * $I->selectOption('Which OS do you use?', ['value' => 'windows']); // Only search by value 'windows'
      * ```
      * @see \Codeception\Module\WebDriver::selectOption()
      */

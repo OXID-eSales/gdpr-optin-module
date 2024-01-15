@@ -27,7 +27,7 @@ class OptinTraitTest extends BaseTestCase
 {
     use ServiceContainer;
 
-    public function dataProviderReviewOptInValidationRequired(): array
+    public static function dataProviderReviewOptInValidationRequired(): array
     {
         return [
             'required_art' => [true, true, ArticleDetails::class],
@@ -56,7 +56,7 @@ class OptinTraitTest extends BaseTestCase
         $this->assertSame($expected, $controller->isReviewOptInValidationRequired());
     }
 
-    public function dataProviderReviewOptInError(): array
+    public static function dataProviderReviewOptInError(): array
     {
         return [
             'required-checked_art' => [true, 1, false, ArticleDetails::class],

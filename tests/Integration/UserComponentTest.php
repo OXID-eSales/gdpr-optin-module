@@ -28,7 +28,7 @@ final class UserComponentTest extends BaseTestCase
 {
     use ServiceContainer;
 
-    public function providerDeliveryAddressOptin(): array
+    public static function providerDeliveryAddressOptin(): array
     {
         //Optin will only be required on changed or new address.
         $addAddress = ['oxaddressid' => '-1'];
@@ -112,7 +112,7 @@ final class UserComponentTest extends BaseTestCase
         $this->$assertDisplayExc(array_key_exists('oegdproptin_deliveryaddress', $displayErrors));
     }
 
-    public function providerInvoiceAddressOptin(): array
+    public static function providerInvoiceAddressOptin(): array
     {
         //Optin will be required on changed invoice address
         $changedAddress = ['oegdproptin_changeInvAddress' => '1'];
@@ -217,7 +217,7 @@ final class UserComponentTest extends BaseTestCase
         $this->assertNull($cmpUser->changeuser_testvalues());
     }
 
-    public function providerUserRegistrationOptin(): array
+    public static function providerUserRegistrationOptin(): array
     {
         return [
             'enable_true_optin_true_register' => [true, true, 'assertFalse'],
@@ -257,7 +257,7 @@ final class UserComponentTest extends BaseTestCase
         $this->$assertDisplayExc(array_key_exists('oegdproptin_userregistration', $displayErrors));
     }
 
-    public function providerUserCheckoutRegistrationOptin(): array
+    public static function providerUserCheckoutRegistrationOptin(): array
     {
         return [
              'enable_true_optin_true_guestbuy' => [true, true, 'assertFalse', 1],
@@ -301,7 +301,7 @@ final class UserComponentTest extends BaseTestCase
         $this->$assertDisplayExc(array_key_exists('oegdproptin_userregistration', $displayErrors));
     }
 
-    public function providerChangeUserDataExceptions(): array
+    public static function providerChangeUserDataExceptions(): array
     {
         return [
             'input_exception' => [
