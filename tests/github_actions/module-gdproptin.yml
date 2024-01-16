@@ -12,7 +12,7 @@ install_module:
     testplan: '["-"]'
   cache:
     prefix: &install_module_prefix 'moduleInstallation-ce-{{ .Github.SHA }}-{{ .Github.RunNumber }}-{{ .Github.RunAttempt }}'
-  ids: &ids 'gdproptin_module'
+  ids: &ids 'oegdproptin'
   activate: *ids
   git:
     module:
@@ -32,6 +32,7 @@ codeception:
     <<: *matrix
     testplan: '["tests/github_actions/defaults/module_codeception_acceptance.yml"]'
   load_shop: *install_module_prefix
+  suite: Acceptance
 
 runtest:
   matrix:
