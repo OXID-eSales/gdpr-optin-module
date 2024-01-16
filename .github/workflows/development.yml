@@ -16,6 +16,13 @@ on:
   push:
     branches:
       - 'b-7.1.x*'
+    inputs:
+      testplan:
+        type: string
+        default: 'tests/github_actions/defaults/7.1.x.yml,tests/github_actions/module-gdproptin.yml'
+      runs_on:
+        type: string
+        default: '"ubuntu-latest"'
 
 jobs:
   call_matrix:
