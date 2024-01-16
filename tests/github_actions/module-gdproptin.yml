@@ -6,6 +6,10 @@ prepare_shop:
     php: '["8.1"]'
     mysql: '["8.0"]'
 
+install_shop:
+  matrix:
+    <<: *matrix
+
 install_module:
   matrix:
     <<: *matrix
