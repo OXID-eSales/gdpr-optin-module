@@ -1,5 +1,12 @@
-GDPR opt-in module
-==================
+# GDPR opt-in module
+
+[![Development](https://github.com/OXID-eSales/gdpr-optin-module/actions/workflows/trigger.yml/badge.svg?branch=b-7.1.x)](https://github.com/OXID-eSales/gdpr-optin-module/actions/workflows/trigger.yml)
+[![Latest Version](https://img.shields.io/packagist/v/OXID-eSales/gdpr-optin-module?logo=composer&label=latest&include_prereleases&color=orange)](https://packagist.org/packages/oxid-esales/gdpr-optin-module)
+[![PHP Version](https://img.shields.io/packagist/php-v/oxid-esales/gdpr-optin-module)](https://github.com/oxid-esales/gdpr-optin-module)
+
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=OXID-eSales_gdpr-optin-module&metric=alert_status)](https://sonarcloud.io/dashboard?id=OXID-eSales_gdpr-optin-module)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=OXID-eSales_gdpr-optin-module&metric=coverage)](https://sonarcloud.io/dashboard?id=OXID-eSales_gdpr-optin-module)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=OXID-eSales_gdpr-optin-module&metric=sqale_index)](https://sonarcloud.io/dashboard?id=OXID-eSales_gdpr-optin-module)
 
 Module adds opt-in functionality which is required for GDPR law.
 
@@ -9,6 +16,7 @@ System requirements and installation instructions are described in the module do
 
 ### Compatibility
 
+* b-7.1.x module branch for shop 7.1.x branches and compilations
 * b-7.0.x module branch for shop 7.0.x branches and compilations
 * b-6.x module branch for shop compilation: 6.2.x and up to 6.5.x
 * b-2.2.x module branch for shop compilation: 6.0.2 and up to 6.1.x
