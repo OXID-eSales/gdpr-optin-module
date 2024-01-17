@@ -62,5 +62,9 @@ styles:
   path: *ids
   module_ids: *ids
 
+actionlint:
+  matrix:
+    testplan: ''
+
 finish:
   slack_title: 'Module oegdproptin on {{ .Github.Repository }} by {{ .Github.Actor }}'
