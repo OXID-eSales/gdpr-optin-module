@@ -61,6 +61,8 @@ class UserComponent extends UserComponent_parent
      * Session variables:
      * <b>ordrem</b>
      *
+     * @SuppressWarnings(PHPMD.StaticAccess)
+     *
      * @return  bool|void true on success, false otherwise
      */
     protected function changeUserWithoutRedirect()
