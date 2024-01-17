@@ -4,7 +4,7 @@ codeception:
     options: '-e SELENIUM_SERVER_HOST=selenium -e BROWSER_NAME=chrome -e XDEBUG_MODE=coverage -e THEME_ID=apex'
   configuration: '/var/www/vendor/{{ .Data.install_module.package_name }}/tests/codeception.yml'
   suite: 'Acceptance'
-  additional_options: '--coverage-xml=/var/www/codeception_coverage.xml -g {{ .Data.install_module.ids }}'
+  additional_options: '--coverage-xml=/var/www/codeception_coverage.xml'
   logfile:
     prefix: 'codeception'
   output:
