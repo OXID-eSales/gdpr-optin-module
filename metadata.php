@@ -59,58 +59,6 @@ $aModule = [
         ArticleDetailsController::class => \OxidEsales\GdprOptinModule\Controller\ArticleDetailsController::class,
         ContactController::class => \OxidEsales\GdprOptinModule\Controller\ContactController::class
     ],
-    'blocks'      => [
-        [
-            'template' => 'form/user.tpl',
-            'block'    => 'user_billing_address_form',
-            'file'     => 'views/smarty/blocks/user_invoice_address_form.tpl',
-        ],
-        [
-            'template' => 'form/user.tpl',
-            'block'    => 'user_shipping_address_form',
-            'file'     => 'views/smarty/blocks/user_shipping_address_form.tpl',
-        ],
-        [
-            'template' => 'form/user.tpl',
-            'block'    => 'user_form',
-            'file'     => 'views/smarty/blocks/user_address.tpl',
-        ],
-        [
-            'template' => 'form/user.tpl',
-            'block'    => 'user',
-            'file'     => 'views/smarty/blocks/user.tpl',
-        ],
-        [
-            'template' => 'form/user_checkout_change.tpl',
-            'block'    => 'user_checkout_change',
-            'file'     => 'views/smarty/blocks/user_checkout_change.tpl',
-        ],
-        [
-            'template' => 'form/user_checkout_change.tpl',
-            'block'    => 'user_checkout_shipping_feedback',
-            'file'     => 'views/smarty/blocks/user_checkout_shipping_feedback.tpl',
-        ],
-        [
-            'template' => 'form/user_checkout_change.tpl',
-            'block'    => 'user_checkout_billing_feedback',
-            'file'     => 'views/smarty/blocks/user_checkout_billing_feedback.tpl',
-        ],
-        [
-            'template' => 'form/fieldset/user_account.tpl',
-            'block'    => 'user_account_newsletter',
-            'file'     => 'views/smarty/blocks/user_account_newsletter.tpl',
-        ],
-        [
-            'template' => 'form/contact.tpl',
-            'block'    => 'contact_form_fields',
-            'file'     => 'views/smarty/blocks/contact_form_fields.tpl',
-        ],
-        [
-            'template' => 'widget/reviews/reviews.tpl',
-            'block'    => 'widget_reviews_form_fields',
-            'file'     => 'views/smarty/blocks/widget_reviews_form_fields.tpl',
-        ]
-    ],
     'settings'    => [
         [
             'group' => 'oegdproptin_settings',

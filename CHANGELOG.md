@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v4.0.0] - Unreleased
+
+### Added
+- Shop 7.1 dependencies match
+- PHP 8.2 support
+
+### Removed
+- Smarty support
+
 ## [v3.0.1] - 2023-05-12
 
 ### Fixed
@@ -125,6 +134,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - The GDPR Opt-In Module was fully ported as described in
   [modules porting guide](https://docs.oxid-esales.com/developer/en/6.0/update/eshop_from_53_to_6/modules.html).
 
+[v4.0.0]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v3.0.1...b-7.1.x
+[v3.0.1]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v3.0.0...v3.0.1
 [v3.0.0]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v2.3.3...v3.0.0
 [v2.3.4]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v2.3.3...b-6.x
 [v2.3.3]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v2.3.2...v2.3.3
