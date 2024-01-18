@@ -1,4 +1,4 @@
-name: nightly_module
+name: Scheduled weekly run
 
 on:
   schedule:
