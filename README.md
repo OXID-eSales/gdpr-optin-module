@@ -1,6 +1,6 @@
 # GDPR opt-in module
 
-[![Development](https://github.com/OXID-eSales/gdpr-optin-module/actions/workflows/trigger.yml/badge.svg?branch=b-7.1.x)](https://github.com/OXID-eSales/gdpr-optin-module/actions/workflows/trigger.yml)
+[![Development](https://github.com/OXID-eSales/gdpr-optin-module/actions/workflows/push_module.yml/badge.svg?branch=b-7.1.x)](https://github.com/OXID-eSales/gdpr-optin-module/actions/workflows/push_module.yml)
 [![Latest Version](https://img.shields.io/packagist/v/OXID-eSales/gdpr-optin-module?logo=composer&label=latest&include_prereleases&color=orange)](https://packagist.org/packages/oxid-esales/gdpr-optin-module)
 [![PHP Version](https://img.shields.io/packagist/php-v/oxid-esales/gdpr-optin-module)](https://github.com/oxid-esales/gdpr-optin-module)
 
