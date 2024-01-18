@@ -1,4 +1,4 @@
-name: dispatch_module
+name: Manual stable trigger
 
 on:
   workflow_dispatch:

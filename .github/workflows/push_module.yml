@@ -1,4 +1,4 @@
-name: push_module
+name: Automatically triggered on push
 
 on:
   push:

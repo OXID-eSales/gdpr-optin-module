@@ -1,4 +1,4 @@
-name: push_module
+name: Automatically triggered on pull request
 
 on: pull_request
 
