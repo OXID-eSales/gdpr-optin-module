@@ -7,8 +7,7 @@ prepare_shop:
     mysql: '["8.0"]'
 
 install_shop:
-  matrix:
-    <<: *matrix
+  matrix: *matrix
 
 install_module:
   matrix:
@@ -61,10 +60,6 @@ styles:
   load_shop: *install_module_prefix
   path: *ids
   module_ids: *ids
-
-actionlint:
-  matrix:
-    testplan: ''
 
 finish:
   slack_title: 'Module oegdproptin on {{ .Github.Repository }} by {{ .Github.Actor }}'

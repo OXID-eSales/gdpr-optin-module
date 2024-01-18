@@ -1,4 +1,4 @@
-name: Push trigger
+name: push_module
 
 on:
   push:
@@ -8,11 +8,11 @@ on:
 
 jobs:
   call_matrix:
-    uses: OXID-eSales/github-actions/.github/workflows/call-universal_test_workflow.yml@v0
+    uses: OXID-eSales/github-actions/.github/workflows/call-universal_test_workflow.yml@v3
     with:
       testplan: 'tests/github_actions/defaults/7.1.x.yml,tests/github_actions/module-gdproptin.yml'
       runs_on: '"ubuntu-latest"'
-      defaults: 'v0'
+      defaults: 'v3'
     secrets:
       DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
       DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
