@@ -3,26 +3,11 @@ services:
   _defaults:
     public: false
     autowire: true
+    bind:
+      OxidEsales\Eshop\Core\Request: '@=service("OxidEsales\\GdprOptinModule\\Core\\Registry").getRequest()'
 
-  oxidesales.oegdproptin.oxid_registry:
+  OxidEsales\GdprOptinModule\Core\Registry:
     class: OxidEsales\Eshop\Core\Registry
-
-  oxidesales.oegdproptin.oxid_request:
-    class: OxidEsales\Eshop\Core\Request
-    factory: [ '@OxidEsales\Eshop\Core\Registry', 'getRequest' ]
-
-  oxidesales.oegdproptin.oxid_session:
-    class: OxidEsales\Eshop\Core\Session
-    factory: [ '@OxidEsales\Eshop\Core\Registry', 'getSession' ]
-
-  OxidEsales\Eshop\Core\Registry:
-    alias: oxidesales.oegdproptin.oxid_registry
-
-  OxidEsales\Eshop\Core\Request:
-    alias: oxidesales.oegdproptin.oxid_request
-
-  OxidEsales\Eshop\Core\Session:
-    alias: oxidesales.oegdproptin.oxid_session
     public: true
 
   OxidEsales\GdprOptinModule\Service\:
