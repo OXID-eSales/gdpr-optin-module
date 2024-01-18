@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace OxidEsales\GdprOptinModule\Tests\Integration\Core;
 
-use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
 use OxidEsales\Eshop\Core\ViewConfig;
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
 use OxidEsales\GdprOptinModule\Core\GdprOptinModule;
 use OxidEsales\GdprOptinModule\Service\ModuleSettings;
 use OxidEsales\GdprOptinModule\Tests\Integration\BaseTestCase;
-use OxidEsales\GdprOptinModule\Traits\ServiceContainer;
+use OxidEsales\GdprOptinModule\Tests\Traits\ServiceContainer;
 
 final class ViewConfigTest extends BaseTestCase
 {

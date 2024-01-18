@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace OxidEsales\GdprOptinModule\Tests\Integration;
 
-use OxidEsales\Eshop\Application\Controller\ReviewController;
 use OxidEsales\Eshop\Application\Controller\ArticleDetailsController;
+use OxidEsales\Eshop\Application\Controller\ReviewController;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
 use OxidEsales\GdprOptinModule\Core\GdprOptinModule;
 use OxidEsales\GdprOptInModule\Service\ModuleSettings;
-use OxidEsales\GdprOptinModule\Traits\ServiceContainer;
+use OxidEsales\GdprOptinModule\Tests\Traits\ServiceContainer;
 
 class ProductReviewControllerTest extends BaseTestCase
 {

@@ -22,7 +22,7 @@ use OxidEsales\Eshop\Core\Session;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
 use OxidEsales\GdprOptinModule\Core\GdprOptinModule;
 use OxidEsales\GdprOptInModule\Service\ModuleSettings;
-use OxidEsales\GdprOptinModule\Traits\ServiceContainer;
+use OxidEsales\GdprOptinModule\Tests\Traits\ServiceContainer;
 
 final class UserComponentTest extends BaseTestCase
 {

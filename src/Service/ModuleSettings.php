@@ -54,17 +54,11 @@ final class ModuleSettings
 
     protected function getStringSettingValue(string $key): string
     {
-        return $this->moduleSettingService->getString(
-            $key,
-            GdprOptInModule::MODULE_ID
-        )->trim()->toString();
+        return $this->moduleSettingService->getString($key, GdprOptInModule::MODULE_ID)->trim()->toString();
     }
 
     protected function getBoolSettingValue(string $key): bool
     {
-        return $this->moduleSettingService->getBoolean(
-            $key,
-            GdprOptInModule::MODULE_ID
-        );
+        return $this->moduleSettingService->getBoolean($key, GdprOptInModule::MODULE_ID);
     }
 }

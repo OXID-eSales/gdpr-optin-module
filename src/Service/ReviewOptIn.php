@@ -35,8 +35,7 @@ final class ReviewOptIn
      */
     public function validateOptIn(): bool
     {
-        $optInValue = $this->request
-            ->getRequestParameter('rvw_oegdproptin');
+        $optInValue = $this->request->getRequestParameter('rvw_oegdproptin');
 
         if ($this->isReviewOptInValidationRequired() && !$optInValue) {
             return false;
@@ -51,8 +50,7 @@ final class ReviewOptIn
      */
     public function isReviewOptInError()
     {
-        $formSent = $this->request
-                ->getRequestParameter('rvw_oegdproptin') !== null;
+        $formSent = $this->request->getRequestParameter('rvw_oegdproptin') !== null;
 
         if ($formSent && !$this->validateOptIn()) {
             return true;

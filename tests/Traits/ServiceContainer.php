@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GdprOptinModule\Traits;
+namespace OxidEsales\GdprOptinModule\Tests\Traits;
 
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 

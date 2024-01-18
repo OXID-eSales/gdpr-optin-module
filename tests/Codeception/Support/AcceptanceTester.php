@@ -12,9 +12,9 @@ use OxidEsales\Codeception\Admin\AdminLoginPage;
 use OxidEsales\Codeception\Admin\AdminPanel;
 use OxidEsales\Codeception\Module\Translation\Translator;
 use OxidEsales\Codeception\Page\Home;
-use OxidEsales\GdprOptinModule\Core\GdprOptinModule;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
-use OxidEsales\GdprOptinModule\Traits\ServiceContainer;
+use OxidEsales\GdprOptinModule\Core\GdprOptinModule;
+use OxidEsales\GdprOptinModule\Tests\Traits\ServiceContainer;
 
 /**
  * Inherited Methods

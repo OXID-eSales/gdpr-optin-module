@@ -8,7 +8,6 @@
 namespace OxidEsales\GdprOptinModule\Core;
 
 use OxidEsales\Eshop\Core\Registry;
-use OxidEsales\GdprOptinModule\Traits\ServiceContainer;
 use OxidEsales\GdprOptinModule\Service\ModuleSettings;
 
 /**
@@ -17,45 +16,38 @@ use OxidEsales\GdprOptinModule\Service\ModuleSettings;
  */
 class ViewConfig extends ViewConfig_parent
 {
-    use ServiceContainer;
-
     public function showGdprInvoiceOptIn(): bool
     {
-         return $this->getServiceFromContainer(ModuleSettings::class)
-             ->showInvoiceOptIn();
+        return $this->getService(ModuleSettings::class)->showInvoiceOptIn();
     }
 
     public function showGdprDeliveryOptIn(): bool
     {
-        return $this->getServiceFromContainer(ModuleSettings::class)
-            ->showDeliveryOptIn();
+        return $this->getService(ModuleSettings::class)->showDeliveryOptIn();
     }
 
     public function showGdprRegistrationOptIn(): bool
     {
-        return $this->getServiceFromContainer(ModuleSettings::class)
-            ->showRegistrationOptIn();
+        return $this->getService(ModuleSettings::class)->showRegistrationOptIn();
     }
 
     public function showGdprReviewOptIn(): bool
     {
-        return $this->getServiceFromContainer(ModuleSettings::class)
-            -> showReviewOptIn();
+        return $this->getService(ModuleSettings::class)->showReviewOptIn();
     }
 
     public function getGdprContactOptIn(): string
     {
-        return $this->getServiceFromContainer(ModuleSettings::class)
-            ->getContactOptIn();
+        return $this->getService(ModuleSettings::class)->getContactOptIn();
     }
 
     public function getInvoiceOptIn(): bool
     {
-        return (bool) Registry::getRequest()->getRequestEscapedParameter('oegdproptin_invoiceaddress');
+        return (bool)Registry::getRequest()->getRequestEscapedParameter('oegdproptin_invoiceaddress');
     }
 
     public function getDeliveryOptIn(): bool
     {
-        return (bool) Registry::getRequest()->getRequestEscapedParameter('oegdproptin_deliveryaddress');
+        return (bool)Registry::getRequest()->getRequestEscapedParameter('oegdproptin_deliveryaddress');
     }
 }

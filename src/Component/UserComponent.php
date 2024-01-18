@@ -7,11 +7,9 @@
 
 namespace OxidEsales\GdprOptinModule\Component;
 
-use OxidEsales\Eshop\Core\Session;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\UtilsView;
 use OxidEsales\GdprOptinModule\Service\ModuleSettings;
-use OxidEsales\GdprOptinModule\Traits\ServiceContainer;
 
 /**
  * @eshopExtension
@@ -19,8 +17,6 @@ use OxidEsales\GdprOptinModule\Traits\ServiceContainer;
  */
 class UserComponent extends UserComponent_parent
 {
-    use ServiceContainer;
-
     /**
      * Create new user.
      *
@@ -136,7 +132,7 @@ class UserComponent extends UserComponent_parent
         $addressId = $this->getRequestParameter('oxaddressid');
         $deliveryAddressData = $this->getDelAddressData();
 
-        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings = $this->getService(ModuleSettings::class);
 
         if (
             $moduleSettings->showDeliveryOptIn()
@@ -161,7 +157,7 @@ class UserComponent extends UserComponent_parent
         //1 is for guest buy, 3 for account creation
         $registrationOption = (int) $this->getRequestParameter('option');
 
-        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings = $this->getService(ModuleSettings::class);
 
         if ($moduleSettings->showRegistrationOptIn() && (3 == $registrationOption) && (1 !== $optin)) {
             $return = false;
@@ -181,7 +177,7 @@ class UserComponent extends UserComponent_parent
         $optin = (int) $this->getRequestParameter('oegdproptin_invoiceaddress');
         $changeExistigAddress = (int) $this->getRequestParameter('oegdproptin_changeInvAddress');
 
-        $moduleSettings = $this->getServiceFromContainer(ModuleSettings::class);
+        $moduleSettings = $this->getService(ModuleSettings::class);
 
         if (
             $moduleSettings->showInvoiceOptIn()

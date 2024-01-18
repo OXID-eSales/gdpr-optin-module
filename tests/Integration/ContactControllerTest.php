@@ -9,13 +9,11 @@ declare(strict_types=1);
 
 namespace OxidEsales\GdprOptinModule\Tests\Integration;
 
+use OxidEsales\Eshop\Application\Controller\ContactController;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
 use OxidEsales\GdprOptinModule\Core\GdprOptinModule;
-use OxidEsales\GdprOptinModule\Traits\ServiceContainer;
-use PHPUnit\Framework\TestCase;
-use OxidEsales\Eshop\Core\Registry;
-use OxidEsales\Eshop\Application\Controller\ContactController;
 use OxidEsales\GdprOptinModule\Service\ModuleSettings;
+use OxidEsales\GdprOptinModule\Tests\Traits\ServiceContainer;
 
 final class ContactControllerTest extends BaseTestCase
 {

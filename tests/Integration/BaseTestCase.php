@@ -15,8 +15,8 @@ use OxidEsales\Eshop\Core\Request;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
 use OxidEsales\GdprOptinModule\Core\GdprOptinModule;
 use OxidEsales\GdprOptinModule\Service\ModuleSettings;
+use OxidEsales\GdprOptinModule\Tests\Traits\ServiceContainer;
 use PHPUnit\Framework\TestCase;
-use OxidEsales\GdprOptinModule\Traits\ServiceContainer;
 
 abstract class BaseTestCase extends TestCase
 {
@@ -24,7 +24,7 @@ abstract class BaseTestCase extends TestCase
 
     protected const TEST_USER_ID = '_gdprtest';
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 

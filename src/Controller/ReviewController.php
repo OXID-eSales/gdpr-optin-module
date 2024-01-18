@@ -9,9 +9,8 @@ namespace OxidEsales\GdprOptinModule\Controller;
 
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\UtilsView;
-use OxidEsales\GdprOptinModule\Traits\ReviewOptIn;
-use OxidEsales\GdprOptinModule\Traits\ServiceContainer;
 use OxidEsales\GdprOptinModule\Service\ReviewOptIn as ReviewOptInService;
+use OxidEsales\GdprOptinModule\Traits\ReviewOptIn;
 
 /**
  * @eshopExtension
@@ -26,7 +25,7 @@ class ReviewController extends ReviewController_parent
      */
     public function saveReview(): bool|null
     {
-        $service = $this->getServiceFromContainer(ReviewOptInService::class);
+        $service = $this->getService(ReviewOptInService::class);
         if (!$service->validateOptIn()) {
             Registry::get(UtilsView::class)->addErrorToDisplay('OEGDPROPTIN_REVIEW_FORM_ERROR_MESSAGE');
             return false;
