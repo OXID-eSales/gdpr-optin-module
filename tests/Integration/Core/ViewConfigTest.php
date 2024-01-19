@@ -15,10 +15,19 @@ use OxidEsales\GdprOptinModule\Core\GdprOptinModule;
 use OxidEsales\GdprOptinModule\Service\ModuleSettings;
 use OxidEsales\GdprOptinModule\Tests\Integration\BaseTestCase;
 use OxidEsales\GdprOptinModule\Tests\Traits\ServiceContainer;
+use OxidEsales\GdprOptinModule\Transput\OptInRequestInterface;
 
 final class ViewConfigTest extends BaseTestCase
 {
     use ServiceContainer;
+
+    public static function dataProviderBoolean(): array
+    {
+        return [
+            'on' => [true],
+            'off' => [false],
+        ];
+    }
 
     public function testGetGdprContactOptIn(): void
     {
@@ -33,14 +42,6 @@ final class ViewConfigTest extends BaseTestCase
 
         $viewConfig = oxNew(ViewConfig::class);
         $this->assertSame($value, $viewConfig->getGdprContactOptIn());
-    }
-
-    public static function dataProviderBoolean(): array
-    {
-        return [
-            'on' => [true],
-            'off' => [false],
-        ];
     }
 
     /**
@@ -105,5 +106,33 @@ final class ViewConfigTest extends BaseTestCase
 
         $viewConfig = oxNew(ViewConfig::class);
         $this->assertSame($value, $viewConfig->showGdprReviewOptIn());
+    }
+
+    public function testGetInvoiceOptIn(): void
+    {
+        $expectedValue = (bool)rand(0, 1);
+        $optInRequestSpy = $this->createMock(OptInRequestInterface::class);
+        $optInRequestSpy->expects($this->once())->method('getInvoiceAddressOptIn')->willReturn($expectedValue);
+
+        $sut = $this->createPartialMock(\OxidEsales\GdprOptinModule\Core\ViewConfig::class, ['getService']);
+        $sut->method('getService')->willReturnMap([
+            [OptInRequestInterface::class, $optInRequestSpy]
+        ]);
+
+        $this->assertSame($expectedValue, $sut->getInvoiceOptIn());
+    }
+
+    public function testGetDeliveryOptIn(): void
+    {
+        $expectedValue = (bool)rand(0, 1);
+        $optInRequestSpy = $this->createMock(OptInRequestInterface::class);
+        $optInRequestSpy->expects($this->once())->method('getDeliveryAddressOptIn')->willReturn($expectedValue);
+
+        $sut = $this->createPartialMock(\OxidEsales\GdprOptinModule\Core\ViewConfig::class, ['getService']);
+        $sut->method('getService')->willReturnMap([
+            [OptInRequestInterface::class, $optInRequestSpy]
+        ]);
+
+        $this->assertSame($expectedValue, $sut->getDeliveryOptIn());
     }
 }

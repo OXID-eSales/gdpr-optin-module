@@ -9,6 +9,7 @@ namespace OxidEsales\GdprOptinModule\Core;
 
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\GdprOptinModule\Service\ModuleSettings;
+use OxidEsales\GdprOptinModule\Transput\OptInRequestInterface;
 
 /**
  * @eshopExtension
@@ -43,11 +44,11 @@ class ViewConfig extends ViewConfig_parent
 
     public function getInvoiceOptIn(): bool
     {
-        return (bool)Registry::getRequest()->getRequestEscapedParameter('oegdproptin_invoiceaddress');
+        return $this->getService(OptInRequestInterface::class)->getInvoiceAddressOptIn();
     }
 
     public function getDeliveryOptIn(): bool
     {
-        return (bool)Registry::getRequest()->getRequestEscapedParameter('oegdproptin_deliveryaddress');
+        return $this->getService(OptInRequestInterface::class)->getDeliveryAddressOptIn();
     }
 }

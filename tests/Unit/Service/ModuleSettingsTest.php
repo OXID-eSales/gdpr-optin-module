@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GdprOptinModule\Tests\Unit\Service;
 
-use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingService;
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
 use OxidEsales\GdprOptinModule\Core\GdprOptinModule as Module;
 use OxidEsales\GdprOptinModule\Service\ModuleSettings;
 use PHPUnit\Framework\TestCase;
@@ -25,11 +25,11 @@ final class ModuleSettingsTest extends TestCase
      */
     public function testGetters($method, $systemMethod, $key, $systemValue, $expectedValue): void
     {
-        $mssMock = $this->createPartialMock(ModuleSettingService::class, [$systemMethod]);
-        $mssMock->expects($this->once())->method($systemMethod)->with(
-            $key,
-            Module::MODULE_ID
-        )->willReturn($systemValue);
+        $mssMock = $this->createMock(ModuleSettingServiceInterface::class);
+        $mssMock->expects($this->once())
+            ->method($systemMethod)
+            ->with($key, Module::MODULE_ID)
+            ->willReturn($systemValue);
 
         $sut = new ModuleSettings($mssMock);
         $this->assertSame($expectedValue, $sut->$method());

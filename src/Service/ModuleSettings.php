@@ -12,9 +12,6 @@ use OxidEsales\GdprOptinModule\Core\GdprOptinModule;
 
 final class ModuleSettings
 {
-    /** @var ModuleSettingServiceInterface */
-    private $moduleSettingService;
-
     public const INVOICE_OPT_IN = 'blOeGdprOptinInvoiceAddress';
     public const DELIVERY_OPT_IN = 'blOeGdprOptinDeliveryAddress';
     public const REGISTRATION_OPT_IN = 'blOeGdprOptinUserRegistration';
@@ -22,9 +19,8 @@ final class ModuleSettings
     public const CONTACT_CHOICE = 'OeGdprOptinContactFormMethod';
 
     public function __construct(
-        ModuleSettingServiceInterface $moduleSettingService
+        private ModuleSettingServiceInterface $moduleSettingService
     ) {
-        $this->moduleSettingService = $moduleSettingService;
     }
 
     public function showInvoiceOptIn(): bool

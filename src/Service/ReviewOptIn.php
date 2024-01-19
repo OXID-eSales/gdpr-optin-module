@@ -11,18 +11,10 @@ use OxidEsales\Eshop\Core\Request;
 
 final class ReviewOptIn
 {
-    /** @var Request */
-    private $request;
-
-    /** @var ModuleSettings */
-    private $moduleSettings;
-
     public function __construct(
-        Request $request,
-        ModuleSettings $moduleSettings
+        private Request $request,
+        private ModuleSettings $moduleSettings
     ) {
-        $this->request = $request;
-        $this->moduleSettings = $moduleSettings;
     }
 
     public function isReviewOptInValidationRequired(): bool

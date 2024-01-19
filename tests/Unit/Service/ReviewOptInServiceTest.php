@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace OxidEsales\GdprOptinModule\Tests\Unit\Service;
 
-use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingService;
+use OxidEsales\Eshop\Core\Request;
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
 use OxidEsales\GdprOptinModule\Core\GdprOptinModule;
 use OxidEsales\GdprOptinModule\Service\ModuleSettings;
 use OxidEsales\GdprOptinModule\Service\ReviewOptIn;
-use OxidEsales\Eshop\Core\Request;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -26,7 +26,7 @@ class ReviewOptInServiceTest extends TestCase
      */
     public function testValidateOptIn(bool $configValue, int|null $checkboxStatus, bool $expectedValue)
     {
-        $service = $this->prepareService($configValue, $checkboxStatus);
+        $service = $this->getSut($configValue, $checkboxStatus);
 
         $this->assertSame($expectedValue, $service->validateOptIn());
     }
@@ -48,7 +48,7 @@ class ReviewOptInServiceTest extends TestCase
      */
     public function testReviewOptInError(bool $configValue, int|null $checkboxStatus, bool $expectedValue): void
     {
-        $service = $this->prepareService($configValue, $checkboxStatus);
+        $service = $this->getSut($configValue, $checkboxStatus);
 
         $this->assertSame($expectedValue, $service->isReviewOptInError());
     }
@@ -65,9 +65,9 @@ class ReviewOptInServiceTest extends TestCase
         ];
     }
 
-    private function prepareService(bool $configValue, int|null $checkboxStatus): ReviewOptIn
+    private function getSut(bool $configValue, int|null $checkboxStatus): ReviewOptIn
     {
-        $mssMock = $this->createPartialMock(ModuleSettingService::class, ['getBoolean']);
+        $mssMock = $this->createMock(ModuleSettingServiceInterface::class);
         $mssMock->expects($this->any())
             ->method('getBoolean')
             ->with(ModuleSettings::REVIEW_OPT_IN, GdprOptinModule::MODULE_ID)
