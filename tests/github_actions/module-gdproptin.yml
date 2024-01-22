@@ -33,12 +33,24 @@ phpunit:
 codeception:
   matrix:
     <<: *matrix
-    testplan: '["tests/github_actions/module_codeception_acceptance.yml"]'
+    testplan: '["-"]'
   load_shop: *install_module_prefix
+  title: codeception
+  container:
+    options: '-e SELENIUM_SERVER_HOST=selenium -e BROWSER_NAME=chrome -e XDEBUG_MODE=coverage -e THEME_ID=apex'
+  configuration: '/var/www/vendor/oxid-esales/gdpr-optin-module/tests/codeception.yml'
+  suite: 'Acceptance'
+  additional_options: '--coverage-xml=/var/www/codeception_coverage.xml'
+  logfile:
+    prefix: 'codeception'
+  output:
+    prefix: 'codeception-artifacts'
+  coverage:
+    path: 'source/codeception_coverage.xml'
 
 runtest:
   matrix:
-    testplan: ''
+    testplan: 'skip'
   load_shop: *install_module_prefix
 
 sonarcloud:

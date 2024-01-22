@@ -8,6 +8,8 @@
          stopOnSkipped="false"
          beStrictAboutTestsThatDoNotTestAnything="false"
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+         displayDetailsOnTestsThatTriggerDeprecations="true"
+         displayDetailsOnTestsThatTriggerWarnings="true"
          colors="true">
     <coverage includeUncoveredFiles="true"/>
     <testsuites>
