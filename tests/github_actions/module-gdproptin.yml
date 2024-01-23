@@ -5,6 +5,8 @@ prepare_shop:
   specific: &specific_matrix
     php: '["8.1"]'
     mysql: '["8.0"]'
+  git:
+    shop_ref: '{{ .Data.global.git.default_ref }}'
 
 install_shop:
   matrix: *matrix
