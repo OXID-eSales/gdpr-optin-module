@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GdprOptinModule\Traits;
 
-use OxidEsales\GdprOptinModule\Service\ReviewOptIn as ReviewOptInService;
+use OxidEsales\GdprOptinModule\Service\ReviewOptInInterface as ReviewOptInService;
 
 trait ReviewOptIn
 {

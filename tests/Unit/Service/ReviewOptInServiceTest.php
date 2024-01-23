@@ -14,6 +14,7 @@ use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServ
 use OxidEsales\GdprOptinModule\Core\GdprOptinModule;
 use OxidEsales\GdprOptinModule\Service\ModuleSettings;
 use OxidEsales\GdprOptinModule\Service\ReviewOptIn;
+use OxidEsales\GdprOptinModule\Service\ReviewOptInInterface;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -65,7 +66,7 @@ class ReviewOptInServiceTest extends TestCase
         ];
     }
 
-    private function getSut(bool $configValue, int|null $checkboxStatus): ReviewOptIn
+    private function getSut(bool $configValue, int|null $checkboxStatus): ReviewOptInInterface
     {
         $mssMock = $this->createMock(ModuleSettingServiceInterface::class);
         $mssMock->expects($this->any())

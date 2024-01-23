@@ -9,7 +9,7 @@ namespace OxidEsales\GdprOptinModule\Controller;
 
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\UtilsView;
-use OxidEsales\GdprOptinModule\Service\ReviewOptIn as ReviewOptInService;
+use OxidEsales\GdprOptinModule\Service\ReviewOptInInterface as ReviewOptInService;
 use OxidEsales\GdprOptinModule\Traits\ReviewOptIn;
 
 /**

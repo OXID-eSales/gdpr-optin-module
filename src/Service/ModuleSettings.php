@@ -10,7 +10,7 @@ namespace OxidEsales\GdprOptinModule\Service;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
 use OxidEsales\GdprOptinModule\Core\GdprOptinModule;
 
-final class ModuleSettings
+final class ModuleSettings implements ModuleSettingsInterface
 {
     public const INVOICE_OPT_IN = 'blOeGdprOptinInvoiceAddress';
     public const DELIVERY_OPT_IN = 'blOeGdprOptinDeliveryAddress';

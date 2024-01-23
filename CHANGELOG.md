@@ -9,9 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Shop 7.1 dependencies match
 - PHP 8.2 support
+- Interfaces for currently existing services
 
 ### Removed
 - Smarty support
+- Use getService from shop instead of ServiceContainer trait in code (but still used for tests)
+- Automatic registration of classes as services from the "Service" directory
 
 ## [v3.0.1] - 2023-05-12
 

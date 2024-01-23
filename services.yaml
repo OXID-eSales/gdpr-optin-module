@@ -10,10 +10,14 @@ services:
     class: OxidEsales\Eshop\Core\Registry
     public: true
 
-  OxidEsales\GdprOptinModule\Transput\OptInRequestInterface:
-    class: OxidEsales\GdprOptinModule\Transput\OptInRequest
+  OxidEsales\GdprOptinModule\Service\ModuleSettingsInterface:
+    class: OxidEsales\GdprOptinModule\Service\ModuleSettings
     public: true
 
-  OxidEsales\GdprOptinModule\Service\:
-    resource: 'src/Service/*'
+  OxidEsales\GdprOptinModule\Service\ReviewOptInInterface:
+    class: OxidEsales\GdprOptinModule\Service\ReviewOptIn
+    public: true
+
+  OxidEsales\GdprOptinModule\Transput\OptInRequestInterface:
+    class: OxidEsales\GdprOptinModule\Transput\OptInRequest
     public: true

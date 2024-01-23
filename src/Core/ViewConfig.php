@@ -7,8 +7,7 @@
 
 namespace OxidEsales\GdprOptinModule\Core;
 
-use OxidEsales\Eshop\Core\Registry;
-use OxidEsales\GdprOptinModule\Service\ModuleSettings;
+use OxidEsales\GdprOptinModule\Service\ModuleSettingsInterface;
 use OxidEsales\GdprOptinModule\Transput\OptInRequestInterface;
 
 /**
@@ -19,27 +18,27 @@ class ViewConfig extends ViewConfig_parent
 {
     public function showGdprInvoiceOptIn(): bool
     {
-        return $this->getService(ModuleSettings::class)->showInvoiceOptIn();
+        return $this->getService(ModuleSettingsInterface::class)->showInvoiceOptIn();
     }
 
     public function showGdprDeliveryOptIn(): bool
     {
-        return $this->getService(ModuleSettings::class)->showDeliveryOptIn();
+        return $this->getService(ModuleSettingsInterface::class)->showDeliveryOptIn();
     }
 
     public function showGdprRegistrationOptIn(): bool
     {
-        return $this->getService(ModuleSettings::class)->showRegistrationOptIn();
+        return $this->getService(ModuleSettingsInterface::class)->showRegistrationOptIn();
     }
 
     public function showGdprReviewOptIn(): bool
     {
-        return $this->getService(ModuleSettings::class)->showReviewOptIn();
+        return $this->getService(ModuleSettingsInterface::class)->showReviewOptIn();
     }
 
     public function getGdprContactOptIn(): string
     {
-        return $this->getService(ModuleSettings::class)->getContactOptIn();
+        return $this->getService(ModuleSettingsInterface::class)->getContactOptIn();
     }
 
     public function getInvoiceOptIn(): bool

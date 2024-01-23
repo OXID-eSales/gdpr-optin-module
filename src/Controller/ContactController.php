@@ -9,7 +9,7 @@ namespace OxidEsales\GdprOptinModule\Controller;
 
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\UtilsView;
-use OxidEsales\GdprOptinModule\Service\ModuleSettings;
+use OxidEsales\GdprOptinModule\Service\ModuleSettingsInterface;
 
 /**
 * @eshopExtension
@@ -68,7 +68,7 @@ class ContactController extends ContactController_parent
      */
     private function getContactFormMethod(): string
     {
-        $moduleSettings = $this->getService(ModuleSettings::class);
+        $moduleSettings = $this->getService(ModuleSettingsInterface::class);
 
         return $moduleSettings->getContactOptIn() ?
             $moduleSettings->getContactOptIn() : self::CONTACT_FORM_METHOD_DEFAULT;

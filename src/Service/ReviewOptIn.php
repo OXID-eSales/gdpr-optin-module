@@ -9,11 +9,11 @@ namespace OxidEsales\GdprOptinModule\Service;
 
 use OxidEsales\Eshop\Core\Request;
 
-final class ReviewOptIn
+final class ReviewOptIn implements ReviewOptInInterface
 {
     public function __construct(
         private Request $request,
-        private ModuleSettings $moduleSettings
+        private ModuleSettingsInterface $moduleSettings
     ) {
     }
 
