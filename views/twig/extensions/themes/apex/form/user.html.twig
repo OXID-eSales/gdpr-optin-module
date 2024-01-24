@@ -1,7 +1,7 @@
 {% extends "form/user.html.twig" %}
 
 {% block user %}
-    {% if true == oViewConf.showGdprDeliveryOptIn() %}
+    {% if oViewConf.getGdprModuleSettings().showDeliveryOptIn() %}
         {% if Errors.oegdproptin_deliveryaddress %}
             {% set oError = Errors.oegdproptin_deliveryaddress.0 %}
                 <div class="alert alert-danger">{{ oError.getOxMessage() }}</div>
@@ -9,7 +9,7 @@
         {% endif %}
     {% endif %}
 
-    {% if true == oViewConf.showGdprInvoiceOptIn() %}
+    {% if oViewConf.getGdprModuleSettings().showInvoiceOptIn() %}
         {% if Errors.oegdproptin_invoiceaddress %}
             {% set oError = Errors.oegdproptin_invoiceaddress.0 %}
             <div class="alert alert-danger">{{ oError.getOxMessage() }}</div>
@@ -28,7 +28,7 @@
         {% set delivadr = oxcmp_user.getSelectedAddress() %}
     {% endif %}
 
-    {% if true == oViewConf.showGdprDeliveryOptIn() %}
+    {% if oViewConf.getGdprModuleSettings().showDeliveryOptIn() %}
         <div id="GdprShippingAddressOptin" style="{% if delivadr or not oView.showShipAddress() %}display: none;{% endif %}">
             <div class="checkbox">
                 <div class="form-check">
@@ -48,7 +48,7 @@
 {% block user_billing_address_form %}
     {{ parent() }}
 
-    {% if true == oViewConf.showGdprInvoiceOptIn() %}
+    {% if oViewConf.getGdprModuleSettings().showInvoiceOptIn() %}
         <div id="GdprInvoiceAddressOptin" style="display: none;">
             <div class="checkbox">
                 <div class="form-check">
@@ -70,7 +70,7 @@
         {% set delivadr = oxcmp_user.getSelectedAddress() %}
     {% endif %}
 
-    {% if true == oViewConf.showGdprDeliveryOptIn() %}
+    {% if oViewConf.getGdprModuleSettings().showDeliveryOptIn() %}
         {% if delivadr %}
             <script type="text/javascript">
                 function editShippingAddressJS() {
@@ -111,7 +111,7 @@
 
     {% endif %}
 
-    {% if true == oViewConf.showGdprInvoiceOptIn() %}
+    {% if oViewConf.getGdprModuleSettings().showInvoiceOptIn() %}
         <script type="text/javascript">
             function editInvoiceAddressJS() {
                 document.querySelector('#userChangeAddress').addEventListener('click', function(){

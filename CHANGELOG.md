@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - PHP 8.2 support
 - Interfaces for currently existing services
 
+### Changed
+- Use ModuleSettings service directly instead of providing proxy methods for every setting in ViewConfig
+
 ### Removed
 - Smarty support
 - Use getService from shop instead of ServiceContainer trait in code (but still used for tests)

@@ -3,7 +3,7 @@
 {% block user_account_newsletter %}
     {{ parent() }}
 
-    {% if true == oViewConf.showGdprRegistrationOptIn() %}
+    {% if oViewConf.getGdprModuleSettings().showRegistrationOptIn() %}
         <div class="form-group row">
             <div class="col-lg-9 col-lg-offset-3 offset-lg-3">
                 <div class="checkbox">

@@ -8,7 +8,7 @@
         {% set delivadr = oxcmp_user.getSelectedAddress() %}
     {% endif %}
 
-    {% if true == oViewConf.showGdprDeliveryOptIn() %}
+    {% if oViewConf.getGdprModuleSettings().showDeliveryOptIn() %}
         {% if delivadr %}
             <script type="text/javascript">
                 function toggleGdprOptinEditAddress() {
@@ -67,7 +67,7 @@
         {% endif %}
     {% endif %}
 
-    {% if true == oViewConf.showGdprInvoiceOptIn() %}
+    {% if oViewConf.getGdprModuleSettings().showInvoiceOptIn() %}
         <script type="text/javascript">
             function toggleGdprInvoiceAddressOptin() {
                 var invoiceAddressForm = document.querySelector('#addressForm').style.display;
@@ -155,7 +155,7 @@
 
     {{ parent() }}
 
-    {% if true == oViewConf.showGdprDeliveryOptIn() %}
+    {% if oViewConf.getGdprModuleSettings().showDeliveryOptIn() %}
         <div class="mb-3" id="GdprOptinShipAddress"{% if not aErrors %} style="display: none;"{% endif %}>
             <input type="hidden" class="hidden" id="oegdproptin_changeDelAddress" name="oegdproptin_changeDelAddress" value="0">
             <div class="form-check">
@@ -176,7 +176,7 @@
 {% block user_checkout_billing_feedback %}
     {{ parent() }}
 
-    {% if true == oViewConf.showGdprInvoiceOptIn() %}
+    {% if oViewConf.getGdprModuleSettings().showInvoiceOptIn() %}
         <div class="mb-3" id="GdprInvoiceAddressOptin" {% if not aErrors %} style="display: none;"{% endif %}>
             <input type="hidden" class="hidden" id="oegdproptin_changeInvAddress" name="oegdproptin_changeInvAddress" value="0">
             <div class="form-check">

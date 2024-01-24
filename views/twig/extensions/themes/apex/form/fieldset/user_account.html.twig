@@ -3,7 +3,7 @@
 {% block user_account_newsletter %}
     {{ parent() }}
 
-    {% if true == oViewConf.showGdprRegistrationOptIn() %}
+    {% if oViewConf.getGdprModuleSettings().showRegistrationOptIn() %}
         <div class="mb-3 form-check{% if aErrors.oegdproptin_userregistration %} oxInValid{% endif %}">
             <input type="checkbox" class="form-check-input" name="oegdproptin_userregistration" id="oegdproptin_userregistration" value="1">
             <label class="form-check-label" for="oegdproptin_userregistration">
