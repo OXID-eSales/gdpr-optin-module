@@ -10,7 +10,6 @@ namespace OxidEsales\GdprOptinModule\Controller;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\UtilsView;
 use OxidEsales\GdprOptinModule\Service\ReviewOptInInterface as ReviewOptInService;
-use OxidEsales\GdprOptinModule\Traits\ReviewOptIn;
 
 /**
  * @eshopExtension
@@ -18,7 +17,15 @@ use OxidEsales\GdprOptinModule\Traits\ReviewOptIn;
  */
 class ReviewController extends ReviewController_parent
 {
-    use ReviewOptIn;
+    /**
+     * @return void
+     */
+    public function init()
+    {
+        parent::init();
+
+        $this->addTplParam('reviewOptInService', $this->getService(ReviewOptInService::class));
+    }
 
     /**
      * Saves user ratings and review text (oxReview object)

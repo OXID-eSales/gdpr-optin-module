@@ -4,7 +4,7 @@
 
     {{ parent() }}
 
-    {% if oView.isReviewOptInValidationRequired() %}
+    {% if reviewOptInService.isReviewOptInValidationRequired() %}
         <div style="margin-top:10px;" class="rvw_oegdproptin_block">
             <input type="hidden" name="rvw_oegdproptin" value="0">
             <label for="rvw_oegdproptin">
@@ -16,7 +16,7 @@
             </label>
 
             <div id="rvw_oegdproptin_error"
-                 class="{% if not oView.isReviewOptInError() %}hidden visually-hidden {% endif %}text-danger">
+                 class="{% if not reviewOptInService.isReviewOptInError() %}hidden visually-hidden {% endif %}text-danger">
                 {{ translate({ ident: "OEGDPROPTIN_REVIEW_FORM_ERROR_MESSAGE" }) }}
             </div>
         </div>

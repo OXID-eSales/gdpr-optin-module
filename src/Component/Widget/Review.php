@@ -7,7 +7,7 @@
 
 namespace OxidEsales\GdprOptinModule\Component\Widget;
 
-use OxidEsales\GdprOptinModule\Traits\ReviewOptIn;
+use OxidEsales\GdprOptinModule\Service\ReviewOptInInterface as ReviewOptInService;
 
 /**
  * @eshopExtension
@@ -15,5 +15,13 @@ use OxidEsales\GdprOptinModule\Traits\ReviewOptIn;
  */
 class Review extends Review_parent
 {
-    use ReviewOptIn;
+    /**
+     * @return void
+     */
+    public function init()
+    {
+        parent::init();
+
+        $this->addTplParam('reviewOptInService', $this->getService(ReviewOptInService::class));
+    }
 }

@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 - Smarty support
 - Use getService from shop instead of ServiceContainer trait in code (but still used for tests)
+- Send original service to template instead of OptInTrait proxy implementation
 - Automatic registration of classes as services from the "Service" directory
 
 ## [v3.0.1] - 2023-05-12
