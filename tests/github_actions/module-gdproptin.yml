@@ -1,40 +1,31 @@
 prepare_shop:
-  matrix: &matrix
-    php: &matrix_php '["8.1", "8.2"]'
-    mysql: &matrix_mysql '["8.0"]'
-  specific: &specific_matrix
-    php: '["8.1"]'
-    mysql: '["8.0"]'
   git:
     shop_ref: '{{ .Data.global.git.default_ref }}'
 
-install_shop:
-  matrix: *matrix
-
+# {{ $ids := "oegdproptin" }}ids: {{ print $ids }}
+# {{ $org := "oxid-esales" }}organisation: {{ print $org }}
+# {{ $name := "gdpr-optin-module" }}name: {{ print $name }}
 install_module:
   matrix:
-    <<: *matrix
     testplan: '["-"]'
   cache:
     prefix: &install_module_prefix 'moduleInstallation-ce-{{ .Github.SHA }}-{{ .Github.RunNumber }}-{{ .Github.RunAttempt }}'
-  ids: &ids 'oegdproptin'
+  ids: &ids '{{ print $ids }}'
   activate: *ids
   git:
     module:
       url: &git_module_url '{{ .Github.Repository }}'
       ref: '{{ .Github.RefName }}'
-  package_name: &package_name 'oxid-esales/gdpr-optin-module'
+  package_name: &package_name '{{ print $org }}/{{ print $name }}'
   path: *ids
 
 phpunit:
   matrix:
-    <<: *matrix
     testplan: '["tests/github_actions/defaults/module_phpunit_unit.yml","tests/github_actions/defaults/module_phpunit_integration.yml"]'
   load_shop: *install_module_prefix
 
 codeception:
   matrix:
-    <<: *matrix
     testplan: '["-"]'
   load_shop: *install_module_prefix
   title: codeception
@@ -57,9 +48,8 @@ runtest:
 
 sonarcloud:
   matrix:
-    <<: *specific_matrix
     testplan: '["-"]'
-  project_key: 'OXID-eSales_gdpr-optin-module'
+  project_key: 'OXID-eSales_{{ print $name }}'
   project_name: *package_name
   parameters: |
     -Dsonar.language=php
@@ -72,7 +62,6 @@ phpcs_tests:
 
 styles:
   matrix:
-    <<: *specific_matrix
     testplan: '["-"]'
   load_shop: *install_module_prefix
   path: *ids
