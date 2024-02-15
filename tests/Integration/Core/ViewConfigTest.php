@@ -24,7 +24,7 @@ final class ViewConfigTest extends BaseTestCase
     {
         $moduleSettingsStub = $this->createStub(ModuleSettingsInterface::class);
 
-        $sut = $this->createPartialMock(\OxidEsales\GdprOptinModule\Core\ViewConfig::class, ['getService']);
+        $sut = $this->createPartialMock(ViewConfig::class, ['getService']);
         $sut->method('getService')->willReturnMap([
             [ModuleSettingsInterface::class, $moduleSettingsStub]
         ]);
