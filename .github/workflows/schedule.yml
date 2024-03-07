@@ -8,7 +8,7 @@ jobs:
   scheduled_70x:
     uses: oxid-eSales/github-actions/.github/workflows/call-universal_test_workflow.yml@v4
     with:
-      testplan: '~/defaults/7.0.x.yml,~/module-gdproptin.yml'
+      testplan: '~/defaults/7.0.x.yml,~/defaults/scheduled.yml,~/module-gdproptin.yml'
       runs_on: '"ubuntu-latest"'
       defaults: 'v4'
       plan_folder: '.github/oxid-esales'
@@ -23,10 +23,9 @@ jobs:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
   scheduled_71x:
-    needs: scheduled_70x
     uses: oxid-eSales/github-actions/.github/workflows/call-universal_test_workflow.yml@v4
     with:
-      testplan: '~/defaults/7.1.x.yml,~/module-gdproptin.yml'
+      testplan: '~/defaults/7.1.x.yml,~/defaults/scheduled.yml,~/module-gdproptin.yml'
       runs_on: '"ubuntu-latest"'
       defaults: 'v4'
       plan_folder: '.github/oxid-esales'
@@ -41,10 +40,9 @@ jobs:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
   # scheduled_80x:
-  #   needs: scheduled_71x
   #   uses: oxid-eSales/github-actions/.github/workflows/call-universal_test_workflow.yml@v4
   #   with:
-  #     testplan: '~/module-gdproptin.yml'
+  #     testplan: '~/defaults/scheduled.yml,~/module-gdproptin.yml'
   #     runs_on: '"ubuntu-latest"'
   #     defaults: 'v4'
   #     plan_folder: '.github/oxid-esales'
