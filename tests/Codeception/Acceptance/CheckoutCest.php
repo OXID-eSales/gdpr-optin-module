@@ -40,7 +40,7 @@ final class CheckoutCest extends BaseCest
             ->enterAddressData($this->getUserAddressFormData())
             ->goToNextStep();
 
-        $I->see(Translator::translate('SELECT_SHIPPING_METHOD'));
+        $I->see(Translator::translate('SELECTED_SHIPPING_CARRIER'));
     }
 
     public function testOptinNeverRequiredDuringGuestCheckout(AcceptanceTester $I): void
@@ -63,7 +63,7 @@ final class CheckoutCest extends BaseCest
             ->enterAddressData($this->getUserAddressFormData())
             ->goToNextStep();
 
-        $I->see(Translator::translate('SELECT_SHIPPING_METHOD'));
+        $I->see(Translator::translate('SELECTED_SHIPPING_CARRIER'));
     }
 
     public function testOptinRequiredDuringCheckoutRegistration(AcceptanceTester $I): void
@@ -103,7 +103,7 @@ final class CheckoutCest extends BaseCest
             ->enterShippingAddressData($this->getUserAddressFormData())
             ->goToNextStep();
 
-        $I->see(Translator::translate('SELECT_SHIPPING_METHOD'));
+        $I->see(Translator::translate('SELECTED_SHIPPING_CARRIER'));
         $I->dontSee(Translator::translate('OEGDPROPTIN_CONFIRM_USER_REGISTRATION_OPTIN'));
     }
 
@@ -151,7 +151,7 @@ final class CheckoutCest extends BaseCest
         $userCheckout
             ->goToNextStep();
 
-        $I->see(Translator::translate('SELECT_SHIPPING_METHOD'));
+        $I->see(Translator::translate('SELECTED_SHIPPING_CARRIER'));
         $I->dontSee(Translator::translate('OEGDPROPTIN_CONFIRM_STORE_DELIVERY_ADDRESS'));
     }
 }
