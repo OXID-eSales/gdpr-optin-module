@@ -5,10 +5,10 @@ on:
     - cron: '0 4 */7 * *'
 
 jobs:
-  module_gdproptin_71x_nightly:
+  module_gdproptin_72x_nightly:
     uses: oxid-eSales/github-actions/.github/workflows/call-universal_test_workflow.yaml@v4
     with:
-      testplan: '~/defaults/7.1.x.yaml,~/defaults/scheduled.yaml,~/module-gdproptin.yaml'
+      testplan: '~/defaults/7.2.x.yaml,~/defaults/scheduled.yaml,~/module-gdproptin.yaml'
       runs_on: '"ubuntu-latest"'
       defaults: 'v4'
       plan_folder: '.github/oxid-esales'
