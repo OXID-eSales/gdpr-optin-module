@@ -37,7 +37,7 @@ jobs:
                ;;
           esac
           # shellcheck disable=SC2088
-          TESTPLAN="~/defaults/7.1.x.yaml,${LIMIT}~/module-gdproptin.yaml"
+          TESTPLAN="~/defaults/7.2.x.yaml,${LIMIT}~/module-gdproptin.yaml"
           echo "testplan=${TESTPLAN}" | tee -a "${GITHUB_OUTPUT}"
 
   dispatch_stable:

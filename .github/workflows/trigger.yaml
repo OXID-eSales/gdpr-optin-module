@@ -9,7 +9,7 @@ jobs:
   module-gdproptin:
     uses: oxid-eSales/github-actions/.github/workflows/call-universal_test_workflow.yaml@v4
     with:
-      testplan: '~/defaults/7.1.x.yaml,~/module-gdproptin.yaml'
+      testplan: '~/defaults/7.2.x.yaml,~/module-gdproptin.yaml'
       runs_on: '"ubuntu-latest"'
       defaults: 'v4'
       plan_folder: '.github/oxid-esales'
