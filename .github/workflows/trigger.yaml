@@ -3,10 +3,12 @@ name: Auto trigger on push or pull requests
 
 on:
   pull_request: {}
-  push: {}
+  push:
+    branches:
+      - 'b-7.1.x*'
 
 jobs:
-  module-gdproptin:
+  module-gdproptin_php82_mysql80:
     uses: oxid-eSales/github-actions/.github/workflows/call-universal_test_workflow.yaml@v4
     with:
       testplan: '~/defaults/7.1.x.yaml,~/module-gdproptin.yaml'
