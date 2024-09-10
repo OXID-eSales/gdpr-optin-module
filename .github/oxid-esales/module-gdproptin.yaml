@@ -95,7 +95,7 @@ runscript: &runscript
           -e 's#views/twig#views/apex#g;' \
           source/vendor/oxid-esales/gdpr-optin-module/tests/Codeception/acceptance.suite.yml
   composer:
-    early: true
+    early: skip
   gdpr_module:
     path: 'vendor/oxid-esales/gdpr-optin-module'
 
