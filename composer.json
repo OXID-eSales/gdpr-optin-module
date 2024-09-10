@@ -63,7 +63,7 @@
 
     "tests-codeception": [
       "Composer\\Config::disableProcessTimeout",
-      "export CODECEPT=/var/www/vendor/bin/codecept ; if [ ! -x \"${CODECEPT}\" ]; then export CODECEPT=vendor/bin/codecept ; fi ; echo \"Codeception: ${CODECEPT}\" ; THEME_ID=apex MODULE_IDS=oegdproptin SHOP_ROOT_PATH=/var/www $CODECEPT vendor/bin/codecept run Acceptance -c tests/codeception.yml --no-redirect"
+      "export CODECEPT=/var/www/vendor/bin/codecept ; if [ ! -x \"${CODECEPT}\" ]; then export CODECEPT=vendor/bin/codecept ; fi ; echo \"Codeception: ${CODECEPT}\" ; THEME_ID=apex MODULE_IDS=oegdproptin SHOP_ROOT_PATH=/var/www $CODECEPT run Acceptance -c tests/codeception.yml --no-redirect"
     ]
   },
   "config": {
