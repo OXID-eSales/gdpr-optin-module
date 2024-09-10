@@ -60,9 +60,12 @@
 #  path: *ids
 #  module_ids: *ids
 
-install_shop_with_modules:
+install:
+  method: 'script'
   cache:
     prepared_shop: false
+  container:
+    options: '-e ESHOP_BOOTSTRAP_PATH=vendor/oxid-esales/oxideshop-ce/source/bootstrap.php'
   composer:
     transform: |
       {
@@ -71,19 +74,11 @@ install_shop_with_modules:
               "oxid-esales/twig-component": "{{ .Data.global.composer.dev_ref }}",
               "oxid-esales/twig-admin-theme": "{{ .Data.global.composer.dev_ref }}",
               "oxid-esales/apex-theme": "{{ .Data.global.composer.dev_ref }}",
-              "oxid-esales/gdpr-optin-module": "{{ .Data.global.composer.ref_name }}"
-          },
-          "repositories": {
-            "oxid-esales/gdpr-optin-module": {
-              "type": "git",
-              "url": "https://github.com/OXID-eSales/gdpr-optin-module.git"
-            }
+              "oxid-esales/gdpr-optin-module": "{{ .Data.global.composer.safe_ref_name }}"
           }
       }
-  custom_script_container: |
-    vendor/bin/oe-console oe:database:reset --db-host=mysql --db-port=3306 --db-name=example --db-user=root --db-password=root --force
-    vendor/bin/oe-console oe:module:activate oegdproptin
-    vendor/bin/oe-console oe:theme:activate apex
+  activate_modules:
+    oegdproptin
 
 runscript: &runscript
   matrix:
@@ -93,6 +88,12 @@ runscript: &runscript
         "gdpr_module:tests-integration",
         "gdpr_module:tests-codeception"
       ]
+  container:
+    options: '-e XDEBUG_MODE=coverage -e THEME_ID=apex'
+    custom_script: |
+     perl -pi \
+          -e 's#views/twig#views/apex#g;' \
+          source/vendor/oxid-esales/gdpr-optin-module/tests/Codeception/acceptance.suite.yml
   composer:
     early: true
   gdpr_module:
