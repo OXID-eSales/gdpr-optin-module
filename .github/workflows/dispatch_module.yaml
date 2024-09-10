@@ -1,5 +1,4 @@
 name: Manual trigger
-# Matrix workflow using re-usable github actions
 
 on:
   workflow_dispatch:
@@ -48,7 +47,7 @@ jobs:
   dispatch_stable:
     if: ${{ inputs.use_dev_version == 'no' }}
     needs: build_testplan
-    uses: oxid-eSales/github-actions/.github/workflows/call-universal_test_workflow.yaml@v4
+    uses: oxid-eSales/github-actions/.github/workflows/call-universal_workflow_light.yaml@v4
     with:
       testplan: ${{ needs.build_testplan.outputs.testplan }}
       runs_on: '"ubuntu-latest"'
@@ -67,7 +66,7 @@ jobs:
   dispatch_v0:
     if: ${{ inputs.use_dev_version == 'v0' }}
     needs: build_testplan
-    uses: oxid-eSales/github-actions/.github/workflows/call-universal_test_workflow.yaml@v0
+    uses: oxid-eSales/github-actions/.github/workflows/call-universal_workflow_light.yaml@v0
     with:
       testplan: ${{ needs.build_testplan.outputs.testplan }}
       runs_on: '"ubuntu-latest"'
