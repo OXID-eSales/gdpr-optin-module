@@ -74,7 +74,7 @@ install:
               "oxid-esales/twig-component": "{{ .Data.global.composer.dev_ref }}",
               "oxid-esales/twig-admin-theme": "{{ .Data.global.composer.dev_ref }}",
               "oxid-esales/apex-theme": "{{ .Data.global.composer.dev_ref }}",
-              "oxid-esales/gdpr-optin-module": "{{ .Data.global.composer.safe_ref_name }}"
+              "oxid-esales/gdpr-optin-module": "{{ .Data.global.composer.ref_name }}"
           }
       }
   activate_modules:
