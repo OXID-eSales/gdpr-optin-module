@@ -57,13 +57,19 @@
       "@phpmd"
     ],
 
-    "tests-unit": "XDEBUG_MODE=coverage PHPUNIT=$(find ../../../ -name phpunit) $PHPUNIT --config=tests/ --testsuite=Unit --coverage-clover=tests/Reports/coverage_unit_module-template.xml",
-    "tests-integration": "XDEBUG_MODE=coverage PHPUNIT=$(find ../../../ -name phpunit) $PHPUNIT --bootstrap=/var/www/source/bootstrap.php --config=tests/ --testsuite=Integration --coverage-clover=tests/Reports/coverage_integration_module-template.xml",
+    "tests-unit": [
+      "export PHPUNIT=/var/www/vendor/bin/phpunit ; if [ -z \"${PHPUNIT}\" ]; then export PHPUNIT=vendor/bin/phpunit ; fi",
+      "XDEBUG_MODE=coverage $PHPUNIT --config=tests/ --testsuite=Unit --coverage-clover=tests/Reports/coverage_unit_module-template.xml"
+    ],
+    "tests-integration": [
+      "export PHPUNIT=/var/www/vendor/bin/phpunit ; if [ -z \"${PHPUNIT}\" ]; then export PHPUNIT=vendor/bin/phpunit ; fi",
+      "XDEBUG_MODE=coverage $PHPUNIT --bootstrap=/var/www/source/bootstrap.php --config=tests/ --testsuite=Integration --coverage-clover=tests/Reports/coverage_integration_module-template.xml"],
     "phpunit-coverage": "XDEBUG_MODE=coverage PHPUNIT=$(find ../../../ -name phpunit) $PHPUNIT --coverage-text --bootstrap=/var/www/source/bootstrap.php --config=tests/ --coverage-html=tests/reports/coverage",
 
     "tests-codeception": [
       "Composer\\Config::disableProcessTimeout",
-      "THEME_ID=apex MODULE_IDS=oegdproptin SHOP_ROOT_PATH=/var/www CODECEPT=$(find ../../../ -name codecept) $CODECEPT vendor/bin/codecept run Acceptance -c tests/codeception.yml --no-redirect"
+      "export CODECEPT=/var/www/vendor/bin/codecept ; if [ -z \"${CODECEPT}\" ]; then export CODECEPT=vendor/bin/codecept ; fi",
+      "THEME_ID=apex MODULE_IDS=oegdproptin SHOP_ROOT_PATH=/var/www $CODECEPT vendor/bin/codecept run Acceptance -c tests/codeception.yml --no-redirect"
     ]
   },
   "config": {
