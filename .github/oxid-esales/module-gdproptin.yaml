@@ -62,12 +62,17 @@
 
 install:
   method: 'script'
+  copy_script_targets: |
+    vendor/oxid-esales/gdpr-optin-module/tests/scripts
   cache:
     prepared_shop: false
   container:
     options: '-e ESHOP_BOOTSTRAP_PATH=vendor/oxid-esales/oxideshop-ce/source/bootstrap.php'
   composer:
     transform: |
+      "preferred-install": {
+        "oxid-esales/*": "source"
+      },
       {
           "require": {
               "oxid-esales/oxideshop-ce": "{{ .Data.global.composer.dev_ref }}",
@@ -84,6 +89,9 @@ runscript: &runscript
   matrix:
     script: |
       [
+        "gdpr_module:~/unit.sh",
+        "gdpr_module:~/integration.sh",
+        "gdpr_module:~/codeception.sh",
         "gdpr_module:tests-unit",
         "gdpr_module:tests-integration",
         "gdpr_module:tests-codeception"
@@ -95,7 +103,7 @@ runscript: &runscript
           -e 's#views/twig#views/apex#g;' \
           source/vendor/oxid-esales/gdpr-optin-module/tests/Codeception/acceptance.suite.yml
   composer:
-    early: true
+    early: skip
   gdpr_module:
     path: 'vendor/oxid-esales/gdpr-optin-module'
 
@@ -104,6 +112,9 @@ runslim:
   matrix:
     script: |
       [
+        "gdpr_module:~/php-cs-report.sh",
+        "gdpr_module:~/phpstan-report.sh",
+        "gdpr_module:~/phpmd-report.sh",
         "gdpr_module:phpcs",
         "gdpr_module:phpstan",
         "gdpr_module:phpmd"
