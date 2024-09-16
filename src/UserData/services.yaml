@@ -1,0 +1,12 @@
+services:
+  _defaults:
+    autowire: true
+    public: false
+
+  OxidEsales\GdprOptinModule\UserData\Infrastructure\UserDataRepositoryInterface:
+    class: OxidEsales\GdprOptinModule\UserData\Infrastructure\UserDataRepository
+    public: true
+
+  OxidEsales\GdprOptinModule\UserData\Infrastructure\UserDataRepositoryInterface:
+    class: OxidEsales\GdprOptinModule\UserData\Infrastructure\UserDataRepository
+    public: true

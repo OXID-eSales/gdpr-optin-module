@@ -10,4 +10,13 @@ namespace OxidEsales\GdprOptinModule\UserData\Infrastructure;
 interface UserDataRepositoryInterface
 {
     public function getDataFromTable(string $table, string $columnName, string $columnValue): array;
+
+    public function getJoinedData(
+        string $primaryTable,
+        string $primaryKey,
+        string $foreignTable,
+        string $foreignKey,
+        string $primaryConditionColumn,
+        string $primaryConditionValue
+    ): array;
 }
