@@ -11,5 +11,5 @@ namespace OxidEsales\GdprOptinModule\UserData\Service;
 
 interface UserDataCollectorInterface
 {
-	public function collectAllData(string $userId): array;
+    public function collectAllData(string $userId): array;
 }

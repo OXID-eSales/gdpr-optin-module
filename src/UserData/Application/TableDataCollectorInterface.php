@@ -7,9 +7,10 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GdprOptinModule\UserData\Service;
+namespace OxidEsales\GdprOptinModule\UserData\Application;
 
 interface TableDataCollectorInterface
 {
-    public function collect(string $userId): array;
+    public function collect(string $id): array;
+    public function getTableName(): string;
 }
