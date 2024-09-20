@@ -109,3 +109,8 @@ services:
     class: OxidEsales\GdprOptinModule\UserData\Application\OrderFilesDataCollector
     tags:
       - { name: 'order_data_collector' }
+
+  OxidEsales\GdprOptinModule\UserData\Service\UserDataAggregationInterface:
+    class: OxidEsales\GdprOptinModule\UserData\Service\UserDataAggregation
+    arguments:
+      $collectors: !tagged user_data_collector
