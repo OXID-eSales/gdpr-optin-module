@@ -50,7 +50,7 @@ services:
   OxidEsales\GdprOptinModule\UserData\Application\VouchersDataCollector:
     class: OxidEsales\GdprOptinModule\UserData\Application\VouchersDataCollector
     arguments:
-      - !tagged voucher_data_collector
+      $collectors: !tagged voucher_data_collector
     tags:
       - { name: 'user_data_collector' }
 
@@ -62,7 +62,7 @@ services:
   OxidEsales\GdprOptinModule\UserData\Application\UserDataCollector:
     class: OxidEsales\GdprOptinModule\UserData\Application\UserDataCollector
     arguments:
-      - !tagged user_object_data_collector
+      $collectors: !tagged user_object_data_collector
     tags:
       - { name: 'user_data_collector' }
 
@@ -84,7 +84,7 @@ services:
   OxidEsales\GdprOptinModule\UserData\Application\BasketDataCollector:
     class: OxidEsales\GdprOptinModule\UserData\Application\BasketDataCollector
     arguments:
-      - !tagged basket_data_collector
+      $collectors: !tagged basket_data_collector
     tags:
       - { name: 'user_data_collector' }
 
@@ -96,7 +96,7 @@ services:
   OxidEsales\GdprOptinModule\UserData\Application\OrderDataCollector:
     class: OxidEsales\GdprOptinModule\UserData\Application\OrderDataCollector
     arguments:
-      - !tagged order_data_collector
+      $collectors: !tagged order_data_collector
     tags:
       - { name: 'user_data_collector' }
 
