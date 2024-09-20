@@ -15,7 +15,7 @@ abstract class AbstractAggregateTableDataCollector implements TableDataCollector
 {
     public function __construct(
         protected readonly UserDataRepositoryInterface $repository,
-        protected array $collectors
+        protected iterable $collectors
     ) {
     }
 
