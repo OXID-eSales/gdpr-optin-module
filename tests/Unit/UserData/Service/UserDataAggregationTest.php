@@ -11,7 +11,7 @@ namespace OxidEsales\GdprOptinModule\Tests\Unit\UserData\Service;
 
 use OxidEsales\GdprOptinModule\Tests\Unit\UserData\Service\Base\BaseTestCase;
 use OxidEsales\GdprOptinModule\UserData\Application\TableDataCollectorInterface;
-use OxidEsales\GdprOptinModule\UserData\Service\UserDataAggregation;
+use OxidEsales\GdprOptinModule\UserData\Service\UserDataAggregationService;
 
 final class UserDataAggregationTest extends BaseTestCase
 {
@@ -35,7 +35,7 @@ final class UserDataAggregationTest extends BaseTestCase
             expectedData: $expectedCollectorData2
         );
 
-        $sut = new UserDataAggregation(collectors: [$collectorMock1, $collectorMock2]);
+        $sut = new UserDataAggregationService(collectors: [$collectorMock1, $collectorMock2]);
         $actualResult = $sut->collectUserData(userId: $userId);
 
         $expectedUserResult = [
@@ -57,7 +57,7 @@ final class UserDataAggregationTest extends BaseTestCase
             expectedData:  []
         );
 
-        $sut = new UserDataAggregation([$collectorMock]);
+        $sut = new UserDataAggregationService([$collectorMock]);
         $actualResult = $sut->collectUserData($userId);
 
         $expectedResult = [

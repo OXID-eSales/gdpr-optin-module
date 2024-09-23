@@ -11,7 +11,7 @@ namespace OxidEsales\GdprOptinModule\UserData\Service;
 
 use OxidEsales\GdprOptinModule\UserData\Application\TableDataCollectorInterface;
 
-class UserDataAggregation implements UserDataAggregationInterface
+class UserDataAggregationService implements UserDataAggregationServiceInterface
 {
     public function __construct(
         protected iterable $collectors

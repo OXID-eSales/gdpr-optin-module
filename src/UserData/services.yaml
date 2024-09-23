@@ -110,7 +110,7 @@ services:
     tags:
       - { name: 'order_data_collector' }
 
-  OxidEsales\GdprOptinModule\UserData\Service\UserDataAggregationInterface:
-    class: OxidEsales\GdprOptinModule\UserData\Service\UserDataAggregation
+  OxidEsales\GdprOptinModule\UserData\Service\UserDataAggregationServiceInterface:
+    class: OxidEsales\GdprOptinModule\UserData\Service\UserDataAggregationService
     arguments:
       $collectors: !tagged user_data_collector
