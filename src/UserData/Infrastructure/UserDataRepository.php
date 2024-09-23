@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GdprOptinModule\UserData\Infrastructure;
 
+use Doctrine\DBAL\ForwardCompatibility\Result;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 
 class UserDataRepository implements UserDataRepositoryInterface
@@ -26,7 +27,10 @@ class UserDataRepository implements UserDataRepositoryInterface
             ->where($columnName . ' = :' . $columnName)
             ->setParameter($columnName, $columnValue);
 
-        return $queryBuilder->execute()->fetchAllAssociative();
+        /** @var Result $result */
+        $result = $queryBuilder->execute();
+
+        return $result->fetchAllAssociative();
     }
 
     public function getJoinedData(
@@ -44,6 +48,9 @@ class UserDataRepository implements UserDataRepositoryInterface
             ->where($primaryTable . '.' . $primaryColumn . ' = :' . $primaryColumn)
             ->setParameter($primaryColumn, $primaryValue);
 
-        return $queryBuilder->execute()->fetchAllAssociative();
+        /** @var Result $result */
+        $result = $queryBuilder->execute();
+
+        return $result->fetchAllAssociative();
     }
 }
