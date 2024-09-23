@@ -109,3 +109,42 @@ services:
     class: OxidEsales\GdprOptinModule\UserData\Application\OrderFilesDataCollector
     tags:
       - { name: 'order_data_collector' }
+
+
+  # User address data
+  address_table_data_selector:
+    class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
+    arguments:
+      $selectionTable: 'oxaddress'
+      $filterColumn: 'OXUSERID'
+    tags:
+      - { name: 'oe.gdpr.user_data' }
+
+  # User order data
+  order_table_data_selector:
+    class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
+    arguments:
+      $selectionTable: 'oxorder'
+      $filterColumn: 'OXUSERID'
+    tags:
+      - { name: 'oe.gdpr.user_data' }
+
+  order_articles_table_data_selector:
+    class: OxidEsales\GdprOptinModule\UserData\Infrastructure\RelatedTableDataSelector
+    arguments:
+      $primaryTable: 'oxorder'
+      $selectionTable: 'oxorderarticles'
+      $relationCondition: 'oxorder.OXID = oxorderarticles.OXORDERID'
+      $filterColumn: 'oxorder.OXUSERID'
+    tags:
+      - { name: 'oe.gdpr.user_data' }
+
+  order_files_table_data_selector:
+    class: OxidEsales\GdprOptinModule\UserData\Infrastructure\RelatedTableDataSelector
+    arguments:
+      $primaryTable: 'oxorder'
+      $selectionTable: 'oxorderfiles'
+      $relationCondition: 'oxorder.OXID = oxorderarticles.OXORDERID'
+      $filterColumn: 'oxorder.OXUSERID'
+    tags:
+      - { name: 'oe.gdpr.user_data' }
