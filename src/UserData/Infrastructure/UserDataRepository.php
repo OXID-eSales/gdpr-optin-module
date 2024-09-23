@@ -34,15 +34,15 @@ class UserDataRepository implements UserDataRepositoryInterface
         string $primaryKey,
         string $foreignTable,
         string $foreignKey,
-        string $primaryConditionColumn,
-        string $primaryConditionValue
+        string $primaryColumn,
+        string $primaryValue
     ): array {
         $queryBuilder = $this->queryBuilderFactory->create();
         $queryBuilder->select('*')
             ->from($primaryTable)
             ->innerJoin($primaryTable, $foreignTable, 'ft', "ft.{$foreignKey} = {$primaryTable}.{$primaryKey}")
-            ->where($primaryTable . '.' . $primaryConditionColumn . ' = :' . $primaryConditionColumn)
-            ->setParameter($primaryConditionColumn, $primaryConditionValue);
+            ->where($primaryTable . '.' . $primaryColumn . ' = :' . $primaryColumn)
+            ->setParameter($primaryColumn, $primaryValue);
 
         return $queryBuilder->execute()->fetchAllAssociative();
     }

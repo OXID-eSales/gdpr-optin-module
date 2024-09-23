@@ -14,8 +14,8 @@ interface RelatedTableDataCollectorInterface
     public function collectRelatedData(
         string $primaryTable,
         string $primaryKey,
-        string $primaryConditionColumn,
-        string $primaryConditionValue
+        string $primaryColumn,
+        string $primaryValue
     ): array;
 
     public function getTableName(): string;

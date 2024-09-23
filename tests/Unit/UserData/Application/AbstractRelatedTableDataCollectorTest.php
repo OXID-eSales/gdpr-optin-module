@@ -57,8 +57,8 @@ final class AbstractRelatedTableDataCollectorTest extends BaseTestCase
         $result = $sut->collectRelatedData(
             primaryTable: self::PRIMARY_TABLE,
             primaryKey: self::PRIMARY_KEY,
-            primaryConditionColumn: self::PRIMARY_CONDITION_COLUMN,
-            primaryConditionValue: self::PRIMARY_CONDITION_VALUE,
+            primaryColumn: self::PRIMARY_CONDITION_COLUMN,
+            primaryValue: self::PRIMARY_CONDITION_VALUE,
         );
         $this->assertSame($expectedData, $result);
     }

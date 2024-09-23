@@ -54,7 +54,7 @@ class BaseAggregateTableDataCollectorTest extends BaseTestCase
             collectors: [$relatedTableCollectorMock]
         );
 
-        $actualResult = $sut->collect(id: static::PRIMARY_COLUMN_VALUE);
+        $actualResult = $sut->collect(recordId: static::PRIMARY_COLUMN_VALUE);
 
         $expectedResult = [
             static::PRIMARY_TABLE => $expectedPrimaryTableData,
@@ -90,7 +90,7 @@ class BaseAggregateTableDataCollectorTest extends BaseTestCase
             collectors: [$relatedTableCollectorMock]
         );
 
-        $actualResult = $sut->collect(id: static::PRIMARY_COLUMN_VALUE);
+        $actualResult = $sut->collect(recordId: static::PRIMARY_COLUMN_VALUE);
 
         $expectedResult = [
             static::PRIMARY_TABLE => [],

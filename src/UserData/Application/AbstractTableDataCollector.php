@@ -22,8 +22,8 @@ abstract class AbstractTableDataCollector implements TableDataCollectorInterface
 
     abstract protected function getColumnName(): string;
 
-    public function collect(string $id): array
+    public function collect(string $recordId): array
     {
-        return $this->repository->getDataFromTable($this->getTableName(), $this->getColumnName(), $id);
+        return $this->repository->getDataFromTable($this->getTableName(), $this->getColumnName(), $recordId);
     }
 }
