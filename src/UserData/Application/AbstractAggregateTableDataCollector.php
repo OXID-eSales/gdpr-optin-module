@@ -23,12 +23,12 @@ abstract class AbstractAggregateTableDataCollector implements TableDataCollector
 
     abstract protected function getColumnName(): string;
 
-    public function collect(string $id): array
+    public function collect(string $recordId): array
     {
         $orderData = $this->repository->getDataFromTable(
             table: $this->getTableName(),
             columnName: $this->getColumnName(),
-            columnValue: $id
+            columnValue: $recordId
         );
 
         $relatedData = [];
@@ -39,8 +39,8 @@ abstract class AbstractAggregateTableDataCollector implements TableDataCollector
                         $collector->collectRelatedData(
                             primaryTable: $this->getTableName(),
                             primaryKey: $this->getColumnName(),
-                            primaryConditionColumn: $this->getColumnName(),
-                            primaryConditionValue: $id
+                            primaryColumn: $this->getColumnName(),
+                            primaryValue: $recordId
                         );
                 }
             }

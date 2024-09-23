@@ -16,7 +16,7 @@ interface UserDataRepositoryInterface
         string $primaryKey,
         string $foreignTable,
         string $foreignKey,
-        string $primaryConditionColumn,
-        string $primaryConditionValue
+        string $primaryColumn,
+        string $primaryValue
     ): array;
 }

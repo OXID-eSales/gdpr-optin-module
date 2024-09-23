@@ -44,8 +44,8 @@ class RelatedTableDataCollectorTest extends BaseTestCase
         $actualResult = $sut->collectRelatedData(
             primaryTable: static::PRIMARY_TABLE,
             primaryKey: static::PRIMARY_KEY,
-            primaryConditionColumn: static::PRIMARY_CONDITION_COLUMN,
-            primaryConditionValue: static::PRIMARY_CONDITION_VALUE,
+            primaryColumn: static::PRIMARY_CONDITION_COLUMN,
+            primaryValue: static::PRIMARY_CONDITION_VALUE,
         );
 
         $this->assertCount(2, $expectedUserData);

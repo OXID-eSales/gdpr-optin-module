@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GdprOptinModule\UserData\Infrastructure;
 
+use Doctrine\DBAL\ForwardCompatibility\Result;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 
 class UserDataRepository implements UserDataRepositoryInterface
@@ -26,7 +27,10 @@ class UserDataRepository implements UserDataRepositoryInterface
             ->where($columnName . ' = :' . $columnName)
             ->setParameter($columnName, $columnValue);
 
-        return $queryBuilder->execute()->fetchAllAssociative();
+        /** @var Result $result */
+        $result = $queryBuilder->execute();
+
+        return $result->fetchAllAssociative();
     }
 
     public function getJoinedData(
@@ -34,16 +38,19 @@ class UserDataRepository implements UserDataRepositoryInterface
         string $primaryKey,
         string $foreignTable,
         string $foreignKey,
-        string $primaryConditionColumn,
-        string $primaryConditionValue
+        string $primaryColumn,
+        string $primaryValue
     ): array {
         $queryBuilder = $this->queryBuilderFactory->create();
         $queryBuilder->select('*')
             ->from($primaryTable)
             ->innerJoin($primaryTable, $foreignTable, 'ft', "ft.{$foreignKey} = {$primaryTable}.{$primaryKey}")
-            ->where($primaryTable . '.' . $primaryConditionColumn . ' = :' . $primaryConditionColumn)
-            ->setParameter($primaryConditionColumn, $primaryConditionValue);
+            ->where($primaryTable . '.' . $primaryColumn . ' = :' . $primaryColumn)
+            ->setParameter($primaryColumn, $primaryValue);
 
-        return $queryBuilder->execute()->fetchAllAssociative();
+        /** @var Result $result */
+        $result = $queryBuilder->execute();
+
+        return $result->fetchAllAssociative();
     }
 }

@@ -29,7 +29,7 @@ class BaseTableDataCollectorTest extends BaseTestCase
         );
 
         $sut = new $class($userDataRepositoryMock);
-        $actualResult = $sut->collect($columnValue);
+        $actualResult = $sut->collect(recordId: $columnValue);
 
         $this->assertCount(2, $expectedUserData);
         $this->assertSame($expectedUserData, $actualResult);

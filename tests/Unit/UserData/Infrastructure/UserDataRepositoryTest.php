@@ -46,8 +46,8 @@ final class UserDataRepositoryTest extends TestCase
             primaryKey: 'primaryKey',
             foreignTable: 'foreignTable',
             foreignKey: 'foreignKey',
-            primaryConditionColumn: 'primaryKey',
-            primaryConditionValue: uniqid()
+            primaryColumn: 'primaryKey',
+            primaryValue: uniqid()
         );
 
         $this->assertSame($expectedData, $actualResult);

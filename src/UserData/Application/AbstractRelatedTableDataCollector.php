@@ -25,16 +25,16 @@ abstract class AbstractRelatedTableDataCollector implements RelatedTableDataColl
     public function collectRelatedData(
         string $primaryTable,
         string $primaryKey,
-        string $primaryConditionColumn,
-        string $primaryConditionValue
+        string $primaryColumn,
+        string $primaryValue
     ): array {
         return $this->repository->getJoinedData(
             $primaryTable,
             $primaryKey,
             $this->getTableName(),
             $this->getColumnName(),
-            $primaryConditionColumn,
-            $primaryConditionValue
+            $primaryColumn,
+            $primaryValue
         );
     }
 }

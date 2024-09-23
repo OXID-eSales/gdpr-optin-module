@@ -22,12 +22,12 @@ final class AbstractTableDataCollectorTest extends BaseTestCase
 
     public function testCollectReturnsExpectedTableData(): void
     {
-        $userId = uniqid();
+        $recordId = uniqid();
         $expectedData = $this->expectedUserData();
         $userDataRepositoryMock = $this->createUserDataRepositoryMock(
             expectedUserData: $expectedData,
             method: 'getDataFromTable',
-            withParams: [static::TABLE_NAME, static::COLUMN_NAME, $userId],
+            withParams: [static::TABLE_NAME, static::COLUMN_NAME, $recordId],
         );
 
         $sut = new class ($userDataRepositoryMock) extends AbstractTableDataCollector {
@@ -42,7 +42,7 @@ final class AbstractTableDataCollectorTest extends BaseTestCase
             }
         };
 
-        $result = $sut->collect($userId);
+        $result = $sut->collect(recordId: $recordId);
         $this->assertSame($expectedData, $result);
     }
 }
