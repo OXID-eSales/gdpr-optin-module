@@ -12,7 +12,7 @@ namespace OxidEsales\GdprOptinModule\UserData\Service;
 use OxidEsales\GdprOptinModule\UserData\DataType\ResultFileInterface;
 use OxidEsales\GdprOptinModule\UserData\DataType\TableCollectionInterface;
 
-interface CollectionSerializerInterface
+interface CollectionSerializerServiceInterface
 {
     public function serializeCollection(TableCollectionInterface $data): ResultFileInterface;
 }

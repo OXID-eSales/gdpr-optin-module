@@ -204,3 +204,6 @@ services:
     class: OxidEsales\GdprOptinModule\UserData\Service\CollectionAggregationService
     arguments:
       $collectors: !tagged oe.gdpr.user_data
+
+  OxidEsales\GdprOptinModule\UserData\Service\CollectionSerializerServiceInterface:
+    class: OxidEsales\GdprOptinModule\UserData\Service\JsonCollectionSerializerService
