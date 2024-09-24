@@ -7,6 +7,7 @@ services:
   OxidEsales\GdprOptinModule\UserData\AddressTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
     arguments:
+      $collection: 'Addresses'
       $selectionTable: 'oxaddress'
       $filterColumn: 'OXUSERID'
     tags:
@@ -16,6 +17,7 @@ services:
   OxidEsales\GdprOptinModule\UserData\OrderTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
     arguments:
+      $collection: 'Orders'
       $selectionTable: 'oxorder'
       $filterColumn: 'OXUSERID'
     tags:
@@ -24,6 +26,7 @@ services:
   OxidEsales\GdprOptinModule\UserData\OrderArticlesTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\RelatedTableDataSelector
     arguments:
+      $collection: 'Orders'
       $primaryTable: 'oxorder'
       $selectionTable: 'oxorderarticles'
       $relationCondition: 'oxorder.OXID = oxorderarticles.OXORDERID'
@@ -34,6 +37,7 @@ services:
   OxidEsales\GdprOptinModule\UserData\OrderFilesTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\RelatedTableDataSelector
     arguments:
+      $collection: 'Orders'
       $primaryTable: 'oxorder'
       $selectionTable: 'oxorderfiles'
       $relationCondition: 'oxorder.OXID = oxorderarticles.OXORDERID'
@@ -45,6 +49,7 @@ services:
   OxidEsales\GdprOptinModule\UserData\AdminLogTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
     arguments:
+      $collection: 'Logs'
       $selectionTable: 'oxadminlog'
       $filterColumn: 'OXUSERID'
     tags:
@@ -54,6 +59,7 @@ services:
   OxidEsales\GdprOptinModule\UserData\BasketTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
     arguments:
+      $collection: 'Baskets'
       $selectionTable: 'oxuserbaskets'
       $filterColumn: 'OXUSERID'
     tags:
@@ -62,6 +68,7 @@ services:
   OxidEsales\GdprOptinModule\UserData\BasketItemsTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\RelatedTableDataSelector
     arguments:
+      $collection: 'Baskets'
       $primaryTable: 'oxuserbaskets'
       $selectionTable: 'oxuserbasketitems'
       $relationCondition: 'oxuserbaskets.OXID = oxuserbasketitems.OXBASKETID'
@@ -73,6 +80,7 @@ services:
   OxidEsales\GdprOptinModule\UserData\NewsSubscribedTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
     arguments:
+      $collection: 'Newsletters'
       $selectionTable: 'oxnewssubscribed'
       $filterColumn: 'OXUSERID'
     tags:
@@ -82,6 +90,7 @@ services:
   OxidEsales\GdprOptinModule\UserData\PriceAlarmTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
     arguments:
+      $collection: 'PriceAlarm'
       $selectionTable: 'oxpricealarm'
       $filterColumn: 'OXUSERID'
     tags:
@@ -91,6 +100,7 @@ services:
   OxidEsales\GdprOptinModule\UserData\RatingTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
     arguments:
+      $collection: 'Ratings'
       $selectionTable: 'oxratings'
       $filterColumn: 'OXUSERID'
     tags:
@@ -100,6 +110,7 @@ services:
   OxidEsales\GdprOptinModule\UserData\RecommendationListTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
     arguments:
+      $collection: 'Recommendations'
       $selectionTable: 'oxrecommlists'
       $filterColumn: 'OXUSERID'
     tags:
@@ -109,6 +120,7 @@ services:
   OxidEsales\GdprOptinModule\UserData\RemarkTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
     arguments:
+      $collection: 'Remarks'
       $selectionTable: 'oxremark'
       $filterColumn: 'OXUSERID'
     tags:
@@ -118,6 +130,7 @@ services:
   OxidEsales\GdprOptinModule\UserData\ReviewsTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
     arguments:
+      $collection: 'Reviews'
       $selectionTable: 'oxreviews'
       $filterColumn: 'OXUSERID'
     tags:
@@ -127,6 +140,7 @@ services:
   OxidEsales\GdprOptinModule\UserData\UserTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
     arguments:
+      $collection: 'Users'
       $selectionTable: 'oxuser'
       $filterColumn: 'OXUSERID'
     tags:
@@ -135,6 +149,7 @@ services:
   OxidEsales\GdprOptinModule\UserData\UserObjectToGroupTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\RelatedTableDataSelector
     arguments:
+      $collection: 'Users'
       $primaryTable: 'oxuser'
       $selectionTable: 'oxobject2group'
       $relationCondition: 'oxuser.OXID = oxobject2group.OXOBJECTID'
@@ -145,6 +160,7 @@ services:
   OxidEsales\GdprOptinModule\UserData\UserObjectToPaymentTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\RelatedTableDataSelector
     arguments:
+      $collection: 'Users'
       $primaryTable: 'oxuser'
       $selectionTable: 'oxobject2payment'
       $relationCondition: 'oxuser.OXID = oxobject2payment.OXOBJECTID'
@@ -155,6 +171,7 @@ services:
   OxidEsales\GdprOptinModule\UserData\UserObjectToRoleTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\RelatedTableDataSelector
     arguments:
+      $collection: 'Users'
       $primaryTable: 'oxuser'
       $selectionTable: 'oxobject2role'
       $relationCondition: 'oxuser.OXID = oxobject2role.OXOBJECTID'
@@ -166,6 +183,7 @@ services:
   OxidEsales\GdprOptinModule\UserData\VouchersTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
     arguments:
+      $collection: 'Vouchers'
       $selectionTable: 'oxvouchers'
       $filterColumn: 'OXUSERID'
     tags:
@@ -174,9 +192,15 @@ services:
   OxidEsales\GdprOptinModule\UserData\VoucherSeriesTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\RelatedTableDataSelector
     arguments:
+      $collection: 'Vouchers'
       $primaryTable: 'oxvouchers'
       $selectionTable: 'oxvoucherseries'
       $relationCondition: 'oxvouchers.OXID = oxvoucherseries.OXSERIENR'
       $filterColumn: 'oxvouchers.OXUSERID'
     tags:
       - { name: 'oe.gdpr.user_data' }
+
+  OxidEsales\GdprOptinModule\UserData\Service\CollectionAggregationServiceInterface:
+    class: OxidEsales\GdprOptinModule\UserData\Service\CollectionAggregationService
+    arguments:
+      $collectors: !tagged oe.gdpr.user_data

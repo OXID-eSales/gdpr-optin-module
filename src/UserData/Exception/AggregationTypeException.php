@@ -7,9 +7,8 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GdprOptinModule\UserData\Service;
+namespace OxidEsales\GdprOptinModule\UserData\Exception;
 
-interface DataSerializerInterface
+class AggregationTypeException extends \Exception
 {
-    public function serialize(array $data): string;
 }

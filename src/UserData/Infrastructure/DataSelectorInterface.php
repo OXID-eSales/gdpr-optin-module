@@ -9,5 +9,12 @@ namespace OxidEsales\GdprOptinModule\UserData\Infrastructure;
 
 interface DataSelectorInterface
 {
+    public function getCollection(): string;
+
+    public function getSelectionTable(): string;
+
+    /**
+     * @return array<array<string, string>>
+     */
     public function getDataForColumnValue(string $columnValue): array;
 }

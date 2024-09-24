@@ -45,6 +45,7 @@ class RelatedTableDataSelectorTest extends IntegrationTestCase
     public function testSelectorSelectsDataFromTableFilteredByColumnValue(): void
     {
         $sut = new RelatedTableDataSelector(
+            collection: $collectionName = uniqid(),
             primaryTable: 'oxorder',
             selectionTable: 'oxorderfiles',
             relationCondition: 'oxorderfiles.OXORDERID = oxorder.OXID',
@@ -56,5 +57,8 @@ class RelatedTableDataSelectorTest extends IntegrationTestCase
 
         $orderFile = $result[0];
         $this->assertSame('example_filename.txt', $orderFile['OXFILENAME']);
+
+        $this->assertSame($collectionName, $sut->getCollection());
+        $this->assertSame('oxorderfiles', $sut->getSelectionTable());
     }
 }
