@@ -200,7 +200,7 @@ services:
     tags:
       - { name: 'oe.gdpr.user_data' }
 
-  OxidEsales\GdprOptinModule\UserData\Service\UserDataAggregationServiceInterface:
-    class: OxidEsales\GdprOptinModule\UserData\Service\UserDataAggregationService
+  OxidEsales\GdprOptinModule\UserData\Service\CollectionAggregationServiceInterface:
+    class: OxidEsales\GdprOptinModule\UserData\Service\CollectionAggregationService
     arguments:
       $collectors: !tagged oe.gdpr.user_data

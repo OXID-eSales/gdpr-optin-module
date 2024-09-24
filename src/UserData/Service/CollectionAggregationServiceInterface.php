@@ -9,7 +9,12 @@ declare(strict_types=1);
 
 namespace OxidEsales\GdprOptinModule\UserData\Service;
 
-interface UserDataAggregationServiceInterface
+use OxidEsales\GdprOptinModule\UserData\DataType\TableCollectionInterface;
+
+interface CollectionAggregationServiceInterface
 {
+    /**
+     * @return array<TableCollectionInterface>
+     */
     public function collectUserData(string $userId): array;
 }
