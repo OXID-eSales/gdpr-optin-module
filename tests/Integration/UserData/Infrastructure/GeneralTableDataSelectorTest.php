@@ -33,6 +33,7 @@ class GeneralTableDataSelectorTest extends IntegrationTestCase
     public function testSelectorSelectsDataFromTableFilteredByColumnValue(): void
     {
         $sut = new GeneralTableDataSelector(
+            collection: $collectionName = uniqid(),
             selectionTable: 'oxuser',
             filterColumn: 'oxuser.OXID',
             queryBuilderFactory: $this->get(QueryBuilderFactoryInterface::class)
@@ -43,5 +44,8 @@ class GeneralTableDataSelectorTest extends IntegrationTestCase
         $user = $result[0];
         $this->assertSame(self::USER_ID, $user['OXID']);
         $this->assertSame('example_user', $user['OXUSERNAME']);
+
+        $this->assertSame($collectionName, $sut->getCollection());
+        $this->assertSame('oxuser', $sut->getSelectionTable());
     }
 }

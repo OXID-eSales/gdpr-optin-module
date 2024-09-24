@@ -15,12 +15,23 @@ use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInt
 class RelatedTableDataSelector implements DataSelectorInterface
 {
     public function __construct(
+        private string $collection,
         private string $primaryTable,
         private string $selectionTable,
         private string $relationCondition,
         private string $filterColumn,
         private QueryBuilderFactoryInterface $queryBuilderFactory,
     ) {
+    }
+
+    public function getCollection(): string
+    {
+        return $this->collection;
+    }
+
+    public function getSelectionTable(): string
+    {
+        return $this->selectionTable;
     }
 
     public function getDataForColumnValue(string $columnValue): array
@@ -33,7 +44,7 @@ class RelatedTableDataSelector implements DataSelectorInterface
             ->setParameter('filterValue', $columnValue);
 
         /** @var Result $result */
-        $result = $queryBuilder->execute();
+        $result = $queryBuilder->execute(); /** @phpstan-ignore missingType.iterableValue */
 
         return $result->fetchAllAssociative();
     }

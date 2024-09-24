@@ -7,6 +7,7 @@ services:
   address_table_data_selector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
     arguments:
+      $collection: 'Addresses'
       $selectionTable: 'oxaddress'
       $filterColumn: 'OXUSERID'
     tags:
@@ -16,6 +17,7 @@ services:
   order_table_data_selector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
     arguments:
+      $collection: 'Orders'
       $selectionTable: 'oxorder'
       $filterColumn: 'OXUSERID'
     tags:
@@ -24,6 +26,7 @@ services:
   order_articles_table_data_selector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\RelatedTableDataSelector
     arguments:
+      $collection: 'Orders'
       $primaryTable: 'oxorder'
       $selectionTable: 'oxorderarticles'
       $relationCondition: 'oxorder.OXID = oxorderarticles.OXORDERID'
@@ -34,6 +37,7 @@ services:
   order_files_table_data_selector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\RelatedTableDataSelector
     arguments:
+      $collection: 'Orders'
       $primaryTable: 'oxorder'
       $selectionTable: 'oxorderfiles'
       $relationCondition: 'oxorder.OXID = oxorderarticles.OXORDERID'
@@ -45,6 +49,7 @@ services:
   adminlog_table_data_selector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
     arguments:
+      $collection: 'Logs'
       $selectionTable: 'oxadminlog'
       $filterColumn: 'OXUSERID'
     tags:
@@ -54,6 +59,7 @@ services:
   basket_table_data_selector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
     arguments:
+      $collection: 'Baskets'
       $selectionTable: 'oxuserbaskets'
       $filterColumn: 'OXUSERID'
     tags:
@@ -62,6 +68,7 @@ services:
   basket_items_table_data_selector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\RelatedTableDataSelector
     arguments:
+      $collection: 'Baskets'
       $primaryTable: 'oxuserbaskets'
       $selectionTable: 'oxuserbasketitems'
       $relationCondition: 'oxuserbaskets.OXID = oxuserbasketitems.OXBASKETID'
@@ -73,6 +80,7 @@ services:
   news_subscribed_table_data_selector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
     arguments:
+      $collection: 'Newsletters'
       $selectionTable: 'oxnewssubscribed'
       $filterColumn: 'OXUSERID'
     tags:
@@ -82,6 +90,7 @@ services:
   price_alarm_table_data_selector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
     arguments:
+      $collection: 'PriceAlarm'
       $selectionTable: 'oxpricealarm'
       $filterColumn: 'OXUSERID'
     tags:
@@ -91,6 +100,7 @@ services:
   rating_table_data_selector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
     arguments:
+      $collection: 'Ratings'
       $selectionTable: 'oxratings'
       $filterColumn: 'OXUSERID'
     tags:
@@ -100,6 +110,7 @@ services:
   recommendation_list_table_data_selector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
     arguments:
+      $collection: 'Recommendations'
       $selectionTable: 'oxrecommlists'
       $filterColumn: 'OXUSERID'
     tags:
@@ -109,6 +120,7 @@ services:
   remark_table_data_selector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
     arguments:
+      $collection: 'Remarks'
       $selectionTable: 'oxremark'
       $filterColumn: 'OXUSERID'
     tags:
@@ -118,6 +130,7 @@ services:
   reviews_table_data_selector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
     arguments:
+      $collection: 'Reviews'
       $selectionTable: 'oxreviews'
       $filterColumn: 'OXUSERID'
     tags:
@@ -127,6 +140,7 @@ services:
   user_table_data_selector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
     arguments:
+      $collection: 'Users'
       $selectionTable: 'oxuser'
       $filterColumn: 'OXUSERID'
     tags:
@@ -135,6 +149,7 @@ services:
   user_object_to_group_table_data_selector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\RelatedTableDataSelector
     arguments:
+      $collection: 'Users'
       $primaryTable: 'oxuser'
       $selectionTable: 'oxobject2group'
       $relationCondition: 'oxuser.OXID = oxobject2group.OXOBJECTID'
@@ -145,6 +160,7 @@ services:
   user_object_to_payment_table_data_selector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\RelatedTableDataSelector
     arguments:
+      $collection: 'Users'
       $primaryTable: 'oxuser'
       $selectionTable: 'oxobject2payment'
       $relationCondition: 'oxuser.OXID = oxobject2payment.OXOBJECTID'
@@ -155,6 +171,7 @@ services:
   user_object_to_role_table_data_selector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\RelatedTableDataSelector
     arguments:
+      $collection: 'Users'
       $primaryTable: 'oxuser'
       $selectionTable: 'oxobject2role'
       $relationCondition: 'oxuser.OXID = oxobject2role.OXOBJECTID'
@@ -166,6 +183,7 @@ services:
   vouchers_table_data_selector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
     arguments:
+      $collection: 'Vouchers'
       $selectionTable: 'oxvouchers'
       $filterColumn: 'OXUSERID'
     tags:
@@ -174,6 +192,7 @@ services:
   voucher_series_table_data_selector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\RelatedTableDataSelector
     arguments:
+      $collection: 'Vouchers'
       $primaryTable: 'oxvouchers'
       $selectionTable: 'oxvoucherseries'
       $relationCondition: 'oxvouchers.OXID = oxvoucherseries.OXSERIENR'
