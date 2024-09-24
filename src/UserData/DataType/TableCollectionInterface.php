@@ -12,7 +12,7 @@ interface TableCollectionInterface
     public function getCollectionName(): string;
 
     /**
-     * @return array<array<string, string>>
+     * @return array<string, array<array<string, string>>>
      */
     public function getCollection(): array;
 }
