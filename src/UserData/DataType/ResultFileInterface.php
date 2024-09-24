@@ -9,7 +9,7 @@ namespace OxidEsales\GdprOptinModule\UserData\DataType;
 
 interface ResultFileInterface
 {
-    public function getFilename(): string;
+    public function getFileName(): string;
 
     public function getContent(): string;
 }
