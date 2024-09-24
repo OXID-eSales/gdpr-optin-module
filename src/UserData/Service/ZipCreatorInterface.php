@@ -9,7 +9,12 @@ declare(strict_types=1);
 
 namespace OxidEsales\GdprOptinModule\UserData\Service;
 
+use OxidEsales\GdprOptinModule\UserData\DataType\ResultFileInterface;
+
 interface ZipCreatorInterface
 {
-    public function createZip(array $files, string $outputPath): string;
+    /**
+     * @param array<ResultFileInterface> $files
+     */
+    public function createZip(array $files, string $outputFilePath): void;
 }
