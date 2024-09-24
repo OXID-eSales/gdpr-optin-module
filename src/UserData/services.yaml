@@ -4,7 +4,7 @@ services:
     public: false
 
   # User address data
-  address_table_data_selector:
+  OxidEsales\GdprOptinModule\UserData\AddressTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
     arguments:
       $selectionTable: 'oxaddress'
@@ -13,7 +13,7 @@ services:
       - { name: 'oe.gdpr.user_data' }
 
   # User order data
-  order_table_data_selector:
+  OxidEsales\GdprOptinModule\UserData\OrderTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
     arguments:
       $selectionTable: 'oxorder'
@@ -21,7 +21,7 @@ services:
     tags:
       - { name: 'oe.gdpr.user_data' }
 
-  order_articles_table_data_selector:
+  OxidEsales\GdprOptinModule\UserData\OrderArticlesTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\RelatedTableDataSelector
     arguments:
       $primaryTable: 'oxorder'
@@ -31,7 +31,7 @@ services:
     tags:
       - { name: 'oe.gdpr.user_data' }
 
-  order_files_table_data_selector:
+  OxidEsales\GdprOptinModule\UserData\OrderFilesTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\RelatedTableDataSelector
     arguments:
       $primaryTable: 'oxorder'
@@ -42,7 +42,7 @@ services:
       - { name: 'oe.gdpr.user_data' }
 
   # Admin log service
-  adminlog_table_data_selector:
+  OxidEsales\GdprOptinModule\UserData\AdminLogTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
     arguments:
       $selectionTable: 'oxadminlog'
@@ -51,7 +51,7 @@ services:
       - { name: 'oe.gdpr.user_data' }
 
   # Basket services
-  basket_table_data_selector:
+  OxidEsales\GdprOptinModule\UserData\BasketTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
     arguments:
       $selectionTable: 'oxuserbaskets'
@@ -59,7 +59,7 @@ services:
     tags:
       - { name: 'oe.gdpr.user_data' }
 
-  basket_items_table_data_selector:
+  OxidEsales\GdprOptinModule\UserData\BasketItemsTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\RelatedTableDataSelector
     arguments:
       $primaryTable: 'oxuserbaskets'
@@ -70,7 +70,7 @@ services:
       - { name: 'oe.gdpr.user_data' }
 
   # Newsletter subscribed service
-  news_subscribed_table_data_selector:
+  OxidEsales\GdprOptinModule\UserData\NewsSubscribedTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
     arguments:
       $selectionTable: 'oxnewssubscribed'
@@ -79,7 +79,7 @@ services:
       - { name: 'oe.gdpr.user_data' }
 
   # Price alarm service
-  price_alarm_table_data_selector:
+  OxidEsales\GdprOptinModule\UserData\PriceAlarmTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
     arguments:
       $selectionTable: 'oxpricealarm'
@@ -88,7 +88,7 @@ services:
       - { name: 'oe.gdpr.user_data' }
 
   # Rating service
-  rating_table_data_selector:
+  OxidEsales\GdprOptinModule\UserData\RatingTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
     arguments:
       $selectionTable: 'oxratings'
@@ -97,7 +97,7 @@ services:
       - { name: 'oe.gdpr.user_data' }
 
   # Recommendation list service
-  recommendation_list_table_data_selector:
+  OxidEsales\GdprOptinModule\UserData\RecommendationListTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
     arguments:
       $selectionTable: 'oxrecommlists'
@@ -106,7 +106,7 @@ services:
       - { name: 'oe.gdpr.user_data' }
 
   # Remark service
-  remark_table_data_selector:
+  OxidEsales\GdprOptinModule\UserData\RemarkTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
     arguments:
       $selectionTable: 'oxremark'
@@ -115,7 +115,7 @@ services:
       - { name: 'oe.gdpr.user_data' }
 
   # Reviews service
-  reviews_table_data_selector:
+  OxidEsales\GdprOptinModule\UserData\ReviewsTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
     arguments:
       $selectionTable: 'oxreviews'
@@ -124,7 +124,7 @@ services:
       - { name: 'oe.gdpr.user_data' }
 
   # User data services
-  user_table_data_selector:
+  OxidEsales\GdprOptinModule\UserData\UserTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
     arguments:
       $selectionTable: 'oxuser'
@@ -132,7 +132,7 @@ services:
     tags:
       - { name: 'oe.gdpr.user_data' }
 
-  user_object_to_group_table_data_selector:
+  OxidEsales\GdprOptinModule\UserData\UserObjectToGroupTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\RelatedTableDataSelector
     arguments:
       $primaryTable: 'oxuser'
@@ -142,7 +142,7 @@ services:
     tags:
       - { name: 'oe.gdpr.user_data' }
 
-  user_object_to_payment_table_data_selector:
+  OxidEsales\GdprOptinModule\UserData\UserObjectToPaymentTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\RelatedTableDataSelector
     arguments:
       $primaryTable: 'oxuser'
@@ -152,7 +152,7 @@ services:
     tags:
       - { name: 'oe.gdpr.user_data' }
 
-  user_object_to_role_table_data_selector:
+  OxidEsales\GdprOptinModule\UserData\UserObjectToRoleTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\RelatedTableDataSelector
     arguments:
       $primaryTable: 'oxuser'
@@ -163,7 +163,7 @@ services:
       - { name: 'oe.gdpr.user_data' }
 
   # Vouches service
-  vouchers_table_data_selector:
+  OxidEsales\GdprOptinModule\UserData\VouchersTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
     arguments:
       $selectionTable: 'oxvouchers'
@@ -171,7 +171,7 @@ services:
     tags:
       - { name: 'oe.gdpr.user_data' }
 
-  voucher_series_table_data_selector:
+  OxidEsales\GdprOptinModule\UserData\VoucherSeriesTableDataSelector:
     class: OxidEsales\GdprOptinModule\UserData\Infrastructure\RelatedTableDataSelector
     arguments:
       $primaryTable: 'oxvouchers'
