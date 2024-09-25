@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GdprOptinModule\UserData\Service;
 
-interface FileDownloadInterface
+interface UserDataFileDownloadServiceInterface
 {
     public function downloadFile(string $filePath): void;
 }
