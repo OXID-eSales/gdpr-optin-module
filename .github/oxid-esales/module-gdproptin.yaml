@@ -1,6 +1,3 @@
-# {{ $name := "gdpr-optin-module" }}name: {{ print $name }}
-# {{ $order := "01" }}order: {{ print $order }}
-
 install:
   method: 'script'
   copy_script_targets: |
