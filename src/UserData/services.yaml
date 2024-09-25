@@ -207,3 +207,7 @@ services:
 
   OxidEsales\GdprOptinModule\UserData\Service\CollectionSerializerServiceInterface:
     class: OxidEsales\GdprOptinModule\UserData\Service\JsonCollectionSerializerService
+
+# Cannot be added while ZipCreatorInterface not available yet
+#  OxidEsales\GdprOptinModule\UserData\Service\UserDataExportServiceInterface:
+#    class: OxidEsales\GdprOptinModule\UserData\Service\UserDataExportService
