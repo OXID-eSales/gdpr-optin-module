@@ -211,3 +211,11 @@ services:
 # Cannot be added while ZipCreatorInterface not available yet
 #  OxidEsales\GdprOptinModule\UserData\Service\UserDataExportServiceInterface:
 #    class: OxidEsales\GdprOptinModule\UserData\Service\UserDataExportService
+
+  OxidEsales\GdprOptinModule\UserData\Service\ZipArchive:
+    class: ZipArchive
+
+  OxidEsales\GdprOptinModule\UserData\Service\ZipCreatorServiceInterface:
+    class: OxidEsales\GdprOptinModule\UserData\Service\ZipCreatorService
+    arguments:
+      - '@OxidEsales\GdprOptinModule\UserData\Service\ZipArchive'
