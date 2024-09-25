@@ -9,7 +9,7 @@ on:
 
 jobs:
   module-gdproptin_php82_mysql80:
-    uses: oxid-eSales/github-actions/.github/workflows/call-universal_test_workflow.yaml@v4
+    uses: oxid-eSales/github-actions/.github/workflows/universal_workflow_light.yaml@v4
     with:
       testplan: '~/defaults/7.1.x.yaml,~/module-gdproptin.yaml'
       runs_on: '"ubuntu-latest"'
