@@ -58,6 +58,7 @@ runscript:
     early: skip
   gdpr_module:
     path: 'vendor/oxid-esales/gdpr-optin-module'
+    workdir: 'vendor/oxid-esales/gdpr-optin-module'
 
 runslim:
   matrix:
