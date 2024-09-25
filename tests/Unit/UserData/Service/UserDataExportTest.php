@@ -40,7 +40,7 @@ class UserDataExportTest extends TestCase
         $collectionSerializerServiceMock->expects($matcher = $this->exactly(2))
             ->method('serializeCollection')
             ->willReturnCallback(function (TableDataCollectionInterface $tableCollection)
-            use ($matcher, $tableCollection1Stub, $tableCollection2Stub, $resultFile1, $resultFile2) {
+ use ($matcher, $tableCollection1Stub, $tableCollection2Stub, $resultFile1, $resultFile2) {
                 match ($matcher->numberOfInvocations()) {
                     1 => $this->assertEquals($tableCollection1Stub, $tableCollection),
                     2 => $this->assertEquals($tableCollection2Stub, $tableCollection),
