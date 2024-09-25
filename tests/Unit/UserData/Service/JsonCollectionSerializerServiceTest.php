@@ -20,8 +20,10 @@ final class JsonCollectionSerializerServiceTest extends TestCase
     {
         $expectedCollectionName = uniqid();
         $expectedCollection = [
-            ['OXID' => uniqid(), 'OXDELFNAME' => uniqid(), 'OXDELLNAME' => uniqid()],
-            ['OXID' => uniqid(), 'OXDELFNAME' => uniqid(), 'OXDELLNAME' => uniqid()]
+            'table1' => [
+                ['OXID' => uniqid(), 'OXDELFNAME' => uniqid(), 'OXDELLNAME' => uniqid()],
+                ['OXID' => uniqid(), 'OXDELFNAME' => uniqid(), 'OXDELLNAME' => uniqid()]
+            ]
         ];
 
         $tableCollectionMock = $this->createConfiguredMock(TableCollectionInterface::class, [
@@ -46,13 +48,11 @@ final class JsonCollectionSerializerServiceTest extends TestCase
 
         $tableCollectionMock = $this->createConfiguredMock(TableCollectionInterface::class, [
             'getCollection' => $invalidCollection,
-            'getCollectionName' => uniqid(),
         ]);
 
         $sut = new JsonCollectionSerializerService();
 
         $this->expectException(JsonSerializationException::class);
-
         $sut->serializeCollection($tableCollectionMock);
     }
 }

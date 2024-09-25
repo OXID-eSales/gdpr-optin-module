@@ -21,7 +21,7 @@ final class ResultFileTest extends TestCase
 
         $sut = new ResultFile(fileName: $expectedFileName, content: $expectedFileContent);
 
-        $this->assertSame($expectedFileName, $sut->getFilename());
+        $this->assertSame($expectedFileName, $sut->getFileName());
         $this->assertSame($expectedFileContent, $sut->getContent());
     }
 }
