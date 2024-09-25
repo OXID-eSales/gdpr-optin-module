@@ -61,9 +61,9 @@ runslim:
   matrix:
     script: |
       [
-        "gdpr_module:phpcs -d /var/www/vendor/oxid-esales/gdpr-optin-module",
-        "gdpr_module:phpstan -d /var/www/vendor/oxid-esales/gdpr-optin-module",
-        "gdpr_module:phpmd -d /var/www/vendor/oxid-esales/gdpr-optin-module"
+        "gdpr_module:phpcs-report -d /var/www/vendor/oxid-esales/gdpr-optin-module",
+        "gdpr_module:phpstan-report -d /var/www/vendor/oxid-esales/gdpr-optin-module",
+        "gdpr_module:phpmd-report -d /var/www/vendor/oxid-esales/gdpr-optin-module"
       ]
 
 sonarcloud:
