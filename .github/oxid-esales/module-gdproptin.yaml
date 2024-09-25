@@ -75,7 +75,7 @@ sonarcloud:
   matrix:
     testplan: '["-"]'
   project_key: 'OXID-eSales_gdpr-optin-module'
-  project_name: *package_name
+  project_name: 'oxid-esales/gdpr-optin-module'
   parameters: |
     -Dsonar.language=php
     -Dsonar.scm.provider=git
