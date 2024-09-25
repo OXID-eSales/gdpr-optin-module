@@ -37,7 +37,7 @@ install:
   activate_modules:
     oegdproptin
 
-runscript:
+runscript: &runscript
   matrix:
     script: |
       [
@@ -58,6 +58,7 @@ runscript:
     workdir: 'vendor/oxid-esales/gdpr-optin-module'
 
 runslim:
+  <<: *runscript
   matrix:
     script: |
       [
