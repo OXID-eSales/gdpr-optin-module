@@ -14,7 +14,7 @@ class UserDataExportService implements UserDataExportServiceInterface
     public function __construct(
         private CollectionAggregationServiceInterface $collectionAggregationService,
         private CollectionSerializerServiceInterface $collectionSerializerService,
-        private ZipCreatorInterface $zipCreatorService,
+        private ZipCreatorServiceInterface $zipCreatorService,
     ) {
     }
 

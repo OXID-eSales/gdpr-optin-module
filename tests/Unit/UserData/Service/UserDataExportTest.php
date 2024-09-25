@@ -15,7 +15,7 @@ use OxidEsales\GdprOptinModule\UserData\Service\CollectionAggregationServiceInte
 use OxidEsales\GdprOptinModule\UserData\Service\CollectionSerializerServiceInterface;
 use OxidEsales\GdprOptinModule\UserData\Service\UserDataExportService;
 use OxidEsales\GdprOptinModule\UserData\Service\UserDataExportServiceInterface;
-use OxidEsales\GdprOptinModule\UserData\Service\ZipCreatorInterface;
+use OxidEsales\GdprOptinModule\UserData\Service\ZipCreatorServiceInterface;
 use PHPUnit\Framework\TestCase;
 
 class UserDataExportTest extends TestCase
@@ -54,7 +54,7 @@ class UserDataExportTest extends TestCase
             });
 
         // Step3: zip creation
-        $zipCreatorServiceSpy = $this->createMock(ZipCreatorInterface::class);
+        $zipCreatorServiceSpy = $this->createMock(ZipCreatorServiceInterface::class);
         $zipCreatorServiceSpy->expects($this->once())
             ->method('createZip')
             ->with([$resultFile1, $resultFile2], $outputZipFilePath);
@@ -71,7 +71,7 @@ class UserDataExportTest extends TestCase
     public function getSut(
         CollectionAggregationServiceInterface $collectionAggregationService = null,
         CollectionSerializerServiceInterface $collectionSerializerService = null,
-        ZipCreatorInterface $zipCreatorService = null,
+        ZipCreatorServiceInterface $zipCreatorService = null,
     ): UserDataExportServiceInterface {
         $collectionAggregationService ??= $this->createStub(CollectionAggregationServiceInterface::class);
         $collectionSerializerService ??= $this->createStub(CollectionSerializerServiceInterface::class);
@@ -79,7 +79,7 @@ class UserDataExportTest extends TestCase
         return new UserDataExportService(
             collectionAggregationService: $collectionAggregationService,
             collectionSerializerService: $collectionSerializerService,
-            zipCreatorService: $zipCreatorService ?? $this->createStub(ZipCreatorInterface::class),
+            zipCreatorService: $zipCreatorService ?? $this->createStub(ZipCreatorServiceInterface::class),
         );
     }
 }
