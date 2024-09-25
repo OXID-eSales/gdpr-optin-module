@@ -41,9 +41,6 @@ runscript:
   matrix:
     script: |
       [
-        "gdpr_module:~/unit.sh",
-        "gdpr_module:~/integration.sh",
-        "gdpr_module:~/codeception.sh",
         "gdpr_module:tests-unit -d /var/www/vendor/oxid-esales/gdpr-optin-module",
         "gdpr_module:tests-integration -d /var/www/vendor/oxid-esales/gdpr-optin-module",
         "gdpr_module:tests-codeception -d /var/www/vendor/oxid-esales/gdpr-optin-module"
@@ -64,12 +61,9 @@ runslim:
   matrix:
     script: |
       [
-        "gdpr_module:~/php-cs-report.sh",
-        "gdpr_module:~/phpstan-report.sh",
-        "gdpr_module:~/phpmd-report.sh",
-        "gdpr_module:phpcs",
-        "gdpr_module:phpstan",
-        "gdpr_module:phpmd"
+        "gdpr_module:phpcs -d /var/www/vendor/oxid-esales/gdpr-optin-module",
+        "gdpr_module:phpstan -d /var/www/vendor/oxid-esales/gdpr-optin-module",
+        "gdpr_module:phpmd -d /var/www/vendor/oxid-esales/gdpr-optin-module"
       ]
 
 sonarcloud:
