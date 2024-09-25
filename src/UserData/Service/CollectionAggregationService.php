@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace OxidEsales\GdprOptinModule\UserData\Service;
 
-use OxidEsales\GdprOptinModule\UserData\DataType\TableCollection;
-use OxidEsales\GdprOptinModule\UserData\DataType\TableCollectionInterface;
+use OxidEsales\GdprOptinModule\UserData\DataType\TableDataCollection;
+use OxidEsales\GdprOptinModule\UserData\DataType\TableDataCollectionInterface;
 use OxidEsales\GdprOptinModule\UserData\Exception\AggregationTypeException;
 use OxidEsales\GdprOptinModule\UserData\Infrastructure\DataSelectorInterface;
 
@@ -35,7 +35,7 @@ class CollectionAggregationService implements CollectionAggregationServiceInterf
     }
 
     /**
-     * @return array<TableCollectionInterface>
+     * @return array<TableDataCollectionInterface>
      */
     public function collectUserData(string $userId): array
     {
@@ -46,7 +46,7 @@ class CollectionAggregationService implements CollectionAggregationServiceInterf
             foreach ($collectors as $oneCollector) {
                 $collectionData[$oneCollector->getSelectionTable()] = $oneCollector->getDataForColumnValue($userId);
             }
-            $resultCollections[] = new TableCollection($collectionName, $collectionData);
+            $resultCollections[] = new TableDataCollection($collectionName, $collectionData);
         }
 
         return $resultCollections;

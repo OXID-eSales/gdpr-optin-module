@@ -11,12 +11,12 @@ namespace OxidEsales\GdprOptinModule\UserData\Service;
 
 use OxidEsales\GdprOptinModule\UserData\DataType\ResultFile;
 use OxidEsales\GdprOptinModule\UserData\DataType\ResultFileInterface;
-use OxidEsales\GdprOptinModule\UserData\DataType\TableCollectionInterface;
+use OxidEsales\GdprOptinModule\UserData\DataType\TableDataCollectionInterface;
 use OxidEsales\GdprOptinModule\UserData\Exception\JsonSerializationException;
 
 class JsonCollectionSerializerService implements CollectionSerializerServiceInterface
 {
-    public function serializeCollection(TableCollectionInterface $data): ResultFileInterface
+    public function serializeCollection(TableDataCollectionInterface $data): ResultFileInterface
     {
         $jsonData = json_encode($data->getCollection());
 

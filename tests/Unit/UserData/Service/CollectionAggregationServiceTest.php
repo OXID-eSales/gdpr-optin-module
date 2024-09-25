@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GdprOptinModule\Tests\Unit\UserData\Service;
 
-use OxidEsales\GdprOptinModule\UserData\DataType\TableCollection;
+use OxidEsales\GdprOptinModule\UserData\DataType\TableDataCollection;
 use OxidEsales\GdprOptinModule\UserData\Exception\AggregationTypeException;
 use OxidEsales\GdprOptinModule\UserData\Infrastructure\DataSelectorInterface;
 use OxidEsales\GdprOptinModule\UserData\Service\CollectionAggregationService;
@@ -69,10 +69,10 @@ final class CollectionAggregationServiceTest extends TestCase
 
         $this->assertEquals(
             [
-                new TableCollection($collection2, [
+                new TableDataCollection($collection2, [
                     $collector1Table => $collection1Data
                 ]),
-                new TableCollection($collection1, [
+                new TableDataCollection($collection1, [
                     $collector2Table => $collection2Data,
                     $collector3Table => $collection3Data
                 ]),

@@ -7,7 +7,7 @@
 
 namespace OxidEsales\GdprOptinModule\Tests\Unit\UserData\DataType;
 
-use OxidEsales\GdprOptinModule\UserData\DataType\TableCollection;
+use OxidEsales\GdprOptinModule\UserData\DataType\TableDataCollection;
 use PHPUnit\Framework\TestCase;
 
 class TableCollectionTest extends TestCase
@@ -26,7 +26,7 @@ class TableCollectionTest extends TestCase
             ],
         ];
 
-        $sut = new TableCollection($collectionName, $dataCollection);
+        $sut = new TableDataCollection($collectionName, $dataCollection);
 
         $this->assertEquals($collectionName, $sut->getCollectionName());
         $this->assertEquals($dataCollection, $sut->getCollection());

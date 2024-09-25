@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GdprOptinModule\UserData\DataType;
 
-class TableCollection implements TableCollectionInterface
+class TableDataCollection implements TableDataCollectionInterface
 {
     /**
      * @param array<string, array<array<string, string>>> $dataCollection

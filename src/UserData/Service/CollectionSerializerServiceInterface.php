@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GdprOptinModule\UserData\Service;
 
 use OxidEsales\GdprOptinModule\UserData\DataType\ResultFileInterface;
-use OxidEsales\GdprOptinModule\UserData\DataType\TableCollectionInterface;
+use OxidEsales\GdprOptinModule\UserData\DataType\TableDataCollectionInterface;
 use OxidEsales\GdprOptinModule\UserData\Exception\JsonSerializationException;
 
 interface CollectionSerializerServiceInterface
@@ -18,5 +18,5 @@ interface CollectionSerializerServiceInterface
     /**
      * @throws JsonSerializationException
      */
-    public function serializeCollection(TableCollectionInterface $data): ResultFileInterface;
+    public function serializeCollection(TableDataCollectionInterface $data): ResultFileInterface;
 }

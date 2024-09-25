@@ -7,7 +7,7 @@
 
 namespace OxidEsales\GdprOptinModule\UserData\DataType;
 
-interface TableCollectionInterface
+interface TableDataCollectionInterface
 {
     public function getCollectionName(): string;
 
