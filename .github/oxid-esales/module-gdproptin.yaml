@@ -44,9 +44,9 @@ runscript:
         "gdpr_module:~/unit.sh",
         "gdpr_module:~/integration.sh",
         "gdpr_module:~/codeception.sh",
-        "gdpr_module:tests-unit",
-        "gdpr_module:tests-integration",
-        "gdpr_module:tests-codeception"
+        "gdpr_module:tests-unit -d /var/www/vendor/oxid-esales/gdpr-optin-module",
+        "gdpr_module:tests-integration -d /var/www/vendor/oxid-esales/gdpr-optin-module",
+        "gdpr_module:tests-codeception -d /var/www/vendor/oxid-esales/gdpr-optin-module"
       ]
   container:
     options: '-e XDEBUG_MODE=coverage -e THEME_ID=apex'
