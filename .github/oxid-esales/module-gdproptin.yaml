@@ -1,76 +1,82 @@
-# {{ $ids := "oegdproptin" }}ids: {{ print $ids }}
-# {{ $org := "oxid-esales" }}organisation: {{ print $org }}
-# {{ $name := "gdpr-optin-module" }}name: {{ print $name }}
-# {{ $order := "01" }}order: {{ print $order }}
-prepare_shop:
-  git:
-    shop_ref: '{{ .Data.global.git.default_ref }}'
-
-install_module:
-  matrix:
-    testplan: '["-"]'
-  title: '{{ print $name }}-{{ print $order }}'
+install:
+  method: 'script'
+  copy_script_targets: |
+    vendor/oxid-esales/gdpr-optin-module/tests/scripts
   cache:
-    prefix: &install_module_prefix 'moduleInstallation-ce-{{ .Github.SHA }}-{{ .Github.RunID }}'
-  ids: &ids '{{ print $ids }}'
-  activate: *ids
-  git:
-    module:
-      url: &git_module_url '{{ .Github.Repository }}'
-      ref: '{{ .Github.RefName }}'
-  package_name: &package_name '{{ print $org }}/{{ print $name }}'
-  path: *ids
-
-phpunit:
-  matrix:
-    testplan: '["~/defaults/module_phpunit_unit.yaml","~/defaults/module_phpunit_integration.yaml"]'
-  load_shop: *install_module_prefix
-
-codeception:
-  matrix:
-    testplan: '["-"]'
-  load_shop: *install_module_prefix
-  title: '{{ print $name }}-{{ print $order }}'
+    prepared_shop: false
   container:
-    options: '-e SELENIUM_SERVER_HOST=selenium -e BROWSER_NAME=chrome -e XDEBUG_MODE=coverage -e THEME_ID=apex'
-  configuration: '/var/www/vendor/oxid-esales/gdpr-optin-module/tests/codeception.yml'
-  suite: 'Acceptance'
-  additional_options: '--coverage-xml=/var/www/codeception_coverage.xml'
-  logfile:
-    prefix: 'codeception'
-  output:
-    prefix: 'codeception-artifacts'
-  coverage:
-    path: 'source/codeception_coverage.xml'
+    options: '-e ESHOP_BOOTSTRAP_PATH=vendor/oxid-esales/oxideshop-ce/source/bootstrap.php'
+  composer:
+    transform: |
+      {
+          "minimum-stability": "dev",
+          "preferred-install": {
+              "oxid-esales/*": "source"
+          },
+          "require": {
+              "oxid-esales/oxideshop-ce": "{{ .Data.global.composer.dev_ref }}",
+              "oxid-esales/twig-component": "{{ .Data.global.composer.dev_ref }}",
+              "oxid-esales/twig-admin-theme": "{{ .Data.global.composer.dev_ref }}",
+              "oxid-esales/apex-theme": "{{ .Data.global.composer.dev_ref }}",
+              "oxid-esales/gdpr-optin-module": "{{ .Data.global.composer.ref_name }}"
+          },
+          "require-dev": {
+              "phpstan/phpstan": "^1.8.11",
+              "squizlabs/php_codesniffer": "3.*",
+              "phpmd/phpmd": "^2.11",
+              "phpunit/phpunit": "^10.5",
+              "codeception/codeception": "*",
+              "codeception/module-asserts": "*",
+              "codeception/module-db": "*",
+              "codeception/module-filesystem": "*",
+              "codeception/module-webdriver": "*",
+              "oxid-esales/codeception-modules": "dev-b-7.1.x",
+              "oxid-esales/codeception-page-objects": "dev-b-7.1.x"
+          }
+      }
+  activate_modules:
+    oegdproptin
 
-runtest:
+runscript: &runscript
   matrix:
-    testplan: 'skip'
-  title: '{{ print $name }}-{{ print $order }}'
-  load_shop: *install_module_prefix
+    script: |
+      [
+        "gdpr_module:tests-unit -d /var/www/vendor/oxid-esales/gdpr-optin-module",
+        "gdpr_module:tests-integration -d /var/www/vendor/oxid-esales/gdpr-optin-module",
+        "gdpr_module:tests-codeception -d /var/www/vendor/oxid-esales/gdpr-optin-module"
+      ]
+  container:
+    options: '-e XDEBUG_MODE=coverage -e THEME_ID=apex'
+    custom_script: |
+     perl -pi \
+          -e 's#views/twig#views/apex#g;' \
+          source/vendor/oxid-esales/gdpr-optin-module/tests/Codeception/acceptance.suite.yml
+  composer:
+    early: skip
+  gdpr_module:
+    path: 'vendor/oxid-esales/gdpr-optin-module'
+    workdir: 'vendor/oxid-esales/gdpr-optin-module'
+
+runslim:
+  <<: *runscript
+  matrix:
+    script: |
+      [
+        "gdpr_module:phpcs-report -d /var/www/vendor/oxid-esales/gdpr-optin-module",
+        "gdpr_module:phpstan-report -d /var/www/vendor/oxid-esales/gdpr-optin-module",
+        "gdpr_module:phpmd-report -d /var/www/vendor/oxid-esales/gdpr-optin-module"
+      ]
 
 sonarcloud:
   matrix:
     testplan: '["-"]'
-  title: '{{ print $name }}-{{ print $order }}'
-  project_key: 'OXID-eSales_{{ print $name }}'
-  project_name: *package_name
+  project_key: 'OXID-eSales_gdpr-optin-module'
+  project_name: 'oxid-esales/gdpr-optin-module'
   parameters: |
     -Dsonar.language=php
     -Dsonar.scm.provider=git
     -Dsonar.sources=src
     -Dsonar.tests=tests
 
-phpcs_tests:
-  skip: true
-
-styles:
-  matrix:
-    testplan: '["-"]'
-  title: '{{ print $name }}-{{ print $order }}'
-  load_shop: *install_module_prefix
-  path: *ids
-  module_ids: *ids
-
 finish:
-  slack_title: 'Module {{ print $name }} ({{ .Github.RefName }}) on {{ .Github.Repository }} by {{ .Github.Actor }}'
+  slack_title: 'gdpr-optin-module ({{ .Github.RefName }}) on {{ .Github.Repository }} by {{ .Github.Actor }}'
