@@ -2,6 +2,8 @@ services:
   _defaults:
     autowire: true
     public: false
+    bind:
+      OxidEsales\Eshop\Core\Utils: '@=service("OxidEsales\\GdprOptinModule\\Core\\Registry").getUtils()'
 
   # User address data
   OxidEsales\GdprOptinModule\UserData\AddressTableDataSelector:
@@ -211,3 +213,6 @@ services:
 # Cannot be added while ZipCreatorInterface not available yet
 #  OxidEsales\GdprOptinModule\UserData\Service\UserDataExportServiceInterface:
 #    class: OxidEsales\GdprOptinModule\UserData\Service\UserDataExportService
+
+  OxidEsales\GdprOptinModule\UserData\Service\UserDataFileDownloadServiceInterface:
+    class: OxidEsales\GdprOptinModule\UserData\Service\UserDataFileDownloadService
