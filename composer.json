@@ -27,7 +27,7 @@
     "codeception/module-asserts": "^3.0",
     "codeception/module-db": "^3.0",
     "codeception/module-filesystem": "^3.0",
-    "codeception/module-webdriver": "^3.1",
+    "codeception/module-webdriver": "^4.0",
     "oxid-esales/codeception-modules": "dev-b-7.2.x",
     "oxid-esales/codeception-page-objects": "dev-b-7.2.x",
     "oxid-esales/developer-tools": "dev-b-7.2.x"
@@ -64,11 +64,12 @@
     ],
 
     "phpunit": "vendor/bin/phpunit --bootstrap=/var/www/source/bootstrap.php --config=tests/",
-    "phpunit-coverage": "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-text --bootstrap=/var/www/source/bootstrap.php --config=tests/ --coverage-html=tests/reports/coverage",
+    "phpunit-coverage": "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-text --bootstrap=/var/www/source/bootstrap.php --config=tests/ --coverage-html=tests/Reports/CoverageHtml",
+    "phpunit-clover": "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-text --coverage-clover=tests/Reports/coverage.xml --bootstrap=/var/www/source/bootstrap.php --config=tests/",
 
     "codeception": [
       "Composer\\Config::disableProcessTimeout",
-      "THEME_ID=apex MODULE_IDS=oegdproptin /var/www/vendor/bin/codecept run Acceptance -c /var/www/vendor/oxid-esales/gdpr-optin-module/tests/codeception.yml --no-redirect"
+      "THEME_ID=apex MODULE_IDS=oegdproptin vendor/bin/codecept run Acceptance -c tests/codeception.yml --no-redirect"
     ]
   },
   "config": {
