@@ -9,13 +9,10 @@ declare(strict_types=1);
 
 namespace OxidEsales\GdprOptinModule\UserData\Service;
 
-use OxidEsales\GdprOptinModule\UserData\Exception\ZipCreationException;
-use ZipArchive;
-
 class ZipCreatorService implements ZipCreatorServiceInterface
 {
     public function __construct(
-        private ZipArchive $zipArchive
+        private ZipArchiveFactoryInterface $zipArchiveFactory
     ) {
     }
 
@@ -24,16 +21,12 @@ class ZipCreatorService implements ZipCreatorServiceInterface
      */
     public function createZip(array $files, string $outputFilePath): void
     {
-        if ($this->zipArchive->open($outputFilePath, ZipArchive::CREATE) !== true) {
-            throw new ZipCreationException("Unable to open zip file at {$outputFilePath}");
-        }
+        $zipArchive = $this->zipArchiveFactory->create($outputFilePath);
 
         foreach ($files as $file) {
-            $fileName = $file->getFileName();
-            $fileContent = $file->getContent();
-            $this->zipArchive->addFromString($fileName, $fileContent);
+            $zipArchive->addFromString($file->getFileName(), $file->getContent());
         }
 
-        $this->zipArchive->close();
+        $zipArchive->close();
     }
 }
