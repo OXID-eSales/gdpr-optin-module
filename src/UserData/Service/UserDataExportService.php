@@ -12,8 +12,7 @@ namespace OxidEsales\GdprOptinModule\UserData\Service;
 class UserDataExportService implements UserDataExportServiceInterface
 {
     public function __construct(
-        private CollectionAggregationServiceInterface $collectionAggregationService,
-        private CollectionSerializerServiceInterface $collectionSerializerService,
+        private UserDataCollectionServiceInterface $userDataCollectionService,
         private ZipCreatorInterface $zipCreatorService,
     ) {
     }
@@ -25,13 +24,7 @@ class UserDataExportService implements UserDataExportServiceInterface
      */
     public function exportUserData(string $userId, string $outputZipFilePath): void
     {
-        $tableDataCollections = $this->collectionAggregationService->collectUserData($userId);
-
-        $serializedFiles = [];
-        foreach ($tableDataCollections as $oneTableDataCollection) {
-            $serializedFiles[] = $this->collectionSerializerService->serializeCollection($oneTableDataCollection);
-        }
-
+        $serializedFiles = $this->userDataCollectionService->getUserDataAsFilesList($userId);
         $this->zipCreatorService->createZip($serializedFiles, $outputZipFilePath);
     }
 }

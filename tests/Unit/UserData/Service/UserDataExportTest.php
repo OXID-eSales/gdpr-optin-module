@@ -10,9 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GdprOptinModule\Tests\Unit\UserData\Service;
 
 use OxidEsales\GdprOptinModule\UserData\DataType\ResultFileInterface;
-use OxidEsales\GdprOptinModule\UserData\DataType\TableDataCollectionInterface;
-use OxidEsales\GdprOptinModule\UserData\Service\CollectionAggregationServiceInterface;
-use OxidEsales\GdprOptinModule\UserData\Service\CollectionSerializerServiceInterface;
+use OxidEsales\GdprOptinModule\UserData\Service\UserDataCollectionServiceInterface;
 use OxidEsales\GdprOptinModule\UserData\Service\UserDataExportService;
 use OxidEsales\GdprOptinModule\UserData\Service\UserDataExportServiceInterface;
 use OxidEsales\GdprOptinModule\UserData\Service\ZipCreatorInterface;
@@ -25,43 +23,23 @@ class UserDataExportTest extends TestCase
         $userId = uniqid();
         $outputZipFilePath = uniqid();
 
-        // Step1: data collection
-        $collectionAggregationServiceMock = $this->createMock(CollectionAggregationServiceInterface::class);
-        $collectionAggregationServiceMock->method('collectUserData')
-            ->with($userId)->willReturn([
-                $tableCollection1Stub = $this->createStub(TableDataCollectionInterface::class),
-                $tableCollection2Stub = $this->createStub(TableDataCollectionInterface::class),
-            ]);
+        $filesListExample = [
+            $this->createStub(ResultFileInterface::class),
+            $this->createStub(ResultFileInterface::class),
+        ];
 
-        // Step2: data serialization
-        $collectionSerializerServiceMock = $this->createMock(CollectionSerializerServiceInterface::class);
-        $resultFile1 = $this->createStub(ResultFileInterface::class);
-        $resultFile2 = $this->createStub(ResultFileInterface::class);
-        $collectionSerializerServiceMock->expects($matcher = $this->exactly(2))
-            ->method('serializeCollection')
-            ->willReturnCallback(function (TableDataCollectionInterface $tableCollection)
- use ($matcher, $tableCollection1Stub, $tableCollection2Stub, $resultFile1, $resultFile2) {
-                match ($matcher->numberOfInvocations()) {
-                    1 => $this->assertEquals($tableCollection1Stub, $tableCollection),
-                    2 => $this->assertEquals($tableCollection2Stub, $tableCollection),
-                };
+        $userDataCollectionServiceMock = $this->createMock(UserDataCollectionServiceInterface::class);
+        $userDataCollectionServiceMock->method('getUserDataAsFilesList')
+            ->with($userId)
+            ->willReturn($filesListExample);
 
-                return match ($matcher->numberOfInvocations()) {
-                    1 => $resultFile1,
-                    2 => $resultFile2,
-                    default => throw new \Exception('Unexpected match value'),
-                };
-            });
-
-        // Step3: zip creation
         $zipCreatorServiceSpy = $this->createMock(ZipCreatorInterface::class);
         $zipCreatorServiceSpy->expects($this->once())
             ->method('createZip')
-            ->with([$resultFile1, $resultFile2], $outputZipFilePath);
+            ->with($filesListExample, $outputZipFilePath);
 
         $sut = $this->getSut(
-            collectionAggregationService: $collectionAggregationServiceMock,
-            collectionSerializerService: $collectionSerializerServiceMock,
+            userDataCollectionService: $userDataCollectionServiceMock,
             zipCreatorService: $zipCreatorServiceSpy,
         );
 
@@ -69,17 +47,15 @@ class UserDataExportTest extends TestCase
     }
 
     public function getSut(
-        CollectionAggregationServiceInterface $collectionAggregationService = null,
-        CollectionSerializerServiceInterface $collectionSerializerService = null,
-        ZipCreatorInterface $zipCreatorService = null,
+        ?UserDataCollectionServiceInterface $userDataCollectionService,
+        ?ZipCreatorInterface $zipCreatorService,
     ): UserDataExportServiceInterface {
-        $collectionAggregationService ??= $this->createStub(CollectionAggregationServiceInterface::class);
-        $collectionSerializerService ??= $this->createStub(CollectionSerializerServiceInterface::class);
+        $userDataCollectionService ??= $this->createStub(UserDataCollectionServiceInterface::class);
+        $zipCreatorService ??= $this->createStub(ZipCreatorInterface::class);
 
         return new UserDataExportService(
-            collectionAggregationService: $collectionAggregationService,
-            collectionSerializerService: $collectionSerializerService,
-            zipCreatorService: $zipCreatorService ?? $this->createStub(ZipCreatorInterface::class),
+            userDataCollectionService: $userDataCollectionService,
+            zipCreatorService: $zipCreatorService,
         );
     }
 }
