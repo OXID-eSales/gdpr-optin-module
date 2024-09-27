@@ -11,7 +11,7 @@ namespace OxidEsales\GdprOptinModule\UserData\Service;
 
 use OxidEsales\GdprOptinModule\UserData\DataType\ResultFileInterface;
 
-interface ZipCreatorInterface
+interface ZipCreatorServiceInterface
 {
     /**
      * @param array<ResultFileInterface> $files

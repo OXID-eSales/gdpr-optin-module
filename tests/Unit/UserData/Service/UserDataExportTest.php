@@ -13,7 +13,7 @@ use OxidEsales\GdprOptinModule\UserData\DataType\ResultFileInterface;
 use OxidEsales\GdprOptinModule\UserData\Service\UserDataCollectionServiceInterface;
 use OxidEsales\GdprOptinModule\UserData\Service\UserDataExportService;
 use OxidEsales\GdprOptinModule\UserData\Service\UserDataExportServiceInterface;
-use OxidEsales\GdprOptinModule\UserData\Service\ZipCreatorInterface;
+use OxidEsales\GdprOptinModule\UserData\Service\ZipCreatorServiceInterface;
 use PHPUnit\Framework\TestCase;
 
 class UserDataExportTest extends TestCase
@@ -33,7 +33,7 @@ class UserDataExportTest extends TestCase
             ->with($userId)
             ->willReturn($filesListExample);
 
-        $zipCreatorServiceSpy = $this->createMock(ZipCreatorInterface::class);
+        $zipCreatorServiceSpy = $this->createMock(ZipCreatorServiceInterface::class);
         $zipCreatorServiceSpy->expects($this->once())
             ->method('createZip')
             ->with($filesListExample, $outputZipFilePath);
@@ -48,10 +48,10 @@ class UserDataExportTest extends TestCase
 
     public function getSut(
         ?UserDataCollectionServiceInterface $userDataCollectionService,
-        ?ZipCreatorInterface $zipCreatorService,
+        ?ZipCreatorServiceInterface $zipCreatorService,
     ): UserDataExportServiceInterface {
         $userDataCollectionService ??= $this->createStub(UserDataCollectionServiceInterface::class);
-        $zipCreatorService ??= $this->createStub(ZipCreatorInterface::class);
+        $zipCreatorService ??= $this->createStub(ZipCreatorServiceInterface::class);
 
         return new UserDataExportService(
             userDataCollectionService: $userDataCollectionService,

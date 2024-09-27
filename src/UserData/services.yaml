@@ -213,9 +213,14 @@ services:
   OxidEsales\GdprOptinModule\UserData\Service\UserDataCollectionServiceInterface:
     class: OxidEsales\GdprOptinModule\UserData\Service\UserDataCollectionService
 
-# Cannot be added while ZipCreatorInterface not available yet
-#  OxidEsales\GdprOptinModule\UserData\Service\UserDataExportServiceInterface:
-#    class: OxidEsales\GdprOptinModule\UserData\Service\UserDataExportService
-
   OxidEsales\GdprOptinModule\UserData\Service\UserDataFileDownloadServiceInterface:
     class: OxidEsales\GdprOptinModule\UserData\Service\UserDataFileDownloadService
+
+  OxidEsales\GdprOptinModule\UserData\Service\UserDataExportServiceInterface:
+    class: OxidEsales\GdprOptinModule\UserData\Service\UserDataExportService
+
+  OxidEsales\GdprOptinModule\UserData\Service\ZipArchiveFactoryInterface:
+    class: OxidEsales\GdprOptinModule\UserData\Service\ZipArchiveFactory
+
+  OxidEsales\GdprOptinModule\UserData\Service\ZipCreatorServiceInterface:
+    class: OxidEsales\GdprOptinModule\UserData\Service\ZipCreatorService

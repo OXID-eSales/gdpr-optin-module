@@ -13,7 +13,7 @@ class UserDataExportService implements UserDataExportServiceInterface
 {
     public function __construct(
         private UserDataCollectionServiceInterface $userDataCollectionService,
-        private ZipCreatorInterface $zipCreatorService,
+        private ZipCreatorServiceInterface $zipCreatorService,
     ) {
     }
 
