@@ -19,16 +19,27 @@ class ZipCreatorServiceTest extends TestCase
 {
     public function testZipCreation(): void
     {
-        $fileName = uniqid();
-        $fileContent = uniqid();
+        $fileName1 = uniqid() . '.txt';
+        $fileContent1 = uniqid();
+
+        $fileName2 = uniqid() . '.txt';
+        $fileContent2 = uniqid();
 
         $zipArchiveMock = $this->createMock(ZipArchive::class);
-        $zipArchiveMock
+        $zipArchiveMock->expects($this->exactly(2))
             ->method('addFromString')
-            ->with($fileName, $fileContent)
-            ->willReturn(true);
+            ->willReturnCallback(
+                function ($fileName, $fileContent) use ($fileName1, $fileContent1, $fileName2, $fileContent2) {
+                    return match ([$fileName, $fileContent]) {
+                        [$fileName1, $fileContent1] => true,
+                        [$fileName2, $fileContent2] => true,
+                        default => throw new \Exception("Unexpected arguments passed to addFromString")
+                    };
+                }
+            );
 
         $zipArchiveMock
+            ->expects($this->once())
             ->method('close')
             ->willReturn(true);
 
@@ -41,11 +52,16 @@ class ZipCreatorServiceTest extends TestCase
 
         $sut = new ZipCreatorService(zipArchiveFactory: $zipArchiveFactoryMock);
 
-        $resultFileMock = $this->createConfiguredMock(ResultFileInterface::class, [
-            'getFileName' => $fileName,
-            'getContent' => $fileContent,
+        $resultFileMock1 = $this->createConfiguredMock(ResultFileInterface::class, [
+            'getFileName' => $fileName1,
+            'getContent' => $fileContent1,
         ]);
 
-        $sut->createZip(files: [$resultFileMock], outputFilePath: $zipFileName);
+        $resultFileMock2 = $this->createConfiguredMock(ResultFileInterface::class, [
+            'getFileName' => $fileName2,
+            'getContent' => $fileContent2,
+        ]);
+
+        $sut->createZip(files: [$resultFileMock1, $resultFileMock2], outputFilePath: $zipFileName);
     }
 }
