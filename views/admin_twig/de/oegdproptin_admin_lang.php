@@ -35,4 +35,6 @@ $aLang = [
     'SHOP_MODULE_OeGdprOptinContactFormMethod' => '', // right side of the inputs, if some notes will be needed
     'SHOP_MODULE_OeGdprOptinContactFormMethod_deletion' => 'Hinweis auf Löschen der Daten nach Verarbeitung anzeigen',
     'SHOP_MODULE_OeGdprOptinContactFormMethod_statistical' => 'Opt-in für Verarbeitung und statistische Verwendung der Daten anzeigen',
+
+	'SHOP_MODULE_oegdproptin_export_label' => 'Benutzerdaten exportieren',
 ];
