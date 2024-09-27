@@ -19,6 +19,7 @@ $php = (getenv('PHPBIN')) ? getenv('PHPBIN') : 'php';
 return [
     'SHOP_URL' => $facts->getShopUrl(),
     'SHOP_SOURCE_PATH' => $facts->getSourcePath(),
+    'SOURCE_RELATIVE_PACKAGE_PATH' => getSourceRelativePackagePath($facts),
     'VENDOR_PATH' => $facts->getVendorPath(),
     'DB_NAME' => $facts->getDatabaseName(),
     'DB_USERNAME' => $facts->getDatabaseUserName(),
@@ -34,6 +35,11 @@ return [
     'BROWSER_NAME' => getenv('BROWSER_NAME') ?: 'chrome',
     'PHP_BIN' => $php,
 ];
+
+function getSourceRelativePackagePath(Facts $facts): string
+{
+    return str_replace($facts->getShopRootPath(), '..', __DIR__) . '/../../../';
+}
 
 function getTestDataDumpFilePath(): string
 {
