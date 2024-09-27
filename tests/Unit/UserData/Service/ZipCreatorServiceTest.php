@@ -17,7 +17,7 @@ use ZipArchive;
 
 class ZipCreatorServiceTest extends TestCase
 {
-    public function testZipCreation(): void
+    public function testZipCreationAddsFilesAndFinalizesTheArchive(): void
     {
         $fileName1 = uniqid() . '.txt';
         $fileContent1 = uniqid();
@@ -25,8 +25,8 @@ class ZipCreatorServiceTest extends TestCase
         $fileName2 = uniqid() . '.txt';
         $fileContent2 = uniqid();
 
-        $zipArchiveMock = $this->createMock(ZipArchive::class);
-        $zipArchiveMock->expects($this->exactly(2))
+        $zipArchiveSpy = $this->createMock(ZipArchive::class);
+        $zipArchiveSpy->expects($this->exactly(2))
             ->method('addFromString')
             ->willReturnCallback(
                 function ($fileName, $fileContent) use ($fileName1, $fileContent1, $fileName2, $fileContent2) {
@@ -38,17 +38,16 @@ class ZipCreatorServiceTest extends TestCase
                 }
             );
 
-        $zipArchiveMock
+        $zipArchiveSpy
             ->expects($this->once())
-            ->method('close')
-            ->willReturn(true);
+            ->method('close');
 
         $zipFileName = 'output/test.zip';
         $zipArchiveFactoryMock = $this->createMock(ZipArchiveFactoryInterface::class);
         $zipArchiveFactoryMock
             ->method('create')
             ->with($zipFileName)
-            ->willReturn($zipArchiveMock);
+            ->willReturn($zipArchiveSpy);
 
         $sut = new ZipCreatorService(zipArchiveFactory: $zipArchiveFactoryMock);
 
