@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GdprOptinModule\Tests\Unit\Service;
+namespace OxidEsales\GdprOptinModule\Tests\Unit\UserData\Service;
 
 use org\bovigo\vfs\vfsStream;
 use OxidEsales\Eshop\Core\Utils;
@@ -54,7 +54,7 @@ class UserDataFileDownloadServiceTest extends TestCase
         $shopUtilsSpy->expects($this->atLeastOnce())
             ->method('showMessageAndExit')->with($fileContent);
 
-        $sut = new \OxidEsales\GdprOptinModule\UserData\Service\UserDataFileDownloadService(
+        $sut = new UserDataFileDownloadService(
             shopUtils: $shopUtilsSpy
         );
         $sut->downloadFile($filePath);
