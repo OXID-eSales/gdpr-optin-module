@@ -14,17 +14,16 @@ class UserDataExportService implements UserDataExportServiceInterface
     public function __construct(
         private UserDataCollectionServiceInterface $userDataCollectionService,
         private ZipCreatorServiceInterface $zipCreatorService,
+        private UserDataFileDownloadServiceInterface $userDataFileDownloadService,
+        private string $userDataZipFilePath
     ) {
     }
 
-    /**
-     * collects data from CollectionAggregationService as array of Collections
-     * iterate through collections and serialize them to ResultFileInterfaces array
-     * give this array of ResultFileInterfaces to the ZipCreatorInterface
-     */
-    public function exportUserData(string $userId, string $outputZipFilePath): void
+    public function exportUserData(string $userId): void
     {
-        $serializedFiles = $this->userDataCollectionService->getUserDataAsFilesList($userId);
-        $this->zipCreatorService->createZip($serializedFiles, $outputZipFilePath);
+        $outputZipFilePath  = $this->userDataZipFilePath . '/' . $userId . '.zip';
+        $serializedFiles = $this->userDataCollectionService->getUserDataAsFilesList(userId: $userId);
+        $this->zipCreatorService->createZip(files: $serializedFiles, outputFilePath: $outputZipFilePath);
+        $this->userDataFileDownloadService->downloadFile(filePath: $outputZipFilePath);
     }
 }

@@ -218,6 +218,9 @@ services:
 
   OxidEsales\GdprOptinModule\UserData\Service\UserDataExportServiceInterface:
     class: OxidEsales\GdprOptinModule\UserData\Service\UserDataExportService
+    public: true
+    arguments:
+      $userDataZipFilePath: '@=service("OxidEsales\\EshopCommunity\\Internal\\Transition\\Utility\\BasicContextInterface").getCacheDirectory()'
 
   OxidEsales\GdprOptinModule\UserData\Service\ZipArchiveFactoryInterface:
     class: OxidEsales\GdprOptinModule\UserData\Service\ZipArchiveFactory
