@@ -42,7 +42,7 @@ services:
       $collection: 'Orders'
       $primaryTable: 'oxorder'
       $selectionTable: 'oxorderfiles'
-      $relationCondition: 'oxorder.OXID = oxorderarticles.OXORDERID'
+      $relationCondition: 'oxorder.OXID = oxorderfiles.OXORDERID'
       $filterColumn: 'oxorder.OXUSERID'
     tags:
       - { name: 'oe.gdpr.user_data' }
@@ -124,7 +124,7 @@ services:
     arguments:
       $collection: 'Remarks'
       $selectionTable: 'oxremark'
-      $filterColumn: 'OXUSERID'
+      $filterColumn: 'OXPARENTID'
     tags:
       - { name: 'oe.gdpr.user_data' }
 
@@ -144,7 +144,7 @@ services:
     arguments:
       $collection: 'Users'
       $selectionTable: 'oxuser'
-      $filterColumn: 'OXUSERID'
+      $filterColumn: 'OXID'
     tags:
       - { name: 'oe.gdpr.user_data' }
 
@@ -155,7 +155,7 @@ services:
       $primaryTable: 'oxuser'
       $selectionTable: 'oxobject2group'
       $relationCondition: 'oxuser.OXID = oxobject2group.OXOBJECTID'
-      $filterColumn: 'oxuser.OXUSERID'
+      $filterColumn: 'oxuser.OXID'
     tags:
       - { name: 'oe.gdpr.user_data' }
 
