@@ -42,7 +42,7 @@ jobs:
                ;;
           esac
           # shellcheck disable=SC2088
-          TESTPLAN="~/defaults/7.2.x.yaml,${LIMIT}~/module-gdproptin.yaml,~/_custom.yaml"
+          TESTPLAN="~/defaults/8.0.x.yaml,${LIMIT}~/module-gdproptin.yaml,~/_custom.yaml"
           echo "testplan=${TESTPLAN}" | tee -a "${GITHUB_OUTPUT}"
   dispatch_stable:
     if: ${{ inputs.use_dev_version == 'no' }}
