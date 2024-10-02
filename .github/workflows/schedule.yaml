@@ -1,18 +1,18 @@
-name: Auto trigger on PR to 8.0.x*
+name: Scheduled weekly run
 
 on:
-  pull_request:
-    branches:
-      - 'b-8.0.x**'
+  schedule:
+    - cron: '0 4 */7 * *'
 
 jobs:
-  pull_module:
-    uses: oxid-eSales/github-actions/.github/workflows/call-universal_test_workflow.yml@v4
+  module_gdproptin_72x_nightly:
+    uses: oxid-eSales/github-actions/.github/workflows/universal_workflow_light.yaml@v4
     with:
-      testplan: '~/module-gdproptin.yml'
+      testplan: '~/defaults/7.2.x.yaml,~/defaults/scheduled.yaml,~/module-gdproptin.yaml,~/_custom.yaml'
       runs_on: '"ubuntu-latest"'
       defaults: 'v4'
       plan_folder: '.github/oxid-esales'
+      use_scheduled_slack_channel: true
     secrets:
       DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
       DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
@@ -22,3 +22,4 @@ jobs:
       enterprise_github_token: ${{ secrets.enterprise_github_token }}
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      SLACK_SCHEDULED_WEBHOOK_URL: ${{ secrets.SLACK_SCHEDULED_WEBHOOK_URL }}

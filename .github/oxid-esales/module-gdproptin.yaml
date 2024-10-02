@@ -1,0 +1,61 @@
+install:
+  cache:
+    prepared_shop: false
+  git:
+    repository: 'OXID-eSales/gdpr-optin-module'
+    ref: &ref '{{ .Github.RefName }}'
+    shop_url: 'https://github.com/OXID-eSales/gdpr-optin-module.git'
+    shop_ref: *ref
+  composer:
+    root_url: ''
+    transform: |
+      {
+          "require": {
+              "oxid-esales/oxideshop-ce": "{{ .Data.global.composer.dev_ref }}",
+              "oxid-esales/twig-admin-theme": "{{ .Data.global.composer.dev_ref }}",
+              "oxid-esales/twig-component": "{{ .Data.global.composer.dev_ref }}",
+              "oxid-esales/apex-theme": "{{ .Data.global.composer.dev_ref }}"
+          }
+      }
+  custom_script_container: |
+    vendor/bin/oe-console oe:database:reset --db-host=mysql --db-port=3306 --db-name=example --db-user=root --db-password=root --force
+    vendor/bin/oe-console oe:module:install ./
+    vendor/bin/oe-console oe:module:activate oegdproptin
+    vendor/bin/oe-console oe:theme:activate apex
+
+install_shop_with_modules:
+  composer:
+    root_url: ''
+
+runscript: &runscript
+  matrix:
+    script: |
+      [
+        "oegdproptin:phpunit-clover",
+        "oegdproptin:codeception",
+      ]
+  fa_invoice:
+    path: ''
+
+runslim:
+  <<: *runscript
+  matrix:
+    script: |
+      [
+        "oegdproptin:phpstan",
+        "oegdproptin:phpmd",
+        "oegdproptin:phpcs",
+      ]
+
+sonarcloud:
+  matrix:
+    testplan: '["-"]'
+  strip_path: '/var/www/'
+  project_name: 'oxid-esales/gdpr-optin-module'
+  project_key: 'OXID-eSales_gdpr-optin-module'
+  organization: 'oxid-esales'
+  parameters: |
+    -Dsonar.language=php
+    -Dsonar.scm.provider=git
+    -Dsonar.sources=src
+    -Dsonar.tests=tests

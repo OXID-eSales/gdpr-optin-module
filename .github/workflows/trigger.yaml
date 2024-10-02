@@ -1,15 +1,15 @@
-name: Auto trigger on Push to 7.1.x*
+name: Auto trigger on push or pull requests
+# Matrix workflow using re-usable github actions
 
 on:
-  push:
-    branches:
-      - 'b-7.1.x**'
+  pull_request: {}
+  push: {}
 
 jobs:
-  push_module:
-    uses: oxid-eSales/github-actions/.github/workflows/call-universal_test_workflow.yml@v4
+  module-gdproptin:
+    uses: oxid-eSales/github-actions/.github/workflows/universal_workflow_light.yaml@v4
     with:
-      testplan: '~/defaults/7.1.x.yml,~/module-gdproptin.yml'
+      testplan: '~/defaults/7.2.x.yaml,~/defaults/php8.2_mysql8.0_only.yaml,~/module-gdproptin.yaml,~/_custom.yaml'
       runs_on: '"ubuntu-latest"'
       defaults: 'v4'
       plan_folder: '.github/oxid-esales'

@@ -46,10 +46,10 @@ modules:
         shop_path: '%SHOP_SOURCE_PATH%'
         paths:
           - 'Application/views/apex'
-          - '../vendor/oxid-esales/gdpr-optin-module/translations'
+          - '%SOURCE_RELATIVE_PACKAGE_PATH%/translations'
         paths_admin:
           - 'Application/views/admin_twig'
-          - '../vendor/oxid-esales/gdpr-optin-module/views/admin_twig'
+          - '%SOURCE_RELATIVE_PACKAGE_PATH%/views/admin_twig'
     - \OxidEsales\Codeception\Module\OxideshopAdmin:
         screen_shot_url: '%SCREEN_SHOT_URL%'
         depends:
