@@ -37,12 +37,12 @@
   },
   "autoload": {
     "psr-4": {
-      "OxidEsales\\GdprOptinModule\\": "src/"
+      "OxidEsales\\GdprOptinModule\\": "src/",
+      "OxidEsales\\GdprOptinModule\\Tests\\": "tests/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "OxidEsales\\GdprOptinModule\\Tests\\": "tests/",
       "OxidEsales\\EshopCommunity\\Tests\\": "./vendor/oxid-esales/oxideshop-ce/tests"
     }
   },
