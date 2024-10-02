@@ -7,9 +7,9 @@ on:
 
 jobs:
   module-gdproptin:
-    uses: oxid-eSales/github-actions/.github/workflows/universal_workflow_light.yml@v4
+    uses: oxid-eSales/github-actions/.github/workflows/universal_workflow_light.yaml@v4
     with:
-      testplan: '~/defaults/7.2.x.yaml,~/defaults/php8.2_mysql8.0_only.yml,~/module-gdproptin.yaml,~/_custom.yml'
+      testplan: '~/defaults/7.2.x.yaml,~/defaults/php8.2_mysql8.0_only.yaml,~/module-gdproptin.yaml,~/_custom.yaml'
       runs_on: '"ubuntu-latest"'
       defaults: 'v4'
       plan_folder: '.github/oxid-esales'
