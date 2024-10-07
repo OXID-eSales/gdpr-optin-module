@@ -227,3 +227,7 @@ services:
 
   OxidEsales\GdprOptinModule\UserData\Service\ZipCreatorServiceInterface:
     class: OxidEsales\GdprOptinModule\UserData\Service\ZipCreatorService
+
+  OxidEsales\GdprOptinModule\UserData\Event\UserDataExportCleanupSubscriber:
+    class: OxidEsales\GdprOptinModule\UserData\Event\UserDataExportCleanupSubscriber
+    tags: [ 'kernel.event_subscriber' ]

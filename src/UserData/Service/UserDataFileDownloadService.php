@@ -10,12 +10,15 @@ declare(strict_types=1);
 namespace OxidEsales\GdprOptinModule\UserData\Service;
 
 use OxidEsales\Eshop\Core\Utils;
+use OxidEsales\GdprOptinModule\UserData\Event\UserDataExportCleanupEvent;
 use OxidEsales\GdprOptinModule\UserData\Exception\UserDataFileDownloadException;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class UserDataFileDownloadService implements UserDataFileDownloadServiceInterface
 {
     public function __construct(
-        private Utils $shopUtils
+        private Utils $shopUtils,
+        private EventDispatcherInterface $eventDispatcher
     ) {
     }
 
@@ -30,6 +33,10 @@ class UserDataFileDownloadService implements UserDataFileDownloadServiceInterfac
 
         /** @var string $fileContent */
         $fileContent = file_get_contents($filePath);
+
+        $event = new UserDataExportCleanupEvent($filePath);
+        $this->eventDispatcher->dispatch(event: $event);
+
         $this->shopUtils->showMessageAndExit($fileContent);
     }
 

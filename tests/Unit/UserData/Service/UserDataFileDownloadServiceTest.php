@@ -11,9 +11,12 @@ namespace OxidEsales\GdprOptinModule\Tests\Unit\UserData\Service;
 
 use org\bovigo\vfs\vfsStream;
 use OxidEsales\Eshop\Core\Utils;
+use OxidEsales\GdprOptinModule\UserData\Event\UserDataExportCleanupEvent;
 use OxidEsales\GdprOptinModule\UserData\Exception\UserDataFileDownloadException;
 use OxidEsales\GdprOptinModule\UserData\Service\UserDataFileDownloadService;
+use OxidEsales\GdprOptinModule\UserData\Service\UserDataFileDownloadServiceInterface;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class UserDataFileDownloadServiceTest extends TestCase
 {
@@ -36,9 +39,8 @@ class UserDataFileDownloadServiceTest extends TestCase
                 };
             });
 
-        $sut = new UserDataFileDownloadService(
-            shopUtils: $shopUtilsSpy
-        );
+        $sut = $this->getSut(shopUtils: $shopUtilsSpy);
+
         $sut->downloadFile($filePath);
     }
 
@@ -54,9 +56,8 @@ class UserDataFileDownloadServiceTest extends TestCase
         $shopUtilsSpy->expects($this->atLeastOnce())
             ->method('showMessageAndExit')->with($fileContent);
 
-        $sut = new UserDataFileDownloadService(
-            shopUtils: $shopUtilsSpy
-        );
+        $sut = $this->getSut(shopUtils: $shopUtilsSpy);
+
         $sut->downloadFile($filePath);
     }
 
@@ -65,9 +66,11 @@ class UserDataFileDownloadServiceTest extends TestCase
         $tempDirectory = vfsStream::setup('root', null, []);
         $filePath = $tempDirectory->url() . '/' . uniqid();
 
-        $sut = new UserDataFileDownloadService(
-            shopUtils: $this->createStub(Utils::class)
-        );
+        $eventDispatcherSpy = $this->createMock(EventDispatcherInterface::class);
+        $eventDispatcherSpy->expects($this->never())
+            ->method('dispatch');
+
+        $sut = $this->getSut(eventDispatcher: $eventDispatcherSpy);
 
         $this->expectException(UserDataFileDownloadException::class);
         $sut->downloadFile($filePath);
@@ -82,11 +85,51 @@ class UserDataFileDownloadServiceTest extends TestCase
         $filePath = $tempDirectory->url() . '/' . $fileName;
         chmod($filePath, 0000);
 
-        $sut = new UserDataFileDownloadService(
-            shopUtils: $this->createStub(Utils::class)
-        );
+        $eventDispatcherSpy = $this->createMock(EventDispatcherInterface::class);
+        $eventDispatcherSpy->expects($this->never())
+            ->method('dispatch');
+
+        $sut = $this->getSut(eventDispatcher: $eventDispatcherSpy);
 
         $this->expectException(UserDataFileDownloadException::class);
         $sut->downloadFile($filePath);
+    }
+
+    public function testEventDispatchTriggered(): void
+    {
+        $fileName = uniqid() . '.zip';
+        $tempDirectory = vfsStream::setup('root', null, [
+            $fileName => uniqid()
+        ]);
+        $filePath = $tempDirectory->url() . '/' . $fileName;
+
+        $shopUtilsSpy = $this->createPartialMock(Utils::class, ['setHeader', 'showMessageAndExit']);
+        $shopUtilsSpy->expects($this->atLeastOnce())
+            ->method('showMessageAndExit');
+
+        $eventDispatcherSpy = $this->createMock(EventDispatcherInterface::class);
+        $eventDispatcherSpy->expects($this->atLeastOnce())
+            ->method('dispatch')
+            ->with($this->callback(function ($event) use ($filePath) {
+                return $event instanceof UserDataExportCleanupEvent
+                    && $event->getFilePath() === $filePath;
+            }));
+
+        $sut = $this->getSut(shopUtils: $shopUtilsSpy, eventDispatcher: $eventDispatcherSpy);
+
+        $sut->downloadFile($filePath);
+    }
+
+    protected function getSut(
+        ?Utils $shopUtils = null,
+        ?EventDispatcherInterface $eventDispatcher = null,
+    ): UserDataFileDownloadServiceInterface {
+        $shopUtils ??= $this->createStub(Utils::class);
+        $eventDispatcher ??= $this->createStub(EventDispatcherInterface::class);
+
+        return new UserDataFileDownloadService(
+            shopUtils: $shopUtils,
+            eventDispatcher: $eventDispatcher,
+        );
     }
 }
