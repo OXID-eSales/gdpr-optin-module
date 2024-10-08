@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [v4.1.0] - Unreleased
 
+### Added
+- User Data Export Feature**: Administrators can now export a user's personal data as a ZIP file, encompassing all available information related to that user. 
+
 ### Removed
 - Support of PHP 8.1
 
