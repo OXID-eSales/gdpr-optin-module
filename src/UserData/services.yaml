@@ -178,6 +178,7 @@ services:
       $selectionTable: 'oxobject2role'
       $relationCondition: 'oxuser.OXID = oxobject2role.OXOBJECTID'
       $filterColumn: 'oxuser.OXID'
+      $optional: true
     tags:
       - { name: 'oe.gdpr.user_data' }
 
