@@ -96,4 +96,7 @@ $aModule = [
         'onActivate'   => 'OxidEsales\GdprOptinModule\Core\GdprOptinModule::onActivate',
         'onDeactivate' => 'OxidEsales\GdprOptinModule\Core\GdprOptinModule::onDeactivate',
     ],
+	'controllers' => [
+		'oegdproptin_user_data_export' => \OxidEsales\GdprOptinModule\UserData\Controller\UserDataExportController::class,
+	],
 ];

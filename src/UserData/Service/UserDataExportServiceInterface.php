@@ -11,5 +11,5 @@ namespace OxidEsales\GdprOptinModule\UserData\Service;
 
 interface UserDataExportServiceInterface
 {
-    public function exportUserData(string $userId, string $outputZipFilePath): void;
+    public function exportUserData(string $userId): void;
 }
