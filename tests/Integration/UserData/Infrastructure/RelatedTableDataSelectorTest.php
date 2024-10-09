@@ -87,7 +87,6 @@ class RelatedTableDataSelectorTest extends IntegrationTestCase
             filterColumn: 'oxorder.OXUSERID',
             queryBuilderFactory: $this->get(QueryBuilderFactoryInterface::class),
             optional: true
-
         );
 
         $this->assertSame([], $sut->getDataForColumnValue(self::USER_ID));

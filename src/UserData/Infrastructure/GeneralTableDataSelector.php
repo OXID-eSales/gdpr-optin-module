@@ -14,6 +14,9 @@ use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInt
 
 class GeneralTableDataSelector implements DataSelectorInterface
 {
+    /**
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag) Not different behaviour, just protection from explosion
+     */
     public function __construct(
         private string $collection,
         private string $selectionTable,
