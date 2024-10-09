@@ -19,6 +19,7 @@ class GeneralTableDataSelector implements DataSelectorInterface
         private string $selectionTable,
         private string $filterColumn,
         private QueryBuilderFactoryInterface $queryBuilderFactory,
+        private bool $optional = false,
     ) {
     }
 
@@ -35,14 +36,23 @@ class GeneralTableDataSelector implements DataSelectorInterface
     public function getDataForColumnValue(string $columnValue): array
     {
         $queryBuilder = $this->queryBuilderFactory->create();
-        $queryBuilder->select('*')
-            ->from($this->selectionTable)
-            ->where($this->filterColumn . ' = :filterValue')
-            ->setParameter('filterValue', $columnValue);
 
-        /** @var Result $result */
-        $result = $queryBuilder->execute(); /** @phpstan-ignore missingType.iterableValue */
+        try {
+            $queryBuilder->select('*')
+                ->from($this->selectionTable)
+                ->where($this->filterColumn . ' = :filterValue')
+                ->setParameter('filterValue', $columnValue);
 
-        return $result->fetchAllAssociative();
+            /** @var Result $result */
+            $result = $queryBuilder->execute(); /** @phpstan-ignore missingType.iterableValue */
+
+            return $result->fetchAllAssociative();
+        } catch (\Exception $e) {
+            if (!$this->optional) {
+                throw $e;
+            }
+        }
+
+        return [];
     }
 }

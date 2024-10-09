@@ -61,4 +61,35 @@ class RelatedTableDataSelectorTest extends IntegrationTestCase
         $this->assertSame($collectionName, $sut->getCollection());
         $this->assertSame('oxorderfiles', $sut->getSelectionTable());
     }
+
+    public function testSelectorExplodesOnWrongQuery(): void
+    {
+        $sut = new RelatedTableDataSelector(
+            collection: $collectionName = uniqid(),
+            primaryTable: uniqid(),
+            selectionTable: uniqid(),
+            relationCondition: 'oxorderfiles.OXORDERID = oxorder.OXID',
+            filterColumn: 'oxorder.OXUSERID',
+            queryBuilderFactory: $this->get(QueryBuilderFactoryInterface::class)
+        );
+
+        $this->expectException(\Exception::class);
+        $sut->getDataForColumnValue(self::USER_ID);
+    }
+
+    public function testOptionalFlagDoesNotExplodeOnQueryError(): void
+    {
+        $sut = new RelatedTableDataSelector(
+            collection: uniqid(),
+            primaryTable: uniqid(),
+            selectionTable: uniqid(),
+            relationCondition: 'oxorderfiles.OXORDERID = oxorder.OXID',
+            filterColumn: 'oxorder.OXUSERID',
+            queryBuilderFactory: $this->get(QueryBuilderFactoryInterface::class),
+            optional: true
+
+        );
+
+        $this->assertSame([], $sut->getDataForColumnValue(self::USER_ID));
+    }
 }
