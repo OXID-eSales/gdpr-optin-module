@@ -13,6 +13,7 @@ use org\bovigo\vfs\vfsStream;
 use OxidEsales\GdprOptinModule\UserData\Event\UserDataExportCleanupSubscriber;
 use OxidEsales\GdprOptinModule\UserData\Event\UserDataExportCleanupEvent;
 use PHPUnit\Framework\TestCase;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class UserDataExportCleanupSubscriberTest extends TestCase
 {
@@ -20,11 +21,10 @@ class UserDataExportCleanupSubscriberTest extends TestCase
     {
         $fileName = uniqid() . '.zip';
 
-
         $vfsRoot = vfsStream::setup('root');
         $testFilePath = vfsStream::url('root/' . $fileName);
 
-		$fileContents = uniqid();
+        $fileContents = uniqid();
         vfsStream::newFile($fileName, 0755)
             ->withContent($fileContents)
             ->at($vfsRoot);
@@ -37,6 +37,19 @@ class UserDataExportCleanupSubscriberTest extends TestCase
 
         $sut = new UserDataExportCleanupSubscriber();
         $sut->onUserDataExportCleanup(event: $userDataExportCleanupEventSpy);
+
+        $this->assertFalse(file_exists($testFilePath));
+    }
+
+    public function testOnUserDataExportCleanupReturnsEvent(): void
+    {
+        $userDataExportCleanupEventSpy = $this->createStub(UserDataExportCleanupEvent::class);
+
+        $sut = new UserDataExportCleanupSubscriber();
+
+        $handlerResult = $sut->onUserDataExportCleanup(event: $userDataExportCleanupEventSpy);
+
+        $this->assertInstanceOf(Event::class, $handlerResult);
     }
 
     public function testSubscriberSubscribesToCorrectEvent(): void

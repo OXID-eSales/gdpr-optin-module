@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GdprOptinModule\UserData\Event;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class UserDataExportCleanupSubscriber implements EventSubscriberInterface
 {
@@ -23,12 +24,14 @@ class UserDataExportCleanupSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function onUserDataExportCleanup(UserDataExportCleanupEvent $event): void
+    public function onUserDataExportCleanup(UserDataExportCleanupEventInterface&Event $event): Event
     {
         $filePath = $event->getFilePath();
 
         if (file_exists($filePath)) {
             unlink($filePath);
         }
+
+        return $event;
     }
 }

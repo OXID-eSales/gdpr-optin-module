@@ -11,7 +11,7 @@ namespace OxidEsales\GdprOptinModule\UserData\Event;
 
 use Symfony\Contracts\EventDispatcher\Event;
 
-class UserDataExportCleanupEvent extends Event
+class UserDataExportCleanupEvent extends Event implements UserDataExportCleanupEventInterface
 {
     public function __construct(
         private readonly string $filePath
