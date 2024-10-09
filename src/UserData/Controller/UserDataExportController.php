@@ -14,8 +14,6 @@ use OxidEsales\GdprOptinModule\UserData\Service\UserDataExportServiceInterface;
 
 class UserDataExportController extends AdminController
 {
-    protected ?UserDataExportServiceInterface $userDataExportService = null;
-
     public function exportUserData(): void
     {
         $userId = $this->getEditObjectId();

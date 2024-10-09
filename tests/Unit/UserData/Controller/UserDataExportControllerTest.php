@@ -11,6 +11,7 @@ namespace OxidEsales\GdprOptinModule\Tests\Unit\UserData\Controller;
 
 use OxidEsales\GdprOptinModule\UserData\Controller\UserDataExportController;
 use OxidEsales\GdprOptinModule\UserData\Service\UserDataExportServiceInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class UserDataExportControllerTest extends TestCase
@@ -18,23 +19,31 @@ class UserDataExportControllerTest extends TestCase
     public function testExportUserData(): void
     {
         $userId = uniqid();
+
         $userDataExportServiceSpy = $this->createMock(UserDataExportServiceInterface::class);
         $userDataExportServiceSpy
+            ->expects($this->once())
             ->method('exportUserData')
             ->with($userId);
 
-        $sut = $this->getSut(userId: $userId, userDataExportService: $userDataExportServiceSpy,);
+        $sut = $this->getSut(
+            userDataExportService: $userDataExportServiceSpy
+        );
+
+        $sut->method('getEditObjectId')->willReturn($userId);
         $sut->exportUserData();
     }
 
     private function getSut(
-        string $userId,
         UserDataExportServiceInterface $userDataExportService = null
-    ): UserDataExportController {
+    ): UserDataExportController&MockObject {
         $sut = $this->createPartialMock(UserDataExportController::class, ['getService', 'getEditObjectId']);
 
-        $sut->method('getService')->willReturn($userDataExportService);
-        $sut->method('getEditObjectId')->willReturn($userId);
+        $userDataExportService ??= $this->createStub(UserDataExportServiceInterface::class);
+
+        $sut->method('getService')->willReturnMap([
+            [UserDataExportServiceInterface::class, $userDataExportService]
+        ]);
 
         return $sut;
     }
