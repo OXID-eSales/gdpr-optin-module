@@ -24,14 +24,12 @@ class UserDataExportCleanupSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function onUserDataExportCleanup(UserDataExportCleanupEventInterface&Event $event): Event
+    public function onUserDataExportCleanup(UserDataExportCleanupEventInterface&Event $event): void
     {
         $filePath = $event->getFilePath();
 
         if (file_exists($filePath)) {
             unlink($filePath);
         }
-
-        return $event;
     }
 }
