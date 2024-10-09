@@ -57,8 +57,6 @@ function getShopTestPath()
 
     if ($facts->isEnterprise()) {
         $shopTestPath = $facts->getEnterpriseEditionRootPath() . '/Tests';
-    } elseif($facts->isProfessional()) {
-        $shopTestPath = $facts->getProfessionalEditionRootPath() . '/Tests';
     } else {
         $shopTestPath = $facts->getCommunityEditionRootPath() . '/tests';
     }
