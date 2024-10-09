@@ -14,6 +14,9 @@ use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInt
 
 class RelatedTableDataSelector implements DataSelectorInterface
 {
+    /**
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag) Not different behaviour, just protection from explosion
+     */
     public function __construct(
         private string $collection,
         private string $primaryTable,
@@ -21,6 +24,7 @@ class RelatedTableDataSelector implements DataSelectorInterface
         private string $relationCondition,
         private string $filterColumn,
         private QueryBuilderFactoryInterface $queryBuilderFactory,
+        private bool $optional = false,
     ) {
     }
 
@@ -37,15 +41,24 @@ class RelatedTableDataSelector implements DataSelectorInterface
     public function getDataForColumnValue(string $columnValue): array
     {
         $queryBuilder = $this->queryBuilderFactory->create();
-        $queryBuilder->select($this->selectionTable . '.*')
-            ->from($this->primaryTable)
-            ->innerJoin($this->primaryTable, $this->selectionTable, $this->selectionTable, $this->relationCondition)
-            ->where($this->filterColumn . ' = :filterValue')
-            ->setParameter('filterValue', $columnValue);
 
-        /** @var Result $result */
-        $result = $queryBuilder->execute(); /** @phpstan-ignore missingType.iterableValue */
+        try {
+            $queryBuilder->select($this->selectionTable . '.*')
+                ->from($this->primaryTable)
+                ->innerJoin($this->primaryTable, $this->selectionTable, $this->selectionTable, $this->relationCondition)
+                ->where($this->filterColumn . ' = :filterValue')
+                ->setParameter('filterValue', $columnValue);
 
-        return $result->fetchAllAssociative();
+            /** @var Result $result */
+            $result = $queryBuilder->execute(); /** @phpstan-ignore missingType.iterableValue */
+
+            return $result->fetchAllAssociative();
+        } catch (\Exception $e) {
+            if (!$this->optional) {
+                throw $e;
+            }
+        }
+
+        return [];
     }
 }

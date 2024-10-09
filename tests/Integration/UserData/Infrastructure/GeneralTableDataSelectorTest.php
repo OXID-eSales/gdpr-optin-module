@@ -48,4 +48,30 @@ class GeneralTableDataSelectorTest extends IntegrationTestCase
         $this->assertSame($collectionName, $sut->getCollection());
         $this->assertSame('oxuser', $sut->getSelectionTable());
     }
+
+    public function testSelectorExplodesOnWrongQuery(): void
+    {
+        $sut = new GeneralTableDataSelector(
+            collection: uniqid(),
+            selectionTable: uniqid(),
+            filterColumn: uniqid(),
+            queryBuilderFactory: $this->get(QueryBuilderFactoryInterface::class),
+        );
+
+        $this->expectException(\Exception::class);
+        $sut->getDataForColumnValue(self::USER_ID);
+    }
+
+    public function testOptionalFlagDoesNotExplodeOnQueryError(): void
+    {
+        $sut = new GeneralTableDataSelector(
+            collection: uniqid(),
+            selectionTable: uniqid(),
+            filterColumn: uniqid(),
+            queryBuilderFactory: $this->get(QueryBuilderFactoryInterface::class),
+            optional: true,
+        );
+
+        $this->assertSame([], $sut->getDataForColumnValue(self::USER_ID));
+    }
 }
