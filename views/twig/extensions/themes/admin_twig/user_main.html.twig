@@ -1,0 +1,55 @@
+{% extends 'user_main.html.twig' %}
+
+{% block admin_user_main_form %}
+
+    {{ parent() }}
+
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create the new form
+            var form = document.createElement('form');
+            form.setAttribute('id', 'downloadUserData');
+            form.setAttribute('action', '{{ oViewConf.getSelfLink()|raw }}');
+            form.setAttribute('method', 'post');
+
+            // Add hidden field for userId
+            var userIdInput = document.createElement('input');
+            userIdInput.setAttribute('type', 'hidden');
+            userIdInput.setAttribute('name', 'oxid');
+            userIdInput.setAttribute('value', '{{ oxid }}');
+            form.appendChild(userIdInput);
+
+            // Add hidden field for "cl"
+            var clInput = document.createElement('input');
+            clInput.setAttribute('type', 'hidden');
+            clInput.setAttribute('name', 'cl');
+            clInput.setAttribute('value', 'oegdproptin_user_data_export');
+            form.appendChild(clInput);
+
+            // Add hidden field for "fnc"
+            var fncInput = document.createElement('input');
+            fncInput.setAttribute('type', 'hidden');
+            fncInput.setAttribute('name', 'fnc');
+            fncInput.setAttribute('value', 'exportUserData');
+            form.appendChild(fncInput);
+
+            // Add the token hidden field
+            form.insertAdjacentHTML('beforeend', '{{ oViewConf.getHiddenSid()|replace({'\n': '', '\r': ''})|raw }}');
+
+            // Create a submit button
+            var button = document.createElement('button');
+            button.setAttribute('type', 'button');
+            button.innerText = '{{ translate({ ident: "SHOP_MODULE_oegdproptin_export_label" }) }}';
+            button.onclick = function() {
+                form.submit();
+            };
+            form.appendChild(button);
+
+            // Append the form after the main form
+            var myEditForm = document.getElementById('myedit');
+            myEditForm.insertAdjacentElement('afterend', form);
+        });
+    </script>
+
+
+{% endblock %}
