@@ -72,7 +72,7 @@
 
     "codeception": [
       "Composer\\Config::disableProcessTimeout",
-      "THEME_ID=apex MODULE_IDS=oegdproptin /var/www/vendor/bin/codecept run Acceptance -c /var/www/vendor/oxid-esales/gdpr-optin-module/tests/codeception.yml --no-redirect"
+      "THEME_ID=apex MODULE_IDS=oegdproptin vendor/bin/codecept run Acceptance -c tests/codeception.yml --no-redirect"
     ]
   },
   "config": {
