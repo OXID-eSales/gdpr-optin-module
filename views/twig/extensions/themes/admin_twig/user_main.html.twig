@@ -34,7 +34,7 @@
             form.appendChild(fncInput);
 
             // Add the token hidden field
-            form.insertAdjacentHTML('beforeend', '{{ oViewConf.getHiddenSid()|raw }}');
+            form.insertAdjacentHTML('beforeend', '{{ oViewConf.getHiddenSid()|replace({'\n': '', '\r': ''})|raw }}');
 
             // Create a submit button
             var button = document.createElement('button');
