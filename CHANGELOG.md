@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 
-## [v4.1.0] - Unreleased
+## [v4.1.0] - 2024-10-14
 
 ### Added
 - User Data Export Feature**: Administrators can now export a user's personal data as a ZIP file, encompassing all available information related to that user. 
@@ -151,7 +151,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - The GDPR Opt-In Module was fully ported as described in
   [modules porting guide](https://docs.oxid-esales.com/developer/en/6.0/update/eshop_from_53_to_6/modules.html).
 
-[v4.0.0]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v3.0.1...b-7.1.x
+[v4.1.0]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v4.0.0...v4.1.0
+[v4.0.0]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v3.0.1...v4.0.0
 [v3.0.1]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v3.0.0...v3.0.1
 [v3.0.0]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v2.3.3...v3.0.0
 [v2.3.4]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v2.3.3...b-6.x

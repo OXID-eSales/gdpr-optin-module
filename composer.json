@@ -36,7 +36,7 @@
     "oxid-esales/developer-tools": "dev-b-7.2.x"
   },
   "conflict": {
-      "oxid-esales/oxideshop-ce": "<7.0"
+      "oxid-esales/oxideshop-ce": "<7.2"
   },
   "autoload": {
     "psr-4": {

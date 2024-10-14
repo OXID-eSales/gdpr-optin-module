@@ -1,6 +1,6 @@
 # GDPR opt-in module
 
-[![Development](https://github.com/OXID-eSales/gdpr-optin-module/actions/workflows/trigger.yaml/badge.svg?branch=b-7.1.x)](https://github.com/OXID-eSales/gdpr-optin-module/actions/workflows/trigger.yaml)
+[![Development](https://github.com/OXID-eSales/gdpr-optin-module/actions/workflows/trigger.yaml/badge.svg?branch=b-7.2.x)](https://github.com/OXID-eSales/gdpr-optin-module/actions/workflows/trigger.yaml)
 [![Latest Version](https://img.shields.io/packagist/v/OXID-eSales/gdpr-optin-module?logo=composer&label=latest&include_prereleases&color=orange)](https://packagist.org/packages/oxid-esales/gdpr-optin-module)
 [![PHP Version](https://img.shields.io/packagist/php-v/oxid-esales/gdpr-optin-module)](https://github.com/oxid-esales/gdpr-optin-module)
 
@@ -16,6 +16,7 @@ System requirements and installation instructions are described in the module do
 
 ### Compatibility
 
+* b-7.2.x module branch for shop 7.2.x branches and compilations
 * b-7.1.x module branch for shop 7.1.x branches and compilations
 * b-7.0.x module branch for shop 7.0.x branches and compilations
 * b-6.x module branch for shop compilation: 6.2.x and up to 6.5.x
@@ -27,6 +28,7 @@ System requirements and installation instructions are described in the module do
 * **composer require oxid-esales/gdpr-optin-module:^2.3.0** to install the released version compatible with OXID eShop 6.2.x - 6.5.x compilations
 * **composer require oxid-esales/gdpr-optin-module:^3.0.0** to install the released version compatible with OXID eShop 7.0.x compilations
 * **composer require oxid-esales/gdpr-optin-module:^4.0.0** to install the released version compatible with OXID eShop 7.1.x compilations
+* **composer require oxid-esales/gdpr-optin-module:^4.1.0** to install the released version compatible with OXID eShop 7.2.x compilations
 
 ### Features
 
