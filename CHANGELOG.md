@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [v4.2.0] - Unreleased
+
+### Fixed
+- Make checkbox `oegdproptin_userregistration` required in user registration page [#0006863](https://bugs.oxid-esales.com/view.php?id=6863)
 
 ## [v4.1.0] - 2024-10-14
 
