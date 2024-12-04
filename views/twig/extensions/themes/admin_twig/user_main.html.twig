@@ -37,9 +37,10 @@
             form.insertAdjacentHTML('beforeend', '{{ oViewConf.getHiddenSid()|replace({'\n': '', '\r': ''})|raw }}');
 
             // Create a submit button
-            var button = document.createElement('button');
+            var button = document.createElement('input');
             button.setAttribute('type', 'button');
-            button.innerText = '{{ translate({ ident: "SHOP_MODULE_oegdproptin_export_label" }) }}';
+            button.setAttribute('value', '{{ translate({ ident: "SHOP_MODULE_oegdproptin_export_label" }) }}');
+            button.setAttribute('style', 'margin-top: 25px;');
             button.onclick = function() {
                 form.submit();
             };
