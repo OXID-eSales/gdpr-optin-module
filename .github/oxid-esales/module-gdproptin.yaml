@@ -32,9 +32,9 @@ runscript: &runscript
     script: |
       [
         "oegdproptin:phpunit-clover",
-        "oegdproptin:codeception",
+        "oegdproptin:codeception"
       ]
-  fa_invoice:
+  oegdproptin:
     path: ''
 
 runslim:
@@ -55,7 +55,11 @@ sonarcloud:
   project_key: 'OXID-eSales_gdpr-optin-module'
   organization: 'oxid-esales'
   parameters: |
-    -Dsonar.language=php
-    -Dsonar.scm.provider=git
-    -Dsonar.sources=src
-    -Dsonar.tests=tests
+    -Dsonar.language=php \
+    -Dsonar.scm.provider=git \
+    -Dsonar.sources=src \
+    -Dsonar.tests=tests \
+    -Dsonar.php.phpstan.reportPaths=coverage-reports/phpstan.report.json
+
+finish:
+  slack_title: 'Module gdpr opt in ({{ .Data.global.git.shop_ref }}) by {{ .Github.Actor }}'
