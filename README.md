@@ -16,6 +16,7 @@ System requirements and installation instructions are described in the module do
 
 ### Compatibility
 
+* b-7.3.x module branch for shop 7.3.x branches and compilations
 * b-7.2.x module branch for shop 7.2.x branches and compilations
 * b-7.1.x module branch for shop 7.1.x branches and compilations
 * b-7.0.x module branch for shop 7.0.x branches and compilations

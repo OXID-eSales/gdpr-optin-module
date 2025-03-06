@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [v4.2.0] - Unreleased
 
+### Added
+- PHP 8.4 support
+
 ### Fixed
 - Make checkbox `oegdproptin_userregistration` required in user registration page [#0006863](https://bugs.oxid-esales.com/view.php?id=6863)
 - Add missing styling for 'Export User Data' button
