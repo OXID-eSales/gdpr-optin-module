@@ -8,7 +8,7 @@ jobs:
   module_gdproptin_72x_nightly:
     uses: oxid-eSales/github-actions/.github/workflows/universal_workflow_light.yaml@v4
     with:
-      testplan: '~/defaults/7.3.x.yaml,~/defaults/scheduled.yaml,~/module-gdproptin.yaml,~/_custom.yaml'
+      testplan: '~/defaults/7.4.x.yaml,~/defaults/scheduled.yaml,~/module-gdproptin.yaml,~/_custom.yaml'
       runs_on: '"ubuntu-latest"'
       defaults: 'v4'
       plan_folder: '.github/oxid-esales'
