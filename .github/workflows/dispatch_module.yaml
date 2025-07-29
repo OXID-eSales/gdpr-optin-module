@@ -1,5 +1,4 @@
 name: Manual trigger
-# Matrix workflow using re-usable github actions
 
 on:
   workflow_dispatch:
@@ -50,16 +49,16 @@ jobs:
               ;;
           esac
           # shellcheck disable=SC2088
-          TESTPLAN="~/defaults/7.3.x.yaml,${LIMIT}~/module-gdproptin.yaml,~/_custom.yaml"
+          TESTPLAN="~/defaults/7.3.x.yaml,${LIMIT}~/module-gdproptin.yaml"
           echo "testplan=${TESTPLAN}" | tee -a "${GITHUB_OUTPUT}"
   dispatch_stable:
     if: ${{ inputs.use_dev_version == 'no' }}
     needs: build_testplan
-    uses: oxid-eSales/github-actions/.github/workflows/universal_workflow_light.yaml@v4
+    uses: oxid-eSales/github-actions/.github/workflows/universal_workflow_light.yaml@v5
     with:
       testplan: ${{ needs.build_testplan.outputs.testplan }}
       runs_on: '"ubuntu-latest"'
-      defaults: 'v4'
+      defaults: 'v5'
       plan_folder: '.github/oxid-esales'
     secrets:
       DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
