@@ -6,13 +6,12 @@ on:
 
 jobs:
   module_gdproptin_72x_nightly:
-    uses: oxid-eSales/github-actions/.github/workflows/universal_workflow_light.yaml@v4
+    uses: oxid-eSales/github-actions/.github/workflows/universal_workflow_light.yaml@v5
     with:
-      testplan: '~/defaults/7.4.x.yaml,~/defaults/scheduled.yaml,~/module-gdproptin.yaml,~/_custom.yaml'
+      testplan: '~/defaults/7.4.x.yaml,~/defaults/scheduled.yaml,~/module-gdproptin.yaml'
       runs_on: '"ubuntu-latest"'
-      defaults: 'v4'
+      defaults: 'v5'
       plan_folder: '.github/oxid-esales'
-      use_scheduled_slack_channel: true
     secrets:
       DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
       DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
