@@ -1,0 +1,234 @@
+services:
+  _defaults:
+    autowire: true
+    public: false
+    bind:
+      OxidEsales\Eshop\Core\Utils: '@=service("OxidEsales\\GdprOptinModule\\Core\\Registry").getUtils()'
+
+  # User address data
+  OxidEsales\GdprOptinModule\UserData\AddressTableDataSelector:
+    class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
+    arguments:
+      $collection: 'Addresses'
+      $selectionTable: 'oxaddress'
+      $filterColumn: 'OXUSERID'
+    tags:
+      - { name: 'oe.gdpr.user_data' }
+
+  # User order data
+  OxidEsales\GdprOptinModule\UserData\OrderTableDataSelector:
+    class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
+    arguments:
+      $collection: 'Orders'
+      $selectionTable: 'oxorder'
+      $filterColumn: 'OXUSERID'
+    tags:
+      - { name: 'oe.gdpr.user_data' }
+
+  OxidEsales\GdprOptinModule\UserData\OrderArticlesTableDataSelector:
+    class: OxidEsales\GdprOptinModule\UserData\Infrastructure\RelatedTableDataSelector
+    arguments:
+      $collection: 'Orders'
+      $primaryTable: 'oxorder'
+      $selectionTable: 'oxorderarticles'
+      $relationCondition: 'oxorder.OXID = oxorderarticles.OXORDERID'
+      $filterColumn: 'oxorder.OXUSERID'
+    tags:
+      - { name: 'oe.gdpr.user_data' }
+
+  OxidEsales\GdprOptinModule\UserData\OrderFilesTableDataSelector:
+    class: OxidEsales\GdprOptinModule\UserData\Infrastructure\RelatedTableDataSelector
+    arguments:
+      $collection: 'Orders'
+      $primaryTable: 'oxorder'
+      $selectionTable: 'oxorderfiles'
+      $relationCondition: 'oxorder.OXID = oxorderfiles.OXORDERID'
+      $filterColumn: 'oxorder.OXUSERID'
+    tags:
+      - { name: 'oe.gdpr.user_data' }
+
+  # Admin log service
+  OxidEsales\GdprOptinModule\UserData\AdminLogTableDataSelector:
+    class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
+    arguments:
+      $collection: 'Logs'
+      $selectionTable: 'oxadminlog'
+      $filterColumn: 'OXUSERID'
+    tags:
+      - { name: 'oe.gdpr.user_data' }
+
+  # Basket services
+  OxidEsales\GdprOptinModule\UserData\BasketTableDataSelector:
+    class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
+    arguments:
+      $collection: 'Baskets'
+      $selectionTable: 'oxuserbaskets'
+      $filterColumn: 'OXUSERID'
+    tags:
+      - { name: 'oe.gdpr.user_data' }
+
+  OxidEsales\GdprOptinModule\UserData\BasketItemsTableDataSelector:
+    class: OxidEsales\GdprOptinModule\UserData\Infrastructure\RelatedTableDataSelector
+    arguments:
+      $collection: 'Baskets'
+      $primaryTable: 'oxuserbaskets'
+      $selectionTable: 'oxuserbasketitems'
+      $relationCondition: 'oxuserbaskets.OXID = oxuserbasketitems.OXBASKETID'
+      $filterColumn: 'oxuserbaskets.OXUSERID'
+    tags:
+      - { name: 'oe.gdpr.user_data' }
+
+  # Newsletter subscribed service
+  OxidEsales\GdprOptinModule\UserData\NewsSubscribedTableDataSelector:
+    class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
+    arguments:
+      $collection: 'Newsletters'
+      $selectionTable: 'oxnewssubscribed'
+      $filterColumn: 'OXUSERID'
+    tags:
+      - { name: 'oe.gdpr.user_data' }
+
+  # Price alarm service
+  OxidEsales\GdprOptinModule\UserData\PriceAlarmTableDataSelector:
+    class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
+    arguments:
+      $collection: 'PriceAlarm'
+      $selectionTable: 'oxpricealarm'
+      $filterColumn: 'OXUSERID'
+    tags:
+      - { name: 'oe.gdpr.user_data' }
+
+  # Rating service
+  OxidEsales\GdprOptinModule\UserData\RatingTableDataSelector:
+    class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
+    arguments:
+      $collection: 'Ratings'
+      $selectionTable: 'oxratings'
+      $filterColumn: 'OXUSERID'
+    tags:
+      - { name: 'oe.gdpr.user_data' }
+
+  # Recommendation list service
+  OxidEsales\GdprOptinModule\UserData\RecommendationListTableDataSelector:
+    class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
+    arguments:
+      $collection: 'Recommendations'
+      $selectionTable: 'oxrecommlists'
+      $filterColumn: 'OXUSERID'
+    tags:
+      - { name: 'oe.gdpr.user_data' }
+
+  # Remark service
+  OxidEsales\GdprOptinModule\UserData\RemarkTableDataSelector:
+    class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
+    arguments:
+      $collection: 'Remarks'
+      $selectionTable: 'oxremark'
+      $filterColumn: 'OXPARENTID'
+    tags:
+      - { name: 'oe.gdpr.user_data' }
+
+  # Reviews service
+  OxidEsales\GdprOptinModule\UserData\ReviewsTableDataSelector:
+    class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
+    arguments:
+      $collection: 'Reviews'
+      $selectionTable: 'oxreviews'
+      $filterColumn: 'OXUSERID'
+    tags:
+      - { name: 'oe.gdpr.user_data' }
+
+  # User data services
+  OxidEsales\GdprOptinModule\UserData\UserTableDataSelector:
+    class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
+    arguments:
+      $collection: 'Users'
+      $selectionTable: 'oxuser'
+      $filterColumn: 'OXID'
+    tags:
+      - { name: 'oe.gdpr.user_data' }
+
+  OxidEsales\GdprOptinModule\UserData\UserObjectToGroupTableDataSelector:
+    class: OxidEsales\GdprOptinModule\UserData\Infrastructure\RelatedTableDataSelector
+    arguments:
+      $collection: 'Users'
+      $primaryTable: 'oxuser'
+      $selectionTable: 'oxobject2group'
+      $relationCondition: 'oxuser.OXID = oxobject2group.OXOBJECTID'
+      $filterColumn: 'oxuser.OXID'
+    tags:
+      - { name: 'oe.gdpr.user_data' }
+
+  OxidEsales\GdprOptinModule\UserData\UserObjectToPaymentTableDataSelector:
+    class: OxidEsales\GdprOptinModule\UserData\Infrastructure\RelatedTableDataSelector
+    arguments:
+      $collection: 'Users'
+      $primaryTable: 'oxuser'
+      $selectionTable: 'oxobject2payment'
+      $relationCondition: 'oxuser.OXID = oxobject2payment.OXOBJECTID'
+      $filterColumn: 'oxuser.OXID'
+    tags:
+      - { name: 'oe.gdpr.user_data' }
+
+  OxidEsales\GdprOptinModule\UserData\UserObjectToRoleTableDataSelector:
+    class: OxidEsales\GdprOptinModule\UserData\Infrastructure\RelatedTableDataSelector
+    arguments:
+      $collection: 'Users'
+      $primaryTable: 'oxuser'
+      $selectionTable: 'oxobject2role'
+      $relationCondition: 'oxuser.OXID = oxobject2role.OXOBJECTID'
+      $filterColumn: 'oxuser.OXID'
+      $optional: true
+    tags:
+      - { name: 'oe.gdpr.user_data' }
+
+  # Vouches service
+  OxidEsales\GdprOptinModule\UserData\VouchersTableDataSelector:
+    class: OxidEsales\GdprOptinModule\UserData\Infrastructure\GeneralTableDataSelector
+    arguments:
+      $collection: 'Vouchers'
+      $selectionTable: 'oxvouchers'
+      $filterColumn: 'OXUSERID'
+    tags:
+      - { name: 'oe.gdpr.user_data' }
+
+  OxidEsales\GdprOptinModule\UserData\VoucherSeriesTableDataSelector:
+    class: OxidEsales\GdprOptinModule\UserData\Infrastructure\RelatedTableDataSelector
+    arguments:
+      $collection: 'Vouchers'
+      $primaryTable: 'oxvouchers'
+      $selectionTable: 'oxvoucherseries'
+      $relationCondition: 'oxvouchers.OXID = oxvoucherseries.OXSERIENR'
+      $filterColumn: 'oxvouchers.OXUSERID'
+    tags:
+      - { name: 'oe.gdpr.user_data' }
+
+  OxidEsales\GdprOptinModule\UserData\Service\CollectionAggregationServiceInterface:
+    class: OxidEsales\GdprOptinModule\UserData\Service\CollectionAggregationService
+    arguments:
+      $collectors: !tagged oe.gdpr.user_data
+
+  OxidEsales\GdprOptinModule\UserData\Service\CollectionSerializerServiceInterface:
+    class: OxidEsales\GdprOptinModule\UserData\Service\JsonCollectionSerializerService
+
+  OxidEsales\GdprOptinModule\UserData\Service\UserDataCollectionServiceInterface:
+    class: OxidEsales\GdprOptinModule\UserData\Service\UserDataCollectionService
+
+  OxidEsales\GdprOptinModule\UserData\Service\UserDataFileDownloadServiceInterface:
+    class: OxidEsales\GdprOptinModule\UserData\Service\UserDataFileDownloadService
+
+  OxidEsales\GdprOptinModule\UserData\Service\UserDataExportServiceInterface:
+    class: OxidEsales\GdprOptinModule\UserData\Service\UserDataExportService
+    public: true
+    arguments:
+      $userDataZipFilePath: '@=service("OxidEsales\\EshopCommunity\\Internal\\Transition\\Utility\\BasicContextInterface").getCacheDirectory()'
+
+  OxidEsales\GdprOptinModule\UserData\Service\ZipArchiveFactoryInterface:
+    class: OxidEsales\GdprOptinModule\UserData\Service\ZipArchiveFactory
+
+  OxidEsales\GdprOptinModule\UserData\Service\ZipCreatorServiceInterface:
+    class: OxidEsales\GdprOptinModule\UserData\Service\ZipCreatorService
+
+  OxidEsales\GdprOptinModule\UserData\Event\UserDataExportCleanupSubscriber:
+    class: OxidEsales\GdprOptinModule\UserData\Event\UserDataExportCleanupSubscriber
+    tags: [ 'kernel.event_subscriber' ]

@@ -93,7 +93,7 @@ final class CheckoutCest extends BaseCest
             ->enterAddressData($this->getUserAddressFormData());
         $I->retryClick($userCheckout->nextStepButton);
 
-        $I->see(Translator::translate('OEGDPROPTIN_CONFIRM_USER_REGISTRATION_OPTIN'));
+        $I->dontSee(Translator::translate('SELECTED_SHIPPING_CARRIER'));
 
         $I->click('#oegdproptin_userregistration');
         $I->seeCheckboxIsChecked('#oegdproptin_userregistration');

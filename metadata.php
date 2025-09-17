@@ -46,7 +46,7 @@ $aModule = [
         'en' => 'This module provides the opt-in functionality for the European General Data Protection Regulation (GDPR)',
     ],
     'thumbnail'   => 'logo.png',
-    'version'     => '4.0.0',
+    'version'     => '4.2.0',
     'author'      => 'OXID eSales AG',
     'url'         => 'https://www.oxid-esales.com/',
     'email'       => '',
@@ -96,4 +96,7 @@ $aModule = [
         'onActivate'   => 'OxidEsales\GdprOptinModule\Core\GdprOptinModule::onActivate',
         'onDeactivate' => 'OxidEsales\GdprOptinModule\Core\GdprOptinModule::onDeactivate',
     ],
+	'controllers' => [
+		'oegdproptin_user_data_export' => \OxidEsales\GdprOptinModule\UserData\Controller\UserDataExportController::class,
+	],
 ];

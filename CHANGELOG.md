@@ -4,8 +4,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Undecided] - unreleased
 
-## [v4.1.0] - Unreleased
+# Changed
+- Update test setup to run with shop 7.4.x
+
+## [v4.2.0] - 2025-04-10
+
+### Added
+- PHP 8.4 support
+
+### Fixed
+- Make checkbox `oegdproptin_userregistration` required in user registration page [#0006863](https://bugs.oxid-esales.com/view.php?id=6863)
+- Add missing styling for 'Export User Data' button
+
+## [v4.1.0] - 2024-10-14
+
+### Added
+- User Data Export Feature**: Administrators can now export a user's personal data as a ZIP file, encompassing all available information related to that user. 
 
 ### Removed
 - Support of PHP 8.1
@@ -148,7 +164,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - The GDPR Opt-In Module was fully ported as described in
   [modules porting guide](https://docs.oxid-esales.com/developer/en/6.0/update/eshop_from_53_to_6/modules.html).
 
-[v4.0.0]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v3.0.1...b-7.1.x
+[v4.2.0]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v4.1.0...v4.2.0
+[v4.1.0]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v4.0.0...v4.1.0
+[v4.0.0]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v3.0.1...v4.0.0
 [v3.0.1]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v3.0.0...v3.0.1
 [v3.0.0]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v2.3.3...v3.0.0
 [v2.3.4]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v2.3.3...b-6.x

@@ -55,13 +55,13 @@ final class RegistrationCest extends BaseCest
 
         $I->retryClick($userForm->saveFormButton);
         $I->waitForPageLoad();
-        $I->see(Translator::translate('OEGDPROPTIN_CONFIRM_USER_REGISTRATION_OPTIN'));
+        $I->dontSee(Translator::translate('MESSAGE_WELCOME_REGISTERED_USER'));
 
         $userForm = $registrationPage->enterUserLoginData($this->getUserLoginData('second'))
             ->enterAddressData($this->getUserAddressData());
         $I->scrollTo('header');//scroll to top, scrolling to gdpr checkbox will be still hidden by header
         $I->wait(1);//scroll to top, scrolling to gdpr checkbox will be still hidden by header
-        $I->click('#oegdproptin_userregistration');
+        $I->retryClick('#oegdproptin_userregistration');
         $I->seeCheckboxIsChecked('#oegdproptin_userregistration');
         $I->retryClick($userForm->saveFormButton);
         $I->waitForPageLoad();
