@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Undecided] - unreleased
+## [v4.3.0] - 2025-10-13
 
 # Changed
 - Update test setup to run with shop 7.4.x
@@ -164,6 +164,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - The GDPR Opt-In Module was fully ported as described in
   [modules porting guide](https://docs.oxid-esales.com/developer/en/6.0/update/eshop_from_53_to_6/modules.html).
 
+[v4.3.0]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v4.2.0...v4.3.0
 [v4.2.0]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v4.1.0...v4.2.0
 [v4.1.0]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v4.0.0...v4.1.0
 [v4.0.0]: https://github.com/OXID-eSales/gdpr-optin-module/compare/v3.0.1...v4.0.0
