@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+
+### Changed
+- Updated to work with OXID eShop 7.5.x
+- Minimum PHP version is now 8.3, tested up to PHP 8.5
+
 ## [v4.3.0] - 2025-10-13
 
 # Changed

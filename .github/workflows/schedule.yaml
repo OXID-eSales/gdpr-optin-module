@@ -8,13 +8,13 @@ jobs:
   matrix_74x_weekly:
     uses: oxid-eSales/github-actions/.github/workflows/universal_workflow_light.yaml@v5
     with:
-      testplan: '~/defaults/7.4.x.yaml,~/defaults/scheduled.yaml,~/module-gdproptin.yaml,~/_custom.yaml'
+      testplan: '~/defaults/7.5.x.yaml,~/defaults/scheduled.yaml,~/module-gdproptin.yaml,~/_custom.yaml'
       runs_on: '"ubuntu-latest"'
       defaults: 'v5'
       plan_folder: '.github/oxid-esales'
       custom_testplan_yaml: |
         finish:
-          slack_title: 'Matrix-74x-Weekly-{{ .Github.EventName }}-{{ .Github.RefName }}'
+          slack_title: 'Matrix-75x-Weekly-{{ .Github.EventName }}-{{ .Github.RefName }}'
     secrets:
       DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
       DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
