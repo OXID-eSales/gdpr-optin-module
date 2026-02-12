@@ -14,8 +14,4 @@ use OxidEsales\Facts\Facts;
 
 final class Acceptance extends \Codeception\Module
 {
-    public function _beforeSuite($settings = []): void
-    {
-        exec((new Facts())->getCommunityEditionRootPath() . '/bin/oe-console oe:module:activate oegdproptin');
-    }
 }
