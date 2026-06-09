@@ -35,7 +35,7 @@ final class JsonCollectionSerializerServiceTest extends TestCase
 
         $actualResult = $sut->serializeCollection($tableCollectionMock);
 
-        $this->assertSame($expectedCollectionName, $actualResult->getFileName());
+        $this->assertSame($expectedCollectionName . '.json', $actualResult->getFileName());
         $this->assertSame(json_encode($expectedCollection), $actualResult->getContent());
     }
 

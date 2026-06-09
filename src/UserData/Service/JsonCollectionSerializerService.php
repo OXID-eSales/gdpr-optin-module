@@ -24,6 +24,6 @@ class JsonCollectionSerializerService implements CollectionSerializerServiceInte
             throw new JsonSerializationException();
         }
 
-        return new ResultFile($data->getCollectionName(), $jsonData);
+        return new ResultFile($data->getCollectionName() . '.json', $jsonData);
     }
 }
