@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Update module to work with OXID eShop 7.6
 
+### Fixed
+- Add file extension to exported files
+
 ## [v4.4.0] - 2026-04-08
 
 ### Changed
