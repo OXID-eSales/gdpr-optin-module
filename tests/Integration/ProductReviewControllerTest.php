@@ -15,6 +15,7 @@ use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServ
 use OxidEsales\GdprOptinModule\Core\GdprOptinModule;
 use OxidEsales\GdprOptInModule\Service\ModuleSettings;
 use OxidEsales\GdprOptinModule\Tests\Traits\ServiceContainer;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ProductReviewControllerTest extends BaseTestCase
 {
@@ -30,9 +31,7 @@ class ProductReviewControllerTest extends BaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProviderReviewSave
-     */
+    #[DataProvider('dataProviderReviewSave')]
     public function testErrorOnReviewSave(
         bool $configValue,
         string $assertMethod,

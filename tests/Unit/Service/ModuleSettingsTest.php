@@ -12,17 +12,15 @@ namespace OxidEsales\GdprOptinModule\Tests\Unit\Service;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServiceInterface;
 use OxidEsales\GdprOptinModule\Core\GdprOptinModule as Module;
 use OxidEsales\GdprOptinModule\Service\ModuleSettings;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\String\UnicodeString;
 
-/**
- * @covers \OxidEsales\GdprOptinModule\Service\ModuleSettings
- */
+#[CoversClass(\OxidEsales\GdprOptinModule\Service\ModuleSettings::class)]
 final class ModuleSettingsTest extends TestCase
 {
-    /**
-     * @dataProvider gettersDataProvider
-     */
+    #[DataProvider('gettersDataProvider')]
     public function testGetters($method, $systemMethod, $key, $systemValue, $expectedValue): void
     {
         $mssMock = $this->createMock(ModuleSettingServiceInterface::class);

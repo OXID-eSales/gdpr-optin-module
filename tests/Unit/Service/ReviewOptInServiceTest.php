@@ -15,16 +15,14 @@ use OxidEsales\GdprOptinModule\Core\GdprOptinModule;
 use OxidEsales\GdprOptinModule\Service\ModuleSettings;
 use OxidEsales\GdprOptinModule\Service\ReviewOptIn;
 use OxidEsales\GdprOptinModule\Service\ReviewOptInInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \OxidEsales\GdprOptinModule\Service\ReviewOptIn
- */
+#[CoversClass(\OxidEsales\GdprOptinModule\Service\ReviewOptIn::class)]
 class ReviewOptInServiceTest extends TestCase
 {
-    /**
-     * @dataProvider dataProviderValidateOptIn
-     */
+    #[DataProvider('dataProviderValidateOptIn')]
     public function testValidateOptIn(bool $configValue, int|null $checkboxStatus, bool $expectedValue)
     {
         $service = $this->getSut($configValue, $checkboxStatus);
@@ -44,9 +42,7 @@ class ReviewOptInServiceTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProviderReviewOptInError
-     */
+    #[DataProvider('dataProviderReviewOptInError')]
     public function testReviewOptInError(bool $configValue, int|null $checkboxStatus, bool $expectedValue): void
     {
         $service = $this->getSut($configValue, $checkboxStatus);

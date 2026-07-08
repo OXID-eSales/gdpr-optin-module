@@ -12,8 +12,9 @@ namespace OxidEsales\GdprOptinModule\Tests\Integration\Component\Widget;
 use OxidEsales\Eshop\Application\Component\Widget\ArticleDetails;
 use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 use OxidEsales\GdprOptinModule\Service\ReviewOptInInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/** @covers \OxidEsales\GdprOptinModule\Component\Widget\ArticleDetails */
+#[CoversClass(\OxidEsales\GdprOptinModule\Component\Widget\ArticleDetails::class)]
 class ArticleDetailsTest extends IntegrationTestCase
 {
     public function testInit(): void

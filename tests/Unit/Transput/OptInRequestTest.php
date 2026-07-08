@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GdprOptinModule\Tests\Unit\Transput;
 
 use OxidEsales\GdprOptinModule\Transput\OptInRequest;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class OptInRequestTest extends TestCase
@@ -26,7 +27,7 @@ class OptInRequestTest extends TestCase
         ];
     }
 
-    /** @dataProvider getBooleanValueDataProvider */
+    #[DataProvider('getBooleanValueDataProvider')]
     public function testGetInvoiceAddressOptIn($requestValue, $expectedValue): void
     {
         $shopRequest = $this->createMock(\OxidEsales\Eshop\Core\Request::class);
@@ -41,7 +42,7 @@ class OptInRequestTest extends TestCase
         $this->assertSame($expectedValue, $sut->getInvoiceAddressOptIn());
     }
 
-    /** @dataProvider getBooleanValueDataProvider */
+    #[DataProvider('getBooleanValueDataProvider')]
     public function testGetDeliveryAddressOptIn($requestValue, $expectedValue): void
     {
         $shopRequest = $this->createMock(\OxidEsales\Eshop\Core\Request::class);

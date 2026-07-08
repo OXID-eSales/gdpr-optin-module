@@ -25,3 +25,20 @@ jobs:
       CACHE_SECRET_KEY: ${{ secrets.CACHE_SECRET_KEY }}
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+  # EE runs only on push (never on pull_request): the public repo cannot run EE
+  # itself, so it dispatches the EE test into the private module-workflows repo.
+  push_module_ee:
+    if: ${{ github.event_name == 'push' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger EE workflow and wait for results
+        uses: convictional/trigger-workflow-and-wait@v1.6.5
+        with:
+          owner: oxid-esales
+          repo: module-workflows
+          github_user: ${{ secrets.CI_USER }}
+          github_token: ${{ secrets.GH_CI_JENKINS_TOKEN }}
+          workflow_file_name: gdproptin_workflow.yaml
+          ref: "b-7.6.x"
+          client_payload: "{\"edition\": \"ee\", \"ref\": \"${{ github.ref_name }}\"}"

@@ -23,6 +23,7 @@ use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServ
 use OxidEsales\GdprOptinModule\Core\GdprOptinModule;
 use OxidEsales\GdprOptInModule\Service\ModuleSettings;
 use OxidEsales\GdprOptinModule\Tests\Traits\ServiceContainer;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 final class UserComponentTest extends BaseTestCase
 {
@@ -57,8 +58,8 @@ final class UserComponentTest extends BaseTestCase
     /**
      * Test checkbox validation.
      *
-     * @dataProvider providerDeliveryAddressOptin
      */
+    #[DataProvider('providerDeliveryAddressOptin')]
     public function testDeliveryAddressOptinValidationCheckoutUser(
         bool $requireGdprOptinDeliveryAddress,
         bool $checkboxChecked,
@@ -84,9 +85,7 @@ final class UserComponentTest extends BaseTestCase
         $this->$assertDisplayExc(array_key_exists('oegdproptin_deliveryaddress', $displayErrors));
     }
 
-    /**
-     * @dataProvider providerDeliveryAddressOptin
-     */
+    #[DataProvider('providerDeliveryAddressOptin')]
     public function testDeliveryAddressOptinValidationAccountUser(
         bool $requireGdprOptinDeliveryAddress,
         bool $checkboxChecked,
@@ -132,9 +131,7 @@ final class UserComponentTest extends BaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider providerInvoiceAddressOptin
-     */
+    #[DataProvider('providerInvoiceAddressOptin')]
     public function testInvoiceAddressOptinValidationCheckoutUser(
         bool $requireGdprOptinInvoiceAddress,
         bool $checkboxChecked,
@@ -158,9 +155,7 @@ final class UserComponentTest extends BaseTestCase
         $this->$assertDisplayExc(array_key_exists('oegdproptin_invoiceaddress', $displayErrors));
     }
 
-    /**
-     * @dataProvider providerInvoiceAddressOptin
-     */
+    #[DataProvider('providerInvoiceAddressOptin')]
     public function testInvoiceAddressOptinValidationAccountUser(
         bool $requireGdprOptinInvoiceAddress,
         bool $checkboxChecked,
@@ -227,9 +222,7 @@ final class UserComponentTest extends BaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider providerUserRegistrationOptin
-     */
+    #[DataProvider('providerUserRegistrationOptin')]
     public function testUserRegistrationOptinValidation(
         bool $oeGdprUserRegistrationAddress,
         bool $checkboxChecked,
@@ -270,9 +263,7 @@ final class UserComponentTest extends BaseTestCase
              'enable_false_optin_false_createuser' => [false, false, 'assertFalse', 3]
         ];
     }
-    /**
-     * @dataProvider  providerUserCheckoutRegistrationOptin
-     */
+    #[DataProvider('providerUserCheckoutRegistrationOptin')]
     public function testUserRegistrationOptinValidationCheckoutUser(
         bool $oeGdprUserRegistrationAddress,
         bool $checkboxChecked,
@@ -316,19 +307,17 @@ final class UserComponentTest extends BaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider  providerChangeUserDataExceptions
-     */
+    #[DataProvider('providerChangeUserDataExceptions')]
     public function testChangeUserDataExceptions(\Exception $exception): void
     {
         $mssMock = $this->createPartialMock(User::class, ['changeUserData']);
-        $mssMock->method('changeUserData')->will($this->throwException($exception));
+        $mssMock->method('changeUserData')->willThrowException($exception);
         $oSession = $this->createPartialMock(Session::class, ['checkSessionChallenge']);
-        $oSession->expects($this->atLeastOnce())->method('checkSessionChallenge')->will($this->returnValue(true));
+        $oSession->expects($this->atLeastOnce())->method('checkSessionChallenge')->willReturn(true);
         Registry::set(Session::class, $oSession);
         $oUserView = $this->createPartialMock(UserComponent::class, ['getUser', 'getDelAddressData']);
         $oUserView->expects($this->atLeastOnce())->method('getDelAddressData');
-        $oUserView->expects($this->atLeastOnce())->method('getUser')->will($this->returnValue(new User()));
+        $oUserView->expects($this->atLeastOnce())->method('getUser')->willReturn(new User());
         $this->assertNull($oUserView->changeuser_testvalues());
     }
 
@@ -390,7 +379,7 @@ final class UserComponentTest extends BaseTestCase
         $user = oxNew(User::class);
         $user->load(self::TEST_USER_ID);
         $oSession = $this->createPartialMock(Session::class, ['checkSessionChallenge']);
-        $oSession->expects($this->atLeastOnce())->method('checkSessionChallenge')->will($this->returnValue(true));
+        $oSession->expects($this->atLeastOnce())->method('checkSessionChallenge')->willReturn(true);
         Registry::set(Session::class, $oSession);
 
         $cmpUser = oxNew(UserComponent::class);

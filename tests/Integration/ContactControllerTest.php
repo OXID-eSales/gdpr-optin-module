@@ -14,6 +14,7 @@ use OxidEsales\EshopCommunity\Internal\Framework\Module\Facade\ModuleSettingServ
 use OxidEsales\GdprOptinModule\Core\GdprOptinModule;
 use OxidEsales\GdprOptinModule\Service\ModuleSettings;
 use OxidEsales\GdprOptinModule\Tests\Traits\ServiceContainer;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 final class ContactControllerTest extends BaseTestCase
 {
@@ -27,9 +28,7 @@ final class ContactControllerTest extends BaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProviderOptInValidationRequired
-     */
+    #[DataProvider('dataProviderOptInValidationRequired')]
     public function testOptInValidationRequired(string $configValue, bool $expected): void
     {
         $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
@@ -43,9 +42,7 @@ final class ContactControllerTest extends BaseTestCase
         $this->assertSame($expected, $controller->isOptInValidationRequired());
     }
 
-    /**
-     * @dataProvider dataProviderOptInValidationRequired
-     */
+    #[DataProvider('dataProviderOptInValidationRequired')]
     public function testErrorOnSend(string $configValue, bool $expected): void
     {
         $settingsService = $this->getServiceFromContainer(ModuleSettingServiceInterface::class);
