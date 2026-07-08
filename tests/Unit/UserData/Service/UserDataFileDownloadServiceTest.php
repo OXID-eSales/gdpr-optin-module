@@ -134,8 +134,8 @@ class UserDataFileDownloadServiceTest extends TestCase
     }
 
     private function createVirtualFile(
-        string $fileName = null,
-        string $fileContent = null
+        ?string $fileName = null,
+        ?string $fileContent = null
     ): string {
         $fileName ??= uniqid() . '.zip';
 

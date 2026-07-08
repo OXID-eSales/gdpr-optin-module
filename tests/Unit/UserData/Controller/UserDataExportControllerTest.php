@@ -37,7 +37,7 @@ class UserDataExportControllerTest extends TestCase
     }
 
     private function getSut(
-        UserDataExportServiceInterface $userDataExportService = null
+        ?UserDataExportServiceInterface $userDataExportService = null
     ): UserDataExportController&MockObject {
         $sut = $this->createPartialMock(UserDataExportController::class, ['getService', 'getEditObjectId']);
 
