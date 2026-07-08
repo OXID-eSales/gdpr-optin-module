@@ -17,7 +17,9 @@ use OxidEsales\GdprOptinModule\Service\ModuleSettingsInterface;
 use OxidEsales\GdprOptinModule\Tests\Integration\BaseTestCase;
 use OxidEsales\GdprOptinModule\Tests\Traits\ServiceContainer;
 use OxidEsales\GdprOptinModule\Transput\OptInRequestInterface;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
+#[AllowMockObjectsWithoutExpectations]
 final class ViewConfigTest extends BaseTestCase
 {
     public function testGetGdprModuleSettings(): void

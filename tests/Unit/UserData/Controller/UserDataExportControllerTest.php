@@ -11,11 +11,13 @@ namespace OxidEsales\GdprOptinModule\Tests\Unit\UserData\Controller;
 
 use OxidEsales\GdprOptinModule\UserData\Controller\UserDataExportController;
 use OxidEsales\GdprOptinModule\UserData\Service\UserDataExportServiceInterface;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class UserDataExportControllerTest extends TestCase
 {
+    #[AllowMockObjectsWithoutExpectations]
     public function testExportUserData(): void
     {
         $userId = uniqid();

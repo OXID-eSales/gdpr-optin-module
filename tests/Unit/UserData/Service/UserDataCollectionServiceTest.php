@@ -23,7 +23,7 @@ class UserDataCollectionServiceTest extends TestCase
     {
         $userId = uniqid();
 
-        $collectionAggregationServiceMock = $this->createMock(CollectionAggregationServiceInterface::class);
+        $collectionAggregationServiceMock = $this->createStub(CollectionAggregationServiceInterface::class);
         $collectionAggregationServiceMock->method('collectUserData')
             ->with($userId)->willReturn([
                 $tableCollection1Stub = $this->createStub(TableDataCollectionInterface::class),

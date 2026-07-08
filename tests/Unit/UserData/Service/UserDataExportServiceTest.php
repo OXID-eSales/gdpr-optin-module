@@ -33,7 +33,7 @@ class UserDataExportServiceTest extends TestCase
             $this->createStub(ResultFileInterface::class),
         ];
 
-        $userDataCollectionServiceMock = $this->createMock(UserDataCollectionServiceInterface::class);
+        $userDataCollectionServiceMock = $this->createStub(UserDataCollectionServiceInterface::class);
         $userDataCollectionServiceMock->method('getUserDataAsFilesList')
             ->with($userId)
             ->willReturn($filesListExample);

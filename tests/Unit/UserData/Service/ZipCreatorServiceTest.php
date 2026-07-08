@@ -43,7 +43,7 @@ class ZipCreatorServiceTest extends TestCase
             ->method('close');
 
         $zipFileName = 'output/test.zip';
-        $zipArchiveFactoryMock = $this->createMock(ZipArchiveFactoryInterface::class);
+        $zipArchiveFactoryMock = $this->createStub(ZipArchiveFactoryInterface::class);
         $zipArchiveFactoryMock
             ->method('create')
             ->with($zipFileName)

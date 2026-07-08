@@ -30,7 +30,7 @@ class OptInRequestTest extends TestCase
     #[DataProvider('getBooleanValueDataProvider')]
     public function testGetInvoiceAddressOptIn($requestValue, $expectedValue): void
     {
-        $shopRequest = $this->createMock(\OxidEsales\Eshop\Core\Request::class);
+        $shopRequest = $this->createStub(\OxidEsales\Eshop\Core\Request::class);
         $shopRequest->method('getRequestEscapedParameter')
             ->with(OptInRequest::REQUEST_PARAM_INVOICE_ADDRESS_OPT_IN)
             ->willReturn($requestValue);
@@ -45,7 +45,7 @@ class OptInRequestTest extends TestCase
     #[DataProvider('getBooleanValueDataProvider')]
     public function testGetDeliveryAddressOptIn($requestValue, $expectedValue): void
     {
-        $shopRequest = $this->createMock(\OxidEsales\Eshop\Core\Request::class);
+        $shopRequest = $this->createStub(\OxidEsales\Eshop\Core\Request::class);
         $shopRequest->method('getRequestEscapedParameter')
             ->with(OptInRequest::REQUEST_PARAM_DELIVERY_ADDRESS_OPT_IN)
             ->willReturn($requestValue);
