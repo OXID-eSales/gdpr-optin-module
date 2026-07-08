@@ -12,8 +12,10 @@ namespace OxidEsales\GdprOptinModule\Tests\Unit\UserData\Event;
 use org\bovigo\vfs\vfsStream;
 use OxidEsales\GdprOptinModule\UserData\Event\UserDataExportCleanupSubscriber;
 use OxidEsales\GdprOptinModule\UserData\Event\UserDataExportCleanupEvent;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\TestCase;
 
+#[AllowMockObjectsWithoutExpectations]
 class UserDataExportCleanupSubscriberTest extends TestCase
 {
     public function testOnUserDataExportCleanupUnlinkedFile(): void

@@ -16,8 +16,10 @@ use OxidEsales\GdprOptinModule\UserData\Service\UserDataExportService;
 use OxidEsales\GdprOptinModule\UserData\Service\UserDataExportServiceInterface;
 use OxidEsales\GdprOptinModule\UserData\Service\UserDataFileDownloadServiceInterface;
 use OxidEsales\GdprOptinModule\UserData\Service\ZipCreatorServiceInterface;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\TestCase;
 
+#[AllowMockObjectsWithoutExpectations]
 class UserDataExportServiceTest extends TestCase
 {
     public function testZipCreationServiceTriggeredWithCorrectlyProcessedData(): void
@@ -33,7 +35,7 @@ class UserDataExportServiceTest extends TestCase
             $this->createStub(ResultFileInterface::class),
         ];
 
-        $userDataCollectionServiceMock = $this->createStub(UserDataCollectionServiceInterface::class);
+        $userDataCollectionServiceMock = $this->createMock(UserDataCollectionServiceInterface::class);
         $userDataCollectionServiceMock->method('getUserDataAsFilesList')
             ->with($userId)
             ->willReturn($filesListExample);

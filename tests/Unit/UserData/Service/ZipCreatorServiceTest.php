@@ -12,9 +12,11 @@ namespace OxidEsales\GdprOptinModule\Tests\Unit\UserData\Service;
 use OxidEsales\GdprOptinModule\UserData\DataType\ResultFileInterface;
 use OxidEsales\GdprOptinModule\UserData\Service\ZipArchiveFactoryInterface;
 use OxidEsales\GdprOptinModule\UserData\Service\ZipCreatorService;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\TestCase;
 use ZipArchive;
 
+#[AllowMockObjectsWithoutExpectations]
 class ZipCreatorServiceTest extends TestCase
 {
     public function testZipCreationAddsFilesAndFinalizesTheArchive(): void
@@ -43,7 +45,7 @@ class ZipCreatorServiceTest extends TestCase
             ->method('close');
 
         $zipFileName = 'output/test.zip';
-        $zipArchiveFactoryMock = $this->createStub(ZipArchiveFactoryInterface::class);
+        $zipArchiveFactoryMock = $this->createMock(ZipArchiveFactoryInterface::class);
         $zipArchiveFactoryMock
             ->method('create')
             ->with($zipFileName)

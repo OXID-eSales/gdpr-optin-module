@@ -15,15 +15,17 @@ use OxidEsales\GdprOptinModule\UserData\Service\CollectionAggregationServiceInte
 use OxidEsales\GdprOptinModule\UserData\Service\CollectionSerializerServiceInterface;
 use OxidEsales\GdprOptinModule\UserData\Service\UserDataCollectionService;
 use OxidEsales\GdprOptinModule\UserData\Service\UserDataCollectionServiceInterface;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\TestCase;
 
+#[AllowMockObjectsWithoutExpectations]
 class UserDataCollectionServiceTest extends TestCase
 {
     public function testGetUserDataAsFilesList(): void
     {
         $userId = uniqid();
 
-        $collectionAggregationServiceMock = $this->createStub(CollectionAggregationServiceInterface::class);
+        $collectionAggregationServiceMock = $this->createMock(CollectionAggregationServiceInterface::class);
         $collectionAggregationServiceMock->method('collectUserData')
             ->with($userId)->willReturn([
                 $tableCollection1Stub = $this->createStub(TableDataCollectionInterface::class),

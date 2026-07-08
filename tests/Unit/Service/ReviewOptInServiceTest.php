@@ -15,11 +15,13 @@ use OxidEsales\GdprOptinModule\Core\GdprOptinModule;
 use OxidEsales\GdprOptinModule\Service\ModuleSettings;
 use OxidEsales\GdprOptinModule\Service\ReviewOptIn;
 use OxidEsales\GdprOptinModule\Service\ReviewOptInInterface;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(\OxidEsales\GdprOptinModule\Service\ReviewOptIn::class)]
+#[AllowMockObjectsWithoutExpectations]
 class ReviewOptInServiceTest extends TestCase
 {
     #[DataProvider('dataProviderValidateOptIn')]

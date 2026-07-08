@@ -10,9 +10,11 @@ declare(strict_types=1);
 namespace OxidEsales\GdprOptinModule\Tests\Unit\Transput;
 
 use OxidEsales\GdprOptinModule\Transput\OptInRequest;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
+#[AllowMockObjectsWithoutExpectations]
 class OptInRequestTest extends TestCase
 {
     public static function getBooleanValueDataProvider(): array
@@ -30,7 +32,7 @@ class OptInRequestTest extends TestCase
     #[DataProvider('getBooleanValueDataProvider')]
     public function testGetInvoiceAddressOptIn($requestValue, $expectedValue): void
     {
-        $shopRequest = $this->createStub(\OxidEsales\Eshop\Core\Request::class);
+        $shopRequest = $this->createMock(\OxidEsales\Eshop\Core\Request::class);
         $shopRequest->method('getRequestEscapedParameter')
             ->with(OptInRequest::REQUEST_PARAM_INVOICE_ADDRESS_OPT_IN)
             ->willReturn($requestValue);
@@ -45,7 +47,7 @@ class OptInRequestTest extends TestCase
     #[DataProvider('getBooleanValueDataProvider')]
     public function testGetDeliveryAddressOptIn($requestValue, $expectedValue): void
     {
-        $shopRequest = $this->createStub(\OxidEsales\Eshop\Core\Request::class);
+        $shopRequest = $this->createMock(\OxidEsales\Eshop\Core\Request::class);
         $shopRequest->method('getRequestEscapedParameter')
             ->with(OptInRequest::REQUEST_PARAM_DELIVERY_ADDRESS_OPT_IN)
             ->willReturn($requestValue);

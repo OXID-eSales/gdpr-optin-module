@@ -26,6 +26,7 @@ use OxidEsales\GdprOptinModule\Tests\Traits\ServiceContainer;
 use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\DataProvider;
 
+#[AllowMockObjectsWithoutExpectations]
 final class UserComponentTest extends BaseTestCase
 {
     use ServiceContainer;
@@ -309,7 +310,6 @@ final class UserComponentTest extends BaseTestCase
     }
 
     #[DataProvider('providerChangeUserDataExceptions')]
-    #[AllowMockObjectsWithoutExpectations]
     public function testChangeUserDataExceptions(\Exception $exception): void
     {
         $mssMock = $this->createPartialMock(User::class, ['changeUserData']);

@@ -13,8 +13,10 @@ use OxidEsales\GdprOptinModule\UserData\DataType\TableDataCollection;
 use OxidEsales\GdprOptinModule\UserData\Exception\AggregationTypeException;
 use OxidEsales\GdprOptinModule\UserData\Infrastructure\DataSelectorInterface;
 use OxidEsales\GdprOptinModule\UserData\Service\CollectionAggregationService;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\TestCase;
 
+#[AllowMockObjectsWithoutExpectations]
 final class CollectionAggregationServiceTest extends TestCase
 {
     public function testAggregatorExplodesOnWrongType(): void
@@ -37,19 +39,19 @@ final class CollectionAggregationServiceTest extends TestCase
         $collection1 = uniqid();
         $collection2 = uniqid();
 
-        $collector1 = $this->createStub(DataSelectorInterface::class);
+        $collector1 = $this->createMock(DataSelectorInterface::class);
         $collector1->method('getCollection')->willReturn($collection2);
         $collector1->method('getSelectionTable')->willReturn($collector1Table = uniqid());
         $collector1->method('getDataForColumnValue')->with($userId)
             ->willReturn($collection1Data = $this->getRandomDataArray());
 
-        $collector2 = $this->createStub(DataSelectorInterface::class);
+        $collector2 = $this->createMock(DataSelectorInterface::class);
         $collector2->method('getCollection')->willReturn($collection1);
         $collector2->method('getSelectionTable')->willReturn($collector2Table = uniqid());
         $collector2->method('getDataForColumnValue')->with($userId)
             ->willReturn($collection2Data = $this->getRandomDataArray());
 
-        $collector3 = $this->createStub(DataSelectorInterface::class);
+        $collector3 = $this->createMock(DataSelectorInterface::class);
         $collector3->method('getCollection')->willReturn($collection1);
         $collector3->method('getSelectionTable')->willReturn($collector3Table = uniqid());
         $collector3->method('getDataForColumnValue')->with($userId)

@@ -12,8 +12,10 @@ namespace OxidEsales\GdprOptinModule\Tests\Unit\UserData\Service;
 use OxidEsales\GdprOptinModule\UserData\DataType\TableDataCollectionInterface;
 use OxidEsales\GdprOptinModule\UserData\Exception\JsonSerializationException;
 use OxidEsales\GdprOptinModule\UserData\Service\JsonCollectionSerializerService;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\TestCase;
 
+#[AllowMockObjectsWithoutExpectations]
 final class JsonCollectionSerializerServiceTest extends TestCase
 {
     public function testSerializeCollection(): void
